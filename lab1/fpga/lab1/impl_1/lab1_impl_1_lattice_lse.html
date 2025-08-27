@@ -1,0 +1,414 @@
+<HTML>
+<HEAD>
+<TITLE>Synthesis Report</TITLE>
+<link href="file:///C:/lscc/radiant/2025.1/data/theme/css/light/report.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="file:///C:/lscc/radiant/2025.1/data/theme/css/print/report.css" rel="stylesheet" type="text/css" media="print"/>
+<style type="text/css">
+#toc {
+  position: fixed;
+  right: 2px;
+  top: 2px;
+  padding: 2px 5px 2px 5px;
+  background-color:rgba(210,210,210,0.1);
+  border-style: solid;
+  border-color: rgba(192,192,192,0.8);
+  border-width:1px;
+}
+#toc_list {
+  display: none;
+  }
+</style>
+
+<script type="text/javascript">
+<!--
+function showTocList() {
+var a = document.getElementById("toc_list");
+a.style.display = "block";
+}
+
+function hideTocList() {
+var a = document.getElementById("toc_list");
+if (a)
+    a.style.display = "none";
+}
+
+//-->
+</script>
+
+</HEAD>
+
+<BODY>
+
+<DIV id="content" onclick="hideTocList()"><PRE>
+<A name="Syn"></A><B><U><big>Synthesis Report</big></U></B>
+synthesis:  version Radiant Software (64-bit) 2025.1.0.39.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2025 Lattice Semiconductor Corporation,  All rights reserved.
+Wed Aug 27 16:12:52 2025
+
+
+Command Line:  C:\lscc\radiant\2025.1\ispfpga\bin\nt64\synthesis.exe -f C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/impl_1/lab1_impl_1_lattice.synproj -logfile lab1_impl_1_lattice.srp -gui -msgset C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/promote.xml 
+
+INFO <35002000> - synthesis: Lattice Synthesis Engine launched.
+
+Synthesis options:
+The -a option is iCE40UP.
+The -t option is SG48.
+The -sp option is High-Performance_1.2V.
+The -p option is iCE40UP5K.
+
+###################### Device Information ######################
+----------------------------------------------------------------
+Lattice Family        | iCE40UP
+----------------------------------------------------------------
+Device                | iCE40UP5K
+----------------------------------------------------------------
+Package               | SG48
+----------------------------------------------------------------
+Performance Grade     | High-Performance_1.2V
+----------------------------------------------------------------
+################################################################
+
+####################### Device Resources #######################
+----------------------------------------------------------------
+Logic Cells           | 5280
+----------------------------------------------------------------
+RAM Blocks            | 30
+----------------------------------------------------------------
+DSP Blocks            | 8
+----------------------------------------------------------------
+PLLs                  | 1
+----------------------------------------------------------------
+I/O Pins              | 56
+----------------------------------------------------------------
+################################################################
+
+Resolving user-selected strategy settings...
+
+INFO <35001797> - synthesis: Use DCC Insertion disabled by default.
+
+###################### Strategy Settings #######################
+----------------------------------------------------------------
+Optimization Goal     | Area
+----------------------------------------------------------------
+Top-level Module Name | top
+----------------------------------------------------------------
+Target Frequency      | 200.000 MHz
+----------------------------------------------------------------
+Maximum Fanout        | 1000
+----------------------------------------------------------------
+Timing Path Count     | 3
+----------------------------------------------------------------
+RAM Read/Write Check  | False
+----------------------------------------------------------------
+BRAM Utilization      | 100.0%
+----------------------------------------------------------------
+DSP Usage             | True
+----------------------------------------------------------------
+DSP Utilization       | 100.0%
+----------------------------------------------------------------
+FSM Encoding Style    | Auto
+----------------------------------------------------------------
+Resolve Mixed Drivers | False
+----------------------------------------------------------------
+Fix Gated Clocks      | True
+----------------------------------------------------------------
+Mux Style             | Auto
+----------------------------------------------------------------
+Use Carry Chain       | True
+----------------------------------------------------------------
+Carry Chain Length    | Infinite
+----------------------------------------------------------------
+Loop Limit            | 1950
+----------------------------------------------------------------
+Use I/O Insertion     | True
+----------------------------------------------------------------
+Use I/O Registers     | True
+----------------------------------------------------------------
+Resource Sharing      | True
+----------------------------------------------------------------
+Propagate Constants   | True
+----------------------------------------------------------------
+Remove Duplicate Reg  | True
+----------------------------------------------------------------
+Force GSR             | False
+----------------------------------------------------------------
+ROM Style             | Auto
+----------------------------------------------------------------
+RAM Style             | Auto
+----------------------------------------------------------------
+Remove LOC Properties | False
+----------------------------------------------------------------
+Partition Flow        | False
+----------------------------------------------------------------
+Use DCC Insertion     | None
+----------------------------------------------------------------
+################################################################
+
+
+The -comp option is FALSE.
+The -syn option is FALSE.
+
+Output HDL filename: lab1_impl_1.vm
+-path C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1 (searchpath added)
+-path C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/impl_1 (searchpath added)
+-path C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/source/impl_1 (searchpath added)
+-path C:/lscc/radiant/2025.1/ispfpga/ice40tp/data (searchpath added)
+Mixed language design
+Verilog design file: C:/lscc/radiant/2025.1/ip/pmi/pmi_iCE40UP.v
+Verilog design file: C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/source/impl_1/top.sv
+VHDL library: pmi
+VHDL design file: C:/lscc/radiant/2025.1/ip/pmi/pmi_iCE40UP.vhd
+WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM8 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM7 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM6 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM5 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM4 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM3 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM2 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM1 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port TRIM0 is not connected on this instance. VDB-5050
+WARNING <35935050> - synthesis: input port I is not connected on this instance. VDB-5050
+
+Compiling design...
+
+Analyzing Verilog file c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v. VERI-1482
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(1): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_addsub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_addsub.v(40): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/adder_subtractor/rtl/lscc_add_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(2): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_add.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_add.v(50): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/adder/rtl/lscc_adder.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(3): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_complex_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_complex_mult.v(52): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/complex_mult/rtl/lscc_complex_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(4): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_counter.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_counter.v(39): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/counter/rtl/lscc_cntr.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(5): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_fifo.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_fifo.v(44): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/fifo/rtl/lscc_fifo.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(6): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_fifo_dc.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_fifo_dc.v(47): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/fifo_dc/rtl/lscc_fifo_dc.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(7): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_mac.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_mac.v(52): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/mult_accumulate/rtl/lscc_mult_accumulate.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(8): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_multaddsubsum.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_multaddsubsum.v(53): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/mult_add_sub_sum/rtl/lscc_mult_add_sub_sum.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(9): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_multaddsub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_multaddsub.v(52): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/mult_add_sub/rtl/lscc_mult_add_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(10): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_mult.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_mult.v(51): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/multiplier/rtl/lscc_multiplier.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(11): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp.v(48): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/ram_dp/rtl/lscc_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp.v(49): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../LFMXO4/ram_dp/rtl/lscc_lfmxo4_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(12): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq.v(45): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq.v(46): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../LFMXO4/ram_dq/rtl/lscc_lfmxo4_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(13): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_rom.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_rom.v(45): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/rom/rtl/lscc_rom.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(14): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_sub.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_sub.v(50): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/subtractor/rtl/lscc_subtractor.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(15): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp_be.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp_be.v(49): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/ram_dp/rtl/lscc_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dp_be.v(50): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../LFMXO4/ram_dp/rtl/lscc_lfmxo4_ram_dp.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(16): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq_be.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq_be.v(45): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../common/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ram_dq_be.v(46): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/../LFMXO4/ram_dq/rtl/lscc_lfmxo4_ram_dq.v. VERI-1328
+INFO <35901328> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2025.1/ip/pmi/pmi_dsp.v. VERI-1328
+Analyzing Verilog file c:/thatfamily dropbox/sorin jayaweera/allsaves/mudd/junior/microps/lab1/fpga/lab1/source/impl_1/top.sv. VERI-1482
+Analyzing VHDL file c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.vhd. VHDL-1481
+Analyzing VHDL file c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.vhd
+
+INFO <35921014> - synthesis: c:/lscc/radiant/2025.1/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/ThatFamily Dropbox/Sorin Jayaweera/allSaves/mudd/junior/MicroPs/lab1/fpga/lab1/impl_1". VHDL-1504
+Top module language type = Verilog.
+Top module name (Verilog, mixed language): top
+INFO <35901018> - synthesis: c:/thatfamily dropbox/sorin jayaweera/allsaves/mudd/junior/microps/lab1/fpga/lab1/source/impl_1/top.sv(1): compiling module top. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2025.1/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b01). VERI-1018
+WARNING <35901209> - synthesis: c:/thatfamily dropbox/sorin jayaweera/allsaves/mudd/junior/microps/lab1/fpga/lab1/source/impl_1/top.sv(16): expression size 32 truncated to fit in target size 25. VERI-1209
+
+<A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
+
+[Parameter Setting Section Start]
+
+	[Parameter Settings for Instance(s): hf_osc]
+	(Module: HSOSC)
+		CLKHF_DIV                 2'b01
+
+[Parameter Setting Section End]
+
+
+
+
+
+<A name="lse_area"></A><B><U><big>Area Report</big></U></B>
+
+################### Begin Area Report (top)######################
+Number of register bits => 25 of 5280 (0 % )
+CCU2 => 13
+FD1P3XZ => 25
+HSOSC_CORE => 1
+IB => 1
+LUT4 => 1
+OB => 1
+################### End Area Report ##################
+Number of odd-length carry chains : 1
+Number of even-length carry chains : 0
+
+
+<A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 1
+  Net : int_osc, loads : 0
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : n171, loads : 25
+  Net : n105[24], loads : 14
+  Net : n105[23], loads : 14
+  Net : n195, loads : 14
+  Net : n105[22], loads : 13
+  Net : n105[21], loads : 13
+  Net : n193, loads : 13
+  Net : n105[20], loads : 12
+  Net : n105[19], loads : 12
+  Net : n191, loads : 12
+################### End Clock Report ##################
+
+
+<A name="lse_constraint"></A><B><U><big>Constraint Report</big></U></B>
+
+################### Begin Constraint Report ######################
+Constraint Summary:
+  Total number of constraints: 0
+  Total number of constraints dropped: 0
+###################  End Constraint Report  ######################
+
+Peak Memory Usage: 93 MB
+
+--------------------------------------------------------------
+Total CPU Time: 3 secs 
+Total REAL Time: 6 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: 2554f85eb87a87addb2b900c6492cab364cdf19
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></DIV>
+
+<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
+<UL id="toc_list">
+<LI><A href=#Syn>Top</A></LI>
+<LI><A href=#lse_parameter>Parameter Setting</A></LI>
+<LI><A href=#lse_area>Area Report</A></LI>
+<LI><A href=#lse_clock>Clock Report</A></LI>
+<LI><A href=#lse_constraint>Constraint Report</A></LI>
+</UL>
+</DIV>
+
+<button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
+<script type="text/javascript">
+<!--
+var scrollStep = 0;
+function scrollToTop(){
+  var funScroll = function() {
+    var top = document.body.scrollTop;
+    if (top == 0) {
+      scrollStep = 0;
+      return;
+    }
+    if (scrollStep == 0)
+      scrollStep = top/20 + 1;
+    top -= scrollStep;
+    if (top < 0)
+      top = 0;
+    document.body.scrollTop = top;
+    requestAnimationFrame(funScroll);
+  };
+  funScroll();
+}
+
+window.addEventListener('scroll', function(e) {
+  var backToTop = document.getElementById('back_to_top')
+  if (document.body.scrollTop > 0) {
+    backToTop.style.display = 'block';
+  } else {	backToTop.style.display = 'none'  }});
+
+//-->
+</script>
+
+<style type="text/css">
+#back_to_top {
+  bottom:20px; right:20px;
+  width:30px; height:30px;
+  font-size: 20px;
+  padding: 2px 5px 2px 5px;
+  position:fixed;
+  background-color:rgba(210,210,210,0.1);
+  border-style: solid;
+  border-color: rgba(192,192,192,0.8);
+  border-width:1px;
+  display:none;
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin:50% 50%;
+}
+#back_to_top:focus {
+  outline-width:0px;
+}
+</style>
+
+</BODY>
+
