@@ -5,11 +5,21 @@ execute:
 website:
   title: "E155 Portfolio"
   navbar:
+    background: "primary"
+    search: true
     left:
-      - href: index.qmd
-        text: Home
-      - href: blog.qmd
-        text: Blog
+      - text: Home
+        href: index.qmd
+      - text: Labs
+        menu:
+          - text: lab 1
+            href: labs/lab1/lab1.qmd
+          - text: lab 2
+            href: labs/lab2/lab2.qmd
+    tools:
+      - icon: github
+        text: Github
+        href: https://github.com/Sorin-Jayaweera?tab=repositories
 
 format:
   html:
@@ -18,5 +28,3 @@ format:
       - brand
     css: styles.css
     toc: true
-
-
