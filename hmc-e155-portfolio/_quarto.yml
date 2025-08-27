@@ -1,13 +1,15 @@
 project:
   type: website
-
+execute:
+  freeze: false
 website:
   title: "E155 Portfolio"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: blog.qmd
+        text: Blog
 
 format:
   html:
@@ -16,6 +18,5 @@ format:
       - brand
     css: styles.css
     toc: true
-
 
 
