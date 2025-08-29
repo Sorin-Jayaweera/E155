@@ -140,32 +140,46 @@
     "text": "lab 2!\n\\(a^2\\)"
   },
   {
+    "objectID": "labs/lab1/lab.html",
+    "href": "labs/lab1/lab.html",
+    "title": "Lab 1 - E155 Startup",
+    "section": "",
+    "text": "In this lab, a PCB with FPGA and MCU was assembled andused to drive a 7 segment LED display. Several onboard components were tested, ensuring proper communication between both microcontrollers."
+  },
+  {
+    "objectID": "labs/lab1/lab.html#introduction",
+    "href": "labs/lab1/lab.html#introduction",
+    "title": "Lab 1 - E155 Startup",
+    "section": "",
+    "text": "In this lab, a PCB with FPGA and MCU was assembled andused to drive a 7 segment LED display. Several onboard components were tested, ensuring proper communication between both microcontrollers."
+  },
+  {
     "objectID": "labs/lab1/lab.html#design-and-testing-methodology",
     "href": "labs/lab1/lab.html#design-and-testing-methodology",
     "title": "Lab 1 - E155 Startup",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology"
+    "text": "Design and Testing Methodology\nThe tests for this project exist under two realms - simulation and hardware.\n\nHardware tests\nThree hardware tests were conducted. The first ensured connection between the FPGA and the on-board LEDs, the second required the FPGA to pull a pin on the MCU high, each driving led’s depending on their current state. The third test was using pins on the PCB to control a number displayed on the 7 segment display, as well as on-board LEDS to understand the internal state.\n\n\nSimulation goals\nThe 7 segment display code was verified first in simulation due to the extra complexity required. For the simulation, a test bench for each possible user input (switches representing binary numbers 0-9) was constructed."
   },
   {
-    "objectID": "labs/lab1/lab.html#technical-documentatoin",
-    "href": "labs/lab1/lab.html#technical-documentatoin",
+    "objectID": "labs/lab1/lab.html#technical-documentation",
+    "href": "labs/lab1/lab.html#technical-documentation",
     "title": "Lab 1 - E155 Startup",
-    "section": "Technical Documentatoin",
-    "text": "Technical Documentatoin\n\nBlock Diagram\n\n\nSchematic"
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nBlock Diagram\nThe block diagram for the 7 segment display is shown below. This describes the internal structure of the FPGA.\nThe FPGA controlls the main logic. It takes as input a binary number from 0-9 and converts it to control for two the on board leds, and drives a third by a 2.4 hz clock signal.\nThe FPGA also converts the input binary number to contorl over the 7 segment display to show the input number in decimal form.\n\n\n\nSchematic\nThe schematic describes the assembled circuit shown here:\n\n\nFor a more detailed schematic of the PCB, see the ()[https://pages.hmc.edu/brake/class/e155/fa23/assets/doc/E155%20Development%20Board%20Schematic.pdf]\n\n\nCode\nFor the git, see (https://github.com/sorinjayaweera/mudd-junior/tree/master/labs/lab1)\nThe most relevant code is shown below:\n// Sorin Jayaweera // sojayaweera@g.hmc.edu // 8/28/2025\nmodule lab1_sj_v1( input logic [3:0] s, input logic reset, output logic [2:0] led, output logic [6:0] seg );\nlight_status ls(.s(s),.reset(reset),.led(led));\nssegdisp sdisp(.s(s),.seg(seg));\nendmodule\n// Control the onboard LEDS with input from the user. // one led will blink at 2.4 hz, // the other leds are status module light_status ( input logic [3:0] s, input logic reset, output logic [2:0] led ); logic lastled = 0; logic [24:0] counter = 0;\nassign led[0] = s[0] ^ s[1];\nassign led[1] = s[3] & s[2];\n\n// 24 Mhz Internal high-speed oscillator\nHSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));\n\nassign led[2] = counter % 2000000 &lt; 100000; // every million counts, blink led.  \n\n// Simple clock divider copied\nalways_ff @(posedge int_osc,negedge reset)\nbegin\n    if (reset == 0) begin \n        counter &lt;= 24'b0;\n        end\n        \n    else begin\n        counter &lt;= counter + 1'b1;\n    end\nend\nendmodule\n// take the user unput from s as a number 0-9 and push to a seven segment display {ABCDEFG} module ssegdisp( input logic [3:0] s, output logic [6:0] seg );\nalways_comb\n    case(s)\n        4'b0000: seg &lt;= 7'b0000001; //7'b1111110; 0000001\n        4'b0001: seg &lt;= 7'b1001111; //7'b0110000; 1001111\n        4'b0010: seg &lt;= 7'b0010010; //7'b1101101; 0010010\n        4'b0011: seg &lt;= 7'b0000110; //7'b1111001; 0000110\n        4'b0100: seg &lt;= 7'b1001100; //7'b0110011; 1001100\n        4'b0101: seg &lt;= 7'b0100100; //7'b1011011; 0100100\n        4'b0110: seg &lt;= 7'b1100000; //7'b0011111; 1100000\n        4'b0111: seg &lt;= 7'b0001111; //7'b1110000; 0001111\n        4'b1000: seg &lt;= 7'b0000000; //7'b1111111; 0000000\n        4'b1001: seg &lt;= 7'b0001100; //7'b1110011; 0001100\n    default\n        seg &lt;= 7'b1111111;//7'b0000000; 1111111\n    endcase\nendmodule\n//always_comb // case(s[1:0]) // 00: led[0] &lt;= 2’b0 // 01: led[0] &lt;= 2b’1 // default: // led &lt;= 2’b00; // nothing // endcase // //"
   },
   {
     "objectID": "labs/lab1/lab.html#results-and-discussion",
     "href": "labs/lab1/lab.html#results-and-discussion",
     "title": "Lab 1 - E155 Startup",
     "section": "Results and Discussion",
-    "text": "Results and Discussion\n\nTestbench Simulation"
+    "text": "Results and Discussion\nThis breif series of tests (15 hours? More?) showed that the hardware is working as expected; The FPGA and MCU were able to properly communicate, and a 7 segment display was properly driven. Further, a 2.4 hz clock signal was generated and used to drive an onboard LED.\nAll intended tasks were completed successfully. The design could be improved to provide adaptive current. A 7 segment display driven by connections to a constant voltage would allow better control of LED brightness. The present setup distributes current across all leds in the 7 segment display, which decreases the brightness.\n\nTestbench Simulation"
   },
   {
     "objectID": "labs/lab1/lab.html#conclusion",
     "href": "labs/lab1/lab.html#conclusion",
     "title": "Lab 1 - E155 Startup",
     "section": "Conclusion",
-    "text": "Conclusion"
+    "text": "Conclusion\nHours spent in lab: Maybe 15-20? I helped a lot of other people on their project, and also made dumb mistakes (i.e. not realizing it was working properly because the leds were too dim!) that ate a large portion of time. I could probably do this lab again in 1/4 the overall time."
   },
   {
     "objectID": "labs/lab1/lab.html#ai-overview",
