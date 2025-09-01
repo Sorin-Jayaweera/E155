@@ -208,7 +208,12 @@ window.Quarto = {
   </ul></li>
   <li><a href="#top" id="toc-top" class="nav-link" data-scroll-target="#top">top</a></li>
   <li><a href="#testbench.sv" id="toc-testbench.sv" class="nav-link" data-scroll-target="#testbench.sv">testbench.sv</a></li>
-  <li><a href="#testvectors.tv" id="toc-testvectors.tv" class="nav-link" data-scroll-target="#testvectors.tv">Testvectors.tv</a></li>
+  <li><a href="#test-vector-files" id="toc-test-vector-files" class="nav-link" data-scroll-target="#test-vector-files">Test Vector Files</a>
+  <ul class="collapse">
+  <li><a href="#testvectors.tv-overall" id="toc-testvectors.tv-overall" class="nav-link" data-scroll-target="#testvectors.tv-overall">Testvectors.tv (overall)</a></li>
+  <li><a href="#onboard-led" id="toc-onboard-led" class="nav-link" data-scroll-target="#onboard-led">ONBOARD LED</a></li>
+  <li><a href="#segment-testing" id="toc-segment-testing" class="nav-link" data-scroll-target="#segment-testing">7 Segment Testing</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -434,11 +439,22 @@ initial begin
 <p>end</p>
 <p>endmodule</p>
 </section>
-<section id="testvectors.tv" class="level2">
-<h2 class="anchored" data-anchor-id="testvectors.tv">Testvectors.tv</h2>
-<p>// S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_000_0000001 //1 0001_010_1001111 //2 0010_010_0010010 //3 0011_000_0000110 //4 0100_000_1001100 //5 0101_010_0100100 //6 0110_010_0100000 //7 0111_000_0001111 //8 1000_000_0000000 //9 1001_010_0001100 //A 1010_010_0001000 //B 1011_000_1100000 //C 1100_100_0110001 //D 1101_110_1000010 //E 1110_110_0110000 //F 1111_100_0111000</p>
+<section id="test-vector-files" class="level2">
+<h2 class="anchored" data-anchor-id="test-vector-files">Test Vector Files</h2>
+<section id="testvectors.tv-overall" class="level3">
+<h3 class="anchored" data-anchor-id="testvectors.tv-overall">Testvectors.tv (overall)</h3>
+<p>To use these test vectors, run testbenchg.sv. Change the bit widths to match these inputs. The overall file has bitwidth 14. // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_000_0000001 //1 0001_010_1001111 //2 0010_010_0010010 //3 0011_000_0000110 //4 0100_000_1001100 //5 0101_010_0100100 //6 0110_010_0100000 //7 0111_000_0001111 //8 1000_000_0000000 //9 1001_010_0001100 //A 1010_010_0001000 //B 1011_000_1100000 //C 1100_100_0110001 //D 1101_110_1000010 //E 1110_110_0110000 //F 1111_100_0111000</p>
+</section>
+<section id="onboard-led" class="level3">
+<h3 class="anchored" data-anchor-id="onboard-led">ONBOARD LED</h3>
+<p>//Bitwidth 7 // LED TESTING // S0 S1 S2 S3 _ LED1 LED2 0000_000 //1 0001_010 //2 0010_010 //3 0011_000 //4 0100_000 //5 0101_010 //6 0110_010 //7 0111_000 //8 1000_000 //9 1001_010 //A 1010_010 //B 1011_000 //C 1100_100 //D 1101_110 //E 1110_110 //F 1111_100</p>
+</section>
+<section id="segment-testing" class="level3">
+<h3 class="anchored" data-anchor-id="segment-testing">7 Segment Testing</h3>
+<p>// bitwidth 11 // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_0000001 //1 0001_1001111 //2 0010_0010010 //3 0011_0000110 //4 0100_1001100 //5 0101_0100100 //6 0110_0100000 //7 0111_0001111 //8 1000_0000000 //9 1001_0001100 //A 1010_0001000 //B 1011_1100000 //C 1100_0110001 //D 1101_1000010 //E 1110_0110000 //F 1111_0111000</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
