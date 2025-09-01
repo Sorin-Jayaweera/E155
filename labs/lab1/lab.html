@@ -198,7 +198,6 @@ window.Quarto = {
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
   <li><a href="#pins" id="toc-pins" class="nav-link" data-scroll-target="#pins">Pins:</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#bugs-for-lab" id="toc-bugs-for-lab" class="nav-link" data-scroll-target="#bugs-for-lab">Bugs for lab</a></li>
   <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI Overview</a></li>
@@ -307,14 +306,15 @@ window.Quarto = {
 <section id="resistor-and-current-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="resistor-and-current-calculations">Resistor and Current Calculations</h4>
 <p>The Resistor was chosen to be 1k <span class="math inline">\(\Omega\)</span>. At minimum there are 2 of them active at once, maximum 7 - both of these situations must be considered for determining the resistor specification.</p>
-<p>Each LED has a maximum forward voltage of 1.8V at 20mA, see spec sheet: <embed src="https://www.farnell.com/datasheets/2095789.pdf" class="img-fluid">. The LEDS are all in parallel, not series. For there to actually be a voltage drop of 1.8V, there must be a 5-1.8 = 3.2v drop across the resistor that is connecting all of the components. For 40mA, this is</p>
-</section>
-</section>
-</section>
-<section id="results-and-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
+<p>Each LED has a maximum forward voltage of 1.8V at 20mA per led.</p>
+<p>The LEDS are all in parallel, not series. For there to actually be a voltage drop of 1.8V, there must be a 5-1.8 = 3.2v drop across the resistor that is connecting all of the components.</p>
+<p>There are, at minimum, two leds that would be on for the 7 segment hex specific display. This means a maximum of 40mA of current.</p>
+<p>This means that the resistor should be at 3.2v / 40mA = 800 <span class="math inline">\(\Omega\)</span>. For this project, I used 1 <span class="math inline">\(k\Omega\)</span> to give more room for unstable power supply, since we aren’t near the lower limit of current to light all 7 displays.</p>
+<p>For more reference see spec sheet: <embed src="https://www.farnell.com/datasheets/2095789.pdf" class="img-fluid">. ## Results and Discussion</p>
 <p>This brief series of test showed that the hardware is working as expected; The FPGA and MCU were able to properly communicate, and a 7 segment display was properly driven. Further, a 2.4 hz clock signal was generated and used to drive an onboard LED, validated with an oscilloscope.</p>
 <p>All intended tasks were completed successfully. The design could be improved to provide more consistent current supply. A ribbon cable has not yet been constructed due to insufficient supply. A 7 segment display driven by connections to a constant voltage would allow better control of LED brightness. The present setup distributes current across all leds in the 7 segment display, which decreases the brightness.</p>
+</section>
+</section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
