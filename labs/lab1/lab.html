@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b3aed8deb8408878d0e4e165d993d59e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-52aac903ff610c2b3cd6903c9562da61.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -160,20 +189,26 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a>
   <ul class="collapse">
   <li><a href="#hardware-tests" id="toc-hardware-tests" class="nav-link" data-scroll-target="#hardware-tests">Hardware tests</a></li>
-  <li><a href="#simulation-goals" id="toc-simulation-goals" class="nav-link" data-scroll-target="#simulation-goals">Simulation goals</a></li>
+  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a></li>
+  <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
   </ul></li>
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
   <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#pins" id="toc-pins" class="nav-link" data-scroll-target="#pins">Pins:</a></li>
+  </ul></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#bugs-for-lab" id="toc-bugs-for-lab" class="nav-link" data-scroll-target="#bugs-for-lab">Bugs for lab</a></li>
+  <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI Overview</a></li>
+  <li><a href="#extra-resources" id="toc-extra-resources" class="nav-link" data-scroll-target="#extra-resources">Extra Resources</a>
+  <ul class="collapse">
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a>
-  <ul class="collapse">
-  <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI overview</a></li>
+  <li><a href="#top" id="toc-top" class="nav-link" data-scroll-target="#top">top</a></li>
+  <li><a href="#testbench.sv" id="toc-testbench.sv" class="nav-link" data-scroll-target="#testbench.sv">testbench.sv</a></li>
+  <li><a href="#testvectors.tv" id="toc-testvectors.tv" class="nav-link" data-scroll-target="#testvectors.tv">Testvectors.tv</a></li>
   </ul>
 </nav>
     </div>
@@ -222,18 +257,27 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this lab, a PCB with FPGA and MCU was assembled andused to drive a 7 segment LED display. Several onboard components were tested, ensuring proper communication between both microcontrollers.</p>
+<p>In this lab, a PCB with FPGA and MCU was assembled and used to drive a 7 segment LED display. Several onboard components were tested, in stages, ensuring proper communication between both microcontrollers and user display.</p>
 </section>
 <section id="design-and-testing-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h2>
 <p>The tests for this project exist under two realms - simulation and hardware.</p>
+<p>Simulation was used to validate the functioning of the FPGA for internal logic states and response to inputs, and then uploaded to hardware based off of the HMC ENGR 155 DEV PCB.</p>
 <section id="hardware-tests" class="level3">
 <h3 class="anchored" data-anchor-id="hardware-tests">Hardware tests</h3>
-<p>Three hardware tests were conducted. The first ensured connection between the FPGA and the on-board LEDs, the second required the FPGA to pull a pin on the MCU high, each driving led’s depending on their current state. The third test was using pins on the PCB to control a number displayed on the 7 segment display, as well as on-board LEDS to understand the internal state.</p>
+<p>Three hardware tests were conducted. The first ensured connection between the FPGA and the on-board LEDs, and the second required the FPGA to pull a pin on the MCU high, each driving led’s depending on their current state. The third test was using pins on the PCB to control a number displayed on the 7 segment display, as well as on-board LEDS to understand the internal state.</p>
 </section>
-<section id="simulation-goals" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-goals">Simulation goals</h3>
-<p>The 7 segment display code was verified first in simulation due to the extra complexity required. For the simulation, a test bench for each possible user input (switches representing binary numbers 0-9) was constructed.</p>
+<section id="simulation" class="level3">
+<h3 class="anchored" data-anchor-id="simulation">Simulation</h3>
+<p>The 7 segment display code was verified first in simulation. A test bench was constructed with all user inputs (hex numbers 0 - 15), with the desired led and display states. The timing LED was not tested in simulation.</p>
+<p>The simulation passed all tests.</p>
+</section>
+<section id="testbench-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
+<p>The simulation included each possible stimulus from the user for numbers 0 - 15, as well as each case necessary to test the led status behavior.</p>
+<p>Shown is a “main” testbench, which includes both the LED and 7 segment display. Two other testbench files were run using the same testbench framework. See all three testvector files.</p>
+<p><img src="../../images/lab1/waveform.png" class="img-fluid"></p>
+<p>The testbench concluded 15 tests with 0 errors.</p>
 </section>
 </section>
 <section id="technical-documentation" class="level2">
@@ -241,23 +285,57 @@ ul.task-list li input[type="checkbox"] {
 <section id="block-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
 <p>The block diagram for the 7 segment display is shown below. This describes the internal structure of the FPGA.</p>
-<p>The FPGA controlls the main logic. It takes as input a binary number from 0-9 and converts it to control for two the on board leds, and drives a third by a 2.4 hz clock signal.</p>
-<p>The FPGA also converts the input binary number to contorl over the 7 segment display to show the input number in decimal form.</p>
-<p><img src="../..\images/lab1/block_diagram.png" class="img-fluid"></p>
+<p>The FPGA controls the main logic, with an input binary number from from 0000 to 1111 and converts it to control for two the on board leds. It also drives a third led by a 2.4 hz clock signal.</p>
+<p>The FPGA also converts the input binary number to control over the 7 segment display to show the input number in decimal form.</p>
+<p><img src="../../images/lab1/block_diagram.png" class="img-fluid"></p>
 </section>
 <section id="schematic" class="level3">
 <h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
-<p>The schematic describes the assembled circuit shown here:</p>
-<p><img src="../..\images/lab1/lab1_breadboard.png" class="img-fluid"></p>
-<p><img src="../..\images/lab1/schematic.png" class="img-fluid"></p>
-<p>For a more detailed schematic of the PCB, see the ()[https://pages.hmc.edu/brake/class/e155/fa23/assets/doc/E155%20Development%20Board%20Schematic.pdf]</p>
+<p>The schematic describes the assembled circuit shown below. First is a photo of the assembled circuit, then a schematic. For more detail on the PCB, see the HMC E155 Design reference: ()[https://pages.hmc.edu/brake/class/e155/fa23/assets/doc/E155%20Development%20Board%20Schematic.pdf]</p>
+<p><img src="../../images/lab1/lab1_breadboard.png" class="img-fluid"></p>
+<p><img src="../../images/lab1/schematic.png" class="img-fluid"></p>
 </section>
+<section id="pins" class="level3">
+<h3 class="anchored" data-anchor-id="pins">Pins:</h3>
+<p>The pins used for the code inputs and outputs are as specified: Inputs: S3: 32 S2: 35 S1: 31 S0: 37 Reset: 23</p>
+<p>Outputs: seg[6]: 13 seg[5]: 18 seg[4]: 19 seg[3]: 11 seg[2]: 6 seg[1]: 9 seg[0]: 44 led[2]: 42 led[1]: 38 led[0]: 28</p>
+<section id="resistor-and-current-calculations" class="level4">
+<h4 class="anchored" data-anchor-id="resistor-and-current-calculations">Resistor and Current Calculations</h4>
+<p>The Resistor was chosen to be 1k <span class="math inline">\(\Omega\)</span>. At minimum there are 2 of them active at once, maximum 7 - both of these situations must be considered for determining the resistor specification.</p>
+<p>Each LED has a maximum forward voltage of 1.8V at 20mA, see spec sheet: <embed src="https://www.farnell.com/datasheets/2095789.pdf" class="img-fluid">. The LEDS are all in parallel, not series. For there to actually be a voltage drop of 1.8V, there must be a 5-1.8 = 3.2v drop across the resistor that is connecting all of the components. For 40mA, this is</p>
+</section>
+</section>
+</section>
+<section id="results-and-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
+<p>This brief series of test showed that the hardware is working as expected; The FPGA and MCU were able to properly communicate, and a 7 segment display was properly driven. Further, a 2.4 hz clock signal was generated and used to drive an onboard LED, validated with an oscilloscope.</p>
+<p>All intended tasks were completed successfully. The design could be improved to provide more consistent current supply. A ribbon cable has not yet been constructed due to insufficient supply. A 7 segment display driven by connections to a constant voltage would allow better control of LED brightness. The present setup distributes current across all leds in the 7 segment display, which decreases the brightness.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>I was sufficiently able to generate a HEX code output on the 7 segment display, with a 2.4 hz clock signal and two other display LEDS, with the brightness on the 7 segment display being roughly consistent.</p>
+<p>Hours spent in lab: Likely in the 20-low 30 hour range. This time was spent mixed helping other people and struggling with bugs that were unrelated to code (the programmer is so annoying). Code for reproducability is found in the Extra Resources category.</p>
+</section>
+<section id="bugs-for-lab" class="level2">
+<h2 class="anchored" data-anchor-id="bugs-for-lab">Bugs for lab</h2>
+<p>Force -s 1111 doesn’t work properly - we have to specify the bit width and interpretation. I.e., 4’b1111.</p>
+</section>
+<section id="ai-overview" class="level2">
+<h2 class="anchored" data-anchor-id="ai-overview">AI Overview</h2>
+<p>I decided to use Claude for the analysis, since I’ve used claude code for personal projects in the past. It failed significantly. There is likely less common documentation on system verilog and lattice radiant, since it would be a less used tool. Being more niche, there is less for the neural net to train on. The code that it generated has some semblence of sense, but picking through it there are constructions that I don’t understand (either from lack of knowledge on my part or genuine failure to make something better). I tried a couple prompts, but didn’t get any usable feedback from the generator.</p>
+<p>For other coding projects, Claude code has worked phenominally. However, in this case it is a complete failure, not “understanding” the base errors that I was receiving.</p>
+</section>
+<section id="extra-resources" class="level2">
+<h2 class="anchored" data-anchor-id="extra-resources">Extra Resources</h2>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
-<p>For the git, see (https://github.com/sorinjayaweera/mudd-junior/tree/master/labs/lab1)</p>
-<p>The most relevant code is shown below:</p>
-<p>// Sorin Jayaweera // sojayaweera@g.hmc.edu // 8/28/2025</p>
-<p>module lab1_sj_v1( input logic [3:0] s, input logic reset, output logic [2:0] led, output logic [6:0] seg );</p>
+<p>For the git, see (https://github.com/sorinjayaweera/mudd-junior/tree/master/labs/lab1) Display // Sorin Jayaweera // sojayaweera@g.hmc.edu // 8/28/2025</p>
+</section>
+</section>
+<section id="top" class="level2">
+<h2 class="anchored" data-anchor-id="top">top</h2>
+<p>(module that brings together the user input and pushes to both the 2 onboard leds, the clock signal, and the 7 segment display).</p>
+<p>module top( input logic [3:0] s, input logic reset, output logic [2:0] led, output logic [6:0] seg ); // S: User Input from DIP switches // RESET: Set the clock counter to zero // LED: On board LED display // SEG: 7 Segment display {A,B,C,D,E,F,G}</p>
 <pre><code>light_status ls(.s(s),.reset(reset),.led(led));
 ssegdisp sdisp(.s(s),.seg(seg));</code></pre>
 <p>endmodule</p>
@@ -282,40 +360,83 @@ begin
     end
 end</code></pre>
 <p>endmodule</p>
-<p>// take the user unput from s as a number 0-9 and push to a seven segment display {ABCDEFG} module ssegdisp( input logic [3:0] s, output logic [6:0] seg );</p>
+<p>// take the user input from s as a number 0-9 and push to a seven segment display {ABCDEFG} module ssegdisp( input logic [3:0] s, output logic [6:0] seg );</p>
 <pre><code>always_comb
     case(s)
-        4'b0000: seg &lt;= 7'b0000001; //7'b1111110; 0000001
-        4'b0001: seg &lt;= 7'b1001111; //7'b0110000; 1001111
-        4'b0010: seg &lt;= 7'b0010010; //7'b1101101; 0010010
-        4'b0011: seg &lt;= 7'b0000110; //7'b1111001; 0000110
-        4'b0100: seg &lt;= 7'b1001100; //7'b0110011; 1001100
-        4'b0101: seg &lt;= 7'b0100100; //7'b1011011; 0100100
-        4'b0110: seg &lt;= 7'b1100000; //7'b0011111; 1100000
-        4'b0111: seg &lt;= 7'b0001111; //7'b1110000; 0001111
-        4'b1000: seg &lt;= 7'b0000000; //7'b1111111; 0000000
-        4'b1001: seg &lt;= 7'b0001100; //7'b1110011; 0001100
+        4'b0000: seg &lt;= 7'b0000001; //0
+        4'b0001: seg &lt;= 7'b1001111; //1
+        4'b0010: seg &lt;= 7'b0010010; //2
+        4'b0011: seg &lt;= 7'b0000110; //3
+        4'b0100: seg &lt;= 7'b1001100; //4
+        4'b0101: seg &lt;= 7'b0100100; //5
+        4'b0110: seg &lt;= 7'b0100000; //6
+        4'b0111: seg &lt;= 7'b0001111; //7
+        4'b1000: seg &lt;= 7'b0000000; //8
+        4'b1001: seg &lt;= 7'b0001100; //9
+        4'b1010: seg &lt;= 7'b0001000; //A
+        4'b1011: seg &lt;= 7'b1100000; //B
+        4'b1100: seg &lt;= 7'b0110001; //C
+        4'b1101: seg &lt;= 7'b1000010; //D
+        4'b1110: seg &lt;= 7'b0110000; //E
+        4'b1111: seg &lt;= 7'b0111000; // F
+
     default
-        seg &lt;= 7'b1111111;//7'b0000000; 1111111
+        seg &lt;= 7'b1111111;//7'b0000000;
     endcase</code></pre>
 <p>endmodule</p>
-<p>//always_comb // case(s[1:0]) // 00: led[0] &lt;= 2’b0 // 01: led[0] &lt;= 2b’1 // default: // led &lt;= 2’b00; // nothing // endcase // //</p>
 </section>
+<section id="testbench.sv" class="level2">
+<h2 class="anchored" data-anchor-id="testbench.sv">testbench.sv</h2>
+<p>// Sorin Jayaweera // 8/29/2025 // 12:30 am // sojayaweera@g.hmc.edu</p>
+<p>module testbench(); logic reset; logic clk; logic [3:0] s; logic [2:0] led; logic [6:0] seg;</p>
+<pre><code>// expected output parameters
+logic [2:0] eled;
+logic [6:0] eseg;
+
+int vectornum, errors;
+logic [16:0] testvectors[15:0];
+
+top dut(.s(s), .reset(reset), .led(led), .seg(seg));
+
+// generate clock
+always 
+    begin
+      clk = 1; #5; clk = 0; #5;
+    end
+
+
+initial begin
+    
+    $display(" reading ");
+    $readmemb("testvectors.tv", testvectors);
+    vectornum = 0; errors = 0;
+    reset = 1; #23; reset = 0;
+    
+    $display(" finished read");
+    end
+
+ always @(posedge clk) 
+     begin
+        #1; {s,eled,eseg} = testvectors[vectornum]; // GOOD
+        $display(" %d %d %d test %d", s,eled,eseg,vectornum);
+     end 
+     // check results on falling edge of clk
+ always @(negedge clk) 
+     if (~reset) begin // skip during reset
+        if ({led,seg} !== {eled,eseg}) begin 
+            errors = errors + 1; // GOOD
+        end
+     vectornum = vectornum + 1;
+     if (testvectors[vectornum] === 14'bx) begin 
+         $display(" %d tests completed with %d errors", vectornum, errors); 
+         $stop; 
+     end </code></pre>
+<p>end</p>
+<p>endmodule</p>
 </section>
-<section id="results-and-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<p>This breif series of tests (15 hours? More?) showed that the hardware is working as expected; The FPGA and MCU were able to properly communicate, and a 7 segment display was properly driven. Further, a 2.4 hz clock signal was generated and used to drive an onboard LED.</p>
-<p>All intended tasks were completed successfully. The design could be improved to provide adaptive current. A 7 segment display driven by connections to a constant voltage would allow better control of LED brightness. The present setup distributes current across all leds in the 7 segment display, which decreases the brightness.</p>
-<section id="testbench-simulation" class="level3">
-<h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>Hours spent in lab: Maybe 15-20? I helped a lot of other people on their project, and also made dumb mistakes (i.e.&nbsp;not realizing it was working properly because the leds were too dim!) that ate a large portion of time. I could probably do this lab again in 1/4 the overall time.</p>
-</section>
-<section id="ai-overview" class="level2">
-<h2 class="anchored" data-anchor-id="ai-overview">AI overview</h2>
+<section id="testvectors.tv" class="level2">
+<h2 class="anchored" data-anchor-id="testvectors.tv">Testvectors.tv</h2>
+<p>// S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_000_0000001 //1 0001_010_1001111 //2 0010_010_0010010 //3 0011_000_0000110 //4 0100_000_1001100 //5 0101_010_0100100 //6 0110_010_0100000 //7 0111_000_0001111 //8 1000_000_0000000 //9 1001_010_0001100 //A 1010_010_0001000 //B 1011_000_1100000 //C 1100_100_0110001 //D 1101_110_1000010 //E 1110_110_0110000 //F 1111_100_0111000</p>
 
 
 </section>
