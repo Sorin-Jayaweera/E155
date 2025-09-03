@@ -9,21 +9,400 @@ categories:
 draft: false
 ---
 
-
 ## Introduction
+In this lab, a PCB with FPGA and MCU was assembled and used to drive a 7 segment LED display. 
+Several onboard components were tested, in stages, ensuring proper communication between both microcontrollers and user display.
 
 ## Design and Testing Methodology
+The tests for this project exist under two realms - simulation and hardware. 
 
-## Technical Documentatoin
+Simulation was used to validate the functioning of the FPGA for internal logic states and response to inputs, and then
+uploaded to hardware based off of the HMC ENGR 155 DEV PCB.
 
-### Block Diagram
+### Hardware tests
+Three hardware tests were conducted.
+The first ensured connection between the FPGA and the on-board LEDs, and the second required the FPGA to pull a pin on the MCU high, each driving led's depending on their current state. 
+The third test was using pins on the PCB to control a number displayed on the 7 segment display, as well as on-board
+LEDS to understand the internal state. 
 
-### Schematic
+### Simulation
+The 7 segment display code was verified first in simulation. A test bench was constructed with all user inputs
+(hex numbers 0 - 15), with the desired led and display states. The timing LED was not tested in simulation.
 
-## Results and Discussion
+The simulation passed all tests.
+
 
 ### Testbench Simulation
 
-## Conclusion
+The simulation included each possible stimulus from the user for numbers 0 - 15, as well as each case necessary to test the led status behavior. 
 
-## AI overview
+Shown is a "main" testbench, which includes both the LED and 7 segment display. Two other testbench files were run using the same testbench framework. See all three testvector files.
+
+![](/images/lab1/waveform.png)
+
+The testbench concluded 15 tests with 0 errors.
+
+
+## Technical Documentation
+
+### Block Diagram
+The block diagram for the 7 segment display is shown below. This describes the internal structure of the FPGA.
+
+The FPGA controls the main logic, with an input binary number from from 0000 to 1111 and converts it to control for two the on board leds. It also drives a third led by a 2.4 hz clock signal.
+
+The FPGA also converts the input binary number to control over the 7 segment display to show the input number in decimal form. 
+
+![](/images/lab1/block_diagram.png)
+
+### Schematic
+The schematic describes the assembled circuit shown below. First is a photo of the assembled circuit, then a schematic. For more detail on the PCB, see the HMC E155 Design reference: ()[https://pages.hmc.edu/brake/class/e155/fa23/assets/doc/E155%20Development%20Board%20Schematic.pdf]
+
+![](/images/lab1/lab1_breadboard.png)
+
+![](/images/lab1/schematic.png)
+
+### Pins:
+The pins used for the code inputs and outputs are as specified:
+
+Inputs:
+
+	S3: 32
+
+	S2: 35
+
+	S1: 31
+
+	S0: 37
+
+	Reset: 23
+
+Outputs:
+
+	seg[6]: 13 
+
+	seg[5]: 18
+
+	seg[4]: 19
+
+	seg[3]: 11
+
+	seg[2]: 6
+
+	seg[1]: 9
+
+	seg[0]: 44
+
+	led[2]: 42
+
+	led[1]: 38
+
+	led[0]: 28
+
+#### Resistor and Current Calculations
+The Resistor was chosen to be 100 $\Omega$ s.
+At minimum there are 2 of them active at once, maximum 7 - both of these situations must be considered for determining the resistor specification. 
+
+Each LED has a maximum forward voltage of 1.8V at 20mA per led,  so we have a maximum of 40mA of allowed current. 
+
+The LEDS are all in parallel, not series. For there to actually be a voltage drop of 1.8V, there must be a 5-1.8 = 3.2v drop across the resistor that is connecting all of the components. 
+
+
+
+This means that the resistor should be at 3.2v / 40mA = 80 $\Omega$. For this project, I used 100 $\Omega$ s to give more room for unstable power supply, since we aren't near the lower limit of current to light all 7 displays. 
+
+For more reference see spec sheet: ![](https://www.farnell.com/datasheets/2095789.pdf).
+
+## Results and Discussion
+
+This brief series of test showed that the hardware is working as expected; The FPGA and MCU were able to properly communicate, and a 7 segment display was properly driven. Further, a 2.4 hz clock signal was generated and used to drive an onboard LED, validated with an oscilloscope.
+
+All intended tasks were completed successfully. The design could be improved to provide more consistent current supply. A ribbon cable has not yet been constructed due to insufficient supply. 
+A 7 segment display driven by connections to a constant voltage would allow better control of LED brightness. The present setup distributes current
+across all leds in the 7 segment display, which decreases the brightness. 
+
+
+## Conclusion
+I was sufficiently able to generate a HEX code output on the 7 segment display, with a 2.4 hz clock signal and two other display LEDS, with the brightness on the 7 segment display being roughly consistent.
+
+Hours spent in lab: Likely in the 20-low 30 hour range. This time was spent mixed helping other people and struggling with bugs that were unrelated to code (the programmer is so annoying). Code for reproducability is found in the Extra Resources category.
+
+## Bugs for lab
+Force -s 1111 doesn't work properly - we have to specify the bit width and interpretation. I.e., 4'b1111.
+
+## AI Overview
+
+I decided to use Claude for the analysis, since I've used claude code for personal projects in the past. It failed significantly. There is likely less common documentation on system verilog and lattice radiant, since it would be a less used tool. Being more niche, there is less for the neural net to train on. The code that it generated has some semblence of sense, but picking through it there are constructions that I don't understand (either from lack of knowledge on my part or genuine failure to make something better). I tried a couple prompts, but didn't get any usable feedback from the generator. 
+
+For other coding projects, Claude code has worked phenominally. However, in this case it is a complete failure, not "understanding" the base errors that I was receiving. 
+
+## Extra Resources
+### Code
+For the git, see (https://github.com/sorinjayaweera/mudd-junior/tree/master/labs/lab1)
+Display
+// Sorin Jayaweera
+// sojayaweera@g.hmc.edu
+// 8/28/2025
+
+## top
+(module that brings together the user input and pushes to both the 2 onboard leds, the clock signal, and the 7 segment display).
+
+module top(
+	input logic [3:0] s,
+	input logic reset,
+	output logic [2:0] led,
+	output logic [6:0] seg
+	);
+	// S: User Input from DIP switches
+	// RESET: Set the clock counter to zero
+	// LED: On board LED display
+	// SEG: 7 Segment display {A,B,C,D,E,F,G}
+	
+	light_status ls(.s(s),.reset(reset),.led(led));
+	ssegdisp sdisp(.s(s),.seg(seg));
+	
+endmodule
+
+
+// Control the onboard LEDS with input from the user.
+// one led will blink at 2.4 hz,
+// the other leds are status
+module light_status (
+	input logic [3:0] s,
+	input logic reset,
+	output logic [2:0] led
+	);
+	logic lastled = 0;
+	logic [24:0] counter = 0;
+	
+	assign led[0] = s[0] ^ s[1];
+	assign led[1] = s[3] & s[2];
+	
+	// 24 Mhz Internal high-speed oscillator
+	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+
+	assign led[2] = counter % 2000000 < 100000; // every million counts, blink led.  
+
+	// Simple clock divider copied
+	always_ff @(posedge int_osc,negedge reset)
+	begin
+		if (reset == 0) begin 
+			counter <= 24'b0;
+			end
+			
+		else begin
+			counter <= counter + 1'b1;
+		end
+	end
+	
+
+endmodule
+
+// take the user input from s as a number 0-9 and push to a seven segment display {ABCDEFG}
+module ssegdisp(
+	input logic [3:0] s,
+	output logic [6:0] seg
+	);
+	
+	always_comb
+		case(s)
+			4'b0000: seg <= 7'b0000001; //0
+			4'b0001: seg <= 7'b1001111; //1
+			4'b0010: seg <= 7'b0010010; //2
+			4'b0011: seg <= 7'b0000110; //3
+			4'b0100: seg <= 7'b1001100; //4
+			4'b0101: seg <= 7'b0100100; //5
+			4'b0110: seg <= 7'b0100000; //6
+			4'b0111: seg <= 7'b0001111; //7
+			4'b1000: seg <= 7'b0000000; //8
+			4'b1001: seg <= 7'b0001100; //9
+			4'b1010: seg <= 7'b0001000; //A
+			4'b1011: seg <= 7'b1100000; //B
+			4'b1100: seg <= 7'b0110001; //C
+			4'b1101: seg <= 7'b1000010; //D
+			4'b1110: seg <= 7'b0110000; //E
+			4'b1111: seg <= 7'b0111000; // F
+
+		default
+			seg <= 7'b1111111;//7'b0000000;
+		endcase
+	
+endmodule
+
+## testbench.sv
+
+// Sorin Jayaweera
+// 8/29/2025
+//   12:30 am
+// sojayaweera@g.hmc.edu
+
+module testbench();
+	logic reset;
+	logic clk;
+	logic [3:0] s;
+	logic [2:0] led;
+	logic [6:0] seg;
+	
+	// expected output parameters
+	logic [2:0] eled;
+	logic [6:0] eseg;
+	
+	int vectornum, errors;
+	// change this bit width depending on the testvectors you are reading 
+	logic [16:0] testvectors[15:0];
+
+	// change this to whatever module - top, ssegdisp, or light_status
+	top dut(.s(s), .reset(reset), .led(led), .seg(seg));
+	
+	// generate clock
+	always 
+		begin
+		  clk = 1; #5; clk = 0; #5;
+		end
+
+
+	initial begin
+		
+		$display(" reading ");
+		$readmemb("testvectors.tv", testvectors); // change to the testvector name you are reading
+		vectornum = 0; errors = 0;
+		reset = 1; #23; reset = 0;
+		
+		$display(" finished read");
+		end
+	
+	 always @(posedge clk) 
+		 begin
+			#1; {s,eled,eseg} = testvectors[vectornum]; // change this to what you want: s and eled, s and eseg, or all three
+			$display(" %d %d %d test %d", s,eled,eseg,vectornum);
+		 end 
+	 	 // check results on falling edge of clk
+	 always @(negedge clk) 
+		 if (~reset) begin // skip during reset
+			if ({led,seg} !== {eled,eseg}) begin // change this to be the thing you want to test - led, seg, or both
+				errors = errors + 1; // GOOD
+			end
+		 vectornum = vectornum + 1;
+		 if (testvectors[vectornum] === 14'bx) begin //Change this to match the bitwidth
+			 $display(" %d tests completed with %d errors", vectornum, errors); 
+			 $stop; 
+		 end 
+ end 
+
+endmodule
+
+
+
+## Test Vector Files
+### Testvectors.tv (overall)
+To use these test vectors, run testbenchg.sv. Change the bit widths to match these inputs. 
+The overall file has bitwidth 14.
+// This is the overall testing code to make it easier
+// S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G 
+// 0
+0000_000_0000001
+//1
+0001_010_1001111
+//2
+0010_010_0010010
+//3
+0011_000_0000110
+//4
+0100_000_1001100
+//5
+0101_010_0100100
+//6
+0110_010_0100000
+//7
+0111_000_0001111
+//8
+1000_000_0000000
+//9
+1001_010_0001100
+//A
+1010_010_0001000
+//B
+1011_000_1100000
+//C
+1100_100_0110001
+//D
+1101_110_1000010
+//E
+1110_110_0110000
+//F
+1111_100_0111000
+
+
+
+
+### ONBOARD LED
+//Bitwidth 7
+// LED TESTING
+// S0 S1 S2 S3 _ LED1 LED2 
+0000_000
+//1
+0001_010
+//2
+0010_010
+//3
+0011_000
+//4
+0100_000
+//5
+0101_010
+//6
+0110_010
+//7
+0111_000
+//8
+1000_000
+//9
+1001_010
+//A
+1010_010
+//B
+1011_000
+//C
+1100_100
+//D
+1101_110
+//E
+1110_110
+//F
+1111_100
+
+### 7 Segment Testing
+// bitwidth 11
+// This is the overall testing code to make it easier
+// S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G 
+// 0
+0000_0000001
+//1
+0001_1001111
+//2
+0010_0010010
+//3
+0011_0000110
+//4
+0100_1001100
+//5
+0101_0100100
+//6
+0110_0100000
+//7
+0111_0001111
+//8
+1000_0000000
+//9
+1001_0001100
+//A
+1010_0001000
+//B
+1011_1100000
+//C
+1100_0110001
+//D
+1101_1000010
+//E
+1110_0110000
+//F
+1111_0111000
