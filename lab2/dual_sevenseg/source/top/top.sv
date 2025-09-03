@@ -3,7 +3,8 @@ module top(
 	input logic [3:0] i1,
 	input logic reset,
 	output logic [6:0] seg0,
-	output logic [6:0] seg1
+	output logic [6:0] seg1,
+	output logic [4:0] sum
 	);
 	
 	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
@@ -16,6 +17,9 @@ module top(
 	
 	// Look up table for the 7 segment displays
 	segLUT lut(.s(iActive),.seg(segout));
+	
+	// add the inputs and display on LEDS
+	fourbitadder adder(i0, i1, sum);
 	
 	// choosing which set of connections for the resource use
 	always_ff@(sel, posedge reset) begin
