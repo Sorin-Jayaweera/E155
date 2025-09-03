@@ -1,0 +1,82 @@
+// Sorin Jayaweera
+// sojayaweera@g.hmc.edu
+// 8/28/2025
+
+module top(
+	input logic [3:0] s,
+	input logic reset,
+	output logic [2:0] led,
+	output logic [6:0] seg
+	);
+	
+	light_status ls(.s(s),.reset(reset),.led(led));
+	ssegdisp sdisp(.s(s),.seg(seg));
+	
+endmodule
+
+
+// Control the onboard LEDS with input from the user.
+// one led will blink at 2.4 hz,
+// the other leds are status
+module light_status (
+	input logic [3:0] s,
+	input logic reset,
+	output logic [2:0] led
+	);
+	logic lastled = 0;
+	logic [24:0] counter = 0;
+	
+	assign led[0] = s[0] ^ s[1];
+	assign led[1] = s[3] & s[2];
+	
+	// 24 Mhz Internal high-speed oscillator
+	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+
+	assign led[2] = counter % 2000000 < 100000; // every million counts, blink led.  
+
+	// Simple clock divider copied
+	always_ff @(posedge int_osc,negedge reset)
+	begin
+		if (reset == 0) begin 
+			counter <= 24'b0;
+			end
+			
+		else begin
+			counter <= counter + 1'b1;
+		end
+	end
+	
+
+endmodule
+
+// take the user input from s as a number 0-9 and push to a seven segment display {ABCDEFG}
+module ssegdisp(
+	input logic [3:0] s,
+	output logic [6:0] seg
+	);
+	
+	always_comb
+		case(s)
+			4'b0000: seg <= 7'b0000001; //0
+			4'b0001: seg <= 7'b1001111; //1
+			4'b0010: seg <= 7'b0010010; //2
+			4'b0011: seg <= 7'b0000110; //3
+			4'b0100: seg <= 7'b1001100; //4
+			4'b0101: seg <= 7'b0100100; //5
+			4'b0110: seg <= 7'b1100000; //6
+			4'b0111: seg <= 7'b0001111; //7
+			4'b1000: seg <= 7'b0000000; //8
+			4'b1001: seg <= 7'b0001100; //9
+			4'b1010: seg <= 7'b0001000; //A
+			4'b1011: seg <= 7'b1100000; //B
+			4'b1100: seg <= 7'b0110001; //C
+			4'b1101: seg <= 7'b1000010; //D
+			4'b1110: seg <= 7'b0110000; //E
+			4'b1111: seg <= 7'b0111000; // F
+
+		default
+			seg <= 7'b1111111;//7'b0000000;
+		endcase
+	
+endmodule
+

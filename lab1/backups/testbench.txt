@@ -1,0 +1,59 @@
+
+// Sorin Jayaweera
+// 8/29/2025
+//   12:30 am
+// sojayaweera@g.hmc.edu
+
+module testbench();
+	logic reset;
+	logic clk;
+	logic [3:0] s;
+	logic [2:0] led;
+	logic [6:0] seg;
+	
+	// expected output parameters
+	logic [2:0] eled;
+	logic [6:0] eseg;
+	
+	int vectornum, errors;
+	logic [16:0] testvectors[15:0];
+
+	top dut(.s(s), .reset(reset), .led(led), .seg(seg));
+	
+	// generate clock
+	always 
+		begin
+		  clk = 1; #5; clk = 0; #5;
+		end
+
+
+	initial begin
+		
+		$display(" reading ");
+		$readmemb("testvectors.tv", testvectors);
+		vectornum = 0; errors = 0;
+		reset = 1; #23; reset = 0;
+		
+		$display(" finished read");
+		end
+	
+	 always @(posedge clk) 
+		 begin
+			#1; {s,eled,eseg} = testvectors[vectornum]; // GOOD
+			$display(" %d %d %d test %d", s,eled,eseg,vectornum);
+		 end 
+	 	 // check results on falling edge of clk
+	 always @(negedge clk) 
+		 if (~reset) begin // skip during reset
+			if ({led,seg} !== {eled,eseg}) begin 
+				errors = errors + 1; // GOOD
+			end
+		 vectornum = vectornum + 1;
+		 if (testvectors[vectornum] === 14'bx) begin 
+			 $display(" %d tests completed with %d errors", vectornum, errors); 
+			 $stop; 
+		 end 
+ end 
+
+endmodule
+
