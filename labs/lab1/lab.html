@@ -335,11 +335,10 @@ led[1]: 38
 led[0]: 28</code></pre>
 <section id="resistor-and-current-calculations" class="level4">
 <h4 class="anchored" data-anchor-id="resistor-and-current-calculations">Resistor and Current Calculations</h4>
-<p>The Resistor was chosen to be 1k <span class="math inline">\(\Omega\)</span>. At minimum there are 2 of them active at once, maximum 7 - both of these situations must be considered for determining the resistor specification.</p>
-<p>Each LED has a maximum forward voltage of 1.8V at 20mA per led.</p>
+<p>The Resistor was chosen to be 100 <span class="math inline">\(\Omega\)</span> s. At minimum there are 2 of them active at once, maximum 7 - both of these situations must be considered for determining the resistor specification.</p>
+<p>Each LED has a maximum forward voltage of 1.8V at 20mA per led, so we have a maximum of 40mA of allowed current.</p>
 <p>The LEDS are all in parallel, not series. For there to actually be a voltage drop of 1.8V, there must be a 5-1.8 = 3.2v drop across the resistor that is connecting all of the components.</p>
-<p>There are, at minimum, two leds that would be on for the 7 segment hex specific display. This means a maximum of 40mA of current.</p>
-<p>This means that the resistor should be at 3.2v / 40mA = 800 <span class="math inline">\(\Omega\)</span>. For this project, I used 1 <span class="math inline">\(k\Omega\)</span> to give more room for unstable power supply, since we aren’t near the lower limit of current to light all 7 displays.</p>
+<p>This means that the resistor should be at 3.2v / 40mA = 80 <span class="math inline">\(\Omega\)</span>. For this project, I used 100 <span class="math inline">\(\Omega\)</span> s to give more room for unstable power supply, since we aren’t near the lower limit of current to light all 7 displays.</p>
 <p>For more reference see spec sheet: <embed src="https://www.farnell.com/datasheets/2095789.pdf" class="img-fluid">.</p>
 </section>
 </section>
