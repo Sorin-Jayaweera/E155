@@ -1,0 +1,5 @@
+ldc_set_location -site {42} [get_ports fpga_blink_led]
+ldc_set_location -site {25} [get_ports fpga_blink_out]
+ldc_set_location -site {38} [get_ports mcu_echo_led]
+ldc_set_location -site {23} [get_ports mcu_blink_in]
+ldc_set_port -iobuf {PULLMODE=10K} [get_ports mcu_blink_in]
