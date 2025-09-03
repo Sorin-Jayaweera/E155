@@ -40,7 +40,48 @@ if (a)
 <BODY>
 
 <DIV id="content" onclick="hideTocList()"><PRE>
+<A name="pn250902212031"></A><B><U><big>pn250902212031</big></U></B>
+#Start recording tcl command: 9/2/2025 19:33:55
+#Project Location: C:/Users/sojayaweera/E155/lab2/dual_sevenseg; Project name: dual_sevenseg
+prj_create -name "dual_sevenseg" -impl "top" -dev iCE40UP5K-SG48I -performance "High-Performance_1.2V" -synthesis "lse"
+prj_save 
+prj_add_source "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv"
+prj_add_source "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv"
+prj_add_source "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/fourbitadder.sv"
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_disable_source "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/fourbitadder.sv"
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run Synthesis -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_run Synthesis -impl top
+prj_run PAR -impl top
+prj_run Export -impl top
+prj_save 
+prj_close
+#Stop recording: 9/2/2025 21:20:31
+
+
+
 </PRE></DIV>
+
+<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
+<UL id="toc_list">
+<LI><A href=#pn250902212031>pn250902212031</A></LI>
+</UL>
+</DIV>
 
 <button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
 <script type="text/javascript">
