@@ -21,7 +21,7 @@ module top(
 	segLUT lut(.s(iActive),.seg(segout));
 	
 	// add the inputs and display on LEDS
-	assign sum = i0+i1;//fourbitadder adder(i0, i1, sum);
+	assign sum = i1;//+i1;//fourbitadder adder(i0, i1, sum);
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
@@ -47,7 +47,7 @@ module top(
 		else begin
 			counter <= counter + 1'b1;
 		
-			sel <= counter[4];
+			sel <= counter[10];
 			nsel <= ~sel;
 		end
 		

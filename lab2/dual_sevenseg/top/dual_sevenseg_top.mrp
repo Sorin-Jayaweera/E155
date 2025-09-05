@@ -8,13 +8,14 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Thu Sep  4 16:24:29 2025
+Mapped on: Thu Sep  4 20:22:16 2025
 
 Design Information
 ------------------
 
-Command line:   map -i dual_sevenseg_top_syn.udb -o dual_sevenseg_top_map.udb
-     -mp dual_sevenseg_top.mrp -hierrpt -gui -msgset
+Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
+     -i dual_sevenseg_top_syn.udb -o dual_sevenseg_top_map.udb -mp
+     dual_sevenseg_top.mrp -hierrpt -gui -msgset
      C:/Users/sojayaweera/E155/lab2/dual_sevenseg/promote.xml
 
 Design Summary
@@ -22,18 +23,18 @@ Design Summary
 
    Number of slice registers:   0 out of  5280 (0%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:            68 out of  5280 (1%)
-      Number of logic LUT4s:              60
-      Number of ripple logic:              4 (8 LUT4s)
-   Number of IO sites used:   28 out of 39 (72%)
-      Number of IO sites used for general PIO: 28
+   Number of LUT4s:            54 out of  5280 (1%)
+      Number of logic LUT4s:              42
+      Number of ripple logic:              6 (12 LUT4s)
+   Number of IO sites used:   23 out of 39 (59%)
+      Number of IO sites used for general PIO: 23
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 28 out of 36 (78%)
+      Number of IO sites used for PIO+I3C: 23 out of 36 (64%)
       Number of IO sites used for OD+RGB IO buffers: 0 out of 3 (0%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 28 out of 39 (72%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 23 out of 39 (59%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  0 out of 1 (0%)
@@ -50,16 +51,15 @@ Design Summary
    Number of Clock Enables:  0
    Number of LSRs:  0
    Top 10 highest fanout non-clock nets:
-      Net reset_c: 40 loads
-      Net sel: 26 loads
-      Net iActive_3__N_15[0]: 11 loads
-      Net iActive_3__N_15[1]: 9 loads
+      Net reset_c: 27 loads
+      Net iActive_3__N_1[1]: 11 loads
+      Net sel_c: 11 loads
+      Net iActive_3__N_1[0]: 10 loads
+      Net iActive_3__N_1[2]: 8 loads
       Net iActive[3]: 7 loads
-      Net i0_c_0: 6 loads
-      Net i0_c_2: 6 loads
-      Net i1_c_0: 6 loads
-      Net i1_c_2: 6 loads
-      Net iActive_3__N_15[2]: 6 loads
+      Net iActive[2]: 4 loads
+      Net iActive[0]: 3 loads
+      Net sum_0_0_c: 3 loads
 
                                     Page 1
 
@@ -67,6 +67,9 @@ Design Summary
 
 
 
+Design Summary (cont)
+---------------------
+      Net sum_0_1_c: 3 loads
 
 
 
@@ -116,17 +119,14 @@ IO (PIO) Attributes
 +---------------------+-----------+-----------+-------+-------+-----------+
 | sum[4]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[0]             | OUTPUT    |           |       |       |           |
+| segout[0]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[1]             | OUTPUT    |           |       |       |           |
+| segout[1]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[2]             | OUTPUT    |           |       |       |           |
+| segout[2]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[3]             | OUTPUT    |           |       |       |           |
+| segout[3]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[4]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[5]             | OUTPUT    |           |       |       |           |
 
                                     Page 2
 
@@ -136,33 +136,21 @@ IO (PIO) Attributes
 
 IO (PIO) Attributes (cont)
 --------------------------
+| segout[4]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg1[6]             | OUTPUT    |           |       |       |           |
+| segout[5]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[0]             | OUTPUT    |           |       |       |           |
+| segout[6]           | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[1]             | OUTPUT    |           |       |       |           |
+| nsel                | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[2]             | OUTPUT    |           |       |       |           |
+| sel                 | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[3]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[4]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[5]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| seg0[6]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-
-Removed logic
--------------
-
-Block i1_i0 was optimized away.
 
 Constraint Summary
 ------------------
 
-   Total number of constraints: 0
+   Total number of constraints: 23
    Total number of constraints dropped: 0
 
 Run Time and Memory Usage
@@ -170,8 +158,20 @@ Run Time and Memory Usage
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
-   Peak Memory Usage: 62 MB
-Checksum -- map: 368f36fcf15b3026272a7d3070c06fabaa71decc
+   Peak Memory Usage: 67 MB
+Checksum -- map: bda76347666290c33fb1b747255f278e10cb0a2
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

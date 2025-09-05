@@ -23,6 +23,9 @@ if {[file exists {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg
   file copy -force -- {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg_top_syn.udb} {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/incr/postsyn.udb}
   file copy -force -- {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg_top_map.udb} {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/incr/postmap.udb}
   file copy -force -- {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg_top.udb} {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/incr/postpar.udb}
+  if [file exists {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc}] {
+    file copy -force -- {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc} {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/incr/lastrun.pdc}
+  }
 }
 
 } out]} {

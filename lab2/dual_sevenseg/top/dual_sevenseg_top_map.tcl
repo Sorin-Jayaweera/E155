@@ -13,6 +13,7 @@ sys_set_attribute -gui on -msg {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pro
 msg_load {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/promote.xml}
 des_set_project_udb -in {dual_sevenseg_top_syn.udb} -out {dual_sevenseg_top_map.udb} -milestone map -pm ice40tp
 des_set_reference_udb -clean
+map_set_option {pdc_file "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc"}
 # map option
 map_set_option { report_symbol_cross_reference false report_signal_cross_reference false   ignore_constraint_errors false}
 map_run

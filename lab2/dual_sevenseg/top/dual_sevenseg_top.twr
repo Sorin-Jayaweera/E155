@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2024.2.0.3.0
 
-Tue Sep  2 22:06:11 2025
+Thu Sep  4 20:19:11 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -103,7 +103,7 @@ i0[3]                                   |                     input
 sum[0]                                  |                    output
 -------------------------------------------------------------------
                                         |                          
-Number of I/O ports without constraint  |                        28
+Number of I/O ports without constraint  |                        22
                                         |                          
 -------------------------------------------------------------------
 
@@ -119,69 +119,42 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-i1285_3_lut_4_lut/D	->	i1285_3_lut_4_lut/Z
+i1213_3_lut/C	->	i1213_3_lut/Z
 
 ++++ Loop2
-i1277_3_lut_4_lut/D	->	i1277_3_lut_4_lut/Z
+i1215_3_lut/A	->	i1215_3_lut/Z
 
 ++++ Loop3
-i1293_3_lut_4_lut/D	->	i1293_3_lut_4_lut/Z
+add_31_add_5_5/S0	->	i1366_2_lut/Z
 
 ++++ Loop4
-i1317_3_lut_4_lut/D	->	i1317_3_lut_4_lut/Z
-
-++++ Loop5
-i1289_3_lut_4_lut/D	->	i1289_3_lut_4_lut/Z
-
-++++ Loop6
-i1313_3_lut_4_lut/D	->	i1313_3_lut_4_lut/Z
-
-++++ Loop7
-i1273_3_lut_4_lut/D	->	i1273_3_lut_4_lut/Z
-
-++++ Loop8
-i1297_3_lut_4_lut/D	->	i1297_3_lut_4_lut/Z
-
-++++ Loop9
-i1301_3_lut_4_lut/D	->	i1301_3_lut_4_lut/Z
-
-++++ Loop10
-i1309_3_lut_4_lut/D	->	i1309_3_lut_4_lut/Z
-
-++++ Loop11
-i1269_3_lut_4_lut/D	->	i1269_3_lut_4_lut/Z
-
-++++ Loop12
-i1263_3_lut_4_lut/D	->	i1263_3_lut_4_lut/Z
-
-++++ Loop13
-i1267_3_lut/C	->	i1267_3_lut/Z
-
-++++ Loop14
-i1305_3_lut_4_lut_4_lut/C	->	i1305_3_lut_4_lut_4_lut/Z
-
-++++ Loop15
-i1281_3_lut_4_lut_4_lut/C	->	i1281_3_lut_4_lut_4_lut/Z
-
-++++ Loop16
-add_31_add_5_1/S1	->	i1505_2_lut/Z
-
-++++ Loop17
-add_31_add_5_3/B1	->	add_31_add_5_3/S1
-
-++++ Loop18
 add_31_add_5_5/B1	->	add_31_add_5_5/S1
 
-++++ Loop19
-i1530_2_lut/Z	->	add_31_add_5_7/S1
+++++ Loop5
+add_31_add_5_7/B1	->	add_31_add_5_7/S1
 
-++++ Loop20
+++++ Loop6
+add_31_add_5_9/B1	->	add_31_add_5_9/S1
+
+++++ Loop7
+i1357_2_lut/Z	->	add_31_add_5_11/S1
+
+++++ Loop8
+add_31_add_5_11/B0	->	add_31_add_5_11/S0
+
+++++ Loop9
+add_31_add_5_9/B0	->	add_31_add_5_9/S0
+
+++++ Loop10
 add_31_add_5_7/B0	->	add_31_add_5_7/S0
 
-++++ Loop21
-add_31_add_5_5/B0	->	add_31_add_5_5/S0
+++++ Loop11
+add_31_add_5_1/S1	->	i1334_2_lut/Z
 
-++++ Loop22
+++++ Loop12
+add_31_add_5_3/B1	->	add_31_add_5_3/S1
+
+++++ Loop13
 add_31_add_5_3/B0	->	add_31_add_5_3/S0
 
 ===============================================================
