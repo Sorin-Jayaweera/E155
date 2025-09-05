@@ -25,7 +25,7 @@ module top(
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
-	always_ff@(posedge int_osc, reset) begin
+	always_ff@(posedge int_osc) begin
 		
 			if(reset == 1) begin
 					iActive <= 4'b0000;
@@ -40,20 +40,18 @@ module top(
 	
 	end
 	// select as a slow clock logic
-	always_ff@(posedge int_osc,posedge reset) begin
+	always_ff@(posedge int_osc) begin
 		if(reset) begin
 				counter <= 25'b0;
 			end
 		else begin
 			counter <= counter + 1'b1;
-		
 		end
-	
-	assign sel = counter[24];
-	assign nsel = !sel;
-end
+	end
 	
 
 	
+	assign sel = counter[23];
+	assign nsel = !sel;
 endmodule
 	

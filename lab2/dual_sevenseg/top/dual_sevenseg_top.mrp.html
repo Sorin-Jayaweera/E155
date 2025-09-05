@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Thu Sep  4 20:22:16 2025
+Mapped on: Thu Sep  4 22:29:08 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -60,11 +60,11 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers:   0 out of  5280 (0%)
+   Number of slice registers:  28 out of  5280 (1%)
    Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:            54 out of  5280 (1%)
-      Number of logic LUT4s:              42
-      Number of ripple logic:              6 (12 LUT4s)
+   Number of LUT4s:            46 out of  5280 (1%)
+      Number of logic LUT4s:              20
+      Number of ripple logic:             13 (26 LUT4s)
    Number of IO sites used:   23 out of 39 (59%)
       Number of IO sites used for general PIO: 23
       Number of IO sites used for I3C: 0 out of 2 (0%)
@@ -76,7 +76,7 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
       Number of IO sites used for PIO+I3C+OD+RGB: 23 out of 39 (59%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
-   Number of High Speed OSCs:  0 out of 1 (0%)
+   Number of High Speed OSCs:  1 out of 1 (100%)
    Number of Low Speed OSCs:   0 out of 1 (0%)
    Number of RGB PWM:          0 out of 1 (0%)
    Number of RGB Drivers:      0 out of 1 (0%)
@@ -86,20 +86,24 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
    Number of SPIs:             0 out of 2 (0%)
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
-   Number of Clocks:  0
-   Number of Clock Enables:  0
-   Number of LSRs:  0
+   Number of Clocks:  1
+      Net int_osc: 17 loads, 17 rising, 0 falling (Driver: Pin
+     hf_osc.osc_inst/CLKHF)
+   Number of Clock Enables:  1
+      Net VCC_net: 1 loads, 0 SLICEs
+   Number of LSRs:  1
+      Pin reset: 17 loads, 17 SLICEs (Net: reset_c)
    Top 10 highest fanout non-clock nets:
-      Net reset_c: 27 loads
-      Net iActive_3__N_1[1]: 11 loads
-      Net sel_c: 11 loads
-      Net iActive_3__N_1[0]: 10 loads
-      Net iActive_3__N_1[2]: 8 loads
+      Net reset_c: 17 loads
+      Net iActive[0]: 7 loads
+      Net iActive[1]: 7 loads
+      Net iActive[2]: 7 loads
       Net iActive[3]: 7 loads
-      Net iActive[2]: 4 loads
-      Net iActive[0]: 3 loads
-      Net sum_0_0_c: 3 loads
-      Net sum_0_1_c: 3 loads
+      Net sel_c_23: 7 loads
+      Net i0_c_0: 4 loads
+      Net i1_c_0: 4 loads
+      Net i0_c_2: 3 loads
+      Net i0_c_3: 3 loads
 
    Number of warnings:  0
    Number of criticals: 0
@@ -164,9 +168,21 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
 
 <A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
 
+Block i1_i0 was optimized away.
+
+<A name="mrp_osc"></A><B><U><big>OSC Summary</big></U></B>
+
+OSC 1:                                 Pin/Node Value
+  OSC Instance Name:                            hf_osc.osc_inst
+  Power UP:                            NODE     VCC_net
+  Enable Signal:                       NODE     VCC_net
+  OSC Output:                          NODE     int_osc
+  DIV Setting:                                  00
 
 <A name="mrp_asic"></A><B><U><big>ASIC Components</big></U></B>
 
+Instance Name: hf_osc.osc_inst
+         Type: HFOSC
 
 <A name="mrp_consum"></A><B><U><big>Constraint Summary</big></U></B>
 
@@ -178,7 +194,7 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab2/dual_sevenseg/pins.pdc
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 67 MB
-Checksum -- map: bda76347666290c33fb1b747255f278e10cb0a2
+Checksum -- map: a11ac199fcdd7ca64e644a4e2a3821cb462bbd5
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.
@@ -196,6 +212,7 @@ Copyright (c) 2002-2024 Lattice Semiconductor
 <LI><A href=#mrp_dwe>Design Errors/Criticals/Warnings</A></LI>
 <LI><A href=#mrp_ioa>IO (PIO) Attributes</A></LI>
 <LI><A href=#mrp_rm>Removed logic</A></LI>
+<LI><A href=#mrp_osc>OSC Summary</A></LI>
 <LI><A href=#mrp_asic>ASIC Components</A></LI>
 <LI><A href=#mrp_consum>Constraint Summary</A></LI>
 <LI><A href=#mrp_runtime>Run Time and Memory Usage</A></LI>
