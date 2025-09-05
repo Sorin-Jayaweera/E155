@@ -21,11 +21,11 @@ module top(
 	segLUT lut(.s(iActive),.seg(segout));
 	
 	// add the inputs and display on LEDS
-	assign sum = i1;//+i1;//fourbitadder adder(i0, i1, sum);
+	assign sum = i1+i0;//+i1;//fourbitadder adder(i0, i1, sum);
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
-	always_ff@(sel, reset) begin
+	always_ff@(posedge int_osc, reset) begin
 		
 			if(reset == 1) begin
 					iActive <= 4'b0000;
@@ -40,17 +40,17 @@ module top(
 	
 	end
 	// select as a slow clock logic
-	always_ff@(posedge int_osc, reset) begin
+	always_ff@(posedge int_osc,posedge reset) begin
 		if(reset) begin
 				counter <= 25'b0;
 			end
 		else begin
 			counter <= counter + 1'b1;
 		
-			sel <= counter[10];
-			nsel <= ~sel;
 		end
-		
+	
+	assign sel = counter[24];
+	assign nsel = !sel;
 end
 	
 
