@@ -1,6 +1,6 @@
 module test_sum ();
 	logic reset;
-	logic clk;
+	logic [24:0] clk;
 	
 	// flag to show test success
 	logic flag = 1'b0;
@@ -25,43 +25,81 @@ module test_sum ();
 	int vectornum, errors;
 	logic [16:0] testvectors[15:0];
 	
-	top dut(i0,i1,reset,sel,nsel,segout,sum)
+	top dut(i0,i1,reset,sel,nsel,segout,sum);
+
+	initial
+		begin
+				clk = 25'b0;
+		end
 	
-	initial begin
-    
-		$display(" reading ");
-		$readmemb("testvectors.tv", testvectors); // change to the testvector name you are reading
-		vectornum = 0; errors = 0;
-		reset = 1; #23; reset = 0;
-		
-		$display(" finished read");
-	end
-	
-	
-	// generate clock
+		// generate clock
 	always 
 		begin
-		  clk = 1; #5; clk = 0; #5;
+		  clk = clk + 1'b1; #5; 
 		end
 	
-	
-	
-	always @(posedge clk) 
-		begin
-			#1; {esum,esegout,esel,ensel} = testvectors[vectornum]; // change this to what you want: s and eled, s and eseg, or all three
+	// on each clock cycle, run a test case
+	always_comb
+		case(clk)
+			8'd0: begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b0000;
+					i1 = 4'b0000;
+					esum = 5'b00000;
+					$display("Pass t0: %d", esum == sum);
+				end
+			8'd1: begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b0001;
+					i1 = 4'b0000;
+					esum = 5'b00001;
+					$display("Pass t0: %d", esum == sum);
+				end
+			8'd2: begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b0001;
+					i1 = 4'b0001;
+					esum = 5'b00010;
+					$display("Pass t0: %d", esum == sum);
+				end
+			8'd3: begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b0001;
+					i1 = 5'b0010;
+					esum = 5'b00011;
+					$display("Pass t0: %d", esum == sum);
+				end
+			8'd4:begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b1001;
+					i1 = 5'b0010;
+					esum = 5'b01011;
+					$display("Pass t0: %d", esum == sum);
+				end
+			8'd5:begin
+					reset = 1'b1;
+					#2
+					reset = 1'b0;
+					i0 = 4'b1001;
+					i1 = 5'b1010;
+					esum = 5'b10011;
+					$display("Pass t0: %d", esum == sum);
+				end
 
-		end 
-	// check results on falling edge of clk
-	always @(negedge clk) 
-		if (~reset) begin // skip during reset
-			if ({sum,segout,sel,nsel} !== {esum,esegout,esel,ensel}) begin // change this to be the thing you want to test - led, seg, or both
-				errors = errors + 1; // GOOD
-			end
-			vectornum = vectornum + 1;
-			if (testvectors[vectornum] === 14'bx) begin //Change this to match the bitwidth
-				$display(" %d tests completed with %d errors", vectornum, errors); 
-				$stop; 
-			end 
-		end
+		default
+			$display("no cases left");
+			$stop;
+		endcase
+
 
 endmodule
