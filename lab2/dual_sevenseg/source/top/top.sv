@@ -1,3 +1,6 @@
+// SORIN JAYAWEERA
+
+
 module top(
 	input logic [3:0] i0,
 	input logic [3:0] i1,
@@ -10,10 +13,7 @@ module top(
 	
 	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
 	
-	logic [6:0] seg0 = 7'b1111111;
-	logic [6:0] seg1 = 7'b1111111;
-	
-	logic [3:0] iActive = 4'b0000;
+	logic [3:0] iActive;
 	
 	logic [24:0] counter = 0;
 	
@@ -21,7 +21,7 @@ module top(
 	segLUT lut(.s(iActive),.seg(segout));
 	
 	// add the inputs and display on LEDS
-	assign sum = i1+i0;//+i1;//fourbitadder adder(i0, i1, sum);
+	assign sum = i1+i0;
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
@@ -29,13 +29,9 @@ module top(
 		
 			if(reset == 1) begin
 					iActive <= 4'b0000;
-					seg0 <= 7'b1111111;
-					seg1 <= 7'b1111111;
 				end
 			else begin
 				iActive <= sel ? i0 : i1;
-				seg0 <= sel ? segout : seg0; // previous value OR the new thing
-				seg1 <= sel ? seg1 : segout;
 				end
 	
 	end
@@ -49,9 +45,7 @@ module top(
 		end
 	end
 	
-
-	
-	assign sel = counter[23];
+	assign sel = counter[18];// // 1.43 hz
 	assign nsel = !sel;
 endmodule
 	

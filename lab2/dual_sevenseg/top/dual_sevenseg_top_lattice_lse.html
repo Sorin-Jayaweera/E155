@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Thu Sep  4 22:28:50 2025
+Sat Sep  6 13:59:13 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg_top_lattice.synproj -logfile dual_sevenseg_top_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab2/dual_sevenseg/promote.xml 
@@ -217,7 +217,7 @@ INFO <35921014> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd(4): a
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top". VHDL-1504
 Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
-INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/top.sv(1): compiling module top. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/top.sv(4): compiling module top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/seglut.sv(1): compiling module segLUT. VERI-1018
 
@@ -238,16 +238,16 @@ INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top)######################
-Number of register bits => 28 of 5280 (0 % )
-CCU2 => 13
-FD1P3XZ => 28
+Number of register bits => 23 of 5280 (0 % )
+CCU2 => 10
+FD1P3XZ => 23
 HSOSC => 1
 IB => 9
 LUT4 => 19
 OB => 14
 ################### End Area Report ##################
-Number of odd-length carry chains : 0
-Number of even-length carry chains : 1
+Number of odd-length carry chains : 1
+Number of even-length carry chains : 0
 
 
 <A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
@@ -260,16 +260,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : reset_c, loads : 28
-  Net : n416, loads : 14
-  Net : n101[23], loads : 14
-  Net : n414, loads : 13
-  Net : n101[22], loads : 13
-  Net : n101[21], loads : 13
-  Net : n101[20], loads : 12
-  Net : n101[19], loads : 12
-  Net : n412, loads : 12
+  Net : reset_c, loads : 23
   Net : sum_c_4, loads : 11
+  Net : n341, loads : 11
+  Net : n81[18], loads : 11
+  Net : n81[17], loads : 11
+  Net : n81[16], loads : 10
+  Net : n81[15], loads : 10
+  Net : n339, loads : 10
+  Net : sum_c_3, loads : 9
+  Net : sum_c_3_N_24, loads : 9
 ################### End Clock Report ##################
 
 
@@ -285,9 +285,9 @@ Peak Memory Usage: 93 MB
 
 --------------------------------------------------------------
 Total CPU Time: 5 secs 
-Total REAL Time: 10 secs 
+Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 782ab2eb9a5953e563fbb9d33bb5350739bbc19
+Checksum -- synthesis -- netlist: a5983d2b8be89f02659fe4b9b4167f6aa19ef1da
 
 
 

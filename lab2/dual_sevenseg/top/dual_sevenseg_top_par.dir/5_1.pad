@@ -6,7 +6,7 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Thu Sep  4 22:29:22 2025
+Sat Sep  6 13:57:35 2025
 
 Pinout by Port Name:
 +-----------+----------+--------------+-------+------------------------------------------+
@@ -22,13 +22,13 @@ Pinout by Port Name:
 | i1[3]     | 20/1     | LVCMOS33_IN  | PL20B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 | nsel      | 48/2     | LVCMOS33_OUT | PL8A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | reset     | 23/0     | LVCMOS33_IN  | PR20A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
-| segout[0] | 13/1     | LVCMOS33_OUT | PL20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| segout[1] | 18/1     | LVCMOS33_OUT | PL23B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| segout[2] | 19/1     | LVCMOS33_OUT | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[0] | 9/1      | LVCMOS33_OUT | PL16A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[1] | 44/2     | LVCMOS33_OUT | PL7B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[2] | 6/1      | LVCMOS33_OUT | PL14B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | segout[3] | 12/1     | LVCMOS33_OUT | PL19A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| segout[4] | 6/1      | LVCMOS33_OUT | PL14B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| segout[5] | 44/2     | LVCMOS33_OUT | PL7B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| segout[6] | 9/1      | LVCMOS33_OUT | PL16A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[4] | 19/1     | LVCMOS33_OUT | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[5] | 18/1     | LVCMOS33_OUT | PL23B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| segout[6] | 13/1     | LVCMOS33_OUT | PL20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | sel       | 4/2      | LVCMOS33_OUT | PL10A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | sum[0]    | 3/2      | LVCMOS33_OUT | PL10B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | sum[1]    | 45/2     | LVCMOS33_OUT | PL8B  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
@@ -53,18 +53,18 @@ Pinout by Pin Number:
 | 2/2      | sum[3]              | LOCATED    | LVCMOS33_OUT | PL9A  |                  |
 | 3/2      | sum[0]              | LOCATED    | LVCMOS33_OUT | PL10B |                  |
 | 4/2      | sel                 | LOCATED    | LVCMOS33_OUT | PL10A |                  |
-| 6/1      | segout[4]           | LOCATED    | LVCMOS33_OUT | PL14B |                  |
-| 9/1      | segout[6]           | LOCATED    | LVCMOS33_OUT | PL16A |                  |
+| 6/1      | segout[2]           | LOCATED    | LVCMOS33_OUT | PL14B |                  |
+| 9/1      | segout[0]           | LOCATED    | LVCMOS33_OUT | PL16A |                  |
 | 10/1     | i1[1]               |            | LVCMOS33_IN  | PL17A |                  |
 | 11/1     | i1[2]               | LOCATED    | LVCMOS33_IN  | PL18A |                  |
 | 12/1     | segout[3]           | LOCATED    | LVCMOS33_OUT | PL19A |                  |
-| 13/1     | segout[0]           | LOCATED    | LVCMOS33_OUT | PL20A |                  |
+| 13/1     | segout[6]           | LOCATED    | LVCMOS33_OUT | PL20A |                  |
 | 14/1     |     unused, PULL:UP |            |              | PL24A | SPI_SO           |
 | 15/1     |     unused, PULL:UP |            |              | PL25A | SPISCK           |
 | 16/1     |     unused, PULL:UP |            |              | PL25B | SPI_SS           |
 | 17/1     |     unused, PULL:UP |            |              | PL24B | SPI_SI           |
-| 18/1     | segout[1]           | LOCATED    | LVCMOS33_OUT | PL23B |                  |
-| 19/1     | segout[2]           | LOCATED    | LVCMOS33_OUT | PL22B |                  |
+| 18/1     | segout[5]           | LOCATED    | LVCMOS33_OUT | PL23B |                  |
+| 19/1     | segout[4]           | LOCATED    | LVCMOS33_OUT | PL22B |                  |
 | 20/1     | i1[3]               | LOCATED    | LVCMOS33_IN  | PL20B | PCLKT1_0         |
 | 21/1     | i1[0]               | LOCATED    | LVCMOS33_IN  | PL19B |                  |
 | 23/0     | reset               | LOCATED    | LVCMOS33_IN  | PR20A |                  |
@@ -84,7 +84,7 @@ Pinout by Pin Number:
 | 41/0     |                     |            |              | PR7A  | RGB2             |
 | 42/0     |     unused, PULL:UP |            |              | PR9A  |                  |
 | 43/0     |     unused, PULL:UP |            |              | PR10A |                  |
-| 44/2     | segout[5]           | LOCATED    | LVCMOS33_OUT | PL7B  | PCLKT2_0         |
+| 44/2     | segout[1]           | LOCATED    | LVCMOS33_OUT | PL7B  | PCLKT2_0         |
 | 45/2     | sum[1]              | LOCATED    | LVCMOS33_OUT | PL8B  |                  |
 | 46/2     | sum[2]              | LOCATED    | LVCMOS33_OUT | PL6A  |                  |
 | 47/2     | sum[4]              | LOCATED    | LVCMOS33_OUT | PL7A  |                  |
@@ -121,13 +121,13 @@ ldc_set_location -site {11} [ get_ports {i1[2]} ]
 ldc_set_location -site {20} [ get_ports {i1[3]} ]
 ldc_set_location -site {48} [ get_ports {nsel} ]
 ldc_set_location -site {23} [ get_ports {reset} ]
-ldc_set_location -site {13} [ get_ports {segout[0]} ]
-ldc_set_location -site {18} [ get_ports {segout[1]} ]
-ldc_set_location -site {19} [ get_ports {segout[2]} ]
+ldc_set_location -site {9} [ get_ports {segout[0]} ]
+ldc_set_location -site {44} [ get_ports {segout[1]} ]
+ldc_set_location -site {6} [ get_ports {segout[2]} ]
 ldc_set_location -site {12} [ get_ports {segout[3]} ]
-ldc_set_location -site {6} [ get_ports {segout[4]} ]
-ldc_set_location -site {44} [ get_ports {segout[5]} ]
-ldc_set_location -site {9} [ get_ports {segout[6]} ]
+ldc_set_location -site {19} [ get_ports {segout[4]} ]
+ldc_set_location -site {18} [ get_ports {segout[5]} ]
+ldc_set_location -site {13} [ get_ports {segout[6]} ]
 ldc_set_location -site {4} [ get_ports {sel} ]
 ldc_set_location -site {3} [ get_ports {sum[0]} ]
 ldc_set_location -site {45} [ get_ports {sum[1]} ]
@@ -141,5 +141,5 @@ ldc_set_location -site {47} [ get_ports {sum[4]} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Thu Sep  4 22:29:22 2025
+Sat Sep  6 13:57:35 2025
 
