@@ -35,6 +35,7 @@ module top(
 				end
 	
 	end
+	
 	// select as a slow clock logic
 	always_ff@(posedge int_osc) begin
 		if(reset) begin

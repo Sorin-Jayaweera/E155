@@ -1,9 +1,15 @@
 module test_sum ();
+	logic reset;
+	logic clk;
+	
+	// flag to show test success
+	logic flag = 1'b0;
+	
 	// inputs
 	logic [3:0] i0;
 	logic [3:0] i1;
-	logic reset;
 
+	
 	//outputs to test
 	logic sel;
 	logic esel;
@@ -13,12 +19,49 @@ module test_sum ();
 	
 	logic [6:0] segout;
 	logic [6:0] esegout;
-	logic [4:0] sumout;
-	logic [4:0] esumout;
-
-
+	logic [4:0] sum;
+	logic [4:0] esum;
+	
+	int vectornum, errors;
+	logic [16:0] testvectors[15:0];
+	
+	top dut(i0,i1,reset,sel,nsel,segout,sum)
+	
+	initial begin
+    
+		$display(" reading ");
+		$readmemb("testvectors.tv", testvectors); // change to the testvector name you are reading
+		vectornum = 0; errors = 0;
+		reset = 1; #23; reset = 0;
+		
+		$display(" finished read");
+	end
 	
 	
+	// generate clock
+	always 
+		begin
+		  clk = 1; #5; clk = 0; #5;
+		end
+	
+	
+	
+	always @(posedge clk) 
+		begin
+			#1; {esum,esegout,esel,ensel} = testvectors[vectornum]; // change this to what you want: s and eled, s and eseg, or all three
 
+		end 
+	// check results on falling edge of clk
+	always @(negedge clk) 
+		if (~reset) begin // skip during reset
+			if ({sum,segout,sel,nsel} !== {esum,esegout,esel,ensel}) begin // change this to be the thing you want to test - led, seg, or both
+				errors = errors + 1; // GOOD
+			end
+			vectornum = vectornum + 1;
+			if (testvectors[vectornum] === 14'bx) begin //Change this to match the bitwidth
+				$display(" %d tests completed with %d errors", vectornum, errors); 
+				$stop; 
+			end 
+		end
 
 endmodule
