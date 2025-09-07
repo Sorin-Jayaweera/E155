@@ -1,3 +1,7 @@
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
 module segLUT( input logic [3:0] s, output logic [6:0] seg );
 
 	always_comb
