@@ -1,6 +1,6 @@
 
 PAR: Place And Route Radiant Software (64-bit) 2024.2.0.3.0.
-PARed on: Sat Sep  6 13:59:43 2025
+PARed on: Sun Sep  7 22:09:54 2025
 
 Command Line: par -w -t 1 -cores 1 -hsp m -exp parPathBased=ON \
 	dual_sevenseg_top_map.udb dual_sevenseg_top_par.dir/5_1.udb 
@@ -67,13 +67,13 @@ Placer score = 19763.
 Device SLICE utilization summary after final SLICE packing:
    SLICE             22/2640         <1% used
 
-Finished Placer Phase 1. CPU time: 4 secs , REAL time: 4 secs 
+Finished Placer Phase 1. CPU time: 3 secs , REAL time: 4 secs 
 
 Starting Placer Phase 2.
 .
 
 Placer score =  19642
-Finished Placer Phase 2.  CPU time: 4 secs , REAL time: 4 secs 
+Finished Placer Phase 2.  CPU time: 3 secs , REAL time: 4 secs 
 
 
 ------------------ Clock Report ------------------
@@ -101,14 +101,14 @@ I/O Bank Usage Summary:
 | 2        | 8 / 8 (100%)   | 3.3V       |            |            |
 +----------+----------------+------------+------------+------------+
 
-Total Placer CPU time: 4 secs , REAL time: 4 secs 
+Total Placer CPU time: 3 secs , REAL time: 4 secs 
 
 
 Checksum -- place: f4a2038c93c014a8a2e2985bb3dfaee64ecbbd9e
 Writing design to file dual_sevenseg_top_par.dir/5_1.udb ...
 
 
-Start NBR router at 13:59:47 09/06/25
+Start NBR router at 22:09:58 09/07/25
 
 *****************************************************************
 Info: NBR allows conflicts(one node used by more than one signal)
@@ -137,7 +137,7 @@ Primary clocks (1 used out of 8 available):
 --------------------------------------------------------------------------------
 Completed routing resource preassignment
 
-Start NBR section for initial routing at 13:59:48 09/06/25
+Start NBR section for initial routing at 22:09:59 09/07/25
 Level 4, iteration 1
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Routing in Serial Mode ......
@@ -148,21 +148,21 @@ Estimated worst slack/total negative slack<setup>: 9.926ns/0.000ns; real time: 0
 Info: Initial congestion level at 75.00% usage is 0
 Info: Initial congestion area  at 75.00% usage is 0 (0.00%)
 
-Start NBR section for normal routing at 13:59:48 09/06/25
+Start NBR section for normal routing at 22:09:59 09/07/25
 Level 4, iteration 1
 0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
 Estimated worst slack/total negative slack<setup>: 9.926ns/0.000ns; real time: 0 secs 
 
-Start NBR section for setup/hold timing optimization with effort level 3 at 13:59:48 09/06/25
+Start NBR section for setup/hold timing optimization with effort level 3 at 22:09:59 09/07/25
 
-Start NBR section for post-routing at 13:59:48 09/06/25
+Start NBR section for post-routing at 22:09:59 09/07/25
 
 End NBR router with 0 unrouted connection(s)
 
 Checksum -- route: 3e3e104ef507e4b0964741bd31b3c651a1031762
 
 Total CPU time 1 secs 
-Total REAL time: 2 secs 
+Total REAL time: 0 secs 
 Completely routed.
 End of route.  184 routed (100.00%); 0 unrouted.
 
@@ -182,9 +182,9 @@ PAR_SUMMARY::Number of errors = 0
 
 Note: user must run 'timing' for timing closure signoff.
 
-Total CPU  Time: 5 secs 
+Total CPU  Time: 4 secs 
 Total REAL Time: 6 secs 
-Peak Memory Usage: 127.35 MB
+Peak Memory Usage: 127.30 MB
 
 
 par done!

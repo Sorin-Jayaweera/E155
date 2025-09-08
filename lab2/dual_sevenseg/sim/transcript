@@ -18,9 +18,9 @@
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
 # 
 # 
-# Start time: 14:57:18 on Sep 06,2025
+# Start time: 22:04:21 on Sep 07,2025
 # 
-# vlog -reportprogress 300 -L work -sv "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
+# vlog -reportprogress 300 -L work -sv "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_segs.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
 # 
 # -- Compiling module top
 # 
@@ -28,23 +28,75 @@
 # 
 # -- Compiling module test_sum
 # 
-# ** Error: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(42): Timing control in always_comb/always_latch is not allowed.
 # 
-# End time: 14:57:18 on Sep 06,2025, Elapsed time: 0:00:00
 # 
-# Errors: 1, Warnings: 0
+# Top level modules:
 # 
-# *** Summary *********************************************
-#     qrun: Errors:   0, Warnings:   0
-#     vlog: Errors:   1, Warnings:   0
-#   Totals: Errors:   1, Warnings:   0
-# C:/lscc/radiant/2024.2/questasim/win64/qrun failed.
-vlib work
-vlog -reportprogress 300 -work work C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv
-# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-# Start time: 14:59:34 on Sep 06,2025
-# vlog -reportprogress 300 -work work C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv 
-# -- Compiling module test_sum
-# ** Error: (vlog-13069) C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(101): near "=": syntax error, unexpected '=', expecting ++ or --.
-# End time: 14:59:34 on Sep 06,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
+# 	test_sum
+# 
+# End time: 22:04:21 on Sep 07,2025, Elapsed time: 0:00:00
+# 
+# Errors: 0, Warnings: 0
+# 
+# Questa Lattice OEM Edition-64 vopt 2024.2 Compiler 2024.05 May 20 2024
+# 
+# 
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# 
+# Start time: 22:04:21 on Sep 07,2025
+# 
+# vopt -reportprogress 300 -L work "+acc" "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up test_sum -suppress vopt-7033 -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=2 
+# 
+# 
+# 
+# Top level modules:
+# 
+# 	test_sum
+# 
+# 
+# 
+# Analyzing design...
+# 
+# -- Loading module test_sum
+# 
+# -- Loading module top
+# 
+# -- Loading module ovi_ice40up.HSOSC
+# 
+# -- Loading module ovi_ice40up.VLO
+# 
+# -- Loading module ovi_ice40up.HSOSC_CORE
+# 
+# -- Loading module ovi_ice40up.HFOSC
+# 
+# -- Loading module ovi_ice40up.HFOSC_CORE
+# 
+# -- Loading module segLUT
+# 
+# ** Warning: (vopt-2108) Cannot find module '*' specified in +noacc option.
+# 
+# Optimizing 8 design-units (inlining 4/8 module instances):
+# 
+# -- Inlining module ovi_ice40up.VLO(fast)
+# 
+# -- Inlining module ovi_ice40up.HFOSC_CORE(fast)
+# 
+# -- Inlining module ovi_ice40up.HFOSC(fast)
+# 
+# -- Inlining module ovi_ice40up.HSOSC_CORE(fast)
+# 
+# -- Optimizing module ovi_ice40up.HSOSC(fast)
+# 
+# -- Optimizing module test_sum(fast)
+# 
+# -- Optimizing module top(fast)
+# 
+# -- Optimizing module segLUT(fast)
+# 
+# Optimized design name is qrun_opt
+# 
+# End time: 22:04:22 on Sep 07,2025, Elapsed time: 0:00:01
+# 
+# Errors: 0, Warnings: 2
+# 
+vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do {view wave} -do {add wave /*} -do {run 100 ns} -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log

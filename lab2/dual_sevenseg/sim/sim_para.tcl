@@ -5,12 +5,12 @@ set ::bali::simulation::Para(DEVICEFAMILYNAME) {iCE40UP}
 set ::bali::simulation::Para(PROJECT) {sim}
 set ::bali::simulation::Para(MDOFILE) {}
 set ::bali::simulation::Para(PROJECTPATH) {C:/Users/sojayaweera/E155/lab2/dual_sevenseg/sim}
-set ::bali::simulation::Para(FILELIST) {"C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv" "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv" "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv" }
+set ::bali::simulation::Para(FILELIST) {"C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv" "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv" "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv" "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_segs.sv" }
 set ::bali::simulation::Para(GLBINCLIST) {}
-set ::bali::simulation::Para(INCLIST) {"none" "none" "none"}
-set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" }
-set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" }
-set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" }
+set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none"}
+set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" }
+set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" "VERILOG" }
+set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" "System Verilog" }
 set ::bali::simulation::Para(SIMLIBLIST) {pmi_work ovi_ice40up}
 set ::bali::simulation::Para(MACROLIST) {}
 set ::bali::simulation::Para(SIMULATIONTOPMODULE) {test_sum}

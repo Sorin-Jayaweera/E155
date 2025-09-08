@@ -6,6 +6,7 @@
 "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv" 
 "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv" 
 "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv" 
+"C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_segs.sv" 
 -sv
 -optionset VOPTDEBUG
 +noacc+pmi_work.*

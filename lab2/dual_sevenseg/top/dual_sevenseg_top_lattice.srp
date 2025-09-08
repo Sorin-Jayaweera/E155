@@ -1,3 +1,15 @@
+synthesis:  version Radiant Software (64-bit) 2024.2.0.3.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+Sun Sep  7 22:09:19 2025
+
+
+Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top/dual_sevenseg_top_lattice.synproj -logfile dual_sevenseg_top_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab2/dual_sevenseg/promote.xml 
+
 INFO <35002000> - synthesis: Lattice Synthesis Engine launched.
 
 Synthesis options:
@@ -104,6 +116,8 @@ Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/segLUT.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_segs.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum_smarter.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -157,5 +171,71 @@ INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(17): an
 Analyzing Verilog file c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/top.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/seglut.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/test_sum.sv. VERI-1482
-WARNING <35901620> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/test_sum.sv(101): expected a system function, not system task stop. VERI-1620
-ERROR <35901137> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/test_sum.sv(101): syntax error near ;. VERI-1137
+Analyzing Verilog file c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/test_segs.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/test_sum_smarter.sv. VERI-1482
+Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
+Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
+
+INFO <35921014> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/lab2/dual_sevenseg/top". VHDL-1504
+Top module language type = Verilog.
+Top module name (Verilog, mixed language): top
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/top.sv(6): compiling module top. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab2/dual_sevenseg/source/top/seglut.sv(5): compiling module segLUT. VERI-1018
+[Parameter Setting Section Start]
+
+	[Parameter Settings for Instance(s): hf_osc]
+	(Module: HSOSC)
+		CLKHF_DIV                 "0b00"
+
+[Parameter Setting Section End]
+
+
+
+
+################### Begin Area Report (top)######################
+Number of register bits => 23 of 5280 (0 % )
+CCU2 => 10
+FD1P3XZ => 23
+HSOSC => 1
+IB => 9
+LUT4 => 19
+OB => 14
+################### End Area Report ##################
+Number of odd-length carry chains : 1
+Number of even-length carry chains : 0
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 1
+  Net : int_osc, loads : 0
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : reset_c, loads : 23
+  Net : sum_c_4, loads : 11
+  Net : n341, loads : 11
+  Net : n81[18], loads : 11
+  Net : n81[17], loads : 11
+  Net : n81[16], loads : 10
+  Net : n81[15], loads : 10
+  Net : n339, loads : 10
+  Net : sum_c_3, loads : 9
+  Net : sum_c_3_N_24, loads : 9
+################### End Clock Report ##################
+
+################### Begin Constraint Report ######################
+Constraint Summary:
+  Total number of constraints: 0
+  Total number of constraints dropped: 0
+###################  End Constraint Report  ######################
+
+Peak Memory Usage: 93 MB
+
+--------------------------------------------------------------
+Total CPU Time: 5 secs 
+Total REAL Time: 12 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: aca237d2491d979c3bc89c311aed7a34dc9c5180
