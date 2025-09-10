@@ -1,3 +1,7 @@
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
 module segLUT( input logic [3:0] s, output logic [6:0] seg );
 
 	always_comb
@@ -17,7 +21,7 @@ module segLUT( input logic [3:0] s, output logic [6:0] seg );
 			4'b1100: seg <= 7'b0110001; //C
 			4'b1101: seg <= 7'b1000010; //D
 			4'b1110: seg <= 7'b0110000; //E
-			4'b1111: seg <= 7'b0111000; // F
+			4'b1111: seg <= 7'b0111000; //F
 
 		default
 			seg <= 7'b1111111;//7'b0000000;

@@ -1,0 +1,819 @@
+# Reading pref.tcl
+# //  Questa Lattice OEM Edition-64
+# //  Version 2024.2 win64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading project sim
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 2 failed with 2 errors.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 2 failed with 2 errors.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 2 failed with 2 errors.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 2 failed with 2 errors.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 2 failed with 2 errors.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv failed with 1 errors.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 1 failed with 1 error.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 0 failed with no errors.
+vsim -gui work.test_sum -voptargs=+acc
+# vsim -gui work.test_sum -voptargs="+acc" 
+# Start time: 15:16:14 on Sep 06,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Error: C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/top.sv(14): Module 'HSOSC' is not defined.
+#  For instance 'hf_osc' at path 'test_sum.dut'
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=1.
+# Error loading design
+# End time: 15:16:15 on Sep 06,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 12
+vsim -gui -voptargs=+acc work.test_sum -L iCE40UP
+# vsim -gui -voptargs="+acc" work.test_sum -L iCE40UP 
+# Start time: 15:16:57 on Sep 06,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(44): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(51): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(58): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(65): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(72): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# ** Error (suppressible): C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(79): (vopt-12003) Variable 'reset' written by continuous and procedural assignments. See C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(40). 
+# Optimization failed
+# ** Error: (vopt-2064) Compiler back-end code generation process terminated with code 12.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=7, Warnings=1.
+# Error loading design
+# End time: 15:16:58 on Sep 06,2025, Elapsed time: 0:00:01
+# Errors: 7, Warnings: 2
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 0 failed with no errors.
+vsim -gui -voptargs=+acc -L iCE40UP work.test_sum
+# vsim -gui -voptargs="+acc" -L iCE40UP work.test_sum 
+# Start time: 15:17:57 on Sep 06,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# ** Error (suppressible): (vsim-3009) [TSCALE] - Module 'test_sum' does not have a timeunit/timeprecision specification in effect, but other modules do.
+#    Time: 0 ns  Iteration: 0  Instance: /test_sum/dut/hf_osc File: nofile
+# Loading work.segLUT(fast)
+# Error loading design
+# End time: 15:18:21 on Sep 06,2025, Elapsed time: 0:00:24
+# Errors: 1, Warnings: 3
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 0 failed with no errors.
+vsim -gui -voptargs=+acc -L iCE40UP work.test_sum
+# vsim -gui -voptargs="+acc" -L iCE40UP work.test_sum 
+# Start time: 15:19:04 on Sep 06,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading sv_std.std
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# ** Error (suppressible): (vsim-3009) [TSCALE] - Module 'test_sum' does not have a timeunit/timeprecision specification in effect, but other modules do.
+#    Time: 0 ns  Iteration: 0  Instance: /test_sum/dut/hf_osc File: nofile
+# Loading work.segLUT(fast)
+# Error loading design
+# End time: 15:19:27 on Sep 06,2025, Elapsed time: 0:00:23
+# Errors: 1, Warnings: 2
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 1 failed with 1 error.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 0 failed with no errors.
+vsim -gui -voptargs=+acc -L iCE40UP work.test_sum
+# vsim -gui -voptargs="+acc" -L iCE40UP work.test_sum 
+# Start time: 15:20:54 on Sep 06,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# Loading work.segLUT(fast)
+run 1000
+# Pass t0: x
+# Pass t0: 1
+add wave  \
+sim:/test_sum/reset \
+sim:/test_sum/clk \
+sim:/test_sum/flag \
+sim:/test_sum/i0 \
+sim:/test_sum/i1 \
+sim:/test_sum/sel \
+sim:/test_sum/esel \
+sim:/test_sum/nsel \
+sim:/test_sum/ensel \
+sim:/test_sum/segout \
+sim:/test_sum/esegout \
+sim:/test_sum/sum \
+sim:/test_sum/esum \
+sim:/test_sum/vectornum \
+sim:/test_sum/errors \
+sim:/test_sum/testvectors
+run 1000
+run 10000
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+run 100000
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# Loading work.segLUT(fast)
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# Loading work.segLUT(fast)
+run 1000000
+# Pass t0: x
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 1000000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# Loading work.segLUT(fast)
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv failed with 1 errors.
+# Compile of top.sv was successful.
+# 4 compiles, 1 failed with 1 error.
+# Compile of segLUT.sv was successful.
+# Compile of test_segs.sv was successful.
+# Compile of test_sum.sv was successful.
+# Compile of top.sv was successful.
+# 4 compiles, 0 failed with no errors.
+run 1000
+# Pass t0: x
+# Pass t0: 1
+run 10000
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+run 100000
+# Pass t0: 0
+# Pass t0: 1
+# Pass t0: 0
+# Pass t0: 1
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+run 100000
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+# no cases left
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.test_sum(fast)
+# Loading work.top(fast)
+# Loading iCE40UP.HSOSC(fast)
+# Loading work.segLUT(fast)
+# Warning in wave window restart: (vish-4014) No objects found matching '/test_sum/vectornum'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/test_sum/errors'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/test_sum/testvectors'. 
+run 100
+# Pass t1: x
+# Pass t1: 1
+run 100
+run 1000000
+# Pass t2: 0
+# Pass t2: 1
+# Pass t3: 0
+# Pass t3: 1
+# Pass t4: 0
+# Pass t4: 1
+# Pass t5: 0
+# Pass t5: 1
+# no cases left
+# ** Note: $stop    : C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv(89)
+#    Time: 5 ns  Iteration: 1  Instance: /test_sum
+# Break in Module test_sum at C:/Users/sojayaweera/E155/lab2/dual_sevenseg/source/top/test_sum.sv line 89
