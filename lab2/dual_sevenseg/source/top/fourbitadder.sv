@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module fourbitadder (input logic [3:0] a, input logic [3:0] b, output logic [4:0] sum);
 	assign sum = a + b;
 	
@@ -25,3 +26,9 @@ module fourbitadder (input logic [3:0] a, input logic [3:0] b, output logic [4:0
 //		sum[5] <= c[4];
 	
 endmodule
+=======
+module fourbitadder (input logic [3:0], output logic [4:0] sum);
+
+
+endmodule
+>>>>>>> b841223 (I HAVE NO CLUE WHAT IS HAPPENING HELP)
