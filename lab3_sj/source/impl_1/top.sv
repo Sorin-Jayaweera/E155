@@ -4,7 +4,7 @@
 // 9/9/2025
 
 module top( 
-	input logic [3:0] col
+	input logic [3:0] col,
 	input logic reset,
 	output logic sel, 
 	output logic [3:0] row,

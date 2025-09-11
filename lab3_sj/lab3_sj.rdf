@@ -4,13 +4,13 @@
     <Implementation title="impl_1" dir="impl_1" description="impl_1" synthesis="lse" default_strategy="Strategy1">
         <Options def_top="keypad_handler"/>
         <Source name="source/impl_1/top.sv" type="Verilog" type_short="Verilog">
-            <Options VerilogStandard="System Verilog" top_module="top"/>
+            <Options VerilogStandard="System Verilog"/>
         </Source>
         <Source name="source/impl_1/sevensegLUT.sv" type="Verilog" type_short="Verilog">
             <Options VerilogStandard="System Verilog" top_module="sevensegLUT"/>
         </Source>
         <Source name="source/impl_1/keypad_handler.sv" type="Verilog" type_short="Verilog">
-            <Options VerilogStandard="System Verilog"/>
+            <Options VerilogStandard="System Verilog" top_module="keypad_handler"/>
         </Source>
     </Implementation>
     <Strategy name="Strategy1" file="lab3_sj1.sty"/>
