@@ -62,11 +62,31 @@ prj_run Export -impl impl_1
 
 
 
+<A name="pn250910172917"></A><B><U><big>pn250910172917</big></U></B>
+#Start recording tcl command: 9/10/2025 16:17:09
+#Project Location: C:/Users/sojayaweera/E155/lab3_sj; Project name: lab3_sj
+prj_open "C:/Users/sojayaweera/E155/lab3_sj/lab3_sj.rdf"
+prj_add_source "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_getrowcol.sv"
+prj_remove_source "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_getrowcol.sv"
+prj_run Synthesis -impl impl_1
+prj_add_source "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv"
+prj_remove_source "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypadLUT.sv"
+prj_run Synthesis -impl impl_1
+prj_run Export -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_save 
+prj_close
+#Stop recording: 9/10/2025 17:29:17
+
+
+
 </PRE></DIV>
 
 <DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
 <UL id="toc_list">
 <LI><A href=#pn250910160011>pn250910160011</A></LI>
+<LI><A href=#pn250910172917>pn250910172917</A></LI>
 </UL>
 </DIV>
 
