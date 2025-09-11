@@ -1,0 +1,18 @@
+#Start recording tcl command: 9/9/2025 19:38:32
+#Project Location: C:/Users/sojayaweera/E155/lab2/lab3_sj; Project name: lab3_sj
+prj_create -name "lab3_sj" -impl "impl_1" -dev iCE40UP5K-SG48I -performance "High-Performance_1.2V" -synthesis "lse"
+prj_save 
+prj_add_source "C:/Users/sojayaweera/E155/lab2/lab3_sj/source/impl_1/top.sv"
+prj_add_source "C:/Users/sojayaweera/E155/lab2/lab3_sj/source/impl_1/keypadLUT.sv"
+prj_add_source "C:/Users/sojayaweera/E155/lab2/lab3_sj/source/impl_1/sevensegLUT.sv"
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+#Stop recording: 9/10/2025 16:00:11
