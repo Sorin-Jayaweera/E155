@@ -9,7 +9,7 @@ module top(
 	output logic sel, 
 	output logic [3:0] row,
 	output logic nsel, 
-	output logic [6:0] segout,
+	output logic [6:0] segout
 	);
 
 	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
@@ -28,7 +28,7 @@ module top(
 	logic [31:0] countstart;
 
 	// Look up table for the 7 segment displays
-	segLUT lut(.s(iActive),.seg(segout));
+	sevensegLUT lut(.s(iActive),.seg(segout));
 
 	// always have the digit READY to push to i0 in itemp
 	keypad_handler keypad(counter, col, row, pressed, itemp); 
@@ -43,7 +43,7 @@ module top(
 				iActive = 4'b0000;
 			end
 		else begin
-				iActive <= sel ? i0 : i1; //choosing for the display
+				iActive = sel ? i0 : i1; //choosing for the display
 			end
 		end
 				
