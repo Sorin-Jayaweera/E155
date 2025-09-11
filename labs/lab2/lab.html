@@ -281,8 +281,8 @@ window.Quarto = {
 <section id="physical-design-calculations" class="level3">
 <h3 class="anchored" data-anchor-id="physical-design-calculations">Physical Design Calculations</h3>
 <p>There are several sensitive components on this PCB.</p>
-<p>The FPGA pins can drive at most <span class="math inline">\(\pm\)</span> 8 mA of current through IO pins, at 2.9 volts (3.3v - 0.4 according to the datasheet). The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA.</p>
-<p>To restrict current going to the PNP transistors, a 1500 k <span class="math inline">\(\Omega\)</span> resistor was used. (<span class="math inline">\(2.9V/(0.02 mA = 1450 \Omega\)</span>).</p>
+<p>The FPGA pins can drive at most <span class="math inline">\(\pm\)</span> 8 mA of current through IO pins, at 3.3V. The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA.</p>
+<p>To restrict current going to the PNP transistors, a 200 <span class="math inline">\(\Omega\)</span> resistor was used. There is at max a 0.4 V drop from the collector to emmitter, which. For a maximum current flow of 2 mA, this yields (<span class="math inline">\(0.4V/0.02 mA = 200 \Omega s\)</span>).</p>
 <p>The LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 <span class="math inline">\(\Omega\)</span> resistor between the LEDs and ground to restrict current flow, as <span class="math inline">\((3.2V - 2.2V)/(20mA) = 50 \Omega\)</span>. A 200 <span class="math inline">\(\Omega\)</span> resistor was used.</p>
 </section>
 </section>
