@@ -10,7 +10,7 @@ draft: false
 ---
  
 ---
-title: "Lab 1 - E155 Startup"
+title: "Lab 2 - Time Multiplexing"
 description: "Testing an MCU and FPGA PCB with a 7 segment display"
 author: "Sorin Jayaweera"
 date: "8/27/2025"
@@ -22,12 +22,22 @@ draft: false
 
 
 ## Introduction
+Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS.
 
 ## Design and Testing Methodology
+A multiplexer inside the FPGA chooses between inputs in0 and in1 (4 bit numbers) and connects the chosen signal to the look up table. These two inputs are connected alternating at 80 hz. At the same 80hz clock, an enable for the left and right display are activated (only one at a time). The pins controlling the seven segment code are connected to both displays, but only the display with an active enable will show. Because they are switching at high frequency, it appears that both are displaying simultaneously - while in reality it is only one at a time. 
 
-## Technical Documentatoin
+This time multiplexing saves internal resources, and only uses one set of segment pins + an enable per display instead of using 7 pins per display.
+
+The sum of the two binary numbers is sent to the LEDS.
+
+## Technical Documentation
 
 ### Block Diagram
+
+![](/images/lab2/block.png)
+
+A single look up table is multiplexed with inputs from two inputs, alternating at 80 hz. 
 
 ### Schematic
 ![](/images/lab2/schematic.png)
@@ -51,17 +61,278 @@ The frequency of the clock alternating between segment 0 and 1 had to be determi
 ### Physical Design Calculations
 There are several sensitive components on this PCB.
 
-The FPGA pins can drive at most $\pm$ 8 mA of current through IO pins, at 2.9 volts (3.3v - 0.4 according to the datasheet). The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA. 
+The FPGA pins can drive at most $\pm$ 8 mA of current through IO pins, at 3.3V. The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA. 
 
- To restrict current going to the PNP transistors, a 1500 k $\Ohm$ resistor was used. ($2.9V/(0.02 mA = 1450 \Ohm$).
+ To restrict current going to the PNP transistors, a 200 $\Omega$ resistor was used. There is at max a 0.4 V drop from the collector to emmitter, which. For a maximum current flow of 2 mA, this yields ($0.4V/0.02 mA = 200 \Omega s$).
 
-The LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 $\Ohm$ resistor between the LEDs and ground to restrict current flow, as $(3.2V - 2.2V)/(20mA) = 50 \Ohm$. A 200 $\Ohm$ resistor was used.
+The LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 $\Omega$ resistor between the LEDs and ground to restrict current flow, as $(3.2V - 2.2V)/(20mA) = 50 \Omega$. A 200 $\Omega$ resistor was used.
 
 
 ## Results and Discussion
 
-### Testbench Simulation
+80 Hz was determined to be near the optimal frequency, where the human eye can't distinguish any flicker, but the power is on long enough to make the led's appear sufficiently bright. 
 
-## Conclusion
+The two seven segment displays were driven from a single LUT module with no visable failures, displaying the sum of the two numbers to LEDs. This lab was completed successfully.
+
+
+
+## MISC
+ Hours spent: ~15 ( STUPID STUPID PCB SHORT ON THE RESET PIN STUPID AARGGH)
+ 
 
 ## AI overview
+
+The output was very close to one that could work. I had to use several prompts with the thoughts and knowledge that I already had (i.e. using a single bus for the segments and an enable for power). However, when i was very detailed on how the code should work and what the end goals are (telling it to ask me questions about the design), 
+it made something that would have saved me large amounts of time. 
+
+The code synthesized properly, and I am familiar with all syntax used.
+
+
+## CODE
+
+### TOP.sv
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
+
+module top(
+	input logic [3:0] i0,
+	input logic [3:0] i1,
+	input logic reset,
+	output logic sel,
+	output logic nsel,
+	output logic [6:0] segout,
+	output logic [4:0] sum
+	);
+	
+	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+	
+	logic [3:0] iActive;
+	
+	logic [24:0] counter = 0;
+	
+	// Look up table for the 7 segment displays
+	segLUT lut(.s(iActive),.seg(segout));
+	
+	// add the inputs and display on LEDS
+	assign sum = i1+i0;
+	
+	// choosing which set of connections for the resource use
+	// sequential logic
+	always_ff@(posedge int_osc) begin
+		
+			if(reset == 1) begin
+					iActive <= 4'b0000;
+				end
+			else begin
+				iActive <= sel ? i0 : i1;
+				end
+	
+	end
+	
+	// select as a slow clock logic
+	always_ff@(posedge int_osc) begin
+		if(reset) begin
+				counter <= 25'b0;
+			end
+		else begin
+			counter <= counter + 1'b1;
+		end
+	end
+	
+	assign sel = counter[18];// // 1.43 hz
+	assign nsel = !sel;
+endmodule
+	
+
+
+### segLUT.sv
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
+module segLUT( input logic [3:0] s, output logic [6:0] seg );
+
+	always_comb
+		case(s)
+			4'b0000: seg = 7'b0000001; //0
+			4'b0001: seg = 7'b1001111; //1
+			4'b0010: seg = 7'b0010010; //2
+			4'b0011: seg = 7'b0000110; //3
+			4'b0100: seg = 7'b1001100; //4
+			4'b0101: seg = 7'b0100100; //5
+			4'b0110: seg = 7'b0100000; //6
+			4'b0111: seg = 7'b0001111; //7
+			4'b1000: seg = 7'b0000000; //8
+			4'b1001: seg = 7'b0001100; //9
+			4'b1010: seg = 7'b0001000; //A
+			4'b1011: seg = 7'b1100000; //B
+			4'b1100: seg = 7'b0110001; //C
+			4'b1101: seg = 7'b1000010; //D
+			4'b1110: seg = 7'b0110000; //E
+			4'b1111: seg = 7'b0111000; //F
+
+		default
+			seg = 7'b1111111;//7'b0000000;
+		endcase
+endmodule
+
+### test_segs_v3.sv
+
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
+`timescale 1ns/1ps
+module test_sum_v3 (
+		output logic [6:0] seg0, 
+		output logic [6:0] seg1,
+		output logic seg1good,
+		output logic seg0good,
+		output logic [7:0] clk
+	);
+		
+	// inputs
+	logic [3:0] i0;
+	logic [3:0] i1;
+	logic reset;
+	//outputs to test
+	logic sel;
+	logic nsel;
+	logic [6:0] segout;
+	logic [4:0] sum;
+	
+	assign i0 = {clk[4],clk[5],clk[6],clk[7]};
+	assign i1 = {clk[0],clk[1],clk[2],clk[3]};
+	top dut(i0,i1,reset,sel,nsel,segout,sum);
+	
+	assign seg1good = seg1 == (segout && sel) || nsel;
+	assign seg0good = seg0 == (segout && nsel) || sel;
+	
+	
+	initial
+		begin
+				clk = 8'b0;
+		end
+	
+	// generate clock
+	always 
+		begin
+		  clk = clk + 1'b1; #1; 
+		  
+		  if(clk == 8'b111111) begin
+				$display("no cases left");
+				$stop;
+			end
+		end
+		
+	always_comb
+		case(i1)
+			4'b0000: seg1 = 7'b0000001; //0
+			4'b0001: seg1 = 7'b1001111; //1
+			4'b0010: seg1 = 7'b0010010; //2
+			4'b0011: seg1 = 7'b0000110; //3
+			4'b0100: seg1 = 7'b1001100; //4
+			4'b0101: seg1 = 7'b0100100; //5
+			4'b0110: seg1 = 7'b0100000; //6
+			4'b0111: seg1 = 7'b0001111; //7
+			4'b1000: seg1 = 7'b0000000; //8
+			4'b1001: seg1 = 7'b0001100; //9
+			4'b1010: seg1 = 7'b0001000; //A
+			4'b1011: seg1 = 7'b1100000; //B
+			4'b1100: seg1 = 7'b0110001; //C
+			4'b1101: seg1 = 7'b1000010; //D
+			4'b1110: seg1 = 7'b0110000; //E
+			4'b1111: seg1 = 7'b0111000; //F
+
+		default
+			seg1 = 7'b1111111;//7'b0000000;
+		endcase
+	
+	
+	always_comb
+		case(i0)
+			4'b0000: seg0 = 7'b0000001; //0
+			4'b0001: seg0 = 7'b1001111; //1
+			4'b0010: seg0 = 7'b0010010; //2
+			4'b0011: seg0 = 7'b0000110; //3
+			4'b0100: seg0 = 7'b1001100; //4
+			4'b0101: seg0 = 7'b0100100; //5
+			4'b0110: seg0 = 7'b0100000; //6
+			4'b0111: seg0 = 7'b0001111; //7
+			4'b1000: seg0 = 7'b0000000; //8
+			4'b1001: seg0 = 7'b0001100; //9
+			4'b1010: seg0 = 7'b0001000; //A
+			4'b1011: seg0 = 7'b1100000; //B
+			4'b1100: seg0 = 7'b0110001; //C
+			4'b1101: seg0 = 7'b1000010; //D
+			4'b1110: seg0 = 7'b0110000; //E
+			4'b1111: seg0 = 7'b0111000; //F
+
+		default
+			seg0 = 7'b1111111;//7'b0000000;
+		endcase
+
+	
+
+
+endmodule
+
+
+
+### test_sum_v2.sv
+
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu
+// 9/6/2025
+`timescale 1ns/1ps
+module test_sum_v2 (
+		output logic good_sum,
+		output logic [7:0] clk
+	);
+		
+	// inputs
+	logic [3:0] i0;
+	logic [3:0] i1;
+	
+	//outputs to test
+	logic sel;
+	logic nsel;
+	logic [6:0] segout;
+	logic [4:0] sum;
+	
+	//expected output logic
+	logic [4:0] esum;
+	
+	assign i0 = {clk[4],clk[5],clk[6],clk[7]};
+	assign i1 = {clk[0],clk[1],clk[2],clk[3]};
+	top dut(i0,i1,reset,sel,nsel,segout,sum);
+	
+	
+	
+	assign esum = i1 + i0;
+	assign good_sum = i1+i0 == sum;
+	
+	initial
+		begin
+				clk = 8'b0;
+		end
+		// generate clock
+	always 
+		begin
+		  clk = clk + 1'b1; #1; 
+		  
+		  if(clk == 8'b111111) begin
+				$display("no cases left");
+				$stop;
+			end
+		end
+
+	
+
+
+endmodule
+
+
