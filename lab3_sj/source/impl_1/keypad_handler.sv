@@ -13,7 +13,9 @@ module keypad_handler(
 	output logic pressed,
 	output logic [3:0] bin
 	);
-
+	logic [7:0] rowcol;
+	
+	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	// scan between activating each of the rows individually
 	always_comb
 		case(counter[18:17]) // somewhat slow switching between all pins
@@ -29,7 +31,7 @@ module keypad_handler(
 	assign pressed = num != none;
 	
 	always_comb
-		case({row,col})
+		case(rowcol)
 			00010001: num = one;
 			00010010: num = two;
 			00010100: num = three;
