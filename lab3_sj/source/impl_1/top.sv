@@ -16,7 +16,6 @@ module top(
 	logic [3:0] col;
 	
 	logic [3:0] iActive;
-	logic [31:0] counter;
 	logic [3:0] itemp;
 	logic [3:0] i0;
 	logic [3:0] i1;
@@ -25,6 +24,7 @@ module top(
 	logic accepting;
 	logic timepassed;
 	
+	logic [31:0] counter;
 	logic [31:0] countstart;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
