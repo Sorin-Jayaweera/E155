@@ -55,7 +55,7 @@ module keypad_handler(
 			num = none;
 		endcase
 
-	always_comb
+	always_combr
 		case(num)
 			zero: bin = 4'b0000;
 			one: bin = 4'b0001;
