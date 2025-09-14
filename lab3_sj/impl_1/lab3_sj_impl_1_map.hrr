@@ -3,18 +3,45 @@ Report for cell top
    Instance path: top
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         27        100.0
-                               LUTGATE	          7        100.0
-                                LUTCCU	         20        100.0
-                                 IOBUF	         14        100.0
-                                PFUREG	         19        100.0
+                                 IOLGC	       4.00        100.0
+                                  LUT4	        193        100.0
+                               LUTGATE	        127        100.0
+                                LUTCCU	         66        100.0
+                                 IOREG	          4        100.0
+                                 IOBUF	         18        100.0
+                                PFUREG	         77        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-                        keypad_handler	          1        14.8
+                          count_module	          1        17.6
+                        keypad_handler	          1        16.6
+                           sevensegLUT	          1         3.6
+                          synchronizer	          1         0.0
+---------------------------------------------------
+Report for cell sevensegLUT
+   Instance path: top/lut
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	          7         3.6
+                               LUTGATE	          7         5.5
+---------------------------------------------------
+Report for cell count_module
+   Instance path: top/clocker
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         34        17.6
+                                LUTCCU	         34        51.5
+                                PFUREG	         32        41.6
+---------------------------------------------------
+Report for cell synchronizer
+   Instance path: top/colsyncer
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                 IOLGC	       4.00        100.0
+                                 IOREG	          4        100.0
 ---------------------------------------------------
 Report for cell keypad_handler
    Instance path: top/keypad
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	          4        14.8
-                               LUTGATE	          4        57.1
+                                  LUT4	         32        16.6
+                               LUTGATE	         32        25.2

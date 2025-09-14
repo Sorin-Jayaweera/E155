@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Sep 13 20:41:05 2025
+Sat Sep 13 21:24:34 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_lattice.synproj -logfile lab3_sj_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab3_sj/promote.xml 
@@ -159,6 +159,8 @@ Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -212,6 +214,8 @@ INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(17): an
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv. VERI-1482
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
 
@@ -220,25 +224,11 @@ INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Use
 Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top.sv(6): compiling module top. VERI-1018
-INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv(6): compiling module sevensegLUT. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(9): compiling module keypad_handler. VERI-1018
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(35): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(36): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(37): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(38): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(40): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(41): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(42): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(43): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(45): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(46): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(47): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(48): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(50): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(51): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(52): case condition never applies. VERI-1166
-WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(53): case condition never applies. VERI-1166
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv(6): compiling module count_module. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv(1): compiling module synchronizer. VERI-1018
 
 <A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
 
@@ -249,35 +239,27 @@ WARNING <35901166> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/
 		CLKHF_DIV                 "0b00"
 
 [Parameter Setting Section End]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[3]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[2]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[1]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[0]
 
 
 
-CRITICAL <35001747> - synthesis: Bit(s) of register driving i0[3:0] stuck at '0': 3, 2, 1, 0
-CRITICAL <35001747> - synthesis: Bit(s) of register driving i1[3:0] stuck at '0': 3, 2, 1, 0
-CRITICAL <35001747> - synthesis: Bit(s) of register driving iActive[3:0] stuck at '0': 3, 2, 1, 0
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[3]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[2]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[1]
-CRITICAL <35002028> - synthesis: I/O port's net has no driver and is unused: col[0]
+CRITICAL <35001748> - synthesis: Bit(s) of register countstart_res1 stuck at '1': 0
+INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top)######################
-Number of register bits => 19 of 5280 (0 % )
-CCU2 => 10
-FD1P3XZ => 19
+Number of register bits => 77 of 5280 (1 % )
+CCU2 => 33
+FD1P3XZ => 77
 HSOSC => 1
-IB => 1
-LUT4 => 5
+IB => 5
+IOL_B => 4
+LUT4 => 90
 OB => 13
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
-Number of even-length carry chains : 1
+Number of even-length carry chains : 2
 
 
 <A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
@@ -285,21 +267,21 @@ Number of even-length carry chains : 1
 ################### Begin Clock Report ######################
 Clock Nets
 Number of Clocks: 1
-  Net : int_osc, loads : 0
+  Net : clocker/int_osc, loads : 0
 Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : reset_c, loads : 19
-  Net : n437, loads : 11
-  Net : n133[18], loads : 11
-  Net : n133[17], loads : 11
-  Net : n435, loads : 10
-  Net : n133[16], loads : 10
-  Net : n133[15], loads : 10
-  Net : n433, loads : 9
-  Net : n133[14], loads : 9
-  Net : n133[13], loads : 9
+  Net : reset_c, loads : 48
+  Net : n301, loads : 45
+  Net : n600, loads : 24
+  Net : timepassed, loads : 21
+  Net : n615, loads : 21
+  Net : n25_adj_90, loads : 19
+  Net : n24_adj_91, loads : 19
+  Net : n23_adj_92, loads : 19
+  Net : n26_adj_89, loads : 18
+  Net : clocker/n823, loads : 18
 ################### End Clock Report ##################
 
 
@@ -311,13 +293,13 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 93 MB
+Peak Memory Usage: 97 MB
 
 --------------------------------------------------------------
 Total CPU Time: 5 secs 
 Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 1d3800a849a30325bdb57aaefeeacafd7e9f4a09
+Checksum -- synthesis -- netlist: 5a924f4e3b9956a4add613a22aa07ecfc6657f5b
 
 
 

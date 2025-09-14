@@ -22,7 +22,7 @@ module keypad_handler(
 			2'b00: row = 4'b0001; 
 			2'b01: row = 4'b0010;
 			2'b10: row = 4'b0100;
-			2'b11: row = 4'b1000;			
+			2'b11: row = 4'b1000;
 		endcase
 
 	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
@@ -32,30 +32,30 @@ module keypad_handler(
 	
 	always_comb
 		case(rowcol)
-			00010001: num = one;
-			00010010: num = two;
-			00010100: num = three;
-			00011000: num = four;
+			8'b00010001: num = one;
+			8'b00010010: num = two;
+			8'b00010100: num = three;
+			8'b00011000: num = four;
 
-			00100001: num = five;
-			00100010: num = six;
-			00100100: num = seven;
-			00101000: num = eight;
+			8'b00100001: num = five;
+			8'b00100010: num = six;
+			8'b00100100: num = seven;
+			8'b00101000: num = eight;
 
-			01000001: num = nine;
-			01000010: num = a;
-			01000100: num = b;
-			01001000: num = c;
+			8'b01000001: num = nine;
+			8'b01000010: num = a;
+			8'b01000100: num = b;
+			8'b01001000: num = c;
 
-			10000001: num = d;
-			10000010: num = e;
-			10000100: num = f;
-			10001000: num = zero;
+			8'b10000001: num = d;
+			8'b10000010: num = e;
+			8'b10000100: num = f;
+			8'b10001000: num = zero;
 		default
 			num = none;
 		endcase
 
-	always_combr
+	always_comb
 		case(num)
 			zero: bin = 4'b0000;
 			one: bin = 4'b0001;
