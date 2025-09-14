@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Sep 13 21:24:34 2025
+Sat Sep 13 22:07:52 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_lattice.synproj -logfile lab3_sj_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab3_sj/promote.xml 
@@ -227,7 +227,7 @@ INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv(6): compiling module sevensegLUT. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(9): compiling module keypad_handler. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv(6): compiling module count_module. VERI-1018
-INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b01). VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv(1): compiling module synchronizer. VERI-1018
 
 <A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
@@ -236,7 +236,7 @@ INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/syn
 
 	[Parameter Settings for Instance(s): hf_osc]
 	(Module: HSOSC)
-		CLKHF_DIV                 "0b00"
+		CLKHF_DIV                 2'b01
 
 [Parameter Setting Section End]
 
@@ -255,7 +255,7 @@ FD1P3XZ => 77
 HSOSC => 1
 IB => 5
 IOL_B => 4
-LUT4 => 90
+LUT4 => 88
 OB => 13
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
@@ -274,14 +274,14 @@ Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
   Net : reset_c, loads : 48
   Net : n301, loads : 45
-  Net : n600, loads : 24
-  Net : timepassed, loads : 21
-  Net : n615, loads : 21
-  Net : n25_adj_90, loads : 19
-  Net : n24_adj_91, loads : 19
-  Net : n23_adj_92, loads : 19
-  Net : n26_adj_89, loads : 18
-  Net : clocker/n823, loads : 18
+  Net : n602, loads : 27
+  Net : n1065, loads : 25
+  Net : n20_adj_89, loads : 23
+  Net : n18, loads : 22
+  Net : n617, loads : 21
+  Net : n44, loads : 20
+  Net : n19_adj_90, loads : 19
+  Net : clocker/n826, loads : 18
 ################### End Clock Report ##################
 
 
@@ -293,13 +293,13 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 97 MB
+Peak Memory Usage: 96 MB
 
 --------------------------------------------------------------
 Total CPU Time: 5 secs 
 Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 5a924f4e3b9956a4add613a22aa07ecfc6657f5b
+Checksum -- synthesis -- netlist: f1ec1982198478e3e10adb3bad789c69515b258
 
 
 

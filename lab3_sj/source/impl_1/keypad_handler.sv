@@ -18,7 +18,7 @@ module keypad_handler(
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	// scan between activating each of the rows individually
 	always_comb
-		case(counter[18:17]) // somewhat slow switching between all pins
+		case(counter[16:15]) // somewhat slow switching between all pins
 			2'b00: row = 4'b0001; 
 			2'b01: row = 4'b0010;
 			2'b10: row = 4'b0100;

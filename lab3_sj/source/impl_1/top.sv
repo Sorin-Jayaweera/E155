@@ -12,13 +12,15 @@ module top(
 	output logic [6:0] segout
 	);
 	
+	// post synchronizer
+	logic [3:0] col; 
 	
-	logic [3:0] col;
 	
-	logic [3:0] iActive;
-	logic [3:0] itemp;
-	logic [3:0] i0;
-	logic [3:0] i1;
+	logic [3:0] iActive; // feeding into the 7 segment LUT
+	logic [3:0] itemp; // holding the number to push to i0 or i1
+	logic [3:0] i0; // active display numbers
+	logic [3:0] i1; // same
+	
 	logic int_osc;
 		logic pressed;
 	logic accepting;
@@ -46,10 +48,9 @@ module top(
 	
 	
 	
-	
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Time Multiplexing Seven Segment Display
-	assign timepassed = countstart - counter > 201600;//100800;// 0.042 (42ms) * 24000000 (cycles per second)
+	assign timepassed = countstart - counter > 2400000;//100800;// 0.042 (42ms) * 24000000 (cycles per second)
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
@@ -57,7 +58,6 @@ module top(
 		
 		if(reset == 1) begin
 				iActive = 4'b0000;
-				
 			end
 		else begin
 				iActive = sel ? i0 : i1; //choosing for the display
@@ -76,7 +76,7 @@ module top(
 				i1 = 4'b0000;
 			end
 		else if (accepting && pressed) begin
-				i1 = i0;
+				i1 = i0; // ORDER DEPENDENT
 				i0 = itemp;
 				accepting = 1'b0;
 				countstart = counter;

@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Sat Sep 13 21:24:55 2025
+Mapped on: Sat Sep 13 22:08:14 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -61,8 +61,8 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 
    Number of slice registers:  77 out of  5280 (1%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           193 out of  5280 (4%)
-      Number of logic LUT4s:              91
+   Number of LUT4s:           191 out of  5280 (4%)
+      Number of logic LUT4s:              89
       Number of inserted feedthru LUT4s:  36
       Number of ripple logic:             33 (66 LUT4s)
    Number of IO sites used:   18 out of 39 (46%)
@@ -91,22 +91,22 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
      clocker.hf_osc.osc_inst/CLKHF)
    Number of Clock Enables:  4
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n615: 8 loads, 8 SLICEs
-      Net n600: 1 loads, 1 SLICEs
+      Net n617: 8 loads, 8 SLICEs
+      Net n602: 1 loads, 1 SLICEs
       Net n301: 32 loads, 32 SLICEs
    Number of LSRs:  1
       Pin reset: 30 loads, 30 SLICEs (Net: reset_c)
    Top 10 highest fanout non-clock nets:
       Net reset_c: 33 loads
       Net n301: 32 loads
-      Net sel_c_18: 18 loads
-      Net col[0]: 13 loads
-      Net counter[17]: 13 loads
-      Net col[1]: 12 loads
-      Net col[3]: 12 loads
-      Net col[2]: 11 loads
-      Net n615: 8 loads
-      Net iActive[0]: 7 loads
+      Net counter[15]: 13 loads
+      Net counter[16]: 13 loads
+      Net col[0]: 11 loads
+      Net col[3]: 10 loads
+      Net col[1]: 9 loads
+      Net col[2]: 9 loads
+      Net n617: 8 loads
+      Net sel_c_18: 8 loads
 
    Number of warnings:  16
    Number of criticals: 0
@@ -201,7 +201,7 @@ OSC 1:                                 Pin/Node Value
   Power UP:                            NODE     VCC_net
   Enable Signal:                       NODE     VCC_net
   OSC Output:                          NODE     int_osc
-  DIV Setting:                                  00
+  DIV Setting:                                  01
 
 <A name="mrp_asic"></A><B><U><big>ASIC Components</big></U></B>
 
@@ -209,11 +209,11 @@ Instance Name: clocker/hf_osc.osc_inst
          Type: HFOSC
 Instance Name: colsyncer/stableval_i1
          Type: IOLOGIC
+Instance Name: colsyncer/stableval_i0
+         Type: IOLOGIC
 Instance Name: colsyncer/stableval_i3
          Type: IOLOGIC
 Instance Name: colsyncer/stableval_i2
-         Type: IOLOGIC
-Instance Name: colsyncer/stableval_i0
          Type: IOLOGIC
 
 <A name="mrp_consum"></A><B><U><big>Constraint Summary</big></U></B>
@@ -231,7 +231,7 @@ Instance Name: colsyncer/stableval_i0
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 69 MB
-Checksum -- map: b6d94c78ecf3b3b8146fe32250c87b0338d604ab
+Checksum -- map: 9878b41134544bfd3bfb38cf179390feb9095cc6
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.
