@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Sun Sep 14 18:24:13 2025
+Mapped on: Sun Sep 14 19:02:02 2025
 
 Design Information
 ------------------
@@ -22,8 +22,8 @@ Design Summary
 
    Number of slice registers:  77 out of  5280 (1%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           207 out of  5280 (4%)
-      Number of logic LUT4s:             105
+   Number of LUT4s:           204 out of  5280 (4%)
+      Number of logic LUT4s:             102
       Number of inserted feedthru LUT4s:  36
       Number of ripple logic:             33 (66 LUT4s)
    Number of IO sites used:   19 out of 39 (49%)
@@ -52,14 +52,14 @@ Design Summary
      clocker.hf_osc.osc_inst/CLKHF)
    Number of Clock Enables:  4
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n601: 8 loads, 8 SLICEs
-      Net n590: 1 loads, 1 SLICEs
-      Net n303: 32 loads, 32 SLICEs
+      Net n594: 1 loads, 1 SLICEs
+      Net n302: 32 loads, 32 SLICEs
+      Net n989: 8 loads, 8 SLICEs
    Number of LSRs:  1
       Pin reset: 30 loads, 30 SLICEs (Net: reset_c)
    Top 10 highest fanout non-clock nets:
       Net reset_c: 33 loads
-      Net n303: 32 loads
+      Net n302: 32 loads
 
                                     Page 1
 
@@ -69,73 +69,33 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net counter[16]: 22 loads
-      Net counter[15]: 19 loads
+      Net counter[16]: 20 loads
+      Net counter[15]: 17 loads
       Net col[2]: 14 loads
+      Net col[0]: 12 loads
       Net col[1]: 12 loads
-      Net col[0]: 11 loads
-      Net col[3]: 11 loads
-      Net n601: 8 loads
-      Net sel_c_18: 8 loads
+      Net col[3]: 12 loads
+      Net sel_c_18: 9 loads
+      Net n989: 8 loads
 
 
 
 
 
-   Number of warnings:  16
+   Number of warnings:  0
    Number of criticals: 0
    Number of errors:    0
 
 Design Errors/Criticals/Warnings
 --------------------------------
 
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (1) : No
-     port matched 's[3]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (2) : No
-     port matched 's[2]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (3) : No
-     port matched 's[1]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (4) : No
-     port matched 's[0]'.
-WARNING <1027013> - map: No port matched 's[3]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (1) : Can't
-     resolve object 's[3]' in constraint 'ldc_set_location -site {32} [get_ports
-     {s[3]}]'.
-WARNING <1027013> - map: No port matched 's[2]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (2) : Can't
-     resolve object 's[2]' in constraint 'ldc_set_location -site {35} [get_ports
-     {s[2]}]'.
-WARNING <1027013> - map: No port matched 's[1]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (3) : Can't
-     resolve object 's[1]' in constraint 'ldc_set_location -site {31} [get_ports
-     {s[1]}]'.
-WARNING <1027013> - map: No port matched 's[0]'.
-WARNING <1026001> - map: C:/Users/sojayaweera/E155/lab3_sj/pins.pdc (4) : Can't
-     resolve object 's[0]' in constraint 'ldc_set_location -site {37} [get_ports
-     {s[0]}]'.
-WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {32}
-     [get_ports {s[3]}]'.
-WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {35}
-     [get_ports {s[2]}]'.
-WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {31}
-     [get_ports {s[1]}]'.
-WARNING <1011001> - map: Remove invalid constraint 'ldc_set_location -site {37}
-     [get_ports {s[0]}]'.
+   No error, critical, or warning presents.
 
 IO (PIO) Attributes
 -------------------
 
 +---------------------+-----------+-----------+-------+-------+-----------+
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
-
-                                    Page 2
-
-
-
-
-
-IO (PIO) Attributes (cont)
---------------------------
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | colunstable[0]      | INPUT     |           | I     |       |           |
@@ -167,6 +127,15 @@ IO (PIO) Attributes (cont)
 | nsel                | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | row[0]              | OUTPUT    |           |       |       |           |
+
+                                    Page 2
+
+
+
+
+
+IO (PIO) Attributes (cont)
+--------------------------
 +---------------------+-----------+-----------+-------+-------+-----------+
 | row[1]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -192,14 +161,6 @@ OSC 1:                                 Pin/Node Value
   OSC Output:                          NODE     int_osc
   DIV Setting:                                  01
 
-
-
-                                    Page 3
-
-
-
-
-
 ASIC Components
 ---------------
 
@@ -207,9 +168,9 @@ Instance Name: clocker/hf_osc.osc_inst
          Type: HFOSC
 Instance Name: colsyncer/stableval_i1
          Type: IOLOGIC
-Instance Name: colsyncer/stableval_i0
-         Type: IOLOGIC
 Instance Name: colsyncer/stableval_i3
+         Type: IOLOGIC
+Instance Name: colsyncer/stableval_i0
          Type: IOLOGIC
 Instance Name: colsyncer/stableval_i2
          Type: IOLOGIC
@@ -217,13 +178,8 @@ Instance Name: colsyncer/stableval_i2
 Constraint Summary
 ------------------
 
-   Total number of constraints: 28
-   Total number of constraints dropped: 4
-   Dropped constraints are:
-     ldc_set_location -site {32} [get_ports {s[3]}]
-     ldc_set_location -site {35} [get_ports {s[2]}]
-     ldc_set_location -site {31} [get_ports {s[1]}]
-     ldc_set_location -site {37} [get_ports {s[0]}]
+   Total number of constraints: 24
+   Total number of constraints dropped: 0
 
 Run Time and Memory Usage
 -------------------------
@@ -231,36 +187,14 @@ Run Time and Memory Usage
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 70 MB
-Checksum -- map: 2bb0b5b1da69033b2790a813b62da665ab15035a
+Checksum -- map: 8422bfa0c8c5925a7c049f8094bf53b8fbd6ee88
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    Page 4
+                                    Page 3
 
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.

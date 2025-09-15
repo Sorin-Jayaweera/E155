@@ -29,7 +29,7 @@ module top(
 	
 	logic [31:0] counter;
 	logic [31:0] countstart;
-	assign debugger = !pressed & timepassed;
+	assign debugger = !pressed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -51,7 +51,7 @@ module top(
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Time Multiplexing Seven Segment Display
-	assign timepassed = (countstart - counter) > 1200000;//100800;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
+	assign timepassed = (counter - countstart ) > 6000000;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
 	
 	// choosing which set of connections for the resource use
 	// sequential logic

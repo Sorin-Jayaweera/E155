@@ -48,7 +48,7 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Sun Sep 14 18:24:28 2025
+Sun Sep 14 19:02:17 2025
 
 Pinout by Port Name:
 +----------------+----------+--------------+-------+------------------------------------------+
@@ -60,7 +60,7 @@ Pinout by Port Name:
 | colunstable[3] | 3/2      | LVCMOS33_IN  | PL10B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 | debugger       | 20/1     | LVCMOS33_OUT | PL20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | nsel           | 48/2     | LVCMOS33_OUT | PL8A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| reset          | 23/0     | LVCMOS33_IN  | PR20A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| reset          | 32/0     | LVCMOS33_IN  | PR17A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 | row[0]         | 47/2     | LVCMOS33_OUT | PL7A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | row[1]         | 11/1     | LVCMOS33_OUT | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | row[2]         | 10/1     | LVCMOS33_OUT | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
@@ -105,13 +105,13 @@ Vccio by Bank:
 | 19/1     | segout[4]           | LOCATED    | LVCMOS33_OUT | PL22B |                  |
 | 20/1     | debugger            | LOCATED    | LVCMOS33_OUT | PL20B | PCLKT1_0         |
 | 21/1     | row[3]              | LOCATED    | LVCMOS33_OUT | PL19B |                  |
-| 23/0     | reset               | LOCATED    | LVCMOS33_IN  | PR20A |                  |
+| 23/0     |     unused, PULL:UP |            |              | PR20A |                  |
 | 25/0     |     unused, PULL:UP |            |              | PR20B |                  |
 | 26/0     |     unused, PULL:UP |            |              | PR19A |                  |
 | 27/0     |     unused, PULL:UP |            |              | PR19B |                  |
 | 28/0     |     unused, PULL:UP |            |              | PR18A |                  |
 | 31/0     |     unused, PULL:UP |            |              | PR17B |                  |
-| 32/0     |     unused, PULL:UP |            |              | PR17A |                  |
+| 32/0     | reset               | LOCATED    | LVCMOS33_IN  | PR17A |                  |
 | 34/0     |     unused, PULL:UP |            |              | PR14B |                  |
 | 35/0     |     unused, PULL:UP |            |              | PR13B | GPLL_IN/PCLKT0_1 |
 | 36/0     |     unused, PULL:UP |            |              | PR10B |                  |
@@ -155,7 +155,7 @@ ldc_set_location -site {45} [ get_ports {colunstable[2]} ]
 ldc_set_location -site {3} [ get_ports {colunstable[3]} ]
 ldc_set_location -site {20} [ get_ports {debugger} ]
 ldc_set_location -site {48} [ get_ports {nsel} ]
-ldc_set_location -site {23} [ get_ports {reset} ]
+ldc_set_location -site {32} [ get_ports {reset} ]
 ldc_set_location -site {47} [ get_ports {row[0]} ]
 ldc_set_location -site {11} [ get_ports {row[1]} ]
 ldc_set_location -site {10} [ get_ports {row[2]} ]
@@ -175,7 +175,7 @@ ldc_set_location -site {4} [ get_ports {sel} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Sun Sep 14 18:24:28 2025
+Sun Sep 14 19:02:17 2025
 
 
 

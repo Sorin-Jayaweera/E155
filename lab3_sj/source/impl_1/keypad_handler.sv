@@ -26,7 +26,7 @@ module keypad_handler(
 	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
 	
 	// if there is not an active column for the current row, then output none.
-	assign pressed = num != none;
+	assign pressed = (num != none);
 	
 	always_comb
 		case(rowcol)

@@ -9,13 +9,11 @@ module count_module(input logic reset, output logic [31:0] counter, output logic
 	// slow clock logic
 	always_ff@(posedge int_osc) begin
 		if(reset) begin
-				counter <= 25'b0;
+				counter <= 32'b0;
 			end
 		else begin
 			counter <= counter + 1'b1;
 		end
 	end
-		
-		
 	
 endmodule
