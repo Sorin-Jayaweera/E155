@@ -32,7 +32,7 @@ module top(
 	logic [31:0] countstart;
 	logic [31:0] pressedcountstart;
 	
-	assign debugger = pressedtimepassed;
+	assign debugger = pressedtimepassed && timepassed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -73,6 +73,8 @@ module top(
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Debounce State Logic
 	//	
+	
+	
 	always_ff@(posedge int_osc) begin
 		if(reset == 1) begin
 				accepting = 1'b1;
@@ -84,12 +86,16 @@ module top(
 				i0 = itemp;
 				accepting = 1'b0;
 				countstart = counter;
+			
 			end
 		else if (!accepting && !pressed && timepassed) begin
 				pressedcountstart = counter;
+				accepting = 1'b0; // TODO: delete
 			end
 		else if(!accepting && !pressed && pressedtimepassed && timepassed)begin
 				accepting = 1'b1;
+				pressedcountstart = counter; // unneeded
+				countstart = counter;// unneeded
 			end
 		end
 			
