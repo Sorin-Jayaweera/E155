@@ -46,7 +46,7 @@ if (a)
 <A name="Timing_rpt_top">Timing Report</A><B><U><big></big></U></B>
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2024.2.0.3.0
 
-Mon Sep 15 10:40:53 2025
+Mon Sep 15 10:41:16 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -96,7 +96,7 @@ create_clock -name {int_osc} -period 41.6667 [get_pins {clocker/hf_osc.osc_inst/
 
 <A name="Timing_rpt_ConstraintCoverage"></A><B><U><big>1.2  Constraint Coverage</big></U></B>
 
-Constraint Coverage: 88.9332%
+Constraint Coverage: 88.934%
 
 <A name="Timing_rpt_OverallSummary"></A><B><U><big>1.3  Overall Summary</big></U></B>
 
@@ -132,10 +132,10 @@ iActive__i3/SR                          |           No arrival time
 iActive__i2/SR                          |           No arrival time
 iActive__i1/SR                          |           No arrival time
 i0__i3/SR                               |           No arrival time
-i0__i2/SR                               |           No arrival time
-i0__i1/SR                               |           No arrival time
-i1__i3/SR                               |           No arrival time
-i1__i2/SR                               |           No arrival time
+clocker/counter_90__i30/SR              |           No arrival time
+clocker/counter_90__i29/SR              |           No arrival time
+clocker/counter_90__i28/SR              |           No arrival time
+clocker/counter_90__i27/SR              |           No arrival time
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
@@ -186,16 +186,16 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-keypad/i451_3_lut_4_lut/A	->	keypad/i451_3_lut_4_lut/Z
+keypad/i453_3_lut_4_lut/A	->	keypad/i453_3_lut_4_lut/Z
 
 ++++ Loop2
 keypad/i449_3_lut_4_lut/A	->	keypad/i449_3_lut_4_lut/Z
 
 ++++ Loop3
-keypad/i453_3_lut_4_lut/A	->	keypad/i453_3_lut_4_lut/Z
+keypad/i447_3_lut_4_lut/A	->	keypad/i447_3_lut_4_lut/Z
 
 ++++ Loop4
-keypad/i447_3_lut_4_lut/A	->	keypad/i447_3_lut_4_lut/Z
+keypad/i451_3_lut_4_lut/A	->	keypad/i451_3_lut_4_lut/Z
 
 <A name="Timing_rpt_SetupSlowCornerMaxDegree"></A><B><U><big>2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees</big></U></B>
 <A name="Timing_rpt_ClockSummarySetupSlowCornerMaxDegree"></A><B><U><big>2.1  Clock Summary</big></U></B>
@@ -249,7 +249,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
  ++++Path 1  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
+Path Begin       : pressedcountstart_i0_i0/Q  (FD1P3XZ)
 Path End         : cycleflag__i0/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
@@ -273,8 +273,8 @@ Source Clock Path
     "path_end":
     {
         "type":"pin",
-        "log_name":"countstart_i0_i0/CK",
-        "phy_name":"countstart_i0_i0/CK"
+        "log_name":"pressedcountstart_i0_i0/CK",
+        "phy_name":"pressedcountstart_i0_i0/CK"
     },
     "path_sections":[
     {
@@ -310,7 +310,7 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                  0.000  115     
 int_osc                                                   NET DELAY            6.225                  6.225  115     
-countstart_i0_i0/CK                                       CLOCK PIN            0.000                  6.225  1       
+pressedcountstart_i0_i0/CK                                CLOCK PIN            0.000                  6.225  1       
 
 
 Data Path
@@ -320,8 +320,8 @@ Data Path
     "path_begin":
     {
         "type":"pin",
-        "log_name":"countstart_i0_i0/Q",
-        "phy_name":"countstart_i0_i0/Q"
+        "log_name":"pressedcountstart_i0_i0/Q",
+        "phy_name":"pressedcountstart_i0_i0/Q"
     },
     "path_end":
     {
@@ -334,13 +334,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"countstart_i0_i0/CK",
-            "phy_name":"countstart_i0_i0/CK"
+            "log_name":"pressedcountstart_i0_i0/CK",
+            "phy_name":"pressedcountstart_i0_i0/CK"
         },
         "pin1":
         {
-            "log_name":"countstart_i0_i0/Q",
-            "phy_name":"countstart_i0_i0/Q"
+            "log_name":"pressedcountstart_i0_i0/Q",
+            "phy_name":"pressedcountstart_i0_i0/Q"
         },
         "arrive":7.616,
         "delay":1.391
@@ -349,8 +349,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"countstart[0]",
-            "phy_name":"countstart[0]"
+            "log_name":"pressedcountstart[0]",
+            "phy_name":"pressedcountstart[0]"
         },
         "arrive":9.691,
         "delay":2.075
@@ -359,13 +359,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"sub_3_inv_0_i1_1_lut/A",
-            "phy_name":"sub_3_inv_0_i1_1_lut/A"
+            "log_name":"sub_5_inv_0_i1_1_lut/A",
+            "phy_name":"sub_5_inv_0_i1_1_lut/A"
         },
         "pin1":
         {
-            "log_name":"sub_3_inv_0_i1_1_lut/Z",
-            "phy_name":"sub_3_inv_0_i1_1_lut/Z"
+            "log_name":"sub_5_inv_0_i1_1_lut/Z",
+            "phy_name":"sub_5_inv_0_i1_1_lut/Z"
         },
         "arrive":10.168,
         "delay":0.477
@@ -374,8 +374,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1[0]",
+            "phy_name":"n1[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -384,13 +384,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_2/C0",
-            "phy_name":"add_159_2/C0"
+            "log_name":"add_158_2/C0",
+            "phy_name":"add_158_2/C0"
         },
         "pin1":
         {
-            "log_name":"add_159_2/CO0",
-            "phy_name":"add_159_2/CO0"
+            "log_name":"add_158_2/CO0",
+            "phy_name":"add_158_2/CO0"
         },
         "arrive":12.587,
         "delay":0.344
@@ -399,8 +399,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3330",
+            "phy_name":"n3330"
         },
         "arrive":12.867,
         "delay":0.280
@@ -409,13 +409,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_2/CI1",
-            "phy_name":"add_159_2/CI1"
+            "log_name":"add_158_2/CI1",
+            "phy_name":"add_158_2/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_2/CO1",
-            "phy_name":"add_159_2/CO1"
+            "log_name":"add_158_2/CO1",
+            "phy_name":"add_158_2/CO1"
         },
         "arrive":13.145,
         "delay":0.278
@@ -424,8 +424,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1464",
+            "phy_name":"n1464"
         },
         "arrive":13.425,
         "delay":0.280
@@ -434,13 +434,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_4/CI0",
-            "phy_name":"add_159_4/CI0"
+            "log_name":"add_158_4/CI0",
+            "phy_name":"add_158_4/CI0"
         },
         "pin1":
         {
-            "log_name":"add_159_4/CO0",
-            "phy_name":"add_159_4/CO0"
+            "log_name":"add_158_4/CO0",
+            "phy_name":"add_158_4/CO0"
         },
         "arrive":13.703,
         "delay":0.278
@@ -449,8 +449,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3333",
+            "phy_name":"n3333"
         },
         "arrive":13.983,
         "delay":0.280
@@ -459,13 +459,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_4/CI1",
-            "phy_name":"add_159_4/CI1"
+            "log_name":"add_158_4/CI1",
+            "phy_name":"add_158_4/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_4/CO1",
-            "phy_name":"add_159_4/CO1"
+            "log_name":"add_158_4/CO1",
+            "phy_name":"add_158_4/CO1"
         },
         "arrive":14.261,
         "delay":0.278
@@ -474,8 +474,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1466",
+            "phy_name":"n1466"
         },
         "arrive":14.541,
         "delay":0.280
@@ -484,13 +484,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_6/CI0",
-            "phy_name":"add_159_6/CI0"
+            "log_name":"add_158_6/CI0",
+            "phy_name":"add_158_6/CI0"
         },
         "pin1":
         {
-            "log_name":"add_159_6/CO0",
-            "phy_name":"add_159_6/CO0"
+            "log_name":"add_158_6/CO0",
+            "phy_name":"add_158_6/CO0"
         },
         "arrive":14.819,
         "delay":0.278
@@ -499,8 +499,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3336",
+            "phy_name":"n3336"
         },
         "arrive":15.099,
         "delay":0.280
@@ -509,13 +509,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_6/CI1",
-            "phy_name":"add_159_6/CI1"
+            "log_name":"add_158_6/CI1",
+            "phy_name":"add_158_6/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_6/CO1",
-            "phy_name":"add_159_6/CO1"
+            "log_name":"add_158_6/CO1",
+            "phy_name":"add_158_6/CO1"
         },
         "arrive":15.377,
         "delay":0.278
@@ -524,8 +524,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1468",
+            "phy_name":"n1468"
         },
         "arrive":15.657,
         "delay":0.280
@@ -534,13 +534,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_8/D0",
-            "phy_name":"add_159_8/D0"
+            "log_name":"add_158_8/D0",
+            "phy_name":"add_158_8/D0"
         },
         "pin1":
         {
-            "log_name":"add_159_8/S0",
-            "phy_name":"add_159_8/S0"
+            "log_name":"add_158_8/S0",
+            "phy_name":"add_158_8/S0"
         },
         "arrive":16.134,
         "delay":0.477
@@ -549,8 +549,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"timepassed_N_153[7]",
-            "phy_name":"timepassed_N_153[7]"
+            "log_name":"debugger_c_N_155[7]",
+            "phy_name":"debugger_c_N_155[7]"
         },
         "arrive":18.209,
         "delay":2.075
@@ -559,13 +559,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut/D",
+            "phy_name":"i5_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut/Z",
+            "phy_name":"i5_4_lut/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -574,8 +574,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12",
+            "phy_name":"n12"
         },
         "arrive":20.761,
         "delay":2.075
@@ -584,13 +584,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut/B",
+            "phy_name":"i6_4_lut/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut/Z",
+            "phy_name":"i6_4_lut/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -599,8 +599,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1875",
+            "phy_name":"n1875"
         },
         "arrive":23.313,
         "delay":2.075
@@ -609,13 +609,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i305_4_lut/D",
-            "phy_name":"i305_4_lut/D"
+            "log_name":"i254_4_lut/D",
+            "phy_name":"i254_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i305_4_lut/Z",
-            "phy_name":"i305_4_lut/Z"
+            "log_name":"i254_4_lut/Z",
+            "phy_name":"i254_4_lut/Z"
         },
         "arrive":23.790,
         "delay":0.477
@@ -624,8 +624,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20",
+            "phy_name":"n20"
         },
         "arrive":25.865,
         "delay":2.075
@@ -634,13 +634,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut/D",
+            "phy_name":"i1_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut/Z",
+            "phy_name":"i1_4_lut/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -649,8 +649,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_164",
+            "phy_name":"n5_adj_164"
         },
         "arrive":28.417,
         "delay":2.075
@@ -659,13 +659,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_13/A",
+            "phy_name":"i1_4_lut_adj_13/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_13/Z",
+            "phy_name":"i1_4_lut_adj_13/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -674,8 +674,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_166",
+            "phy_name":"n5_adj_166"
         },
         "arrive":30.969,
         "delay":2.075
@@ -684,13 +684,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i231_4_lut/A",
-            "phy_name":"i231_4_lut/A"
+            "log_name":"i1_4_lut_adj_14/B",
+            "phy_name":"i1_4_lut_adj_14/B"
         },
         "pin1":
         {
-            "log_name":"i231_4_lut/Z",
-            "phy_name":"i231_4_lut/Z"
+            "log_name":"i1_4_lut_adj_14/Z",
+            "phy_name":"i1_4_lut_adj_14/Z"
         },
         "arrive":31.446,
         "delay":0.477
@@ -699,8 +699,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n38",
-            "phy_name":"n38"
+            "log_name":"n4_adj_245",
+            "phy_name":"n4_adj_245"
         },
         "arrive":33.521,
         "delay":2.075
@@ -709,13 +709,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i234_4_lut/D",
-            "phy_name":"i234_4_lut/D"
+            "log_name":"i282_4_lut/D",
+            "phy_name":"i282_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i234_4_lut/Z",
-            "phy_name":"i234_4_lut/Z"
+            "log_name":"i282_4_lut/Z",
+            "phy_name":"i282_4_lut/Z"
         },
         "arrive":33.998,
         "delay":0.477
@@ -724,8 +724,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n44",
-            "phy_name":"n44"
+            "log_name":"n46",
+            "phy_name":"n46"
         },
         "arrive":36.073,
         "delay":2.075
@@ -734,13 +734,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i8_4_lut/A",
-            "phy_name":"i8_4_lut/A"
+            "log_name":"i6_4_lut_adj_15/C",
+            "phy_name":"i6_4_lut_adj_15/C"
         },
         "pin1":
         {
-            "log_name":"i8_4_lut/Z",
-            "phy_name":"i8_4_lut/Z"
+            "log_name":"i6_4_lut_adj_15/Z",
+            "phy_name":"i6_4_lut_adj_15/Z"
         },
         "arrive":36.550,
         "delay":0.477
@@ -749,8 +749,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n16_adj_243",
+            "phy_name":"n16_adj_243"
         },
         "arrive":38.625,
         "delay":2.075
@@ -759,8 +759,8 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut/C",
+            "phy_name":"i9_4_lut/C"
         },
         "pin1":
         {
@@ -774,8 +774,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"timepassed",
-            "phy_name":"timepassed"
+            "log_name":"debugger_c",
+            "phy_name":"debugger_c"
         },
         "arrive":41.177,
         "delay":2.075
@@ -784,13 +784,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut/C",
+            "phy_name":"i3_4_lut/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut/Z",
+            "phy_name":"i3_4_lut/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -799,8 +799,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n147",
-            "phy_name":"n147"
+            "log_name":"n151",
+            "phy_name":"n151"
         },
         "arrive":43.729,
         "delay":2.075
@@ -809,13 +809,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i2_4_lut_adj_18/A",
-            "phy_name":"i2_4_lut_adj_18/A"
+            "log_name":"i2_3_lut_4_lut/D",
+            "phy_name":"i2_3_lut_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i2_4_lut_adj_18/Z",
-            "phy_name":"i2_4_lut_adj_18/Z"
+            "log_name":"i2_3_lut_4_lut/Z",
+            "phy_name":"i2_3_lut_4_lut/Z"
         },
         "arrive":44.206,
         "delay":0.477
@@ -824,8 +824,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2448",
-            "phy_name":"n2448"
+            "log_name":"n2065",
+            "phy_name":"n2065"
         },
         "arrive":46.281,
         "delay":2.075
@@ -876,47 +876,48 @@ Data Path
 </tapath>
 Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
-countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+pressedcountstart_i0_i0/CK->pressedcountstart_i0_i0/Q
+                                          FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
+pressedcountstart[0]                                      NET DELAY            2.075                  9.691  1       
+sub_5_inv_0_i1_1_lut/A->sub_5_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_4_lut_adj_18/A->i2_4_lut_adj_18/Z      LUT4            A_TO_Z_DELAY         0.477                 44.206  2       
-n2448                                                     NET DELAY            2.075                 46.281  2       
+n1[0]                                                     NET DELAY            2.075                 12.243  1       
+add_158_2/C0->add_158_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n3330                                                     NET DELAY            0.280                 12.867  2       
+add_158_2/CI1->add_158_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n1464                                                     NET DELAY            0.280                 13.425  2       
+add_158_4/CI0->add_158_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n3333                                                     NET DELAY            0.280                 13.983  2       
+add_158_4/CI1->add_158_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n1466                                                     NET DELAY            0.280                 14.541  2       
+add_158_6/CI0->add_158_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n3336                                                     NET DELAY            0.280                 15.099  2       
+add_158_6/CI1->add_158_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n1468                                                     NET DELAY            0.280                 15.657  2       
+add_158_8/D0->add_158_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+debugger_c_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12                                                       NET DELAY            2.075                 20.761  1       
+i6_4_lut/B->i6_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1875                                                     NET DELAY            2.075                 23.313  1       
+i254_4_lut/D->i254_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
+n20                                                       NET DELAY            2.075                 25.865  1       
+i1_4_lut/D->i1_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_164                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_13/A->i1_4_lut_adj_13/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_166                                                NET DELAY            2.075                 30.969  1       
+i1_4_lut_adj_14/B->i1_4_lut_adj_14/Z      LUT4            B_TO_Z_DELAY         0.477                 31.446  1       
+n4_adj_245                                                NET DELAY            2.075                 33.521  1       
+i282_4_lut/D->i282_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
+n46                                                       NET DELAY            2.075                 36.073  1       
+i6_4_lut_adj_15/C->i6_4_lut_adj_15/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  1       
+n16_adj_243                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut/C->i9_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 39.102  2       
+debugger_c                                                NET DELAY            2.075                 41.177  2       
+i3_4_lut/C->i3_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 41.654  1       
+n151                                                      NET DELAY            2.075                 43.729  1       
+i2_3_lut_4_lut/D->i2_3_lut_4_lut/Z        LUT4            D_TO_Z_DELAY         0.477                 44.206  2       
+n2065                                                     NET DELAY            2.075                 46.281  2       
 i433_3_lut_4_lut/D->i433_3_lut_4_lut/Z    LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
 n910                                                      NET DELAY            2.075                 48.833  1       
 cycleflag__i0/D                                           ENDPOINT             0.000                 48.833  1       
@@ -1002,7 +1003,7 @@ Path Slack  (Failed)                                                            
 
 ++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
+Path Begin       : pressedcountstart_i0_i0/Q  (FD1P3XZ)
 Path End         : cycleflag__i1/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
@@ -1026,8 +1027,8 @@ Source Clock Path
     "path_end":
     {
         "type":"pin",
-        "log_name":"countstart_i0_i0/CK",
-        "phy_name":"countstart_i0_i0/CK"
+        "log_name":"pressedcountstart_i0_i0/CK",
+        "phy_name":"pressedcountstart_i0_i0/CK"
     },
     "path_sections":[
     {
@@ -1063,7 +1064,7 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                  0.000  115     
 int_osc                                                   NET DELAY            6.225                  6.225  115     
-countstart_i0_i0/CK                                       CLOCK PIN            0.000                  6.225  1       
+pressedcountstart_i0_i0/CK                                CLOCK PIN            0.000                  6.225  1       
 
 
 Data Path
@@ -1073,8 +1074,8 @@ Data Path
     "path_begin":
     {
         "type":"pin",
-        "log_name":"countstart_i0_i0/Q",
-        "phy_name":"countstart_i0_i0/Q"
+        "log_name":"pressedcountstart_i0_i0/Q",
+        "phy_name":"pressedcountstart_i0_i0/Q"
     },
     "path_end":
     {
@@ -1087,13 +1088,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"countstart_i0_i0/CK",
-            "phy_name":"countstart_i0_i0/CK"
+            "log_name":"pressedcountstart_i0_i0/CK",
+            "phy_name":"pressedcountstart_i0_i0/CK"
         },
         "pin1":
         {
-            "log_name":"countstart_i0_i0/Q",
-            "phy_name":"countstart_i0_i0/Q"
+            "log_name":"pressedcountstart_i0_i0/Q",
+            "phy_name":"pressedcountstart_i0_i0/Q"
         },
         "arrive":7.616,
         "delay":1.391
@@ -1102,8 +1103,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"countstart[0]",
-            "phy_name":"countstart[0]"
+            "log_name":"pressedcountstart[0]",
+            "phy_name":"pressedcountstart[0]"
         },
         "arrive":9.691,
         "delay":2.075
@@ -1112,13 +1113,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"sub_3_inv_0_i1_1_lut/A",
-            "phy_name":"sub_3_inv_0_i1_1_lut/A"
+            "log_name":"sub_5_inv_0_i1_1_lut/A",
+            "phy_name":"sub_5_inv_0_i1_1_lut/A"
         },
         "pin1":
         {
-            "log_name":"sub_3_inv_0_i1_1_lut/Z",
-            "phy_name":"sub_3_inv_0_i1_1_lut/Z"
+            "log_name":"sub_5_inv_0_i1_1_lut/Z",
+            "phy_name":"sub_5_inv_0_i1_1_lut/Z"
         },
         "arrive":10.168,
         "delay":0.477
@@ -1127,8 +1128,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1[0]",
+            "phy_name":"n1[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -1137,13 +1138,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_2/C0",
-            "phy_name":"add_159_2/C0"
+            "log_name":"add_158_2/C0",
+            "phy_name":"add_158_2/C0"
         },
         "pin1":
         {
-            "log_name":"add_159_2/CO0",
-            "phy_name":"add_159_2/CO0"
+            "log_name":"add_158_2/CO0",
+            "phy_name":"add_158_2/CO0"
         },
         "arrive":12.587,
         "delay":0.344
@@ -1152,8 +1153,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3330",
+            "phy_name":"n3330"
         },
         "arrive":12.867,
         "delay":0.280
@@ -1162,13 +1163,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_2/CI1",
-            "phy_name":"add_159_2/CI1"
+            "log_name":"add_158_2/CI1",
+            "phy_name":"add_158_2/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_2/CO1",
-            "phy_name":"add_159_2/CO1"
+            "log_name":"add_158_2/CO1",
+            "phy_name":"add_158_2/CO1"
         },
         "arrive":13.145,
         "delay":0.278
@@ -1177,8 +1178,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1464",
+            "phy_name":"n1464"
         },
         "arrive":13.425,
         "delay":0.280
@@ -1187,13 +1188,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_4/CI0",
-            "phy_name":"add_159_4/CI0"
+            "log_name":"add_158_4/CI0",
+            "phy_name":"add_158_4/CI0"
         },
         "pin1":
         {
-            "log_name":"add_159_4/CO0",
-            "phy_name":"add_159_4/CO0"
+            "log_name":"add_158_4/CO0",
+            "phy_name":"add_158_4/CO0"
         },
         "arrive":13.703,
         "delay":0.278
@@ -1202,8 +1203,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3333",
+            "phy_name":"n3333"
         },
         "arrive":13.983,
         "delay":0.280
@@ -1212,13 +1213,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_4/CI1",
-            "phy_name":"add_159_4/CI1"
+            "log_name":"add_158_4/CI1",
+            "phy_name":"add_158_4/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_4/CO1",
-            "phy_name":"add_159_4/CO1"
+            "log_name":"add_158_4/CO1",
+            "phy_name":"add_158_4/CO1"
         },
         "arrive":14.261,
         "delay":0.278
@@ -1227,8 +1228,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1466",
+            "phy_name":"n1466"
         },
         "arrive":14.541,
         "delay":0.280
@@ -1237,13 +1238,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_6/CI0",
-            "phy_name":"add_159_6/CI0"
+            "log_name":"add_158_6/CI0",
+            "phy_name":"add_158_6/CI0"
         },
         "pin1":
         {
-            "log_name":"add_159_6/CO0",
-            "phy_name":"add_159_6/CO0"
+            "log_name":"add_158_6/CO0",
+            "phy_name":"add_158_6/CO0"
         },
         "arrive":14.819,
         "delay":0.278
@@ -1252,8 +1253,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3336",
+            "phy_name":"n3336"
         },
         "arrive":15.099,
         "delay":0.280
@@ -1262,13 +1263,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_6/CI1",
-            "phy_name":"add_159_6/CI1"
+            "log_name":"add_158_6/CI1",
+            "phy_name":"add_158_6/CI1"
         },
         "pin1":
         {
-            "log_name":"add_159_6/CO1",
-            "phy_name":"add_159_6/CO1"
+            "log_name":"add_158_6/CO1",
+            "phy_name":"add_158_6/CO1"
         },
         "arrive":15.377,
         "delay":0.278
@@ -1277,8 +1278,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1468",
+            "phy_name":"n1468"
         },
         "arrive":15.657,
         "delay":0.280
@@ -1287,13 +1288,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"add_159_8/D0",
-            "phy_name":"add_159_8/D0"
+            "log_name":"add_158_8/D0",
+            "phy_name":"add_158_8/D0"
         },
         "pin1":
         {
-            "log_name":"add_159_8/S0",
-            "phy_name":"add_159_8/S0"
+            "log_name":"add_158_8/S0",
+            "phy_name":"add_158_8/S0"
         },
         "arrive":16.134,
         "delay":0.477
@@ -1302,8 +1303,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"timepassed_N_153[7]",
-            "phy_name":"timepassed_N_153[7]"
+            "log_name":"debugger_c_N_155[7]",
+            "phy_name":"debugger_c_N_155[7]"
         },
         "arrive":18.209,
         "delay":2.075
@@ -1312,13 +1313,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut/D",
+            "phy_name":"i5_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut/Z",
+            "phy_name":"i5_4_lut/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -1327,8 +1328,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12",
+            "phy_name":"n12"
         },
         "arrive":20.761,
         "delay":2.075
@@ -1337,13 +1338,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut/B",
+            "phy_name":"i6_4_lut/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut/Z",
+            "phy_name":"i6_4_lut/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -1352,8 +1353,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1875",
+            "phy_name":"n1875"
         },
         "arrive":23.313,
         "delay":2.075
@@ -1362,13 +1363,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i305_4_lut/D",
-            "phy_name":"i305_4_lut/D"
+            "log_name":"i254_4_lut/D",
+            "phy_name":"i254_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i305_4_lut/Z",
-            "phy_name":"i305_4_lut/Z"
+            "log_name":"i254_4_lut/Z",
+            "phy_name":"i254_4_lut/Z"
         },
         "arrive":23.790,
         "delay":0.477
@@ -1377,8 +1378,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20",
+            "phy_name":"n20"
         },
         "arrive":25.865,
         "delay":2.075
@@ -1387,13 +1388,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut/D",
+            "phy_name":"i1_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut/Z",
+            "phy_name":"i1_4_lut/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -1402,8 +1403,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_164",
+            "phy_name":"n5_adj_164"
         },
         "arrive":28.417,
         "delay":2.075
@@ -1412,13 +1413,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_13/A",
+            "phy_name":"i1_4_lut_adj_13/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_13/Z",
+            "phy_name":"i1_4_lut_adj_13/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -1427,8 +1428,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_166",
+            "phy_name":"n5_adj_166"
         },
         "arrive":30.969,
         "delay":2.075
@@ -1437,13 +1438,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i231_4_lut/A",
-            "phy_name":"i231_4_lut/A"
+            "log_name":"i1_4_lut_adj_14/B",
+            "phy_name":"i1_4_lut_adj_14/B"
         },
         "pin1":
         {
-            "log_name":"i231_4_lut/Z",
-            "phy_name":"i231_4_lut/Z"
+            "log_name":"i1_4_lut_adj_14/Z",
+            "phy_name":"i1_4_lut_adj_14/Z"
         },
         "arrive":31.446,
         "delay":0.477
@@ -1452,8 +1453,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n38",
-            "phy_name":"n38"
+            "log_name":"n4_adj_245",
+            "phy_name":"n4_adj_245"
         },
         "arrive":33.521,
         "delay":2.075
@@ -1462,13 +1463,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i234_4_lut/D",
-            "phy_name":"i234_4_lut/D"
+            "log_name":"i282_4_lut/D",
+            "phy_name":"i282_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i234_4_lut/Z",
-            "phy_name":"i234_4_lut/Z"
+            "log_name":"i282_4_lut/Z",
+            "phy_name":"i282_4_lut/Z"
         },
         "arrive":33.998,
         "delay":0.477
@@ -1477,8 +1478,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n44",
-            "phy_name":"n44"
+            "log_name":"n46",
+            "phy_name":"n46"
         },
         "arrive":36.073,
         "delay":2.075
@@ -1487,13 +1488,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i8_4_lut/A",
-            "phy_name":"i8_4_lut/A"
+            "log_name":"i6_4_lut_adj_15/C",
+            "phy_name":"i6_4_lut_adj_15/C"
         },
         "pin1":
         {
-            "log_name":"i8_4_lut/Z",
-            "phy_name":"i8_4_lut/Z"
+            "log_name":"i6_4_lut_adj_15/Z",
+            "phy_name":"i6_4_lut_adj_15/Z"
         },
         "arrive":36.550,
         "delay":0.477
@@ -1502,8 +1503,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n16_adj_243",
+            "phy_name":"n16_adj_243"
         },
         "arrive":38.625,
         "delay":2.075
@@ -1512,8 +1513,8 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut/C",
+            "phy_name":"i9_4_lut/C"
         },
         "pin1":
         {
@@ -1527,8 +1528,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"timepassed",
-            "phy_name":"timepassed"
+            "log_name":"debugger_c",
+            "phy_name":"debugger_c"
         },
         "arrive":41.177,
         "delay":2.075
@@ -1537,13 +1538,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut/C",
+            "phy_name":"i3_4_lut/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut/Z",
+            "phy_name":"i3_4_lut/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -1552,8 +1553,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n147",
-            "phy_name":"n147"
+            "log_name":"n151",
+            "phy_name":"n151"
         },
         "arrive":43.729,
         "delay":2.075
@@ -1562,13 +1563,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i2_4_lut_adj_18/A",
-            "phy_name":"i2_4_lut_adj_18/A"
+            "log_name":"i2_3_lut_4_lut/D",
+            "phy_name":"i2_3_lut_4_lut/D"
         },
         "pin1":
         {
-            "log_name":"i2_4_lut_adj_18/Z",
-            "phy_name":"i2_4_lut_adj_18/Z"
+            "log_name":"i2_3_lut_4_lut/Z",
+            "phy_name":"i2_3_lut_4_lut/Z"
         },
         "arrive":44.206,
         "delay":0.477
@@ -1577,8 +1578,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2448",
-            "phy_name":"n2448"
+            "log_name":"n2065",
+            "phy_name":"n2065"
         },
         "arrive":46.281,
         "delay":2.075
@@ -1629,47 +1630,48 @@ Data Path
 </tapath>
 Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
-countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+pressedcountstart_i0_i0/CK->pressedcountstart_i0_i0/Q
+                                          FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
+pressedcountstart[0]                                      NET DELAY            2.075                  9.691  1       
+sub_5_inv_0_i1_1_lut/A->sub_5_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_4_lut_adj_18/A->i2_4_lut_adj_18/Z      LUT4            A_TO_Z_DELAY         0.477                 44.206  2       
-n2448                                                     NET DELAY            2.075                 46.281  2       
+n1[0]                                                     NET DELAY            2.075                 12.243  1       
+add_158_2/C0->add_158_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n3330                                                     NET DELAY            0.280                 12.867  2       
+add_158_2/CI1->add_158_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n1464                                                     NET DELAY            0.280                 13.425  2       
+add_158_4/CI0->add_158_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n3333                                                     NET DELAY            0.280                 13.983  2       
+add_158_4/CI1->add_158_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n1466                                                     NET DELAY            0.280                 14.541  2       
+add_158_6/CI0->add_158_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n3336                                                     NET DELAY            0.280                 15.099  2       
+add_158_6/CI1->add_158_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n1468                                                     NET DELAY            0.280                 15.657  2       
+add_158_8/D0->add_158_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+debugger_c_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12                                                       NET DELAY            2.075                 20.761  1       
+i6_4_lut/B->i6_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1875                                                     NET DELAY            2.075                 23.313  1       
+i254_4_lut/D->i254_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
+n20                                                       NET DELAY            2.075                 25.865  1       
+i1_4_lut/D->i1_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_164                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_13/A->i1_4_lut_adj_13/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_166                                                NET DELAY            2.075                 30.969  1       
+i1_4_lut_adj_14/B->i1_4_lut_adj_14/Z      LUT4            B_TO_Z_DELAY         0.477                 31.446  1       
+n4_adj_245                                                NET DELAY            2.075                 33.521  1       
+i282_4_lut/D->i282_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
+n46                                                       NET DELAY            2.075                 36.073  1       
+i6_4_lut_adj_15/C->i6_4_lut_adj_15/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  1       
+n16_adj_243                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut/C->i9_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 39.102  2       
+debugger_c                                                NET DELAY            2.075                 41.177  2       
+i3_4_lut/C->i3_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 41.654  1       
+n151                                                      NET DELAY            2.075                 43.729  1       
+i2_3_lut_4_lut/D->i2_3_lut_4_lut/Z        LUT4            D_TO_Z_DELAY         0.477                 44.206  2       
+n2065                                                     NET DELAY            2.075                 46.281  2       
 i436_4_lut/D->i436_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
 n913                                                      NET DELAY            2.075                 48.833  1       
 cycleflag__i1/D                                           ENDPOINT             0.000                 48.833  1       
@@ -1880,8 +1882,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -1905,8 +1907,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -1930,8 +1932,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -1955,8 +1957,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -1980,8 +1982,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -2005,8 +2007,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -2030,8 +2032,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -2065,13 +2067,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -2080,8 +2082,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -2090,13 +2092,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -2105,8 +2107,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -2130,8 +2132,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -2140,13 +2142,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -2155,8 +2157,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -2165,13 +2167,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -2180,8 +2182,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -2255,8 +2257,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -2265,13 +2267,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -2290,13 +2292,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -2361,40 +2363,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -2606,8 +2608,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -2631,8 +2633,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -2656,8 +2658,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -2681,8 +2683,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -2706,8 +2708,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -2731,8 +2733,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -2756,8 +2758,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -2791,13 +2793,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -2806,8 +2808,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -2816,13 +2818,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -2831,8 +2833,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -2856,8 +2858,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -2866,13 +2868,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -2881,8 +2883,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -2891,13 +2893,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -2906,8 +2908,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -2981,8 +2983,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -2991,13 +2993,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -3016,13 +3018,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -3087,40 +3089,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -3332,8 +3334,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -3357,8 +3359,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -3382,8 +3384,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -3407,8 +3409,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -3432,8 +3434,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -3457,8 +3459,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -3482,8 +3484,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -3517,13 +3519,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -3532,8 +3534,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -3542,13 +3544,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -3557,8 +3559,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -3582,8 +3584,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -3592,13 +3594,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -3607,8 +3609,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -3617,13 +3619,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -3632,8 +3634,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -3707,8 +3709,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -3717,13 +3719,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -3742,13 +3744,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -3813,40 +3815,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -4058,8 +4060,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -4083,8 +4085,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -4108,8 +4110,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -4133,8 +4135,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -4158,8 +4160,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -4183,8 +4185,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -4208,8 +4210,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -4243,13 +4245,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -4258,8 +4260,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -4268,13 +4270,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -4283,8 +4285,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -4308,8 +4310,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -4318,13 +4320,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -4333,8 +4335,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -4343,13 +4345,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -4358,8 +4360,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -4433,8 +4435,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -4443,13 +4445,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -4468,13 +4470,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -4539,40 +4541,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -4784,8 +4786,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -4809,8 +4811,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -4834,8 +4836,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -4859,8 +4861,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -4884,8 +4886,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -4909,8 +4911,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -4934,8 +4936,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -4969,13 +4971,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -4984,8 +4986,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -4994,13 +4996,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -5009,8 +5011,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -5034,8 +5036,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -5044,13 +5046,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -5059,8 +5061,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -5069,13 +5071,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -5084,8 +5086,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -5159,8 +5161,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -5169,13 +5171,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -5194,13 +5196,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -5265,40 +5267,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -5510,8 +5512,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -5535,8 +5537,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -5560,8 +5562,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -5585,8 +5587,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -5610,8 +5612,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -5635,8 +5637,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -5660,8 +5662,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -5695,13 +5697,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -5710,8 +5712,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -5720,13 +5722,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -5735,8 +5737,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -5760,8 +5762,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -5770,13 +5772,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -5785,8 +5787,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -5795,13 +5797,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -5810,8 +5812,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -5885,8 +5887,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -5895,13 +5897,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -5920,13 +5922,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -5991,40 +5993,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -6236,8 +6238,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -6261,8 +6263,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -6286,8 +6288,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -6311,8 +6313,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -6336,8 +6338,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -6361,8 +6363,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -6386,8 +6388,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -6421,13 +6423,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -6436,8 +6438,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -6446,13 +6448,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -6461,8 +6463,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -6486,8 +6488,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -6496,13 +6498,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -6511,8 +6513,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -6521,13 +6523,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -6536,8 +6538,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -6611,8 +6613,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -6621,13 +6623,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -6646,13 +6648,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -6717,40 +6719,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -6962,8 +6964,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1_adj_243[0]",
-            "phy_name":"n1_adj_243[0]"
+            "log_name":"n1_adj_246[0]",
+            "phy_name":"n1_adj_246[0]"
         },
         "arrive":12.243,
         "delay":2.075
@@ -6987,8 +6989,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3593",
-            "phy_name":"n3593"
+            "log_name":"n3231",
+            "phy_name":"n3231"
         },
         "arrive":12.867,
         "delay":0.280
@@ -7012,8 +7014,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1805",
-            "phy_name":"n1805"
+            "log_name":"n1432",
+            "phy_name":"n1432"
         },
         "arrive":13.425,
         "delay":0.280
@@ -7037,8 +7039,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3596",
-            "phy_name":"n3596"
+            "log_name":"n3234",
+            "phy_name":"n3234"
         },
         "arrive":13.983,
         "delay":0.280
@@ -7062,8 +7064,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1807",
-            "phy_name":"n1807"
+            "log_name":"n1434",
+            "phy_name":"n1434"
         },
         "arrive":14.541,
         "delay":0.280
@@ -7087,8 +7089,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n3599",
-            "phy_name":"n3599"
+            "log_name":"n3237",
+            "phy_name":"n3237"
         },
         "arrive":15.099,
         "delay":0.280
@@ -7112,8 +7114,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n1809",
-            "phy_name":"n1809"
+            "log_name":"n1436",
+            "phy_name":"n1436"
         },
         "arrive":15.657,
         "delay":0.280
@@ -7147,13 +7149,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i5_4_lut_adj_19/D",
-            "phy_name":"i5_4_lut_adj_19/D"
+            "log_name":"i5_4_lut_adj_16/D",
+            "phy_name":"i5_4_lut_adj_16/D"
         },
         "pin1":
         {
-            "log_name":"i5_4_lut_adj_19/Z",
-            "phy_name":"i5_4_lut_adj_19/Z"
+            "log_name":"i5_4_lut_adj_16/Z",
+            "phy_name":"i5_4_lut_adj_16/Z"
         },
         "arrive":18.686,
         "delay":0.477
@@ -7162,8 +7164,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n12_adj_200",
-            "phy_name":"n12_adj_200"
+            "log_name":"n12_adj_244",
+            "phy_name":"n12_adj_244"
         },
         "arrive":20.761,
         "delay":2.075
@@ -7172,13 +7174,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i6_4_lut_adj_20/B",
-            "phy_name":"i6_4_lut_adj_20/B"
+            "log_name":"i6_4_lut_adj_17/B",
+            "phy_name":"i6_4_lut_adj_17/B"
         },
         "pin1":
         {
-            "log_name":"i6_4_lut_adj_20/Z",
-            "phy_name":"i6_4_lut_adj_20/Z"
+            "log_name":"i6_4_lut_adj_17/Z",
+            "phy_name":"i6_4_lut_adj_17/Z"
         },
         "arrive":21.238,
         "delay":0.477
@@ -7187,8 +7189,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n2248",
-            "phy_name":"n2248"
+            "log_name":"n1872",
+            "phy_name":"n1872"
         },
         "arrive":23.313,
         "delay":2.075
@@ -7212,8 +7214,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n20_adj_199",
-            "phy_name":"n20_adj_199"
+            "log_name":"n20_adj_207",
+            "phy_name":"n20_adj_207"
         },
         "arrive":25.865,
         "delay":2.075
@@ -7222,13 +7224,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_21/D",
-            "phy_name":"i1_4_lut_adj_21/D"
+            "log_name":"i1_4_lut_adj_18/D",
+            "phy_name":"i1_4_lut_adj_18/D"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_21/Z",
-            "phy_name":"i1_4_lut_adj_21/Z"
+            "log_name":"i1_4_lut_adj_18/Z",
+            "phy_name":"i1_4_lut_adj_18/Z"
         },
         "arrive":26.342,
         "delay":0.477
@@ -7237,8 +7239,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_238",
-            "phy_name":"n5_adj_238"
+            "log_name":"n5_adj_167",
+            "phy_name":"n5_adj_167"
         },
         "arrive":28.417,
         "delay":2.075
@@ -7247,13 +7249,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i1_4_lut_adj_22/A",
-            "phy_name":"i1_4_lut_adj_22/A"
+            "log_name":"i1_4_lut_adj_19/A",
+            "phy_name":"i1_4_lut_adj_19/A"
         },
         "pin1":
         {
-            "log_name":"i1_4_lut_adj_22/Z",
-            "phy_name":"i1_4_lut_adj_22/Z"
+            "log_name":"i1_4_lut_adj_19/Z",
+            "phy_name":"i1_4_lut_adj_19/Z"
         },
         "arrive":28.894,
         "delay":0.477
@@ -7262,8 +7264,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n5_adj_196",
-            "phy_name":"n5_adj_196"
+            "log_name":"n5_adj_210",
+            "phy_name":"n5_adj_210"
         },
         "arrive":30.969,
         "delay":2.075
@@ -7337,8 +7339,8 @@ Data Path
         "type":"net_delay",
         "net":
         {
-            "log_name":"n18_adj_232",
-            "phy_name":"n18_adj_232"
+            "log_name":"n18_adj_203",
+            "phy_name":"n18_adj_203"
         },
         "arrive":38.625,
         "delay":2.075
@@ -7347,13 +7349,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i9_4_lut/B",
-            "phy_name":"i9_4_lut/B"
+            "log_name":"i9_4_lut_adj_21/B",
+            "phy_name":"i9_4_lut_adj_21/B"
         },
         "pin1":
         {
-            "log_name":"i9_4_lut/Z",
-            "phy_name":"i9_4_lut/Z"
+            "log_name":"i9_4_lut_adj_21/Z",
+            "phy_name":"i9_4_lut_adj_21/Z"
         },
         "arrive":39.102,
         "delay":0.477
@@ -7372,13 +7374,13 @@ Data Path
         "type":"site_delay",
         "pin0":
         {
-            "log_name":"i3_4_lut_adj_24/C",
-            "phy_name":"i3_4_lut_adj_24/C"
+            "log_name":"i3_4_lut_adj_22/C",
+            "phy_name":"i3_4_lut_adj_22/C"
         },
         "pin1":
         {
-            "log_name":"i3_4_lut_adj_24/Z",
-            "phy_name":"i3_4_lut_adj_24/Z"
+            "log_name":"i3_4_lut_adj_22/Z",
+            "phy_name":"i3_4_lut_adj_22/Z"
         },
         "arrive":41.654,
         "delay":0.477
@@ -7443,40 +7445,40 @@ countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
 sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_243[0]                                             NET DELAY            2.075                 12.243  1       
+n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
 add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3593                                                     NET DELAY            0.280                 12.867  2       
+n3231                                                     NET DELAY            0.280                 12.867  2       
 add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1805                                                     NET DELAY            0.280                 13.425  2       
+n1432                                                     NET DELAY            0.280                 13.425  2       
 add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3596                                                     NET DELAY            0.280                 13.983  2       
+n3234                                                     NET DELAY            0.280                 13.983  2       
 add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1807                                                     NET DELAY            0.280                 14.541  2       
+n1434                                                     NET DELAY            0.280                 14.541  2       
 add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3599                                                     NET DELAY            0.280                 15.099  2       
+n3237                                                     NET DELAY            0.280                 15.099  2       
 add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1809                                                     NET DELAY            0.280                 15.657  2       
+n1436                                                     NET DELAY            0.280                 15.657  2       
 add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
 timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_19/D->i5_4_lut_adj_19/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_200                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_20/B->i6_4_lut_adj_20/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n2248                                                     NET DELAY            2.075                 23.313  1       
+i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_244                                               NET DELAY            2.075                 20.761  1       
+i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
+n1872                                                     NET DELAY            2.075                 23.313  1       
 i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_199                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_21/D->i1_4_lut_adj_21/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_238                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_22/A->i1_4_lut_adj_22/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_196                                                NET DELAY            2.075                 30.969  1       
+n20_adj_207                                               NET DELAY            2.075                 25.865  1       
+i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
+n5_adj_167                                                NET DELAY            2.075                 28.417  1       
+i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n5_adj_210                                                NET DELAY            2.075                 30.969  1       
 i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
 n38                                                       NET DELAY            2.075                 33.521  1       
 i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
 n44                                                       NET DELAY            2.075                 36.073  1       
 i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_232                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/B->i9_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
+n18_adj_203                                               NET DELAY            2.075                 38.625  1       
+i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
 timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_24/C->i3_4_lut_adj_24/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
+i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
 n147                                                      NET DELAY            2.075                 43.729  3       
 i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
 n531                                                      NET DELAY            2.075                 46.281  32      
@@ -9437,8 +9439,8 @@ Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/counter_90__i15/CK->clocker/counter_90__i15/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  25      
-counter[15]                                               NET DELAY      0.280                  7.896  25      
+                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  23      
+counter[15]                                               NET DELAY      0.280                  7.896  23      
 pressedcountstart_i0_i15/D                                ENDPOINT       0.000                  7.896  1       
 
 
@@ -9650,8 +9652,8 @@ Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/counter_90__i16/CK->clocker/counter_90__i16/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  27      
-counter[16]                                               NET DELAY      0.280                  7.896  27      
+                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  26      
+counter[16]                                               NET DELAY      0.280                  7.896  26      
 pressedcountstart_i0_i16/D                                ENDPOINT       0.000                  7.896  1       
 
 
