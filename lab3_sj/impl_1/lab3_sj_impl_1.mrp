@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Sun Sep 14 19:02:02 2025
+Mapped on: Sun Sep 14 20:27:20 2025
 
 Design Information
 ------------------
@@ -20,12 +20,12 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 Design Summary
 --------------
 
-   Number of slice registers:  77 out of  5280 (1%)
+   Number of slice registers: 109 out of  5280 (2%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           204 out of  5280 (4%)
-      Number of logic LUT4s:             102
-      Number of inserted feedthru LUT4s:  36
-      Number of ripple logic:             33 (66 LUT4s)
+   Number of LUT4s:           310 out of  5280 (6%)
+      Number of logic LUT4s:             144
+      Number of inserted feedthru LUT4s:  68
+      Number of ripple logic:             49 (98 LUT4s)
    Number of IO sites used:   19 out of 39 (49%)
       Number of IO sites used for general PIO: 19
       Number of IO sites used for I3C: 0 out of 2 (0%)
@@ -48,18 +48,18 @@ Design Summary
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
    Number of Clocks:  1
-      Net int_osc: 66 loads, 66 rising, 0 falling (Driver: Pin
+      Net int_osc: 98 loads, 98 rising, 0 falling (Driver: Pin
      clocker.hf_osc.osc_inst/CLKHF)
    Number of Clock Enables:  4
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n594: 1 loads, 1 SLICEs
-      Net n302: 32 loads, 32 SLICEs
-      Net n989: 8 loads, 8 SLICEs
+      Net n884: 8 loads, 8 SLICEs
+      Net n513: 32 loads, 32 SLICEs
+      Net n511: 32 loads, 32 SLICEs
    Number of LSRs:  1
-      Pin reset: 30 loads, 30 SLICEs (Net: reset_c)
+      Pin reset: 29 loads, 29 SLICEs (Net: reset_c)
    Top 10 highest fanout non-clock nets:
       Net reset_c: 33 loads
-      Net n302: 32 loads
+      Net n511: 32 loads
 
                                     Page 1
 
@@ -69,14 +69,14 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net counter[16]: 20 loads
-      Net counter[15]: 17 loads
-      Net col[2]: 14 loads
-      Net col[0]: 12 loads
+      Net n513: 32 loads
+      Net counter[16]: 22 loads
+      Net counter[15]: 18 loads
+      Net col[2]: 15 loads
+      Net col[0]: 13 loads
+      Net col[3]: 13 loads
       Net col[1]: 12 loads
-      Net col[3]: 12 loads
-      Net sel_c_18: 9 loads
-      Net n989: 8 loads
+      Net sel_c_18: 11 loads
 
 
 
@@ -166,13 +166,13 @@ ASIC Components
 
 Instance Name: clocker/hf_osc.osc_inst
          Type: HFOSC
-Instance Name: colsyncer/stableval_i1
+Instance Name: colsyncer/stableval_i2
          Type: IOLOGIC
-Instance Name: colsyncer/stableval_i3
+Instance Name: colsyncer/stableval_i1
          Type: IOLOGIC
 Instance Name: colsyncer/stableval_i0
          Type: IOLOGIC
-Instance Name: colsyncer/stableval_i2
+Instance Name: colsyncer/stableval_i3
          Type: IOLOGIC
 
 Constraint Summary
@@ -186,8 +186,8 @@ Run Time and Memory Usage
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
-   Peak Memory Usage: 70 MB
-Checksum -- map: 8422bfa0c8c5925a7c049f8094bf53b8fbd6ee88
+   Peak Memory Usage: 72 MB
+Checksum -- map: 227bf3a8e8e812e371fc60e471d221b3a090708
 
 
 

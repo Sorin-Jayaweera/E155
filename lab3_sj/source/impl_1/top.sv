@@ -26,10 +26,13 @@ module top(
 		logic pressed;
 	logic accepting;
 	logic timepassed;
+	logic pressedtimepassed;
 	
 	logic [31:0] counter;
 	logic [31:0] countstart;
-	assign debugger = !pressed;
+	logic [31:0] pressedcountstart;
+	
+	assign debugger = pressedtimepassed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -52,7 +55,7 @@ module top(
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Time Multiplexing Seven Segment Display
 	assign timepassed = (counter - countstart ) > 6000000;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
-	
+	assign pressedtimepassed = (counter - pressedcountstart) > 6000000;
 	// choosing which set of connections for the resource use
 	// sequential logic
 	always_ff@(posedge int_osc) begin
@@ -77,12 +80,15 @@ module top(
 				i1 = 4'b0000;
 			end
 		else if (accepting && pressed) begin
-				i1 = i0; // ORDER DEPENDENT
+				i1 = i0; 
 				i0 = itemp;
 				accepting = 1'b0;
 				countstart = counter;
 			end
 		else if (!accepting && !pressed && timepassed) begin
+				pressedcountstart = counter;
+			end
+		else if(!accepting && !pressed && pressedtimepassed && timepassed)begin
 				accepting = 1'b1;
 			end
 		end
