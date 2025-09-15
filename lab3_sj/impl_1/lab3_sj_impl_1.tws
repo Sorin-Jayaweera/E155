@@ -1,6 +1,6 @@
 Lattice Timing Report -  Setup  and Hold, Version Radiant Software (64-bit) 2024.2.0.3.0
 
-Mon Sep 15 10:41:16 2025
+Mon Sep 15 11:05:27 2025
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -51,7 +51,7 @@ create_clock -name {int_osc} -period 41.6667 [get_pins {clocker/hf_osc.osc_inst/
 
 1.2  Constraint Coverage
 ---------------------------
-Constraint Coverage: 88.934%
+Constraint Coverage: 88.5685%
 
 
 1.3  Overall Summary
@@ -90,10 +90,10 @@ iActive__i3/SR                          |           No arrival time
 iActive__i2/SR                          |           No arrival time
 iActive__i1/SR                          |           No arrival time
 i0__i3/SR                               |           No arrival time
-clocker/counter_90__i30/SR              |           No arrival time
-clocker/counter_90__i29/SR              |           No arrival time
-clocker/counter_90__i28/SR              |           No arrival time
-clocker/counter_90__i27/SR              |           No arrival time
+clocker/counter_97__i30/SR              |           No arrival time
+clocker/counter_97__i29/SR              |           No arrival time
+clocker/counter_97__i28/SR              |           No arrival time
+clocker/counter_97__i27/SR              |           No arrival time
 -------------------------------------------------------------------
                                         |                          
 Number of unconstrained timing end poin |                          
@@ -145,16 +145,16 @@ There is no instance satisfying reporting criteria
 Combinational Loops
 -------------------
 ++++ Loop1
-keypad/i453_3_lut_4_lut/A	->	keypad/i453_3_lut_4_lut/Z
+keypad/i467_3_lut_4_lut/A	->	keypad/i467_3_lut_4_lut/Z
 
 ++++ Loop2
-keypad/i449_3_lut_4_lut/A	->	keypad/i449_3_lut_4_lut/Z
+keypad/i469_3_lut_4_lut/A	->	keypad/i469_3_lut_4_lut/Z
 
 ++++ Loop3
-keypad/i447_3_lut_4_lut/A	->	keypad/i447_3_lut_4_lut/Z
+keypad/i471_3_lut_4_lut/A	->	keypad/i471_3_lut_4_lut/Z
 
 ++++ Loop4
-keypad/i451_3_lut_4_lut/A	->	keypad/i451_3_lut_4_lut/Z
+keypad/i465_3_lut_4_lut/A	->	keypad/i465_3_lut_4_lut/Z
 
 ===============================================================
 2  Setup at Speed Grade High-Performance_1.2V Corner at 100 Degrees
@@ -183,16 +183,16 @@ Clock Domain Crossing
 -------------------------------------------------------
           Listing 10 End Points          |    Slack    
 -------------------------------------------------------
-cycleflag__i0/D                          |   -1.140 ns 
 cycleflag__i1/D                          |   -1.140 ns 
-pressedcountstart_i0_i17/SP              |    1.412 ns 
-pressedcountstart_i0_i11/SP              |    1.412 ns 
-pressedcountstart_i0_i12/SP              |    1.412 ns 
-pressedcountstart_i0_i18/SP              |    1.412 ns 
-pressedcountstart_i0_i13/SP              |    1.412 ns 
-pressedcountstart_i0_i14/SP              |    1.412 ns 
-pressedcountstart_i0_i15/SP              |    1.412 ns 
-pressedcountstart_i0_i16/SP              |    1.412 ns 
+cycleflag__i0/D                          |   -1.140 ns 
+countstart_i0_i11/SP                     |    3.964 ns 
+countstart_i0_i12/SP                     |    3.964 ns 
+countstart_i0_i18/SP                     |    3.964 ns 
+countstart_i0_i13/SP                     |    3.964 ns 
+countstart_i0_i14/SP                     |    3.964 ns 
+countstart_i0_i15/SP                     |    3.964 ns 
+countstart_i0_i16/SP                     |    3.964 ns 
+i0__i0/SP                                |    3.964 ns 
 -------------------------------------------------------
                                          |             
 Setup # of endpoints with negative slack:|           2 
@@ -215,96 +215,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
  ++++Path 1  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Path Begin       : pressedcountstart_i0_i0/Q  (FD1P3XZ)
-Path End         : cycleflag__i0/D  (FD1P3XZ)
-Source Clock     : int_osc (R)
-Destination Clock: int_osc (R)
-Logic Level      : 21
-Delay Ratio      : 77.0% (route), 23.0% (logic)
-Clock Skew       : 0.000 ns 
-Setup Constraint : 41.666 ns 
-Path Slack       : -1.140 ns  (Failed)
-
-
-Source Clock Path
-Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
-----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                  0.000  115     
-int_osc                                                   NET DELAY            6.225                  6.225  115     
-pressedcountstart_i0_i0/CK                                CLOCK PIN            0.000                  6.225  1       
-
-
-Data Path
-Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
-----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-pressedcountstart_i0_i0/CK->pressedcountstart_i0_i0/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
-pressedcountstart[0]                                      NET DELAY            2.075                  9.691  1       
-sub_5_inv_0_i1_1_lut/A->sub_5_inv_0_i1_1_lut/Z
-                                          LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1[0]                                                     NET DELAY            2.075                 12.243  1       
-add_158_2/C0->add_158_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3330                                                     NET DELAY            0.280                 12.867  2       
-add_158_2/CI1->add_158_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1464                                                     NET DELAY            0.280                 13.425  2       
-add_158_4/CI0->add_158_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3333                                                     NET DELAY            0.280                 13.983  2       
-add_158_4/CI1->add_158_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1466                                                     NET DELAY            0.280                 14.541  2       
-add_158_6/CI0->add_158_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3336                                                     NET DELAY            0.280                 15.099  2       
-add_158_6/CI1->add_158_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1468                                                     NET DELAY            0.280                 15.657  2       
-add_158_8/D0->add_158_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-debugger_c_N_155[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12                                                       NET DELAY            2.075                 20.761  1       
-i6_4_lut/B->i6_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1875                                                     NET DELAY            2.075                 23.313  1       
-i254_4_lut/D->i254_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20                                                       NET DELAY            2.075                 25.865  1       
-i1_4_lut/D->i1_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_164                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_13/A->i1_4_lut_adj_13/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_166                                                NET DELAY            2.075                 30.969  1       
-i1_4_lut_adj_14/B->i1_4_lut_adj_14/Z      LUT4            B_TO_Z_DELAY         0.477                 31.446  1       
-n4_adj_245                                                NET DELAY            2.075                 33.521  1       
-i282_4_lut/D->i282_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n46                                                       NET DELAY            2.075                 36.073  1       
-i6_4_lut_adj_15/C->i6_4_lut_adj_15/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  1       
-n16_adj_243                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/C->i9_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 39.102  2       
-debugger_c                                                NET DELAY            2.075                 41.177  2       
-i3_4_lut/C->i3_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 41.654  1       
-n151                                                      NET DELAY            2.075                 43.729  1       
-i2_3_lut_4_lut/D->i2_3_lut_4_lut/Z        LUT4            D_TO_Z_DELAY         0.477                 44.206  2       
-n2065                                                     NET DELAY            2.075                 46.281  2       
-i433_3_lut_4_lut/D->i433_3_lut_4_lut/Z    LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
-n910                                                      NET DELAY            2.075                 48.833  1       
-cycleflag__i0/D                                           ENDPOINT             0.000                 48.833  1       
-
-
-Destination Clock Path
-Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
-----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-                                                          CONSTRAINT           0.000                 41.666  1       
-clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
-int_osc                                                   NET DELAY            6.225                 47.891  115     
-cycleflag__i0/CK                                          CLOCK PIN            0.000                 47.891  1       
-                                                          Uncertainty       -(0.000)                 47.891  
-                                                          Setup time        -(0.199)                 47.692  
-----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(48.832)  
-----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Failed)                                                                                 -1.140  
-
-
-
-
-++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-
-Path Begin       : pressedcountstart_i0_i0/Q  (FD1P3XZ)
+Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
 Path End         : cycleflag__i1/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
@@ -320,56 +231,55 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                  0.000  115     
 int_osc                                                   NET DELAY            6.225                  6.225  115     
-pressedcountstart_i0_i0/CK                                CLOCK PIN            0.000                  6.225  1       
+countstart_i0_i0/CK                                       CLOCK PIN            0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-pressedcountstart_i0_i0/CK->pressedcountstart_i0_i0/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
-pressedcountstart[0]                                      NET DELAY            2.075                  9.691  1       
-sub_5_inv_0_i1_1_lut/A->sub_5_inv_0_i1_1_lut/Z
+countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
+countstart[0]                                             NET DELAY            2.075                  9.691  1       
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1[0]                                                     NET DELAY            2.075                 12.243  1       
-add_158_2/C0->add_158_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3330                                                     NET DELAY            0.280                 12.867  2       
-add_158_2/CI1->add_158_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1464                                                     NET DELAY            0.280                 13.425  2       
-add_158_4/CI0->add_158_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3333                                                     NET DELAY            0.280                 13.983  2       
-add_158_4/CI1->add_158_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1466                                                     NET DELAY            0.280                 14.541  2       
-add_158_6/CI0->add_158_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3336                                                     NET DELAY            0.280                 15.099  2       
-add_158_6/CI1->add_158_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1468                                                     NET DELAY            0.280                 15.657  2       
-add_158_8/D0->add_158_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-debugger_c_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
 i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12                                                       NET DELAY            2.075                 20.761  1       
-i6_4_lut/B->i6_4_lut/Z                    LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1875                                                     NET DELAY            2.075                 23.313  1       
-i254_4_lut/D->i254_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20                                                       NET DELAY            2.075                 25.865  1       
-i1_4_lut/D->i1_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_164                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_13/A->i1_4_lut_adj_13/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_166                                                NET DELAY            2.075                 30.969  1       
-i1_4_lut_adj_14/B->i1_4_lut_adj_14/Z      LUT4            B_TO_Z_DELAY         0.477                 31.446  1       
-n4_adj_245                                                NET DELAY            2.075                 33.521  1       
-i282_4_lut/D->i282_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n46                                                       NET DELAY            2.075                 36.073  1       
-i6_4_lut_adj_15/C->i6_4_lut_adj_15/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  1       
-n16_adj_243                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut/C->i9_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 39.102  2       
-debugger_c                                                NET DELAY            2.075                 41.177  2       
-i3_4_lut/C->i3_4_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 41.654  1       
-n151                                                      NET DELAY            2.075                 43.729  1       
-i2_3_lut_4_lut/D->i2_3_lut_4_lut/Z        LUT4            D_TO_Z_DELAY         0.477                 44.206  2       
-n2065                                                     NET DELAY            2.075                 46.281  2       
-i436_4_lut/D->i436_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
-n913                                                      NET DELAY            2.075                 48.833  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+i1_4_lut/A->i1_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 44.206  2       
+n2884                                                     NET DELAY            2.075                 46.281  2       
+i453_4_lut/D->i453_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
+n930                                                      NET DELAY            2.075                 48.833  1       
 cycleflag__i1/D                                           ENDPOINT             0.000                 48.833  1       
 
 
@@ -391,17 +301,17 @@ Path Slack  (Failed)                                                            
 
 
 
-++++ Path 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i17/SP  (FD1P3XZ)
+Path End         : cycleflag__i0/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 21
+Delay Ratio      : 77.0% (route), 23.0% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : -1.140 ns  (Failed)
 
 
 Source Clock Path
@@ -417,46 +327,48 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i17/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+i1_4_lut/A->i1_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 44.206  2       
+n2884                                                     NET DELAY            2.075                 46.281  2       
+i450_4_lut/D->i450_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 46.758  1       
+n927                                                      NET DELAY            2.075                 48.833  1       
+cycleflag__i0/D                                           ENDPOINT             0.000                 48.833  1       
 
 
 Destination Clock Path
@@ -465,14 +377,98 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i17/CK                               CLOCK PIN            0.000                 47.891  1       
+cycleflag__i0/CK                                          CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(48.832)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Failed)                                                                                 -1.140  
+
+
+
+
+++++ Path 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
+Path End         : countstart_i0_i11/SP  (FD1P3XZ)
+Source Clock     : int_osc (R)
+Destination Clock: int_osc (R)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
+Clock Skew       : 0.000 ns 
+Setup Constraint : 41.666 ns 
+Path Slack       : 3.963 ns  (Passed)
+
+
+Source Clock Path
+Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
+----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
+clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                  0.000  115     
+int_osc                                                   NET DELAY            6.225                  6.225  115     
+countstart_i0_i0/CK                                       CLOCK PIN            0.000                  6.225  1       
+
+
+Data Path
+Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
+----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
+countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
+countstart[0]                                             NET DELAY            2.075                  9.691  1       
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
+                                          LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i11/SP                                      ENDPOINT             0.000                 43.729  1       
+
+
+Destination Clock Path
+Name                                      Cell/Site Name  Delay Name        Incr      Arrival/Required Time  Fanout  
+----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
+                                                          CONSTRAINT           0.000                 41.666  1       
+clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
+int_osc                                                   NET DELAY            6.225                 47.891  115     
+countstart_i0_i11/CK                                      CLOCK PIN            0.000                 47.891  1       
+                                                          Uncertainty       -(0.000)                 47.891  
+                                                          Setup time        -(0.199)                 47.692  
+----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
+Required Time                                                                                        47.692  
+Arrival Time                                                                                      -(43.728)  
+----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -480,14 +476,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i11/SP  (FD1P3XZ)
+Path End         : countstart_i0_i12/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -503,46 +499,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i11/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i12/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -551,14 +545,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i11/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i12/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -566,14 +560,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 5 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i12/SP  (FD1P3XZ)
+Path End         : countstart_i0_i18/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -589,46 +583,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i12/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i18/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -637,14 +629,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i12/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i18/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -652,14 +644,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 6 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i18/SP  (FD1P3XZ)
+Path End         : countstart_i0_i13/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -675,46 +667,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i18/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i13/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -723,14 +713,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i18/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i13/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -738,14 +728,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 7 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i13/SP  (FD1P3XZ)
+Path End         : countstart_i0_i14/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -761,46 +751,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i13/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i14/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -809,14 +797,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i13/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i14/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -824,14 +812,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 8 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i14/SP  (FD1P3XZ)
+Path End         : countstart_i0_i15/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -847,46 +835,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i14/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i15/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -895,14 +881,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i14/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i15/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -910,14 +896,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 9 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i15/SP  (FD1P3XZ)
+Path End         : countstart_i0_i16/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -933,46 +919,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i15/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+countstart_i0_i16/SP                                      ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -981,14 +965,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i15/CK                               CLOCK PIN            0.000                 47.891  1       
+countstart_i0_i16/CK                                      CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -996,14 +980,14 @@ Path Slack  (Passed)                                                            
 ++++ Path 10 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin       : countstart_i0_i0/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i16/SP  (FD1P3XZ)
+Path End         : i0__i0/SP  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
-Logic Level      : 20
-Delay Ratio      : 76.7% (route), 23.3% (logic)
+Logic Level      : 19
+Delay Ratio      : 76.4% (route), 23.6% (logic)
 Clock Skew       : 0.000 ns 
 Setup Constraint : 41.666 ns 
-Path Slack       : 1.411 ns  (Passed)
+Path Slack       : 3.963 ns  (Passed)
 
 
 Source Clock Path
@@ -1019,46 +1003,44 @@ Name                                      Cell/Site Name  Delay Name        Incr
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 countstart_i0_i0/CK->countstart_i0_i0/Q   FD1P3XZ         CK_TO_Q_DELAY        1.391                  7.616  1       
 countstart[0]                                             NET DELAY            2.075                  9.691  1       
-sub_3_inv_0_i1_1_lut/A->sub_3_inv_0_i1_1_lut/Z
+sub_7_inv_0_i1_1_lut/A->sub_7_inv_0_i1_1_lut/Z
                                           LUT4            A_TO_Z_DELAY         0.477                 10.168  1       
-n1_adj_246[0]                                             NET DELAY            2.075                 12.243  1       
-add_159_2/C0->add_159_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
-n3231                                                     NET DELAY            0.280                 12.867  2       
-add_159_2/CI1->add_159_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
-n1432                                                     NET DELAY            0.280                 13.425  2       
-add_159_4/CI0->add_159_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
-n3234                                                     NET DELAY            0.280                 13.983  2       
-add_159_4/CI1->add_159_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
-n1434                                                     NET DELAY            0.280                 14.541  2       
-add_159_6/CI0->add_159_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
-n3237                                                     NET DELAY            0.280                 15.099  2       
-add_159_6/CI1->add_159_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
-n1436                                                     NET DELAY            0.280                 15.657  2       
-add_159_8/D0->add_159_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
-timepassed_N_153[7]                                       NET DELAY            2.075                 18.209  1       
-i5_4_lut_adj_16/D->i5_4_lut_adj_16/Z      LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
-n12_adj_244                                               NET DELAY            2.075                 20.761  1       
-i6_4_lut_adj_17/B->i6_4_lut_adj_17/Z      LUT4            B_TO_Z_DELAY         0.477                 21.238  1       
-n1872                                                     NET DELAY            2.075                 23.313  1       
-i305_4_lut/D->i305_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 23.790  1       
-n20_adj_207                                               NET DELAY            2.075                 25.865  1       
-i1_4_lut_adj_18/D->i1_4_lut_adj_18/Z      LUT4            D_TO_Z_DELAY         0.477                 26.342  1       
-n5_adj_167                                                NET DELAY            2.075                 28.417  1       
-i1_4_lut_adj_19/A->i1_4_lut_adj_19/Z      LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
-n5_adj_210                                                NET DELAY            2.075                 30.969  1       
-i231_4_lut/A->i231_4_lut/Z                LUT4            A_TO_Z_DELAY         0.477                 31.446  1       
-n38                                                       NET DELAY            2.075                 33.521  1       
-i234_4_lut/D->i234_4_lut/Z                LUT4            D_TO_Z_DELAY         0.477                 33.998  1       
-n44                                                       NET DELAY            2.075                 36.073  1       
-i8_4_lut/A->i8_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 36.550  1       
-n18_adj_203                                               NET DELAY            2.075                 38.625  1       
-i9_4_lut_adj_21/B->i9_4_lut_adj_21/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  1       
-timepassed                                                NET DELAY            2.075                 41.177  1       
-i3_4_lut_adj_22/C->i3_4_lut_adj_22/Z      LUT4            C_TO_Z_DELAY         0.477                 41.654  3       
-n147                                                      NET DELAY            2.075                 43.729  3       
-i2_3_lut/C->i2_3_lut/Z                    LUT4            C_TO_Z_DELAY         0.477                 44.206  32      
-n531                                                      NET DELAY            2.075                 46.281  32      
-pressedcountstart_i0_i16/SP                               ENDPOINT             0.000                 46.281  1       
+n1_adj_238[0]                                             NET DELAY            2.075                 12.243  1       
+add_166_2/C0->add_166_2/CO0               FA2             C0_TO_CO0_DELAY      0.344                 12.587  2       
+n4049                                                     NET DELAY            0.280                 12.867  2       
+add_166_2/CI1->add_166_2/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 13.145  2       
+n2251                                                     NET DELAY            0.280                 13.425  2       
+add_166_4/CI0->add_166_4/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 13.703  2       
+n4052                                                     NET DELAY            0.280                 13.983  2       
+add_166_4/CI1->add_166_4/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 14.261  2       
+n2253                                                     NET DELAY            0.280                 14.541  2       
+add_166_6/CI0->add_166_6/CO0              FA2             CI0_TO_CO0_DELAY     0.278                 14.819  2       
+n4055                                                     NET DELAY            0.280                 15.099  2       
+add_166_6/CI1->add_166_6/CO1              FA2             CI1_TO_CO1_DELAY     0.278                 15.377  2       
+n2255                                                     NET DELAY            0.280                 15.657  2       
+add_166_8/D0->add_166_8/S0                FA2             D0_TO_S0_DELAY       0.477                 16.134  1       
+timepassed_N_155[7]                                       NET DELAY            2.075                 18.209  1       
+i5_4_lut/D->i5_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 18.686  1       
+n12_adj_236                                               NET DELAY            2.075                 20.761  1       
+i2_4_lut/D->i2_4_lut/Z                    LUT4            D_TO_Z_DELAY         0.477                 21.238  1       
+n2681                                                     NET DELAY            2.075                 23.313  1       
+i2_4_lut_adj_8/C->i2_4_lut_adj_8/Z        LUT4            C_TO_Z_DELAY         0.477                 23.790  1       
+n2665                                                     NET DELAY            2.075                 25.865  1       
+i3_4_lut/A->i3_4_lut/Z                    LUT4            A_TO_Z_DELAY         0.477                 26.342  1       
+n2691                                                     NET DELAY            2.075                 28.417  1       
+i3_4_lut_adj_9/A->i3_4_lut_adj_9/Z        LUT4            A_TO_Z_DELAY         0.477                 28.894  1       
+n2666                                                     NET DELAY            2.075                 30.969  1       
+i2_4_lut_adj_10/C->i2_4_lut_adj_10/Z      LUT4            C_TO_Z_DELAY         0.477                 31.446  1       
+n2668                                                     NET DELAY            2.075                 33.521  1       
+i5_4_lut_adj_11/A->i5_4_lut_adj_11/Z      LUT4            A_TO_Z_DELAY         0.477                 33.998  1       
+n15_adj_201                                               NET DELAY            2.075                 36.073  1       
+i1_4_lut_adj_12/C->i1_4_lut_adj_12/Z      LUT4            C_TO_Z_DELAY         0.477                 36.550  2       
+n905                                                      NET DELAY            2.075                 38.625  2       
+i2_3_lut_adj_24/B->i2_3_lut_adj_24/Z      LUT4            B_TO_Z_DELAY         0.477                 39.102  3       
+n149                                                      NET DELAY            2.075                 41.177  3       
+i415_2_lut/B->i415_2_lut/Z                LUT4            B_TO_Z_DELAY         0.477                 41.654  42      
+n537                                                      NET DELAY            2.075                 43.729  42      
+i0__i0/SP                                                 ENDPOINT             0.000                 43.729  1       
 
 
 Destination Clock Path
@@ -1067,14 +1049,14 @@ Name                                      Cell/Site Name  Delay Name        Incr
                                                           CONSTRAINT           0.000                 41.666  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY        0.000                 41.666  115     
 int_osc                                                   NET DELAY            6.225                 47.891  115     
-pressedcountstart_i0_i16/CK                               CLOCK PIN            0.000                 47.891  1       
+i0__i0/CK                                                 CLOCK PIN            0.000                 47.891  1       
                                                           Uncertainty       -(0.000)                 47.891  
                                                           Setup time        -(0.199)                 47.692  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
 Required Time                                                                                        47.692  
-Arrival Time                                                                                      -(46.280)  
+Arrival Time                                                                                      -(43.728)  
 ----------------------------------------  --------------  ----------------  --------  ---------------------  ------  
-Path Slack  (Passed)                                                                                  1.411  
+Path Slack  (Passed)                                                                                  3.963  
 
 
 
@@ -1096,16 +1078,16 @@ Path Slack  (Passed)                                                            
 -------------------------------------------------------
           Listing 10 End Points          |    Slack    
 -------------------------------------------------------
-pressedcountstart_i0_i9/D                |    1.671 ns 
-pressedcountstart_i0_i10/D               |    1.671 ns 
-pressedcountstart_i0_i17/D               |    1.671 ns 
-pressedcountstart_i0_i11/D               |    1.671 ns 
-pressedcountstart_i0_i12/D               |    1.671 ns 
-pressedcountstart_i0_i18/D               |    1.671 ns 
-pressedcountstart_i0_i13/D               |    1.671 ns 
-pressedcountstart_i0_i14/D               |    1.671 ns 
-pressedcountstart_i0_i15/D               |    1.671 ns 
-pressedcountstart_i0_i16/D               |    1.671 ns 
+countstart_i0_i9/D                       |    1.671 ns 
+countstart_i0_i10/D                      |    1.671 ns 
+countstart_i0_i17/D                      |    1.671 ns 
+countstart_i0_i11/D                      |    1.671 ns 
+countstart_i0_i12/D                      |    1.671 ns 
+countstart_i0_i18/D                      |    1.671 ns 
+countstart_i0_i13/D                      |    1.671 ns 
+countstart_i0_i14/D                      |    1.671 ns 
+countstart_i0_i15/D                      |    1.671 ns 
+countstart_i0_i16/D                      |    1.671 ns 
 -------------------------------------------------------
                                          |             
 Hold # of endpoints with negative slack: |           0 
@@ -1128,8 +1110,8 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
  ++++Path 1  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Path Begin       : clocker/counter_90__i9/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i9/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i9/Q  (FD1P3XZ)
+Path End         : countstart_i0_i9/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1144,16 +1126,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i9/CK                                 CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i9/CK                                 CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i9/CK->clocker/counter_90__i9/Q
+clocker/counter_97__i9/CK->clocker/counter_97__i9/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[9]                                                NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i9/D                                 ENDPOINT       0.000                  7.896  1       
+countstart_i0_i9/D                                        ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1162,7 +1144,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i9/CK                                CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i9/CK                                       CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1176,8 +1158,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i10/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i10/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i10/Q  (FD1P3XZ)
+Path End         : countstart_i0_i10/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1192,16 +1174,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i10/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i10/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i10/CK->clocker/counter_90__i10/Q
+clocker/counter_97__i10/CK->clocker/counter_97__i10/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[10]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i10/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i10/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1210,7 +1192,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i10/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i10/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1224,8 +1206,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i17/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i17/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i17/Q  (FD1P3XZ)
+Path End         : countstart_i0_i17/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1240,16 +1222,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i17/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i17/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i17/CK->clocker/counter_90__i17/Q
+clocker/counter_97__i17/CK->clocker/counter_97__i17/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[17]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i17/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i17/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1258,7 +1240,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i17/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i17/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1272,8 +1254,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i11/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i11/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i11/Q  (FD1P3XZ)
+Path End         : countstart_i0_i11/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1288,16 +1270,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i11/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i11/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i11/CK->clocker/counter_90__i11/Q
+clocker/counter_97__i11/CK->clocker/counter_97__i11/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[11]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i11/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i11/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1306,7 +1288,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i11/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i11/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1320,8 +1302,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 5 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i12/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i12/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i12/Q  (FD1P3XZ)
+Path End         : countstart_i0_i12/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1336,16 +1318,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i12/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i12/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i12/CK->clocker/counter_90__i12/Q
+clocker/counter_97__i12/CK->clocker/counter_97__i12/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[12]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i12/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i12/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1354,7 +1336,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i12/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i12/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1368,8 +1350,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 6 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i18/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i18/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i18/Q  (FD1P3XZ)
+Path End         : countstart_i0_i18/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1384,16 +1366,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i18/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i18/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i18/CK->clocker/counter_90__i18/Q
+clocker/counter_97__i18/CK->clocker/counter_97__i18/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  11      
 sel_c_18                                                  NET DELAY      0.280                  7.896  11      
-pressedcountstart_i0_i18/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i18/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1402,7 +1384,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i18/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i18/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1416,8 +1398,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 7 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i13/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i13/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i13/Q  (FD1P3XZ)
+Path End         : countstart_i0_i13/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1432,16 +1414,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i13/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i13/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i13/CK->clocker/counter_90__i13/Q
+clocker/counter_97__i13/CK->clocker/counter_97__i13/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[13]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i13/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i13/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1450,7 +1432,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i13/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i13/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1464,8 +1446,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 8 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i14/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i14/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i14/Q  (FD1P3XZ)
+Path End         : countstart_i0_i14/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1480,16 +1462,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i14/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i14/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i14/CK->clocker/counter_90__i14/Q
+clocker/counter_97__i14/CK->clocker/counter_97__i14/Q
                                           FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  5       
 counter[14]                                               NET DELAY      0.280                  7.896  5       
-pressedcountstart_i0_i14/D                                ENDPOINT       0.000                  7.896  1       
+countstart_i0_i14/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1498,7 +1480,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i14/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i14/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1512,8 +1494,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 9 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i15/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i15/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i15/Q  (FD1P3XZ)
+Path End         : countstart_i0_i15/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1528,16 +1510,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i15/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i15/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i15/CK->clocker/counter_90__i15/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  23      
-counter[15]                                               NET DELAY      0.280                  7.896  23      
-pressedcountstart_i0_i15/D                                ENDPOINT       0.000                  7.896  1       
+clocker/counter_97__i15/CK->clocker/counter_97__i15/Q
+                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  21      
+counter[15]                                               NET DELAY      0.280                  7.896  21      
+countstart_i0_i15/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1546,7 +1528,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i15/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i15/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
@@ -1560,8 +1542,8 @@ Path Slack  (Passed)                                                            
 
 ++++ Path 10 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
-Path Begin       : clocker/counter_90__i16/Q  (FD1P3XZ)
-Path End         : pressedcountstart_i0_i16/D  (FD1P3XZ)
+Path Begin       : clocker/counter_97__i16/Q  (FD1P3XZ)
+Path End         : countstart_i0_i16/D  (FD1P3XZ)
 Source Clock     : int_osc (R)
 Destination Clock: int_osc (R)
 Logic Level      : 1
@@ -1576,16 +1558,16 @@ Name                                      Cell/Site Name  Delay Name     Incr   
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-clocker/counter_90__i16/CK                                CLOCK PIN      0.000                  6.225  1       
+clocker/counter_97__i16/CK                                CLOCK PIN      0.000                  6.225  1       
 
 
 Data Path
 Name                                      Cell/Site Name  Delay Name     Incr   Arrival/Required Time  Fanout  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  
-clocker/counter_90__i16/CK->clocker/counter_90__i16/Q
-                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  26      
-counter[16]                                               NET DELAY      0.280                  7.896  26      
-pressedcountstart_i0_i16/D                                ENDPOINT       0.000                  7.896  1       
+clocker/counter_97__i16/CK->clocker/counter_97__i16/Q
+                                          FD1P3XZ         CK_TO_Q_DELAY  1.391                  7.616  24      
+counter[16]                                               NET DELAY      0.280                  7.896  24      
+countstart_i0_i16/D                                       ENDPOINT       0.000                  7.896  1       
 
 
 Destination Clock Path
@@ -1594,7 +1576,7 @@ Name                                      Cell/Site Name  Delay Name     Incr   
                                                           CONSTRAINT     0.000                  0.000  1       
 clocker/hf_osc.osc_inst/CLKHF             HSOSC_CORE      CLOCK LATENCY  0.000                  0.000  115     
 int_osc                                                   NET DELAY      6.225                  6.225  115     
-pressedcountstart_i0_i16/CK                               CLOCK PIN      0.000                  6.225  1       
+countstart_i0_i16/CK                                      CLOCK PIN      0.000                  6.225  1       
                                                           Uncertainty    0.000                  6.225  
                                                           Hold time      0.000                  6.225  
 ----------------------------------------  --------------  -------------  -----  ---------------------  ------  

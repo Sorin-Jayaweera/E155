@@ -34,7 +34,7 @@ module top(
 	// state logic
 	enum logic [1:0] {empty, entering, exiting} cycleflag; 
 	
-	assign debugger = pressedtimepassed;//cycleflag == exiting;//pressedtimepassed && timepassed;
+	assign debugger =  cycleflag = empty;;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == exiting;//pressedtimepassed && timepassed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -82,9 +82,12 @@ module top(
 				i0 = 4'b0000;
 				i1 = 4'b0000;
 				cycleflag = empty;
+				pressedcountstart = counter;
+				countstart = counter;
 			end
 		// pressed the first time, start the press debounce
-		else if (pressed && cycleflag == empty) begin // rising edge
+		// time conditions unnessisary
+		else if (pressed & cycleflag == empty & pressedtimepassed & timepassed) begin // rising edge, only triggers once bc flag changes
 				i1 = i0; //push numbers
 				i0 = itemp;
 				// state logic
@@ -94,14 +97,14 @@ module top(
 			end
 			
 		// has been pressed but on falling edge when released, start release debounce	
-		else if (!pressed && timepassed && cycleflag == entering) begin // falling edge
+		else if (!pressed & timepassed & cycleflag == entering) begin // falling edge
 				pressedcountstart = counter;
 				cycleflag = exiting;
 			end
 		
 		
 		// release debounce finished, go back to start
-		else if( !pressed && pressedtimepassed && cycleflag == exiting)begin
+		else if( !pressed & pressedtimepassed & cycleflag == exiting)begin
 				cycleflag = empty;
 			end
 		
