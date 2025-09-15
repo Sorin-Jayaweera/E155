@@ -9,7 +9,8 @@ module top(
 	output logic sel, 
 	output logic [3:0] row,
 	output logic nsel, 
-	output logic [6:0] segout
+	output logic [6:0] segout,
+	output logic debugger
 	);
 	
 	// post synchronizer
@@ -28,7 +29,7 @@ module top(
 	
 	logic [31:0] counter;
 	logic [31:0] countstart;
-	
+	assign debugger = !pressed & timepassed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -50,7 +51,7 @@ module top(
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Time Multiplexing Seven Segment Display
-	assign timepassed = countstart - counter > 2400000;//100800;// 0.042 (42ms) * 24000000 (cycles per second)
+	assign timepassed = (countstart - counter) > 1200000;//100800;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
 	
 	// choosing which set of connections for the resource use
 	// sequential logic
@@ -60,7 +61,7 @@ module top(
 				iActive = 4'b0000;
 			end
 		else begin
-				iActive = sel ? i0 : i1; //choosing for the display
+				iActive =  sel ? i0 : i1; //choosing for the display 
 			end
 		end
 	////////////////////////////////////////////////////////////////////////////////////////////////
