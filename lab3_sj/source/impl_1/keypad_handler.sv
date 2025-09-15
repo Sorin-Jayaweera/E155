@@ -12,22 +12,25 @@ module keypad_handler(
 	output logic [3:0] bin
 	);
 	logic [7:0] rowcol;
+	logic [3:0] pressedarr;
+	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
+	
+	// if there is not an active column for the current row, then output none.
+	assign pressed = |pressedarr;
+	
 	
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	// scan between activating each of the rows individually
 	always_comb
-		case(counter[16:15 ]) // somewhat slow switching between all pins
-			2'b00: row = 4'b0001; 
-			2'b01: row = 4'b0010;
-			2'b10: row = 4'b0100;
-			2'b11: row = 4'b1000;
+		case(counter[16:15]) // somewhat slow switching between all pins
+			2'b00: begin row = 4'b0001;  pressedarr[0] = (num != none); end
+			2'b01: begin row = 4'b0010;  pressedarr[1] = (num != none); end
+			2'b10: begin row = 4'b0100;  pressedarr[2] = (num != none); end
+			2'b11: begin row = 4'b1000;  pressedarr[3] = (num != none); end
 		endcase
 
-	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
 	
-	// if there is not an active column for the current row, then output none.
-	assign pressed = (num != none);
-	
+
 	always_comb
 		case(rowcol)
 			8'b00010001: num = one;
