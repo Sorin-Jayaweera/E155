@@ -24,7 +24,6 @@ module top(
 	
 	logic int_osc;
 		logic pressed;
-	logic accepting;
 	logic timepassed;
 	logic pressedtimepassed;
 	
@@ -32,7 +31,10 @@ module top(
 	logic [31:0] countstart;
 	logic [31:0] pressedcountstart;
 	
-	assign debugger = pressedtimepassed && timepassed;
+	// state logic
+	enum logic [1:0] {empty, entering, exiting} cycleflag; 
+	
+	assign debugger = cycleflag == exiting;//pressedtimepassed && timepassed;
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
@@ -73,30 +75,36 @@ module top(
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Debounce State Logic
 	//	
-	
+
 	
 	always_ff@(posedge int_osc) begin
 		if(reset == 1) begin
-				accepting = 1'b1;
 				i0 = 4'b0000;
 				i1 = 4'b0000;
+				cycleflag = empty;
 			end
-		else if (accepting && pressed) begin
-				i1 = i0; 
-				i0 = itemp;
-				accepting = 1'b0;
-				countstart = counter;
-			
+		
+		// release debounce finished, go back to start
+		else if( !pressed && pressedtimepassed && cycleflag == exiting)begin
+				cycleflag = empty;
 			end
-		else if (!accepting && !pressed && timepassed) begin
+		
+		// has been pressed but on falling edge when released, start release debounce	
+		else if (!pressed && timepassed && cycleflag == entering) begin // falling edge
 				pressedcountstart = counter;
-				accepting = 1'b0; // TODO: delete
+				cycleflag = exiting;
 			end
-		else if(!accepting && !pressed && pressedtimepassed && timepassed)begin
-				accepting = 1'b1;
-				pressedcountstart = counter; // unneeded
-				countstart = counter;// unneeded
+		
+		// pressed the first time, start the press debounce
+		else if (pressed && cycleflag == empty) begin // rising edge
+				i1 = i0; //push numbers
+				i0 = itemp;
+				// state logic
+				
+				cycleflag = entering;
+				countstart = counter;
 			end
+		
 		end
 			
 	////////////////////////////////////////////////////////////////////////////////////////////////
