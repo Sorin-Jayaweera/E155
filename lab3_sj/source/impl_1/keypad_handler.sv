@@ -29,8 +29,6 @@ module keypad_handler(
 			2'b11: begin row = 4'b1000;  pressedarr[3] = (num != none); end
 		endcase
 
-	
-
 	always_comb
 		case(rowcol)
 			8'b00010001: num = one;

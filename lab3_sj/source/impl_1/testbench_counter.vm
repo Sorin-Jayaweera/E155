@@ -9,26 +9,26 @@ module testbench_counter(
 		output logic clk
 	);
 
-logic reset;
-logic [31:0] manualcounter;
-logic [31:0] counter;
+	logic reset;
+	logic [31:0] manualcounter;
+	logic [31:0] counter;
 
-count_module(reset, counter, clk);
-initial
-	begin
-			reset = 1'b1;
-			assert (counter == 32'b0) else $error("Bad Reset");
-			
-			#10
-			reset = 1'b0;
-			manualcounter = 8'b0;
-	end
+	count_module cnt(reset, counter, clk);
+	initial
+		begin
+				reset = 1'b1;
+				assert(counter == 32'b0) else $error("Bad Reset");
+				
+				#10
+				reset = 1'b0;
+				manualcounter = 8'b0;
+		end
 
 
 	assign countergood = counter == manualcounter; 
 
-	always_ff(@posedge clk) begin
-		manualcounter = manualcounter + 1'b0;
+	always_comb begin
+		if(clk) manualcounter = manualcounter + 1'b0;
 	end
 
 

@@ -36,8 +36,11 @@ module top(
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
-	// Look up table for the 7 segment displays
 	
+	// synchronize inputs
+	synchronizer colsyncer(.clk(int_osc),.unstableval(colunstable),.stableval(col));
+
+	// Look up table for the 7 segment displays
 	sevensegLUT lut(.s(iActive),.seg(segout));
 
 	// always have the digit READY to push to i0 in itemp
@@ -46,8 +49,6 @@ module top(
 	// setup the clock
 	count_module clocker(.reset(reset),.counter(counter),.int_osc(int_osc));
 	
-	// synchronize inputs
-	synchronizer colsyncer(.clk(int_osc),.unstableval(colunstable),.stableval(col));
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
@@ -74,7 +75,7 @@ module top(
 	// Debounce State Logic
 	//	
 
-	assign debugger = !pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == accepting;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == exiting;//pressedtimepassed && timepassed;
+	assign debugger = pressed;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == accepting;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == exiting;//pressedtimepassed && timepassed;
 	
 	always_ff@(posedge int_osc) begin
 		if(reset == 1) begin
@@ -89,6 +90,7 @@ module top(
 		else if (pressed & cycleflag == accepting) begin // rising edge, only triggers once bc flag changes
 				i1 = i0; //push numbers
 				i0 = itemp;
+				
 				// state logic
 				countstart = counter;
 				cycleflag = entering;
@@ -100,14 +102,10 @@ module top(
 				cycleflag = exiting;
 			end
 		
-		
 		// release debounce finished, go back to start
 		else if( !pressed & pressedtimepassed & cycleflag == exiting)begin
 				cycleflag = accepting;
 			end
-		
-		
-		
 		end
 			
 	////////////////////////////////////////////////////////////////////////////////////////////////
