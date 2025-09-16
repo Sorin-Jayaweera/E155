@@ -1,0 +1,49 @@
+// Sorin Jayaweera
+// 909 957 6074
+// sojayaweera@g.hmc.edu 
+// 9/13/2025
+
+
+module testbench_counter(
+		output logic countergood,
+		output logic clk
+	);
+
+logic reset;
+logic [31:0] manualcounter;
+logic [31:0] counter;
+
+count_module(reset, counter, clk);
+initial
+	begin
+			reset = 1'b1;
+			assert (counter == 32'b0) else $error("Bad Reset");
+			
+			#10
+			reset = 1'b0;
+			manualcounter = 8'b0;
+	end
+
+
+	assign countergood = counter == manualcounter; 
+
+	always_ff(@posedge clk) begin
+		manualcounter = manualcounter + 1'b0;
+	end
+
+
+//module count_module(input logic reset, output logic [31:0] counter, output logic int_osc);
+//
+//	HSOSC #(.CLKHF_DIV(2'b01)) hf_osc(.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+
+	// slow clock logic
+//	always_ff@(posedge int_osc) begin
+//		if(reset) begin
+//				counter <= 32'b0;
+//			end
+//		else begin
+//			counter <= counter + 1'b1;
+//		end
+//	end
+//	
+//endmodule

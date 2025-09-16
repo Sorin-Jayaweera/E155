@@ -9,20 +9,20 @@ I/O cells:      19
                               HSOSC         1          100.0
                                  IB         5          100.0
                               IOL_B         4          100.0
-                               LUT4       152          100.0
+                               LUT4       160          100.0
                                  OB        14          100.0
 SUB MODULES
                        count_module         1
                      keypad_handler         1
                         sevensegLUT         1
                        synchronizer         1
-                              TOTAL       339
+                              TOTAL       347
 ----------------------------------------------------------------------
 Report for cell sevensegLUT.v1
 Instance Path : lut
                                   Cell usage:
                                cell     count   Res Usage(%)
-                               LUT4         7            4.6
+                               LUT4         7            4.4
                               TOTAL         7
 ----------------------------------------------------------------------
 Report for cell count_module.v1
@@ -32,14 +32,8 @@ Instance Path : clocker
                                 FA2        17           34.7
                             FD1P3XZ        32           29.1
                               HSOSC         1          100.0
-                              TOTAL        50
-----------------------------------------------------------------------
-Report for cell keypad_handler.v1
-Instance Path : keypad
-                                  Cell usage:
-                               cell     count   Res Usage(%)
-                               LUT4        45           29.6
-                              TOTAL        45
+                               LUT4         2            1.2
+                              TOTAL        52
 ----------------------------------------------------------------------
 Report for cell synchronizer.v1
 Instance Path : colsyncer
@@ -47,3 +41,10 @@ Instance Path : colsyncer
                                cell     count   Res Usage(%)
                               IOL_B         4          100.0
                               TOTAL         4
+----------------------------------------------------------------------
+Report for cell keypad_handler.v1
+Instance Path : keypad
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4        52           32.5
+                              TOTAL        52
