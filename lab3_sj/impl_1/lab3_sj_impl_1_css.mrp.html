@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Mon Sep 15 22:15:16 2025
+Mapped on: Mon Sep 15 23:44:28 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -59,10 +59,10 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers: 118 out of  5280 (2%)
+   Number of slice registers: 127 out of  5280 (2%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           336 out of  5280 (6%)
-      Number of logic LUT4s:             168
+   Number of LUT4s:           338 out of  5280 (6%)
+      Number of logic LUT4s:             170
       Number of inserted feedthru LUT4s:  70
       Number of ripple logic:             49 (98 LUT4s)
    Number of IO sites used:   19 out of 39 (49%)
@@ -86,31 +86,32 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
    Number of SPIs:             0 out of 2 (0%)
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
-   Number of Clocks:  2
-      Net counter[12]: 8 loads, 8 rising, 0 falling (Driver: Pin
-     clocker.counter_90__i12/Q)
-      Net int_osc: 99 loads, 99 rising, 0 falling (Driver: Pin
+   Number of Clocks:  3
+      Net int_osc: 95 loads, 95 rising, 0 falling (Driver: Pin
      clocker.hf_osc.osc_inst/CLKHF)
-   Number of Clock Enables:  4
+      Net counter[13]: 17 loads, 17 rising, 0 falling (Driver: Pin
+     clocker.counter_92__i13/Q)
+      Net counter[0]: 4 loads, 4 rising, 0 falling (Driver: Pin
+     clocker.counter_92__i0/Q)
+   Number of Clock Enables:  3
       Net VCC_net: 1 loads, 0 SLICEs
       Net n530: 40 loads, 40 SLICEs
-      Net counter[14]: 2 loads, 2 SLICEs
       Net n528: 32 loads, 32 SLICEs
    Number of LSRs:  3
       Pin reset: 29 loads, 29 SLICEs (Net: reset_c)
-      Net counter[15]: 1 loads, 1 SLICEs
-      Net n802: 1 loads, 1 SLICEs
+      Net sel_c_18: 1 loads, 1 SLICEs
+      Net sel_c_18_N_143: 1 loads, 1 SLICEs
    Top 10 highest fanout non-clock nets:
       Net n530: 41 loads
       Net n528: 32 loads
       Net reset_c: 32 loads
-      Net col[2]: 18 loads
-      Net col[1]: 17 loads
-      Net row_c_2: 17 loads
-      Net col[0]: 16 loads
-      Net row_c_3: 16 loads
-      Net row_c_1: 14 loads
-      Net col[3]: 13 loads
+      Net sel_c_18: 22 loads
+      Net counter[17]: 17 loads
+      Net col[2]: 16 loads
+      Net row_c_2: 14 loads
+      Net row_c_3: 14 loads
+      Net col[0]: 12 loads
+      Net row_c_0: 12 loads
 
    Number of warnings:  0
    Number of criticals: 0
@@ -201,7 +202,7 @@ Instance Name: colsyncer/stableval_i3
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 71 MB
-Checksum -- map: 2de59fdf113bfdfb2456c3043e011f2a4dfa390
+Checksum -- map: 15a03c20177a26fe53930ff6df50fa875b434a
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

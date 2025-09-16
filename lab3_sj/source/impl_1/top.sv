@@ -37,8 +37,11 @@ module top(
 	// MODULES
 	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
 	
+	// setup the clock
+	count_module clocker(.reset(reset),.counter(counter),.int_osc(int_osc));
+	
 	// synchronize inputs
-	synchronizer colsyncer(.clk(int_osc),.unstableval(colunstable),.stableval(col));
+	synchronizer colsyncer(.clk(counter[0]),.unstableval(colunstable),.stableval(col));
 
 	// Look up table for the 7 segment displays
 	sevensegLUT lut(.s(iActive),.seg(segout));
@@ -46,8 +49,6 @@ module top(
 	// always have the digit READY to push to i0 in itemp
 	keypad_handler keypad(.counter(counter),.col(col),.row(row),.pressed(pressed),.bin(itemp)); 
 	
-	// setup the clock
-	count_module clocker(.reset(reset),.counter(counter),.int_osc(int_osc));
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -110,6 +111,6 @@ module top(
 			
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	assign sel = counter[18];// 80 hz
+	assign sel = counter[18];// 90 hz
 	assign nsel = !sel;
 endmodule

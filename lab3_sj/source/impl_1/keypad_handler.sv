@@ -13,54 +13,61 @@ module keypad_handler(
 	);
 	logic [7:0] rowcol;
 	logic [3:0] pressedarr;
-	logic [1:0] timepressedarr;
-
-	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
+	logic [3:0] storedpressedarr;
+	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num, temp;
 	
 	// if there is not an active column for the current row, then output none.
-	assign pressed = |pressedarr; // taking the last 4 values of pressed //|pressedarr;
-		
+	assign pressed = |storedpressedarr; // taking the last 4 values of pressed //|pressedarr;	
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
+	
 	// scan between activating each of the rows individually
-	always_ff@(posedge counter[12]) 
-		case(counter[15:14]) // somewhat slow switching between all pins. Sampling the buttons medium fast
-			2'b00: begin row = 4'b0001;  pressedarr[0] = (num != none); end
-			2'b01: begin row = 4'b0010;  pressedarr[1] = (num != none); end
-			2'b10: begin row = 4'b0100;  pressedarr[2] = (num != none); end
-			2'b11: begin row = 4'b1000;  pressedarr[3] = (num != none); end
+	always_ff@(posedge counter[13])  begin
+		case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
+			2'b00: begin row <= 4'b0001;  pressedarr[0] <= (temp != none); end
+			2'b01: begin row <= 4'b0010;  pressedarr[1] <= (temp != none); end
+			2'b10: begin row <= 4'b0100;  pressedarr[2] <= (temp != none); end
+			2'b11: begin row <= 4'b1000;  pressedarr[3] <= (temp != none); end
 		endcase
-		
-	always_ff@(posedge counter[10]) begin // holding on to the last buttons for a fairly long time - 1/3 second
-		case(counter[16])
-			1'b0: begin timepressedarr[0] = |pressedarr; end
-
-		endcase
-		
 	end
-
+	always_ff@(posedge counter[13]) begin
+		case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
+			2'b00: begin storedpressedarr[0] <= |pressedarr; end
+			2'b01: begin storedpressedarr[1] <= |pressedarr; end
+			2'b10: begin storedpressedarr[2] <= |pressedarr; end
+			2'b11: begin storedpressedarr[3] <= |pressedarr; end
+		endcase	
+	end
+	
+	always_ff@(posedge counter[13]) begin
+		if(temp != none) begin
+			num = temp;
+		end
+	end
+		
+		
 	always_comb
 		case(rowcol)
-			8'b00010001: num = one;
-			8'b00010010: num = two;
-			8'b00010100: num = three;
-			8'b00011000: num = a;
+			8'b00010001: temp = one;
+			8'b00010010: temp = two;
+			8'b00010100: temp = three;
+			8'b00011000: temp = a;
 
-			8'b00100001: num = four;
-			8'b00100010: num = five;
-			8'b00100100: num = six;
-			8'b00101000: num = b;
+			8'b00100001: temp = four;
+			8'b00100010: temp = five;
+			8'b00100100: temp = six;
+			8'b00101000: temp = b;
 
-			8'b01000001: num = seven;
-			8'b01000010: num = eight;
-			8'b01000100: num = nine;
-			8'b01001000: num = c;
+			8'b01000001: temp = seven;
+			8'b01000010: temp = eight;
+			8'b01000100: temp = nine;
+			8'b01001000: temp = c;
 
-			8'b10000001: num = e;
-			8'b10000010: num = zero;
-			8'b10000100: num = f;
-			8'b10001000: num = d;
+			8'b10000001: temp = e;
+			8'b10000010: temp = zero;
+			8'b10000100: temp = f;
+			8'b10001000: temp = d;
 		default
-			num = none;
+			temp = none;
 		endcase
 
 	always_comb
