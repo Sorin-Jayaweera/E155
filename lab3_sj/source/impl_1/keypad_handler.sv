@@ -13,21 +13,30 @@ module keypad_handler(
 	);
 	logic [7:0] rowcol;
 	logic [3:0] pressedarr;
+	logic [1:0] timepressedarr;
+
 	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
 	
 	// if there is not an active column for the current row, then output none.
-	assign pressed = |pressedarr;
-	
-	
+	assign pressed = |pressedarr; // taking the last 4 values of pressed //|pressedarr;
+		
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	// scan between activating each of the rows individually
-	always_comb
-		case(counter[16:15]) // somewhat slow switching between all pins
+	always_ff@(posedge counter[12]) 
+		case(counter[15:14]) // somewhat slow switching between all pins. Sampling the buttons medium fast
 			2'b00: begin row = 4'b0001;  pressedarr[0] = (num != none); end
 			2'b01: begin row = 4'b0010;  pressedarr[1] = (num != none); end
 			2'b10: begin row = 4'b0100;  pressedarr[2] = (num != none); end
 			2'b11: begin row = 4'b1000;  pressedarr[3] = (num != none); end
 		endcase
+		
+	always_ff@(posedge counter[10]) begin // holding on to the last buttons for a fairly long time - 1/3 second
+		case(counter[16])
+			1'b0: begin timepressedarr[0] = |pressedarr; end
+
+		endcase
+		
+	end
 
 	always_comb
 		case(rowcol)
