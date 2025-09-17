@@ -5,12 +5,12 @@ set ::bali::simulation::Para(DEVICEFAMILYNAME) {iCE40UP}
 set ::bali::simulation::Para(PROJECT) {sim}
 set ::bali::simulation::Para(MDOFILE) {}
 set ::bali::simulation::Para(PROJECTPATH) {C:/Users/sojayaweera/E155/lab3_sj/sim}
-set ::bali::simulation::Para(FILELIST) {"C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv" }
+set ::bali::simulation::Para(FILELIST) {"C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv" "C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/debouncer.sv" }
 set ::bali::simulation::Para(GLBINCLIST) {}
-set ::bali::simulation::Para(INCLIST) {"none" "none" "none"}
-set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" }
-set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" }
-set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" }
+set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none" "none" "none"}
+set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" "work" "work" }
+set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" }
+set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" }
 set ::bali::simulation::Para(SIMLIBLIST) {pmi_work ovi_ice40up}
 set ::bali::simulation::Para(MACROLIST) {}
 set ::bali::simulation::Para(SIMULATIONTOPMODULE) {top}

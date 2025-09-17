@@ -13,10 +13,18 @@ I/O cells:      19
                                  OB        14          100.0
 SUB MODULES
                        count_module         1
+                          debouncer         1
                      keypad_handler         1
                         sevensegLUT         1
                        synchronizer         1
-                              TOTAL       373
+                              TOTAL       374
+----------------------------------------------------------------------
+Report for cell sevensegLUT.v1
+Instance Path : lut
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         7            4.1
+                              TOTAL         7
 ----------------------------------------------------------------------
 Report for cell count_module.v1
 Instance Path : clocker
@@ -27,20 +35,13 @@ Instance Path : clocker
                               HSOSC         1          100.0
                               TOTAL        50
 ----------------------------------------------------------------------
-Report for cell sevensegLUT.v1
-Instance Path : lut
-                                  Cell usage:
-                               cell     count   Res Usage(%)
-                               LUT4         7            4.1
-                              TOTAL         7
-----------------------------------------------------------------------
 Report for cell keypad_handler.v1
 Instance Path : keypad
                                   Cell usage:
                                cell     count   Res Usage(%)
                             FD1P3XZ        17           13.4
-                               LUT4        62           36.7
-                              TOTAL        79
+                               LUT4        63           37.3
+                              TOTAL        80
 ----------------------------------------------------------------------
 Report for cell synchronizer.v1
 Instance Path : colsyncer
@@ -48,3 +49,12 @@ Instance Path : colsyncer
                                cell     count   Res Usage(%)
                               IOL_B         4          100.0
                               TOTAL         4
+----------------------------------------------------------------------
+Report for cell debouncer.v1
+Instance Path : deb
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        32           65.3
+                            FD1P3XZ        74           58.3
+                               LUT4        94           55.6
+                              TOTAL       200

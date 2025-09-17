@@ -13,9 +13,17 @@ Report for cell top
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
                           count_module	          1        10.1
-                        keypad_handler	          1        18.3
+                             debouncer	          1        46.7
+                        keypad_handler	          1        18.6
                            sevensegLUT	          1         2.1
                           synchronizer	          1         0.0
+---------------------------------------------------
+Report for cell sevensegLUT
+   Instance path: top/lut
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	          7         2.1
+                               LUTGATE	          7         2.9
 ---------------------------------------------------
 Report for cell count_module
    Instance path: top/clocker
@@ -25,19 +33,12 @@ Report for cell count_module
                                 LUTCCU	         34        34.7
                                 PFUREG	         32        25.2
 ---------------------------------------------------
-Report for cell sevensegLUT
-   Instance path: top/lut
-                     Cell usage:
-                                  cell	      count    Res Usage(%)
-                                  LUT4	          7         2.1
-                               LUTGATE	          7         2.9
----------------------------------------------------
 Report for cell keypad_handler
    Instance path: top/keypad
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         62        18.3
-                               LUTGATE	         62        25.8
+                                  LUT4	         63        18.6
+                               LUTGATE	         63        26.2
                                 PFUREG	         17        13.4
 ---------------------------------------------------
 Report for cell synchronizer
@@ -46,3 +47,12 @@ Report for cell synchronizer
                                   cell	      count    Res Usage(%)
                                  IOLGC	       4.00        100.0
                                  IOREG	          4        100.0
+---------------------------------------------------
+Report for cell debouncer
+   Instance path: top/deb
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        158        46.7
+                               LUTGATE	         94        39.2
+                                LUTCCU	         64        65.3
+                                PFUREG	         74        58.3

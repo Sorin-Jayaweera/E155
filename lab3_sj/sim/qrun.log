@@ -61,3 +61,46 @@ run 1000
 run 1000
 run 1000
 run 1000
+# *** Summary *********************************************
+#     qrun: Errors:   0, Warnings:   0
+#     vlog: Errors:   0, Warnings:   0
+#     vopt: Errors:   0, Warnings:   2
+#   Totals: Errors:   0, Warnings:   2
+# vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do "view wave" -do "add wave /*" -do "run 100 ns" -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log 
+# Start time: 09:21:24 on Sep 17,2025
+# Loading sv_std.std
+# Loading work.top(fast)
+# Loading work.count_module(fast)
+# Loading ovi_ice40up.HSOSC(fast)
+# Loading work.synchronizer(fast)
+# Loading work.sevensegLUT(fast)
+# Loading work.keypad_handler(fast)
+# Loading work.debouncer(fast)
+# view wave
+# .main_pane.wave.interior.cs.body.pw.wf
+# add wave /*
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: sojayaweera  Hostname: GGMZ0R3  ProcessID: 20180
+#           Attempting to use alternate WLF file "./wlftx4c2tm".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftx4c2tm
+# run 100 ns
+force reset = 0
+# Invalid hexadecimal digit: =.
+# ** UI-Msg (Error): (vsim-4011) Invalid force value: = 0.
+# 
+force reset 0
+run 10
+run 100
+force reset 1
+run 10
+run 100
+force reset 0
+run 10000
+run 10000000000
+force colunstable 4'b0001
+run 10
+run 100
+run 200
+# End time: 09:24:00 on Sep 17,2025, Elapsed time: 0:02:36
+# Errors: 0, Warnings: 2

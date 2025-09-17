@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Mon Sep 15 23:44:06 2025
+Wed Sep 17 09:19:34 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_lattice.synproj -logfile lab3_sj_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab3_sj/promote.xml 
@@ -161,6 +161,7 @@ Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/debouncer.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -216,6 +217,7 @@ Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevensegl
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/debouncer.sv. VERI-1482
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
 
@@ -229,6 +231,7 @@ INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synth
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv(1): compiling module synchronizer. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv(6): compiling module sevensegLUT. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(7): compiling module keypad_handler. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/debouncer.sv(7): compiling module debouncer. VERI-1018
 
 <A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
 
@@ -274,16 +277,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : n528, loads : 61
+  Net : deb/n102, loads : 61
   Net : reset_c, loads : 47
-  Net : n530, loads : 46
-  Net : n940, loads : 32
-  Net : n1926, loads : 29
-  Net : n11_adj_218, loads : 29
-  Net : n147, loads : 28
-  Net : n151, loads : 27
-  Net : pressedtimepassed, loads : 25
-  Net : n18, loads : 24
+  Net : deb/n104, loads : 46
+  Net : deb/n508, loads : 32
+  Net : deb/n1370, loads : 29
+  Net : deb/n11, loads : 29
+  Net : deb/n77, loads : 28
+  Net : deb/n81, loads : 27
+  Net : deb/pressedtimepassed, loads : 25
+  Net : deb/n18_adj_234, loads : 24
 ################### End Clock Report ##################
 
 
@@ -301,7 +304,7 @@ Peak Memory Usage: 101 MB
 Total CPU Time: 5 secs 
 Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: f1b1342198bcc8ca6cc33db36239b423a5f90d4
+Checksum -- synthesis -- netlist: 5706a374d77d0d173de9a3bc4588e78aedbc26d2
 
 
 

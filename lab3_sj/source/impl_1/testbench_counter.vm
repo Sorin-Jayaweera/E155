@@ -27,9 +27,12 @@ module testbench_counter(
 
 	assign countergood = counter == manualcounter; 
 
-	always_comb begin
-		if(clk) manualcounter = manualcounter + 1'b0;
+	always_ff@(posedge clk) begin
+		manualcounter = manualcounter + 1'b0;
+		assert(manualcounter == counter) else $error("failed at %d",counter)
 	end
+	
+endmodule
 
 
 //module count_module(input logic reset, output logic [31:0] counter, output logic int_osc);

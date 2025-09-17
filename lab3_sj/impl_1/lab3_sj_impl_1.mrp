@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Mon Sep 15 23:44:28 2025
+Mapped on: Wed Sep 17 09:19:55 2025
 
 Design Information
 ------------------
@@ -51,13 +51,13 @@ Design Summary
       Net int_osc: 95 loads, 95 rising, 0 falling (Driver: Pin
      clocker.hf_osc.osc_inst/CLKHF)
       Net counter[13]: 17 loads, 17 rising, 0 falling (Driver: Pin
-     clocker.counter_92__i13/Q)
+     clocker.counter_58__i13/Q)
       Net counter[0]: 4 loads, 4 rising, 0 falling (Driver: Pin
-     clocker.counter_92__i0/Q)
+     clocker.counter_58__i0/Q)
    Number of Clock Enables:  3
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n530: 40 loads, 40 SLICEs
-      Net n528: 32 loads, 32 SLICEs
+      Net deb.n102: 32 loads, 32 SLICEs
+      Net deb.n104: 40 loads, 40 SLICEs
    Number of LSRs:  3
       Pin reset: 29 loads, 29 SLICEs (Net: reset_c)
 
@@ -69,19 +69,19 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net sel_c_18: 1 loads, 1 SLICEs
-      Net sel_c_18_N_143: 1 loads, 1 SLICEs
+      Net sel_c: 1 loads, 1 SLICEs
+      Net sel_c_N_144: 1 loads, 1 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net n530: 41 loads
-      Net n528: 32 loads
+      Net deb.n104: 41 loads
+      Net deb.n102: 32 loads
       Net reset_c: 32 loads
-      Net sel_c_18: 22 loads
+      Net sel_c: 22 loads
       Net counter[17]: 17 loads
       Net col[2]: 16 loads
       Net row_c_2: 14 loads
       Net row_c_3: 14 loads
       Net col[0]: 12 loads
-      Net row_c_0: 12 loads
+      Net col[1]: 12 loads
 
 
 
@@ -154,7 +154,7 @@ IO (PIO) Attributes (cont)
 Removed logic
 -------------
 
-Block i1_2 was optimized away.
+Block colunstable_pad[0].vlo_inst was optimized away.
 
 OSC Summary
 -----------
@@ -192,7 +192,7 @@ Run Time and Memory Usage
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 71 MB
-Checksum -- map: 15a03c20177a26fe53930ff6df50fa875b434a
+Checksum -- map: 23e9663a177965098e4318ca383aba6c9456f39
 
                                     Page 3
 

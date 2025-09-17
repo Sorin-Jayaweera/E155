@@ -1,20 +1,144 @@
 module testbench_keypad()
+	
 	logic [31:0] counter; 
 	logic [3:0] col;
 	logic [3:0] row;
 	logic pressed;
+	logic [3:0] binout;
 	logic [3:0] bin;
+	
+	
+	keypadhandler dut(counter,col,row,pressed,binout)
 
+	
+	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
+	logic [7:0] rowcolctrl;
 
-	keypadhandler kph(counter,col,row,pressed,bin)
+	
+	for(i = 0; i < 4; i++) begin
+		for(j = 0; j < 4; j++) begin
+			tranif1 t1(row[i],col[j],rowcolctrl[i]&rowcolctrl[4+j]);	
+		end
+	end
 
 	initial begin
-		counter = 32'b0;
-		col = 4'b0;
-	
+		num = none;
+		assert(bin = 4'b0) else $error("null failed");
+			
+		#1;
+		num = zero;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+		
+		#1;
+		num = one;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+		
+		#1;
+		num = two;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+		
+		
+		#1;
+		num = three;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+		
+		#1;
+		num = four;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+			
+		#1;
+		num = five;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+			
+			
+		#1;
+		num = six;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = seven;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = eight;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = nine;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = ten;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = a;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = b;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = c;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = d;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+						
+		#1;
+		num = e;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
+		
+		#1;
+		num = f;
+		assert(pressed = 1'b1) else $error("Press detection fault");
+		assert(bin = binout) else $error("");
 	end
 		
+		
+	// drive the clock
+	always begin
+	\	counter[13] = 1'b1; #1; counter[13] = 1'b0; #1;	
+	end
 	
 	
-
+	always_comb 
+		case(num)
+				zero: begin bin = 4'b0000; rowcolctrl = 8'b10000010; end;
+				one: begin bin = 4'b0001; rowcolctrl = 8'b00010001; end;
+				two: begin bin = 4'b0010; rowcolctrl = 8'b00010010; end;
+				three: begin bin = 4'b0011;rowcolctrl = 8'b00010100; end;
+				four: begin bin = 4'b0100; rowcolctrl = 8'b00100001; end;
+				five: begin bin = 4'b0101; rowcolctrl = 8'b00100010; end;
+				six: begin bin = 4'b0110; rowcolctrl = 8'b00100100; end;
+				seven: begin bin = 4'b0111; rowcolctrl = 8'b01000001; end;
+				eight: begin bin = 4'b1000; rowcolctrl = 8'b01000010; end;
+				nine: begin bin = 4'b1001; rowcolctrl = 8'b01000100; end;
+				a:  begin bin = 4'b1010; rowcolctrl = 8'b00011000; end;
+				b: begin bin = 4'b1011; rowcolctrl = 8'b10000010; end;
+				c: begin bin = 4'b1100; rowcolctrl = 8'b01001000; end;
+				d: begin bin = 4'b1101; rowcolctrl = 8'b10001000; end;
+				e: begin bin = 4'b1110; rowcolctrl = 8'b10000001; end;
+				f: begin bin = 4'b1111; rowcolctrl = 8'b10000100; end;
+			default
+					bin = 4'b0000;
+			endcase
 endmodule

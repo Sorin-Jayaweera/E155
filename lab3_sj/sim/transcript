@@ -13,13 +13,14 @@
 # // and may not be used in any way not expressly authorized by SISW.
 # //
 # qrun -clean -f "C:/Users/sojayaweera/E155/lab3_sj/sim/sim.f"
+# Deleting directory qrun.out...
 # Creating library 'qrun.out/work'.
 # Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
 # 
 # 
-# Start time: 20:46:17 on Sep 13,2025
+# Start time: 09:21:23 on Sep 17,2025
 # 
-# vlog -reportprogress 300 -L work -sv "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
+# vlog -reportprogress 300 -L work -sv "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/debouncer.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
 # 
 # -- Compiling module top
 # 
@@ -27,13 +28,19 @@
 # 
 # -- Compiling module keypad_handler
 # 
+# -- Compiling module count_module
+# 
+# -- Compiling module synchronizer
+# 
+# -- Compiling module debouncer
+# 
 # 
 # 
 # Top level modules:
 # 
 # 	top
 # 
-# End time: 20:46:17 on Sep 13,2025, Elapsed time: 0:00:00
+# End time: 09:21:23 on Sep 17,2025, Elapsed time: 0:00:00
 # 
 # Errors: 0, Warnings: 0
 # 
@@ -42,7 +49,7 @@
 # 
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
 # 
-# Start time: 20:46:17 on Sep 13,2025
+# Start time: 09:21:23 on Sep 17,2025
 # 
 # vopt -reportprogress 300 -L work "+acc" "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up top -suppress vopt-7033 -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=2 
 # 
@@ -58,6 +65,8 @@
 # 
 # -- Loading module top
 # 
+# -- Loading module count_module
+# 
 # -- Loading module ovi_ice40up.HSOSC
 # 
 # -- Loading module ovi_ice40up.VLO
@@ -68,13 +77,17 @@
 # 
 # -- Loading module ovi_ice40up.HFOSC_CORE
 # 
+# -- Loading module synchronizer
+# 
 # -- Loading module sevensegLUT
 # 
 # -- Loading module keypad_handler
 # 
+# -- Loading module debouncer
+# 
 # ** Warning: (vopt-2108) Cannot find module '*' specified in +noacc option.
 # 
-# Optimizing 8 design-units (inlining 4/8 module instances):
+# Optimizing 11 design-units (inlining 4/11 module instances):
 # 
 # -- Inlining module ovi_ice40up.VLO(fast)
 # 
@@ -88,13 +101,21 @@
 # 
 # -- Optimizing module keypad_handler(fast)
 # 
+# -- Optimizing module debouncer(fast)
+# 
+# ** Note: (vopt-143) Recognized 1 FSM in module "debouncer(fast)".
+# 
 # -- Optimizing module top(fast)
 # 
 # -- Optimizing module sevensegLUT(fast)
 # 
+# -- Optimizing module count_module(fast)
+# 
+# -- Optimizing module synchronizer(fast)
+# 
 # Optimized design name is qrun_opt
 # 
-# End time: 20:46:18 on Sep 13,2025, Elapsed time: 0:00:01
+# End time: 09:21:24 on Sep 17,2025, Elapsed time: 0:00:01
 # 
 # Errors: 0, Warnings: 2
 # 
