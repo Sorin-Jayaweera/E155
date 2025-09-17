@@ -23,6 +23,9 @@ if {[file exists {C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_syn.ud
   file copy -force -- {C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_syn.udb} {C:/Users/sojayaweera/E155/lab3_sj/impl_1/incr/postsyn.udb}
   file copy -force -- {C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_map.udb} {C:/Users/sojayaweera/E155/lab3_sj/impl_1/incr/postmap.udb}
   file copy -force -- {C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1.udb} {C:/Users/sojayaweera/E155/lab3_sj/impl_1/incr/postpar.udb}
+  if [file exists {C:/Users/sojayaweera/E155/lab3_sj/pins.pdc}] {
+    file copy -force -- {C:/Users/sojayaweera/E155/lab3_sj/pins.pdc} {C:/Users/sojayaweera/E155/lab3_sj/impl_1/incr/lastrun.pdc}
+  }
 }
 
 } out]} {
