@@ -245,37 +245,51 @@
     "text": "Test Vector Files\n\nTestvectors.tv (overall)\nTo use these test vectors, run testbenchg.sv. Change the bit widths to match these inputs. The overall file has bitwidth 14. // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_000_0000001 //1 0001_010_1001111 //2 0010_010_0010010 //3 0011_000_0000110 //4 0100_000_1001100 //5 0101_010_0100100 //6 0110_010_0100000 //7 0111_000_0001111 //8 1000_000_0000000 //9 1001_010_0001100 //A 1010_010_0001000 //B 1011_000_1100000 //C 1100_100_0110001 //D 1101_110_1000010 //E 1110_110_0110000 //F 1111_100_0111000\n\n\nONBOARD LED\n//Bitwidth 7 // LED TESTING // S0 S1 S2 S3 _ LED1 LED2 0000_000 //1 0001_010 //2 0010_010 //3 0011_000 //4 0100_000 //5 0101_010 //6 0110_010 //7 0111_000 //8 1000_000 //9 1001_010 //A 1010_010 //B 1011_000 //C 1100_100 //D 1101_110 //E 1110_110 //F 1111_100\n\n\n7 Segment Testing\n// bitwidth 11 // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_0000001 //1 0001_1001111 //2 0010_0010010 //3 0011_0000110 //4 0100_1001100 //5 0101_0100100 //6 0110_0100000 //7 0111_0001111 //8 1000_0000000 //9 1001_0001100 //A 1010_0001000 //B 1011_1100000 //C 1100_0110001 //D 1101_1000010 //E 1110_0110000 //F 1111_0111000"
   },
   {
-    "objectID": "labs/lab3/lab.html#design-and-testing-methodology",
-    "href": "labs/lab3/lab.html#design-and-testing-methodology",
-    "title": "Lab 1 - E155 Startup",
-    "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology"
+    "objectID": "labs/lab3/lab.html",
+    "href": "labs/lab3/lab.html",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "",
+    "text": "In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony."
   },
   {
-    "objectID": "labs/lab3/lab.html#technical-documentatoin",
-    "href": "labs/lab3/lab.html#technical-documentatoin",
-    "title": "Lab 1 - E155 Startup",
-    "section": "Technical Documentatoin",
-    "text": "Technical Documentatoin\n\nBlock Diagram\n\n\nSchematic"
+    "objectID": "labs/lab3/lab.html#introduction",
+    "href": "labs/lab3/lab.html#introduction",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "",
+    "text": "In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony."
+  },
+  {
+    "objectID": "labs/lab3/lab.html#design-and-testing-methodology",
+    "href": "labs/lab3/lab.html#design-and-testing-methodology",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "Design and Testing Methodology",
+    "text": "Design and Testing Methodology\nOsilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 80 ms each.\nA testbench to simulate each module was also created."
+  },
+  {
+    "objectID": "labs/lab3/lab.html#technical-documentation",
+    "href": "labs/lab3/lab.html#technical-documentation",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nState Machine Debounce Logic\n\n\n\nBlock Diagram\n\n\n\nSchematic"
+  },
+  {
+    "objectID": "labs/lab3/lab.html#testbench-simulation",
+    "href": "labs/lab3/lab.html#testbench-simulation",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "Testbench Simulation",
+    "text": "Testbench Simulation"
   },
   {
     "objectID": "labs/lab3/lab.html#results-and-discussion",
     "href": "labs/lab3/lab.html#results-and-discussion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "Results and Discussion",
-    "text": "Results and Discussion\n\nTestbench Simulation"
-  },
-  {
-    "objectID": "labs/lab3/lab.html#conclusion",
-    "href": "labs/lab3/lab.html#conclusion",
-    "title": "Lab 1 - E155 Startup",
-    "section": "Conclusion",
-    "text": "Conclusion"
+    "text": "Results and Discussion\nThe device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.\nThe debounce length chosen is somewhat lengthy, and may be reduced for optimization."
   },
   {
     "objectID": "labs/lab3/lab.html#ai-overview",
     "href": "labs/lab3/lab.html#ai-overview",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "AI overview",
     "text": "AI overview"
   },

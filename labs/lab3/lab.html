@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sorin Jayaweera">
-<meta name="description" content="Testing an MCU and FPGA PCB with a 7 segment display">
+<meta name="dcterms.date" content="2025-08-27">
+<meta name="description" content="Testing an FPGA reading a keypad and pushing to two 7 segment displays">
 
-<title>Lab 1 - E155 Startup – E155 Portfolio</title>
+<title>Lab 3 - Keypad Debounce – E155 Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,16 +158,14 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
-  <li><a href="#technical-documentatoin" id="toc-technical-documentatoin" class="nav-link" data-scroll-target="#technical-documentatoin">Technical Documentatoin</a>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
+  <li><a href="#state-machine-debounce-logic" id="toc-state-machine-debounce-logic" class="nav-link" data-scroll-target="#state-machine-debounce-logic">State Machine Debounce Logic</a></li>
   <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a>
-  <ul class="collapse">
   <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI overview</a></li>
   </ul>
 </nav>
@@ -176,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 1 - E155 Startup</h1>
+<h1 class="title">Lab 3 - Keypad Debounce</h1>
   <div class="quarto-categories">
     <div class="quarto-category">reflection</div>
     <div class="quarto-category">labreport</div>
@@ -185,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Testing an MCU and FPGA PCB with a 7 segment display
+    Testing an FPGA reading a keypad and pushing to two 7 segment displays
   </div>
 </div>
 
@@ -202,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">8/27/2025</p>
+      <p class="date">August 27, 2025</p>
     </div>
   </div>
   
@@ -216,27 +215,35 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.</p>
 </section>
 <section id="design-and-testing-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h2>
+<p>Osilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 80 ms each.</p>
+<p>A testbench to simulate each module was also created.</p>
 </section>
-<section id="technical-documentatoin" class="level2">
-<h2 class="anchored" data-anchor-id="technical-documentatoin">Technical Documentatoin</h2>
+<section id="technical-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
+<section id="state-machine-debounce-logic" class="level3">
+<h3 class="anchored" data-anchor-id="state-machine-debounce-logic">State Machine Debounce Logic</h3>
+<p><img src="../../images/lab3/fsm.png" class="img-fluid"></p>
+</section>
 <section id="block-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
+<p><img src="../../images/lab3/block_diagram.png" class="img-fluid"></p>
 </section>
 <section id="schematic" class="level3">
 <h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
+<p><img src="../../images/lab3/schematic.png" class="img-fluid"></p>
 </section>
+</section>
+<section id="testbench-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h2>
 </section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<section id="testbench-simulation" class="level3">
-<h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.</p>
+<p>The debounce length chosen is somewhat lengthy, and may be reduced for optimization.</p>
 </section>
 <section id="ai-overview" class="level2">
 <h2 class="anchored" data-anchor-id="ai-overview">AI overview</h2>
