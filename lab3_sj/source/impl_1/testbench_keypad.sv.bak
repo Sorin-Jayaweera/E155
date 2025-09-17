@@ -14,7 +14,16 @@ module testbench_keypad();
 	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
 	logic [7:0] rowcolctrl;
 
+
+	initial begin
+
+
 	tranif1 t0(row[0],col[0],rowcolctrl[0]&rowcolctrl[4]);	
+	
+
+		num = none;
+		assert(bin == 4'b0) else $error("null failed");
+		
 	tranif1 t1(row[0],col[1],rowcolctrl[0]&rowcolctrl[5]);
 	tranif1 t2(row[0],col[2],rowcolctrl[0]&rowcolctrl[6]);
 	tranif1 t3(row[0],col[3],rowcolctrl[0]&rowcolctrl[7]);
@@ -33,11 +42,7 @@ module testbench_keypad();
 	tranif1 t13(row[3],col[1],rowcolctrl[0]&rowcolctrl[5]);
 	tranif1 t14(row[3],col[2],rowcolctrl[0]&rowcolctrl[6]);
 	tranif1 t15(row[3],col[3],rowcolctrl[0]&rowcolctrl[7]);
-
-	initial begin
-		#1;
-		num = none;
-		assert(bin == 4'b0) else $error("null failed");
+		
 
 		#1;
 		num = zero;
