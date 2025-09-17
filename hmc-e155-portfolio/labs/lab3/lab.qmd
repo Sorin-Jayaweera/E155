@@ -10,24 +10,41 @@ draft: false
 ---
 
 ---
-title: "Lab 1 - E155 Startup"
-description: "Testing an MCU and FPGA PCB with a 7 segment display"
+title: "Lab 3 - Keypad Scanner "
+description: "Reading user input through a non-driven 16 pin keypad"
 author: "Sorin Jayaweera"
-date: "8/27/2025"
+date: "9/11/2025"
 categories:
+  - Introduction
+  - Design and Testing Methodology
+  - Technical Documentation
+  - Simulation
   - reflection
-  - labreport
 draft: false
 ---
 
 
 ## Introduction
+In this lab, a user's most recent two button presses on a keypad are displayed on two seven segment displays. 
 
 ## Design and Testing Methodology
 
-## Technical Documentatoin
+The keypad matrix has four rows and columns. By pulling one column at a time high and reading if any rows have power, the location of any button presses may be found. 
+
+The contact switch makes noisy voltage while jittering, so a 40 ms debounce was used for pressing and release - only accepting a number after the current one is released AND sufficient time has passed.
+
+## Technical Documentation
+Reading user inputs required a state machine with three states, and ability to change based off current and past values. 
+
+There is an initial state (accepting). Once a button is pressed (rising edge), the state changes to entering. The state can only move on if the button is released and the debounce time has finished, from which the state goes to exiting. Once an exit debounce timer is finished (and the button is released), then the state goes back to accepting new inputs. 
+
+![](images/lab3/fsm.png)
+
+
 
 ### Block Diagram
+
+![](images/lab3/block_diagram.png)
 
 ### Schematic
 
