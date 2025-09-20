@@ -1,5 +1,5 @@
 ---
-title: "Lab 3 - Keypad Debounce""
+title: "Lab 3 - Keypad Debounce"
 description: "Testing an FPGA reading a keypad and pushing to two 7 segment displays"
 author: "Sorin Jayaweera"
 date: "8/27/2025"
@@ -12,18 +12,37 @@ draft: false
 
 ## Introduction
 
+In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. 
+This tests the principles of debouncing and asynchrony.
+
 ## Design and Testing Methodology
 
-## Technical Documentatoin
+Osilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 80 ms each.
+
+A testbench to simulate each module was also created.
+ 
+## Technical Documentation
+
+### State Machine Debounce Logic
+![](/images/lab3/fsm.png) 
+
 
 ### Block Diagram
+![](/images/lab3/block_diagram.png)
 
 ### Schematic
+![](/images/lab3/schematic.png)
+
+
+## Testbench Simulation
+A testbench was constructed for every module.
+
+
 
 ## Results and Discussion
 
-### Testbench Simulation
+The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.
 
-## Conclusion
+The debounce length chosen is somewhat lengthy, and may be reduced for optimization. 
 
 ## AI overview
