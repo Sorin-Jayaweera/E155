@@ -4,42 +4,34 @@ Report for cell top
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                  IOLGC	       4.00        100.0
-                                  LUT4	        338        100.0
-                               LUTGATE	        240        100.0
+                                  LUT4	        345        100.0
+                               LUTGATE	        247        100.0
                                 LUTCCU	         98        100.0
                                  IOREG	          4        100.0
                                  IOBUF	         19        100.0
-                                PFUREG	        127        100.0
+                                PFUREG	        115        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
-                          count_module	          1        10.1
-                             debouncer	          1        46.7
-                        keypad_handler	          1        18.6
-                           sevensegLUT	          1         2.1
+                          count_module	          1         9.9
+                             debouncer	          1        47.0
+                        keypad_handler	          1        19.7
+                           sevensegLUT	          1         2.0
                           synchronizer	          1         0.0
----------------------------------------------------
-Report for cell sevensegLUT
-   Instance path: top/lut
-                     Cell usage:
-                                  cell	      count    Res Usage(%)
-                                  LUT4	          7         2.1
-                               LUTGATE	          7         2.9
 ---------------------------------------------------
 Report for cell count_module
    Instance path: top/clocker
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         34        10.1
+                                  LUT4	         34         9.9
                                 LUTCCU	         34        34.7
-                                PFUREG	         32        25.2
+                                PFUREG	         32        27.8
 ---------------------------------------------------
-Report for cell keypad_handler
-   Instance path: top/keypad
+Report for cell sevensegLUT
+   Instance path: top/lut
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	         63        18.6
-                               LUTGATE	         63        26.2
-                                PFUREG	         17        13.4
+                                  LUT4	          7         2.0
+                               LUTGATE	          7         2.8
 ---------------------------------------------------
 Report for cell synchronizer
    Instance path: top/colsyncer
@@ -48,11 +40,19 @@ Report for cell synchronizer
                                  IOLGC	       4.00        100.0
                                  IOREG	          4        100.0
 ---------------------------------------------------
+Report for cell keypad_handler
+   Instance path: top/keypad
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         68        19.7
+                               LUTGATE	         68        27.5
+                                PFUREG	          5         4.3
+---------------------------------------------------
 Report for cell debouncer
    Instance path: top/deb
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        158        46.7
-                               LUTGATE	         94        39.2
+                                  LUT4	        162        47.0
+                               LUTGATE	         98        39.7
                                 LUTCCU	         64        65.3
-                                PFUREG	         74        58.3
+                                PFUREG	         74        64.3

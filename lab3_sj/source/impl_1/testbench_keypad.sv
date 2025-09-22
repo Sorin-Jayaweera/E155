@@ -1,122 +1,138 @@
 module testbench_keypad();
 	
 	logic [31:0] counter; 
-	logic [3:0] col;
-	logic [3:0] row;
+	wire [3:0] col;
+	wire [3:0] row;
 	logic pressed;
 	logic [3:0] binout;
 	logic [3:0] bin;
+	logic reset;
 	
-	
-	keypadhandler dut(counter,col,row,pressed,binout);
+	keypad_handler dut(counter,col,reset,row,pressed,binout);
 
 	
 	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
 	logic [7:0] rowcolctrl;
 
-	tranif1 t0(row[0],col[0],rowcolctrl[0]&rowcolctrl[4]);	
-	tranif1 t1(row[0],col[1],rowcolctrl[0]&rowcolctrl[5]);
-	tranif1 t2(row[0],col[2],rowcolctrl[0]&rowcolctrl[6]);
-	tranif1 t3(row[0],col[3],rowcolctrl[0]&rowcolctrl[7]);
+	pulldown(col[0]);
+	pulldown(col[1]);
+	pulldown(col[2]);
+	pulldown(col[3]);
+
+	tranif1 t0(row[0],col[0],num == one);	
+	tranif1 t1(row[0],col[1],num == two);
+	tranif1 t2(row[0],col[2],num == three);
+	tranif1 t3(row[0],col[3],num == a);
 	
-	tranif1 t4(row[1],col[0],rowcolctrl[0]&rowcolctrl[4]);	
-	tranif1 t5(row[1],col[1],rowcolctrl[0]&rowcolctrl[5]);
-	tranif1 t6(row[1],col[2],rowcolctrl[0]&rowcolctrl[6]);
-	tranif1 t7(row[1],col[3],rowcolctrl[0]&rowcolctrl[7]);
+	tranif1 t4(row[1],col[0],num == four);	
+	tranif1 t5(row[1],col[1],num == five);
+	tranif1 t6(row[1],col[2],num == six);
+	tranif1 t7(row[1],col[3],num == b);
 	
-	tranif1 t8(row[2],col[0],rowcolctrl[0]&rowcolctrl[4]);	
-	tranif1 t9(row[2],col[1],rowcolctrl[0]&rowcolctrl[5]);
-	tranif1 t10(row[2],col[2],rowcolctrl[0]&rowcolctrl[6]);
-	tranif1 t11(row[2],col[3],rowcolctrl[0]&rowcolctrl[7]);
+	tranif1 t8(row[2],col[0],num == seven);	
+	tranif1 t9(row[2],col[1],num == eight);
+	tranif1 t10(row[2],col[2],num == nine);
+	tranif1 t11(row[2],col[3],num == c);
 	
-	tranif1 t12(row[3],col[0],rowcolctrl[0]&rowcolctrl[4]);	
-	tranif1 t13(row[3],col[1],rowcolctrl[0]&rowcolctrl[5]);
-	tranif1 t14(row[3],col[2],rowcolctrl[0]&rowcolctrl[6]);
-	tranif1 t15(row[3],col[3],rowcolctrl[0]&rowcolctrl[7]);
+	tranif1 t12(row[3],col[0],num == e);	
+	tranif1 t13(row[3],col[1],num == zero);
+	tranif1 t14(row[3],col[2],num == f);
+	tranif1 t15(row[3],col[3],num == d);
+
 
 	initial begin
-		#1;
+		counter = 0;
+		reset = 1;
+		#10
+		reset = 0;
+		//row = 4'b0;
+		//col = 4'b0
+		
+		wait(counter[14] == 1);
+		#10
 		num = none;
 		assert(bin == 4'b0) else $error("null failed");
+		wait(counter[14] == 0);
 
-		#1;
 		num = zero;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
+		wait(counter[14] == 0);
 		
-		#1;
 		num = one;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
+		wait(counter[14] == 1);
 		
-		#1;
 		num = two;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
+		wait(counter[14] == 0);
 		
-		
-		#1;
 		num = three;
+		wait(counter[14] == 1);
+		assert(pressed == 1'b1) else $error("Press detection fault");
+		assert(bin == binout) else $error("");
+		wait(counter[14] == 0);
+		
+		num = four;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
 		
-		#1;
-		num = four;
+		num = five;	
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-			
-		#1;
-		num = five;
+		wait(counter[14] == 0);
+
+		num = six;	
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-			
-			
-		#1;
-		num = six;
-		assert(pressed == 1'b1) else $error("Press detection fault");
-		assert(bin == binout) else $error("");
-						
-		#1;
+		wait(counter[14] == 0);		
+		
 		num = seven;
+		
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		wait(counter[14] == 0);	
+		
 		num = eight;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		wait(counter[14] == 0);
+		
 		num = nine;
+		wait(counter[14] == 1);
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		wait(counter[14] == 0);
+		
 		num = a;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		
 		num = b;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		
 		num = c;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
 		num = d;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
-						
-		#1;
+		
 		num = e;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
 		
-		#1;
 		num = f;
 		assert(pressed == 1'b1) else $error("Press detection fault");
 		assert(bin == binout) else $error("");
@@ -125,7 +141,7 @@ module testbench_keypad();
 		
 	// drive the clock
 	always begin
-		counter[13] = 1'b1; #1; counter[13] = 1'b0; #1;	
+		counter = counter + 10'b1000000000; #1; counter = counter+10'b1000000000;
 	end
 	
 	

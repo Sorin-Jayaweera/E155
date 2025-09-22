@@ -24,12 +24,12 @@ module debouncer(
 	logic [31:0] countstart;
 	logic [31:0] pressedcountstart;
 	
-	assign timepassed = (counter - countstart ) > 6000000;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
-	assign pressedtimepassed = (counter - pressedcountstart) > 6000000;
+	assign timepassed = (counter - countstart ) > 1000000;//6000000;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
+	assign pressedtimepassed = (counter - pressedcountstart) > 1000000;//6000000;
 
 
-	always_ff@(posedge int_osc) begin
-		if(reset == 1) begin
+	always_ff@(posedge int_osc,reset) begin
+		if(reset == 1'b1) begin
 				i0 = 4'b0000;
 				i1 = 4'b0000;
 				cycleflag = accepting;

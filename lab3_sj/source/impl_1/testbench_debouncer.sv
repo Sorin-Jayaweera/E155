@@ -20,9 +20,10 @@ module testbench_debouncer(	);
 	initial
 		begin
 				reset = 1'b1;
-				assert(counter == 32'b0) else $error("Bad Reset");
-				
-				#5
+				counter = 32'b0;
+				#10
+				assert(i0 == 4'b0000);
+				#10
 				reset = 0;
 				
 				// press F
@@ -41,13 +42,15 @@ module testbench_debouncer(	);
 				#5; 
 				pressed = 1'b1;
 				itemp = 4'b0110;
-				assert(i0 == 4'b1111);				
+				assert(i0 == 4'b1111);			
+
+				$stop;
 				
 		end
 
 
 	always begin
-		clk = 0; #1; clk = 1; #1;
+		clk = 0; #1; clk = 1; counter = counter + 1; #1;
 	end
 
 endmodule

@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Wed Sep 17 09:19:55 2025
+Mapped on: Mon Sep 22 13:31:09 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -59,11 +59,11 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers: 127 out of  5280 (2%)
+   Number of slice registers: 115 out of  5280 (2%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           338 out of  5280 (6%)
-      Number of logic LUT4s:             170
-      Number of inserted feedthru LUT4s:  70
+   Number of LUT4s:           345 out of  5280 (7%)
+      Number of logic LUT4s:             179
+      Number of inserted feedthru LUT4s:  68
       Number of ripple logic:             49 (98 LUT4s)
    Number of IO sites used:   19 out of 39 (49%)
       Number of IO sites used for general PIO: 19
@@ -89,7 +89,7 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
    Number of Clocks:  3
       Net int_osc: 95 loads, 95 rising, 0 falling (Driver: Pin
      clocker.hf_osc.osc_inst/CLKHF)
-      Net counter[13]: 17 loads, 17 rising, 0 falling (Driver: Pin
+      Net counter[13]: 5 loads, 5 rising, 0 falling (Driver: Pin
      clocker.counter_58__i13/Q)
       Net counter[0]: 4 loads, 4 rising, 0 falling (Driver: Pin
      clocker.counter_58__i0/Q)
@@ -97,21 +97,19 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
       Net VCC_net: 1 loads, 0 SLICEs
       Net deb.n102: 32 loads, 32 SLICEs
       Net deb.n104: 40 loads, 40 SLICEs
-   Number of LSRs:  3
+   Number of LSRs:  1
       Pin reset: 29 loads, 29 SLICEs (Net: reset_c)
-      Net sel_c: 1 loads, 1 SLICEs
-      Net sel_c_N_144: 1 loads, 1 SLICEs
    Top 10 highest fanout non-clock nets:
       Net deb.n104: 41 loads
+      Net reset_c: 40 loads
       Net deb.n102: 32 loads
-      Net reset_c: 32 loads
-      Net sel_c: 22 loads
-      Net counter[17]: 17 loads
+      Net sel_c: 19 loads
       Net col[2]: 16 loads
-      Net row_c_2: 14 loads
-      Net row_c_3: 14 loads
-      Net col[0]: 12 loads
-      Net col[1]: 12 loads
+      Net row_c_2: 15 loads
+      Net row_c_3: 15 loads
+      Net counter[17]: 13 loads
+      Net row_c_0: 13 loads
+      Net row_c_1: 13 loads
 
    Number of warnings:  0
    Number of criticals: 0
@@ -202,7 +200,7 @@ Instance Name: colsyncer/stableval_i3
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 71 MB
-Checksum -- map: 23e9663a177965098e4318ca383aba6c9456f39
+Checksum -- map: 1292d541e2a084d8b5a77f8f26f601153297d623
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

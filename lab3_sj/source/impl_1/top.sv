@@ -45,7 +45,7 @@ module top(
 	sevensegLUT lut(.s(iActive),.seg(segout));
 
 	// always have the digit READY to push to i0 in itemp
-	keypad_handler keypad(.counter(counter),.col(col),.row(row),.pressed(pressed),.bin(itemp)); 
+	keypad_handler keypad(.counter(counter),.col(col),.reset(reset),.row(row),.pressed(pressed),.bin(itemp)); 
 	
 	// state machine for debounce
 	debouncer deb(int_osc, counter, pressed,reset,itemp,i0,i1);

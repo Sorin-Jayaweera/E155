@@ -3,7 +3,7 @@
 // sojayaweera@g.hmc.edu 
 // 9/13/2025
 
-module testbench_debouncer(output logic clk, output logic [3:0] stableval);
+module testbench_synchronizer(output logic clk, output logic [3:0] stableval);
 	
 
 	logic [3:0] unstableval;
