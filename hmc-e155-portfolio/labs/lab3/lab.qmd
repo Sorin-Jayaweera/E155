@@ -25,7 +25,17 @@ A simulation testbench for each module was also created to ensure desired functi
  
 ## Technical Documentation
 
-The logic for this design is partitioned into many functions. There is a 
+The logic for this design is partitioned into many functions. 
+
+Asynchronous key presses are aligned to the clock with a synchronizer - just a flop taking input on the fastest clock cycle. 
+
+A clock module handles a counter for time based conditions.
+
+A Keypad handler drives each row of the keypad high one at a time, then reads out the associated columns. If any of the columns was active, then a button was pressed within the cycle of checking.
+
+A debouncer module ensures that each button is only activated once. When the button is first pressed, a 40 ms timer is started. New inputs are only accepted after the button is released after the 40ms timer and an additional 40 ms after release has passed.
+
+A single 7 segment driver is time multiplexed to drive two 7 segment displays, alternating which is powered at 90 hz. 
 
 ### State Machine Debounce Logic
 ![](/images/lab3/fsm.png) 
@@ -43,10 +53,13 @@ A testbench was constructed for every module.
 
 ![](/images/lab3/synchroniezerandkeypadtestbench.png)
 
+
 ## Results and Discussion
 
 The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.
 
 The debounce length chosen is somewhat lengthy, and may be reduced for optimization. 
+
+Time spent: No clue, maybe ~ 15 hrs
 
 ## AI overview

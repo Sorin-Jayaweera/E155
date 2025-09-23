@@ -9,7 +9,7 @@
   {
     "objectID": "labs/lab6/lab.html#design-and-testing-methodology",
     "href": "labs/lab6/lab.html#design-and-testing-methodology",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
@@ -23,28 +23,28 @@
   {
     "objectID": "labs/lab6/lab.html#results-and-discussion",
     "href": "labs/lab6/lab.html#results-and-discussion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
     "objectID": "labs/lab6/lab.html#conclusion",
     "href": "labs/lab6/lab.html#conclusion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
     "objectID": "labs/lab6/lab.html#ai-overview",
     "href": "labs/lab6/lab.html#ai-overview",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
   },
   {
     "objectID": "labs/lab4/lab.html#design-and-testing-methodology",
     "href": "labs/lab4/lab.html#design-and-testing-methodology",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
@@ -58,21 +58,21 @@
   {
     "objectID": "labs/lab4/lab.html#results-and-discussion",
     "href": "labs/lab4/lab.html#results-and-discussion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
     "objectID": "labs/lab4/lab.html#conclusion",
     "href": "labs/lab4/lab.html#conclusion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
     "objectID": "labs/lab4/lab.html#ai-overview",
     "href": "labs/lab4/lab.html#ai-overview",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
   },
@@ -249,42 +249,42 @@
     "href": "labs/lab3/lab.html",
     "title": "Lab 3 - Keypad Debounce",
     "section": "",
-    "text": "In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony."
+    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
   },
   {
     "objectID": "labs/lab3/lab.html#introduction",
     "href": "labs/lab3/lab.html#introduction",
     "title": "Lab 3 - Keypad Debounce",
     "section": "",
-    "text": "In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony."
+    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
   },
   {
     "objectID": "labs/lab3/lab.html#design-and-testing-methodology",
     "href": "labs/lab3/lab.html#design-and-testing-methodology",
     "title": "Lab 3 - Keypad Debounce",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology\nOsilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 80 ms each.\nA testbench to simulate each module was also created."
+    "text": "Design and Testing Methodology\nOsilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 40 ms each.\nA simulation testbench for each module was also created to ensure desired functionality. (albeit they were constructed after it already worked)."
   },
   {
     "objectID": "labs/lab3/lab.html#technical-documentation",
     "href": "labs/lab3/lab.html#technical-documentation",
     "title": "Lab 3 - Keypad Debounce",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\n\nState Machine Debounce Logic\n\n\n\nBlock Diagram\n\n\n\nSchematic"
+    "text": "Technical Documentation\nThe logic for this design is partitioned into many functions.\nAsynchronous key presses are aligned to the clock with a synchronizer - just a flop taking input on the fastest clock cycle.\nA clock module handles a counter for time based conditions.\nA Keypad handler drives each row of the keypad high one at a time, then reads out the associated columns. If any of the columns was active, then a button was pressed within the cycle of checking.\nA debouncer module ensures that each button is only activated once. When the button is first pressed, a 40 ms timer is started. New inputs are only accepted after the button is released after the 40ms timer and an additional 40 ms after release has passed.\nA single 7 segment driver is time multiplexed to drive two 7 segment displays, alternating which is powered at 90 hz.\n\nState Machine Debounce Logic\n\n\n\nBlock Diagram\n\n\n\nSchematic"
   },
   {
     "objectID": "labs/lab3/lab.html#testbench-simulation",
     "href": "labs/lab3/lab.html#testbench-simulation",
     "title": "Lab 3 - Keypad Debounce",
     "section": "Testbench Simulation",
-    "text": "Testbench Simulation"
+    "text": "Testbench Simulation\nA testbench was constructed for every module."
   },
   {
     "objectID": "labs/lab3/lab.html#results-and-discussion",
     "href": "labs/lab3/lab.html#results-and-discussion",
     "title": "Lab 3 - Keypad Debounce",
     "section": "Results and Discussion",
-    "text": "Results and Discussion\nThe device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.\nThe debounce length chosen is somewhat lengthy, and may be reduced for optimization."
+    "text": "Results and Discussion\nThe device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.\nThe debounce length chosen is somewhat lengthy, and may be reduced for optimization.\nTime spent: No clue, maybe ~ 15 hrs"
   },
   {
     "objectID": "labs/lab3/lab.html#ai-overview",
@@ -296,7 +296,7 @@
   {
     "objectID": "labs/lab5/lab.html#design-and-testing-methodology",
     "href": "labs/lab5/lab.html#design-and-testing-methodology",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
@@ -310,28 +310,28 @@
   {
     "objectID": "labs/lab5/lab.html#results-and-discussion",
     "href": "labs/lab5/lab.html#results-and-discussion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
     "objectID": "labs/lab5/lab.html#conclusion",
     "href": "labs/lab5/lab.html#conclusion",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
     "objectID": "labs/lab5/lab.html#ai-overview",
     "href": "labs/lab5/lab.html#ai-overview",
-    "title": "Lab 1 - E155 Startup",
+    "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
   },
   {
     "objectID": "labs/lab7/lab.html#design-and-testing-methodology",
     "href": "labs/lab7/lab.html#design-and-testing-methodology",
-    "title": "Lab 7!",
+    "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
@@ -345,22 +345,50 @@
   {
     "objectID": "labs/lab7/lab.html#results-and-discussion",
     "href": "labs/lab7/lab.html#results-and-discussion",
-    "title": "Lab 7!",
+    "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
     "objectID": "labs/lab7/lab.html#conclusion",
     "href": "labs/lab7/lab.html#conclusion",
-    "title": "Lab 7!",
+    "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
     "objectID": "labs/lab7/lab.html#ai-overview",
     "href": "labs/lab7/lab.html#ai-overview",
-    "title": "Lab 7!",
+    "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
+  },
+  {
+    "objectID": "labs/lab7/lab.html#technical-documentation",
+    "href": "labs/lab7/lab.html#technical-documentation",
+    "title": "Lab 4!",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
+  },
+  {
+    "objectID": "labs/lab5/lab.html#technical-documentation",
+    "href": "labs/lab5/lab.html#technical-documentation",
+    "title": "Lab 4!",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
+  },
+  {
+    "objectID": "labs/lab4/lab.html#technical-documentation",
+    "href": "labs/lab4/lab.html#technical-documentation",
+    "title": "Lab 4!",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
+  },
+  {
+    "objectID": "labs/lab6/lab.html#technical-documentation",
+    "href": "labs/lab6/lab.html#technical-documentation",
+    "title": "Lab 4!",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
   }
 ]
