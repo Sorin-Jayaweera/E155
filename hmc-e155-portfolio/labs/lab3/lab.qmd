@@ -12,16 +12,20 @@ draft: false
 
 ## Introduction
 
-In this lab, a 16 pin keypad was used to read user input, the most recent two displays of which are shown on two seven segments. 
-This tests the principles of debouncing and asynchrony.
+In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. 
+This tests the principles of debouncing and asynchrony. 
+
+This was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k. 
 
 ## Design and Testing Methodology
 
-Osilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 80 ms each.
+Osilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 40 ms each.
 
-A testbench to simulate each module was also created.
+A simulation testbench for each module was also created to ensure desired functionality. (albeit they were constructed after it already worked).
  
 ## Technical Documentation
+
+The logic for this design is partitioned into many functions. There is a 
 
 ### State Machine Debounce Logic
 ![](/images/lab3/fsm.png) 
@@ -37,7 +41,7 @@ A testbench to simulate each module was also created.
 ## Testbench Simulation
 A testbench was constructed for every module.
 
-
+![](/images/lab3/synchroniezerandkeypadtestbench.png)
 
 ## Results and Discussion
 
