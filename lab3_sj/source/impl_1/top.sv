@@ -4,37 +4,57 @@
 // 9/9/2025
 
 module top( 
-	input logic [3:0] col,
-	input logic reset,
+	input  logic reset,
+	input  logic [3:0] colunstable,	
 	output logic sel, 
 	output logic [3:0] row,
 	output logic nsel, 
 	output logic [6:0] segout,
+	output logic debugger
 	);
-
-	HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
-
-	logic [3:0] iActive;
-
-	logic [31:0] counter = 0;
 	
-	logic [3:0] itemp;
-	logic [3:0] i0;
-	logic [3:0] i1;
-		logic pressed;
-	logic accepting;
-	logic timepassed;
 	
-	logic [31:0] countstart;
+	logic [3:0] itemp; // holding the number to push to i0 or i1
+	
+	logic [3:0] iActive; // feeding into the 7 segment LUT
+	logic [3:0] i0; // active display numbers
+	logic [3:0] i1; // same
+	
+	logic int_osc;
+	logic [31:0] counter;	
+	logic pressed;
+	
+	// post synchronizer
+	logic [3:0] col; 
+	
+
+	assign debugger = pressed;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == accepting;//!pressed & timepassed & cycleflag == entering;//!pressed & pressedtimepassed & cycleflag == exiting;//cycleflag == exiting;//pressedtimepassed && timepassed;
+
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// MODULES
+	// Synchronizer, Seven Segment look up table, keypad handler, high frequency clock and counter generation
+	
+	// setup the clock
+	count_module clocker(.reset(reset),.counter(counter),.int_osc(int_osc));
+	
+	// synchronize inputs
+	synchronizer colsyncer(.clk(counter[0]),.unstableval(colunstable),.stableval(col));
 
 	// Look up table for the 7 segment displays
-	segLUT lut(.s(iActive),.seg(segout));
+	sevensegLUT lut(.s(iActive),.seg(segout));
 
 	// always have the digit READY to push to i0 in itemp
-	keypad_handler keypad(counter, col, row, pressed, itemp); 
+	keypad_handler keypad(.counter(counter),.col(col),.reset(reset),.row(row),.pressed(pressed),.bin(itemp)); 
 	
-	assign timepassed = countstart - counter > 100800;// 0.042 (42ms) * 24000000 (cycles per second)
+	// state machine for debounce
+	debouncer deb(int_osc, counter, pressed,reset,itemp,i0,i1);
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Time Multiplexing Seven Segment Display
 	// choosing which set of connections for the resource use
 	// sequential logic
 	always_ff@(posedge int_osc) begin
@@ -43,37 +63,10 @@ module top(
 				iActive = 4'b0000;
 			end
 		else begin
-				iActive <= sel ? i0 : i1; //choosing for the display
+				iActive =  sel ? i0 : i1; //choosing for the display 
 			end
 		end
-				
-	always_ff@(posedge int_osc) begin
-		if(reset == 1) begin
-				accepting = 1'b1;
-				i0 = 4'b0000;
-				i1 = 4'b0000;
-			end
-		else if (accepting && pressed) begin
-				i1 = i0;
-				i0 = itemp;
-				accepting = 1'b0;
-				countstart = counter;
-			end
-		else if (!accepting && !pressed && timepassed) begin
-				accepting = 1'b1;
-			end
-		end
-			
-	// select as a slow clock logic
-	always_ff@(posedge int_osc) begin
-		if(reset) begin
-				counter <= 25'b0;
-			end
-		else begin
-			counter <= counter + 1'b1;
-		end
-	end
 
-	assign sel = counter[18];// 80 hz
+	assign sel = counter[18];// 90 hz
 	assign nsel = !sel;
 endmodule

@@ -41,6 +41,18 @@ if (a)
 
 <DIV id="content" onclick="hideTocList()"><PRE>
 <A name="Syn"></A><B><U><big>Synthesis Report</big></U></B>
+synthesis:  version Radiant Software (64-bit) 2024.2.0.3.0
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+Mon Sep 22 13:30:47 2025
+
+
+Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/lab3_sj/impl_1/lab3_sj_impl_1_lattice.synproj -logfile lab3_sj_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/lab3_sj/promote.xml 
+
 INFO <35002000> - synthesis: Lattice Synthesis Engine launched.
 
 Synthesis options:
@@ -82,7 +94,7 @@ Resolving user-selected strategy settings...
 ----------------------------------------------------------------
 Optimization Goal     | Area
 ----------------------------------------------------------------
-Top-level Module Name | keypad_handler
+Top-level Module Name | top
 ----------------------------------------------------------------
 Target Frequency      | 200.000 MHz
 ----------------------------------------------------------------
@@ -147,6 +159,10 @@ Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv
 Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/debouncer.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypadLUT.sv
+Verilog design file: C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -198,7 +214,193 @@ INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(16): an
 INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ram_dq_be.v(45): analyzing included file c:/lscc/radiant/2024.2/ip/pmi/../common/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
 INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2024.2/ip/pmi/pmi_dsp.v. VERI-1328
 Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top.sv. VERI-1482
-ERROR <35901137> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top.sv(13): syntax error near ). VERI-1137
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/debouncer.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypadlut.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv. VERI-1482
+Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
+Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
+
+INFO <35921014> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
+INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/lab3_sj/impl_1". VHDL-1504
+Top module language type = Verilog.
+Top module name (Verilog, mixed language): top
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/top.sv(6): compiling module top. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/count_module.sv(6): compiling module count_module. VERI-1018
+INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC(CLKHF_DIV=2'b01). VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/synchronizer.sv(1): compiling module synchronizer. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/sevenseglut.sv(6): compiling module sevensegLUT. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(7): compiling module keypad_handler. VERI-1018
+WARNING <35901084> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(25): no support for synthesis of mixed edge and level triggers. VERI-1084
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(34): temp should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(35): temp should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(36): temp should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(37): temp should be on the sensitivity list. VERI-1221
+WARNING <35901084> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(42): no support for synthesis of mixed edge and level triggers. VERI-1084
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(51): pressedarr should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(52): pressedarr should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(53): pressedarr should be on the sensitivity list. VERI-1221
+WARNING <35901221> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/keypad_handler.sv(54): pressedarr should be on the sensitivity list. VERI-1221
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/debouncer.sv(7): compiling module debouncer. VERI-1018
+
+<A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
+
+[Parameter Setting Section Start]
+
+	[Parameter Settings for Instance(s): hf_osc]
+	(Module: HSOSC)
+		CLKHF_DIV                 2'b01
+
+[Parameter Setting Section End]
+
+
+
+CRITICAL <35001747> - synthesis: Bit(s) of register driving \keypad/num[5:0] stuck at '0': 5
+Combinational loop due to latch found: 1
+
+	Instance row_c_3_I_3 
+
+	Net row_c_0 
+
+Combinational loop due to latch found: 2
+
+	Instance \keypad/pressedarr_2__I_0 
+
+	Net \keypad/pressedarr[2] 
+
+Combinational loop due to latch found: 3
+
+	Instance \keypad/pressedarr_1__I_0 
+
+	Net \keypad/pressedarr[1] 
+
+Combinational loop due to latch found: 4
+
+	Instance \keypad/pressedarr_0__I_0 
+
+	Net \keypad/pressedarr[0] 
+
+Combinational loop due to latch found: 5
+
+	Instance \keypad/storedpressedarr_3__I_0 
+
+	Net \keypad/storedpressedarr[3] 
+
+Combinational loop due to latch found: 6
+
+	Instance \keypad/storedpressedarr_2__I_0 
+
+	Net \keypad/storedpressedarr[2] 
+
+Combinational loop due to latch found: 7
+
+	Instance \keypad/storedpressedarr_1__I_0 
+
+	Net \keypad/storedpressedarr[1] 
+
+Combinational loop due to latch found: 8
+
+	Instance \keypad/storedpressedarr_0__I_0 
+
+	Net \keypad/storedpressedarr[0] 
+
+Combinational loop due to latch found: 9
+
+	Instance \keypad/pressedarr_3__I_0 
+
+	Net \keypad/pressedarr[3] 
+
+Combinational loop due to latch found: 10
+
+	Instance row_c_3_I_2 
+
+	Net row_c_1 
+
+Combinational loop due to latch found: 11
+
+	Instance row_c_3_I_1 
+
+	Net row_c_2 
+
+Combinational loop due to latch found: 12
+
+	Instance row_c_3_I_0 
+
+	Net row_c_3 
+
+CRITICAL <35001783> - synthesis: Mapping latch row_c_3_I_3 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/pressedarr_2__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/pressedarr_1__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/pressedarr_0__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/storedpressedarr_3__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/storedpressedarr_2__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/storedpressedarr_1__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/storedpressedarr_0__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch \keypad/pressedarr_3__I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch row_c_3_I_2 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch row_c_3_I_1 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+CRITICAL <35001783> - synthesis: Mapping latch row_c_3_I_0 to logic since no latches found in device. Possible simulation mismatch. Please check if or case statements
+INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
+
+
+<A name="lse_area"></A><B><U><big>Area Report</big></U></B>
+
+################### Begin Area Report (top)######################
+Number of register bits => 115 of 5280 (2 % )
+CCU2 => 49
+FD1P3XZ => 115
+HSOSC => 1
+IB => 5
+IOL_B => 4
+LUT4 => 178
+OB => 14
+################### End Area Report ##################
+Number of odd-length carry chains : 0
+Number of even-length carry chains : 3
+
+
+<A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 3
+  Net : clocker/int_osc, loads : 0
+  Net : clocker/counter[13], loads : 11
+  Net : clocker/counter[0], loads : 3
+Clock Enable Nets
+Number of Clock Enables: 0
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : deb/n102, loads : 57
+  Net : reset_c, loads : 55
+  Net : deb/n104, loads : 46
+  Net : deb/n572, loads : 28
+  Net : deb/n11_adj_183, loads : 25
+  Net : deb/n1872, loads : 25
+  Net : deb/n77, loads : 24
+  Net : deb/n81, loads : 23
+  Net : keypad/n8, loads : 21
+  Net : deb/pressedtimepassed, loads : 21
+################### End Clock Report ##################
+
+
+<A name="lse_constraint"></A><B><U><big>Constraint Report</big></U></B>
+
+################### Begin Constraint Report ######################
+Constraint Summary:
+  Total number of constraints: 0
+  Total number of constraints dropped: 0
+###################  End Constraint Report  ######################
+
+Peak Memory Usage: 101 MB
+
+--------------------------------------------------------------
+Total CPU Time: 5 secs 
+Total REAL Time: 12 secs 
+--------------------------------------------------------------
+Checksum -- synthesis -- netlist: bd7063316e5c4b5a4679bb2a3d4fb7cd9ea30b47
 
 
 
@@ -253,6 +455,16 @@ ERROR <35901137> - synthesis: c:/users/sojayaweera/e155/lab3_sj/source/impl_1/to
 <BR>
 <BR>
 </PRE></DIV>
+
+<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
+<UL id="toc_list">
+<LI><A href=#Syn>Top</A></LI>
+<LI><A href=#lse_parameter>Parameter Setting</A></LI>
+<LI><A href=#lse_area>Area Report</A></LI>
+<LI><A href=#lse_clock>Clock Report</A></LI>
+<LI><A href=#lse_constraint>Constraint Report</A></LI>
+</UL>
+</DIV>
 
 <button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
 <script type="text/javascript">

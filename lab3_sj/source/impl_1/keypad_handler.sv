@@ -2,55 +2,90 @@
 // 909 957 6074
 // sojayaweera@g.hmc.edu 
 // 9/9/2025
-
-// activate each row one at a time
-// if a column reads high then it is connected
-
+//
+// checked off
 module keypad_handler(
 	input logic [31:0] counter, 
 	input logic [3:0] col,
+	input logic reset,
 	output logic [3:0] row,
 	output logic pressed,
 	output logic [3:0] bin
 	);
-
-	// scan between activating each of the rows individually
-	always_comb
-		case(counter[18:17]) // somewhat slow switching between all pins
-			2'b00: row = 4'b0001; 
-			2'b01: row = 4'b0010;
-			2'b10: row = 4'b0100;
-			2'b11: row = 4'b1000;			
-		endcase
-
-	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num;
+	logic [7:0] rowcol;
+	logic [3:0] pressedarr;
+	logic [3:0] storedpressedarr;
+	enum logic [5:0] {zero,one,two,three,four,five,six,seven,eight,nine,a,b,c,d,e,f,none} num, temp;
 	
 	// if there is not an active column for the current row, then output none.
-	assign pressed = num != none;
+	assign pressed = |storedpressedarr; // taking the last 4 values of pressed //|pressedarr;	
+	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	
+	// scan between activating each of the rows individually
+	always_ff@(posedge counter[0],posedge counter[13], reset)  begin
+		if(reset) begin
+			pressedarr[0] = 1'b0;
+			pressedarr[1] = 1'b0;
+			pressedarr[2] = 1'b0;
+			pressedarr[3] = 1'b0;
+		end
+		if(counter[13]) begin
+			case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
+				2'b00: begin row = 4'b0001;  pressedarr[0] = (temp != none); end
+				2'b01: begin row = 4'b0010;  pressedarr[1] = (temp != none); end
+				2'b10: begin row = 4'b0100;  pressedarr[2] = (temp != none); end
+				2'b11: begin row = 4'b1000;  pressedarr[3] = (temp != none); end
+			endcase
+		end
+	end
+	
+	always_ff@(posedge counter[0],posedge counter[13], reset) begin
+		if(reset) begin
+				storedpressedarr[0] = 1'b0;
+				storedpressedarr[1] = 1'b0;
+				storedpressedarr[2] = 1'b0;
+				storedpressedarr[3] = 1'b0;
+		end
+		if(counter[13]) begin
+			case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
+				2'b00: begin storedpressedarr[0] = |pressedarr; end
+				2'b01: begin storedpressedarr[1] = |pressedarr; end
+				2'b10: begin storedpressedarr[2] = |pressedarr; end
+				2'b11: begin storedpressedarr[3] = |pressedarr; end
+			endcase	
+		end
+	end
+	
+	always_ff@(posedge counter[13]) begin
+		if(temp != none) begin
+			num = temp;
+		end
+	end
+		
+		
 	always_comb
-		case({row,col})
-			00010001: num = one;
-			00010010: num = two;
-			00010100: num = three;
-			00011000: num = four;
+		case(rowcol)
+			8'b00010001: temp = one;
+			8'b00010010: temp = two;
+			8'b00010100: temp = three;
+			8'b00011000: temp = a;
 
-			00100001: num = five;
-			00100010: num = six;
-			00100100: num = seven;
-			00101000: num = eight;
+			8'b00100001: temp = four;
+			8'b00100010: temp = five;
+			8'b00100100: temp = six;
+			8'b00101000: temp = b;
 
-			01000001: num = nine;
-			01000010: num = a;
-			01000100: num = b;
-			01001000: num = c;
+			8'b01000001: temp = seven;
+			8'b01000010: temp = eight;
+			8'b01000100: temp = nine;
+			8'b01001000: temp = c;
 
-			10000001: num = d;
-			10000010: num = e;
-			10000100: num = f;
-			10001000: num = zero;
+			8'b10000001: temp = e;
+			8'b10000010: temp = zero;
+			8'b10000100: temp = f;
+			8'b10001000: temp = d;
 		default
-			num = none;
+			temp = none;
 		endcase
 
 	always_comb

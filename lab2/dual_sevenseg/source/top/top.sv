@@ -31,10 +31,10 @@ module top(
 	always_ff@(posedge int_osc) begin
 		
 			if(reset == 1) begin
-					iActive = 4'b0000;
+					iActive <= 4'b0000;
 				end
 			else begin
-				iActive = sel ? i0 : i1;
+				iActive <= sel ? i0 : i1;
 				end
 	
 	end
@@ -49,9 +49,13 @@ module top(
 		end
 	end
 	
-	assign sel = counter[18];// 90 hz
+	assign sel = counter[18];// 1.43 hz
 	assign nsel = !sel;
 endmodule
+<<<<<<< HEAD
+	
+
+=======
 =======
 module top(
 	input logic [3:0] i0,
@@ -106,3 +110,4 @@ end
 endmodule
 >>>>>>> b841223 (I HAVE NO CLUE WHAT IS HAPPENING HELP)
 	
+>>>>>>> main

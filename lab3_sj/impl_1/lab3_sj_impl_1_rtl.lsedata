@@ -1,11 +1,14 @@
-<top name = "sevensegLUT"  library = "work"  arch = ""  entry = "Verilog">
+<top name = "top"  library = "work"  arch = ""  entry = "Verilog">
 
 <clocks>
+    <clockitem name = "counter[13]"  type = "net" />
+    <clockitem name = "counter[0]"  type = "net" />
+    <clockitem name = "int_osc"  type = "net" />
 </clocks>
 
 <!--
     //=============================================================
-    //  Number of Clocks processed: 0
+    //  Number of Clocks processed: 3
     //
     //  If a clock cannot be found in the top level pins section,
     //  that means it is an internal clock.
