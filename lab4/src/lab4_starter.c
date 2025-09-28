@@ -115,6 +115,27 @@ const int notes[][2] = {
 {  0,	0}};
 
 int main(void) {
-	
+    // enable gpio
+    
+    // set a bit to give clk 15 and 16 each
+
+    //
+	for(int i = 0; i < sizeof(notes)/size(notes[0]); i++){
+        // set the frequency for the clk.
+       
+        
+
+        // start timer to delay for the duration
+        delay(ijsalfkje);
+
+    }
 	
 }
+
+//fxn to configure timer for delay
+
+// use delay
+
+// set how high and fast
+
+
