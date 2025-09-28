@@ -119,10 +119,7 @@ const int notes[][2] = {
 
 
 // main.c
-// GPIO blink LED with clock configuration
-// Josh Brake
-// jbrake@hmc.edu
-// 9/16/24
+// GPIO drive a musical note
 
 // Includes for libraries
 #include "STM32L432KC_RCC.h"
@@ -130,53 +127,85 @@ const int notes[][2] = {
 #include "STM32L432C_FLASH.h"
 
 // Define macros for constants
-#define LED_PIN           3
-#define DELAY_DURATION_MS    500
-
-// Function for dummy delay by executing nops
-void ms_delay(int ms) {
-   while (ms-- > 0) {
-      volatile int x=1000;
-      while (x-- > 0)
-         __asm("nop");
-   }
-}
+#define AUDIO_PIN           3
+#define sysclockfreq 80000000 // 80 MHz
 
 int main(void) {
+    // unbrick the microcontroller
+    configureFlash();
+    
+    //turn on the PLL clock
+    // use 80MHz timer 
+    configureClock();
+    
+    // Set speaker output as output
+    pinMode(AUDIO_PIN, GPIO_OUTPUT);
+    
     // Turn on clock to GPIOB
     RCC->AHB2ENR |= (1 << 1);
 
-    // use 80MHz timer from PLL
-    configureClock();
+    // enable the clock source for timer 15 and 16
+    RCC->APB2ENR |= (1 << 1);
 
-    // set a bit to give clk 15 and 16 each
+    int currenttime = 0;
+
+    int pitchoffset;
+    int durationoffset;
+
+    int pitchhightime;
+    int notestarttime;
+    bool exitflag;
 
 
-    // Set LED_PIN as output
-    pinMode(LED_PIN, GPIO_OUTPUT);
+    for(int i = 0; i < sizeof(nootes)/size(notes[0]); i++){
+        // song information
+        int pitch = notes[i][0]; // hz
+        int duration = notes[i][1]; // ms
 
-    // Blink LED
-    while(1) {
-        ms_delay(DELAY_DURATION_MS);
-        togglePin(LED_PIN);
-    }
-    return 0;
+        // for state machine
+        exitflag = 0;   
 
-    for(int i = 0; i < sizeof(notes)/size(notes[0]); i++){
-        // set the frequency for the clk.
-       
+        //setting up counters for pulse time and for freq time
+        notestarttime = currenttime;
+        pitchhightime = currenttime; 
+
+        // 80 Mhz sysclock
+        // cycles/second *second/cycle = number ratio between them to count up to in this divider 
+        pitchoffset = sysclockfreq /pitch ; // number of time cycles between toggling high or low
         
+        // cycles/ second * seconds
+        durationoffset = sysclockfreq * duration/1000 ;// number of time cycles until switching to the next note
+        
+        while(~exitflag){
+            currenttime = get_current_time_count();
+            // set the frequency for the clk.
 
-        // start timer to delay for the duration
-        delay(ijsalfkje);
+            if(currenttime > notestarttime + durationoffset){
+                exitflag = 1;
+            }
+                
+            if(curenttime > pitchhightime + pitchoffset){
+                pitchhightime = currenttime;
+                togglePin(AUDIO_PIN);
+            }
+
+            
+            // do we have to set a case for if the counter wraps around to zero again?
+            if(currenttime < notestarttime || currenttime < pitchhightime){
+                currenttime = get_current_time_count();
+            }
+        
+        }
+         
 
     }
+
 }
 
-//fxn to configure timer for delay
+int get_current_time_count(){
 
-// use delay
 
-// set how high and fast
+}
+
 
 
