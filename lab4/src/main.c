@@ -185,6 +185,7 @@ int main(void) {
             }
                 
             if(curenttime > pitchhightime + pitchoffset){
+                //TODO: Potentially divide by 2?
                 pitchhightime = currenttime;
                 togglePin(AUDIO_PIN);
             }
@@ -203,7 +204,6 @@ int main(void) {
 }
 
 int get_current_time_count(){
-
 
 }
 
