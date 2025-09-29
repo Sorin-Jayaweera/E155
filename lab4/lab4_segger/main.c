@@ -164,12 +164,10 @@ int main(void) {
     // Address 0x08 write 1111 to divide by 512
     RCC->CFGR |= (1111 << 4);
 
-    //APB Prescaler -> 16
+    // APB Prescaler -> 16
     // Address 0x08 bits 13:11, write 111
     RCC->CFGR |= (111 << 11);
 
-    
-    int currenttime = 0;
 
     int pitchoffset;
     int durationoffset;
