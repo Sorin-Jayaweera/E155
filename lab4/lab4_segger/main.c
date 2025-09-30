@@ -6,6 +6,9 @@
 // main.c
 // GPIO drive a musical note
 
+// Standard libraries
+#include <stdbool.h>
+
 // Includes for libraries
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_GPIO.h"
@@ -138,9 +141,10 @@ const int notes[][2] = {
 
 #define TIM16_CNTADDR 0x24 // bits 15:0 are counter
 
-
-int currentNoteIdx = 0;
-bool durationFlag = false;
+uint8_t durationFlagMask;  
+uint8_t freqFlagMask;
+bool durationFlag;
+bool freqFlag;
 
 int main(void) {
     // unbrick the microcontroller
@@ -152,66 +156,73 @@ int main(void) {
     
     // set up clks 15 and 16
     initializeTIM16Counter();
-    initializeTIM15PWM();
+    initializeTIM15Counter();
   
 
     // Set speaker output as output
     pinMode(AUDIO_PIN, GPIO_OUTPUT);
     
 
-    // Turn on clock to GPIOB
-    RCC->AHB2ENR |= (1 << 1);
 
-    // set pwm to gpio through
-    //alternate function
-
+    /////////////////////////////////////////////////////
     // Clock Configuration Register Handling
     // section 6.4.3
-
+    // enable the clock source for timer 15 and 16
+    // TIM15EN address 0x60 + 16   write 1
+    // TIM15EN address 0x60 + 17   write 1
+    RCC->APB2ENR |= (1 << 16);
+    RCC->APB2ENR |= (1 << 17);
     // Set the frequency of the clock source going into tim15 and tim16
     // the max freq is 2000hz (for ease)
     // min freq is 200 hz 
     // Prescaler1: 512 (max)
     // Prescaler2: 16 (max)
     // this leaves 9765 hz feeding into clk 15 and 16. Those have their own further prescalers
-
-    // enable the clock source for timer 15 and 16
-    // TIM15EN address 0x60 + 16   write 1
-    RCC->APB2ENR |= (1 << 16);
-    // TIM15EN address 0x60 + 17   write 1
-    RCC->APB2ENR |= (1 << 17);
-    
-
-    // Send clock signal to clk 15 and 16
-
     // AHB prescaler HPRE:
     // Address 0x08 write 1111 to divide by 512
     RCC->CFGR |= (1111 << 4); //TODO: Or 7?
-
     // APB Prescaler -> 16
     // Address 0x08 bits 13:11, write 111
     RCC->CFGR |= (111 << 11); //TODO: or 13?
-
-   // we have 16 bits, which is enough to have 0.14 h, aka 6 seconds
-   // we don't need any prescaler to make the clock slower
-
-
-  // song information
-  int pitch = notes[i][0]; // hz
-  int duration = notes[i][1]; // ms
-  
-  setTIM15FREQ(pitch);
-  setTIM16Count(duration);
-  
-  while(true){
-    durationFlag = 
-    while(durationFlag == 0){}
-    //UIF bits are interrupt flag
+    // we have 16 bits, which is enough to have 0.14 h, aka 6 seconds
+    // we don't need any prescaler to make the clock slower
+    /////////////////////////////////////////////////////
     
-    togglePin(pin#)
+    // Turn on clock to GPIOB Peripheral so that it can work at all
+    RCC->AHB2ENR |= (1 << 1);
+
+    int currentNoteIdx = 0;
+    int pitch = notes[currentNoteIdx][0]; // hz
+    int duration = notes[currentNoteIdx][1]; // ms
+    setTIM16Count(duration);
+    setTIM15FREQ(pitch);
+    
+    while(true){
+      durationFlagMask = (1<<0);
+      durationFlag = (TIM16->SR & durationFlagMask) >> 0;// UIF = Update interrupt flag
+      
+      freqFlagMask = (1<<0);
+      freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
+
+      if(durationFlag == 1){
+        // song information
+        currentNoteIdx +=1;
+        int pitch = notes[currentNoteIdx][0]; // hz
+        int duration = notes[currentNoteIdx][1]; // ms
+        
+        setTIM16Count(duration);
+        setTIM15FREQ(pitch);
+      }
+
+      if(freqFlag == 1){
+        currentNoteIdx +=1;
+        togglePin(AUDIO_PIN);
+      }
+      //UIF bits are interrupt flag
+    
 
     
-  }
+    }
 
 
 
