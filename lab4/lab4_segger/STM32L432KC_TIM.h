@@ -5,6 +5,7 @@
 #define STM32L4_TIM_H
 
 #include <stdint.h>
+#include <math.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -23,6 +24,8 @@
 typedef struct
 {
    __IO uint16_t CR1;   /* Control register 1       0x00 */
+   //insert reserved uint16
+
    __IO uint16_t CR2;   /* Control register 2       0x04 */
    __IO uint16_t SMCR;  /* Slave mode control reg   0x08 */
    __IO uint16_t DIER;  /* DMA interrupt enable     0x0C */
@@ -46,7 +49,7 @@ typedef struct
 
 typedef struct
 {
-   __IO uint16_t CR1;   /* Control register 1          0x00*/
+   __IO uint16_t CR1;   /* Control register 1          0x00 */
    __IO uint16_t CR2;   /* Control register 2          0x04 */
    __IO uint16_t DIER;  /* DMA interrupt enable        0x0C */
    __IO uint16_t SR;    /* Status register             0x10 */

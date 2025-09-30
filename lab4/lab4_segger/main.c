@@ -2,6 +2,16 @@
 // lab 4
 // 9/28/2025
 
+
+// main.c
+// GPIO drive a musical note
+
+// Includes for libraries
+#include "STM32L432KC_RCC.h"
+#include "STM32L432KC_GPIO.h"
+#include "STM32L432KC_TIM.h"
+#include "STM32L432KC_FLASH.h"
+
 // Pitch in Hz, duration in ms
 const int notes[][2] = {
 {659,	125},
@@ -117,13 +127,6 @@ const int notes[][2] = {
 
 
 
-// main.c
-// GPIO drive a musical note
-
-// Includes for libraries
-#include "STM32L432KC_RCC.h"
-#include "STM32L432KC_GPIO.h"
-#include "STM32L432C_FLASH.h"
 
 // Define macros for constants
 #define AUDIO_PIN           3
@@ -136,6 +139,8 @@ const int notes[][2] = {
 #define TIM16_CNTADDR 0x24 // bits 15:0 are counter
 
 
+int currentNoteIdx = 0;
+bool durationFlag = false;
 
 int main(void) {
     // unbrick the microcontroller
@@ -145,13 +150,20 @@ int main(void) {
     // use 80MHz timer 
     configureClock();
     
+    // set up clks 15 and 16
+    initializeTIM16Counter();
+    initializeTIM15PWM();
+  
+
     // Set speaker output as output
     pinMode(AUDIO_PIN, GPIO_OUTPUT);
     
+
     // Turn on clock to GPIOB
-    // WHAT DOES THAT MEAN?
     RCC->AHB2ENR |= (1 << 1);
 
+    // set pwm to gpio through
+    //alternate function
 
     // Clock Configuration Register Handling
     // section 6.4.3
@@ -169,75 +181,42 @@ int main(void) {
     // TIM15EN address 0x60 + 17   write 1
     RCC->APB2ENR |= (1 << 17);
     
-    // AHB prescaler HPRE bits 7:
 
     // Send clock signal to clk 15 and 16
 
+    // AHB prescaler HPRE:
     // Address 0x08 write 1111 to divide by 512
-    RCC->CFGR |= (1111 << 4);
+    RCC->CFGR |= (1111 << 4); //TODO: Or 7?
 
     // APB Prescaler -> 16
     // Address 0x08 bits 13:11, write 111
-    RCC->CFGR |= (111 << 11);
+    RCC->CFGR |= (111 << 11); //TODO: or 13?
 
    // we have 16 bits, which is enough to have 0.14 h, aka 6 seconds
    // we don't need any prescaler to make the clock slower
 
-    int pitchoffset;
-    int durationoffset;
 
-    int pitchhightime;
-    int notestarttime;
-    bool exitflag;
+  // song information
+  int pitch = notes[i][0]; // hz
+  int duration = notes[i][1]; // ms
+  
+  setTIM15FREQ(pitch);
+  setTIM16Count(duration);
+  
+  while(true){
+    durationFlag = 
+    while(durationFlag == 0){}
+    //UIF bits are interrupt flag
+    
+    togglePin(pin#)
+
+    
+  }
 
 
-    for(int i = 0; i < sizeof(notes)/size(notes[0]); i++){
-        // song information
-        int pitch = notes[i][0]; // hz
-        int duration = notes[i][1]; // ms
 
-        // for state machine
-        exitflag = 0;   
-
-        //setting up counters for pulse time and for freq time
-        notestarttime = currenttime;
-        pitchhightime = currenttime; 
-
-        // 80 Mhz sysclock
-        // cycles/second *second/cycle = number ratio between them to count up to in this divider 
-        pitchoffset = sysclockfreq /pitch; // number of time cycles between toggling high or low
-        
-        // cycles/ second * seconds
-        durationoffset = sysclockfreq * duration/1000 ;// number of time cycles until switching to the next note
-        
-        while(~exitflag){
-            currenttime = get_current_time_count();
-            // set the frequency for the clk.
-
-            if(currenttime > notestarttime + durationoffset){
-                exitflag = 1;
-            }
-                
-            if(curenttime > pitchhightime + pitchoffset){
-                //TODO: Potentially divide by 2?
-                pitchhightime = currenttime;
-                togglePin(AUDIO_PIN);
-            }
-
-            
-            // do we have to set a case for if the counter wraps around to zero again?
-            if(currenttime < notestarttime || currenttime < pitchhightime){
-                currenttime = get_current_time_count();
-            }
-        
-        }
-         
-
-    }
-
-}
-
-int get_current_time_count(){
+  
+   
 
 }
 
