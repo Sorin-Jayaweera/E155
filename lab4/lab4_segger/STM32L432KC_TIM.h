@@ -16,8 +16,6 @@
 #define TIM15_BASE (0x40014000UL) // base address of TIM15
 #define TIM16_BASE (0x40014400UL) // base address of TIM16
 
-
-
 /**
   * @brief Reset and Clock Control
   */
@@ -75,9 +73,13 @@ typedef struct
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
-void configureTIM(void);
-void configurePWM(void);
-void configureCOUNTER(void);
+void initializeTIM15PWM(void);
+void initializeTIM16Counter(void);
+
+void setTIM15FREQ(int freqHz);
+void setTIM16Count(int ms);
+
+
 
 
 #endif
