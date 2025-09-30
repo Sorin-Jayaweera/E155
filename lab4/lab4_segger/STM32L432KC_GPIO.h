@@ -58,4 +58,6 @@ void digitalWrite(int pin, int val);
 
 void togglePin(int pin);
 
+void initAltFxn(void);
+
 #endif

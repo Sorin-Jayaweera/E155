@@ -146,6 +146,11 @@ uint8_t freqFlagMask;
 bool durationFlag;
 bool freqFlag;
 
+// TODO:
+// GPIO: connect a pin to the PWM signal. Alternate functions in MODER
+// Figure out what MOE and CCER for pwm generation
+//
+
 int main(void) {
     // unbrick the microcontroller
     configureFlash();
@@ -188,8 +193,8 @@ int main(void) {
     // we don't need any prescaler to make the clock slower
     /////////////////////////////////////////////////////
     
-    // Turn on clock to GPIOB Peripheral so that it can work at all
-    RCC->AHB2ENR |= (1 << 1);
+    // Turn on clock to GPIOA Peripheral so that it can work at all
+    RCC->AHB2ENR |= (1 << 0); // TODO: CHECK. GPIO B was 1<<1 
 
     int currentNoteIdx = 0;
     int pitch = notes[currentNoteIdx][0]; // hz
@@ -198,6 +203,8 @@ int main(void) {
     setTIM15FREQ(pitch);
     
     while(true){
+      while(duration == 0 && pitch == 0){}; // end the song
+
       durationFlagMask = (1<<0);
       durationFlag = (TIM16->SR & durationFlagMask) >> 0;// UIF = Update interrupt flag
       
@@ -205,24 +212,23 @@ int main(void) {
       freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
 
       if(durationFlag == 1){
-        // song information
-        if(duration != 0){
-          
-          currentNoteIdx +=1;
-          int pitch = notes[currentNoteIdx][0]; // hz
-          int duration = notes[currentNoteIdx][1]; // ms
-        
-          setTIM16Count(duration);
-          setTIM15FREQ(pitch);
-          TIM16->SR &= ~(1<<0);
-        }
-        
+
+        currentNoteIdx +=1;
+
+        int pitch = notes[currentNoteIdx][0]; // hz
+        int duration = notes[currentNoteIdx][1]; // ms
+      
+        setTIM16Count(duration);
+        setTIM15FREQ(pitch);
+
+        TIM16->SR &= ~(1<<0);// read / clear write 0, turn off the interrupt flag
+ 
       }
 
       if(freqFlag == 1){
-        if(pitch != 0){
-          togglePin(AUDIO_PIN);
-          TIM15->SR &= ~(1<<0);
+        if(pitch != 0){ 
+          togglePin(AUDIO_PIN); // manually toggle with countup mode, or drive with PWM mode?
+          TIM15->SR &= ~(1<<0); // clear the flag
         }
       }
       //UIF bits are interrupt flag
@@ -230,12 +236,6 @@ int main(void) {
 
     
     }
-
-
-
-  
-   
-
 }
 
 

@@ -77,8 +77,8 @@ typedef struct
 void initializeTIM15PWM(void);
 void initializeTIM15Counter(void);
 void initializeTIM16Counter(void);
-
 void setTIM15FREQ(int freqHz);
 void setTIM16Count(int ms);
+
 
 #endif
