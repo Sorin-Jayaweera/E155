@@ -1,7 +1,8 @@
 //Sorin Jayaweera
 // lab 4
 // 9/28/2025
-
+// FOLDER:
+//C:\ThatFamily Dropbox\Sorin Jayaweera\allSaves\mudd\junior\MicroPs
 
 // main.c
 // GPIO drive a musical note
@@ -146,7 +147,7 @@ uint8_t freqFlagMask;
 bool durationFlag;
 bool freqFlag;
 
-// TODO:
+// 
 // GPIO: connect a pin to the PWM signal. Alternate functions in MODER
 // Figure out what MOE and CCER for pwm generation
 //
@@ -167,8 +168,6 @@ int main(void) {
     // Set speaker output as output
     pinMode(AUDIO_PIN, GPIO_OUTPUT);
     
-
-
     /////////////////////////////////////////////////////
     // Clock Configuration Register Handling
     // section 6.4.3
@@ -193,8 +192,8 @@ int main(void) {
     // we don't need any prescaler to make the clock slower
     /////////////////////////////////////////////////////
     
-    // Turn on clock to GPIOA Peripheral so that it can work at all
-    RCC->AHB2ENR |= (1 << 0); // TODO: CHECK. GPIO B was 1<<1 
+    RCC->AHB2ENR |= (1 << 0); // GPIO A 
+    RCC->AHB2ENR |= (1 << 1); // GPIO B
 
     int currentNoteIdx = 0;
     int pitch = notes[currentNoteIdx][0]; // hz
@@ -221,6 +220,7 @@ int main(void) {
         setTIM16Count(duration);
         setTIM15FREQ(pitch);
 
+        //UIF bits are interrupt flag
         TIM16->SR &= ~(1<<0);// read / clear write 0, turn off the interrupt flag
  
       }
@@ -228,10 +228,11 @@ int main(void) {
       if(freqFlag == 1){
         if(pitch != 0){ 
           togglePin(AUDIO_PIN); // manually toggle with countup mode, or drive with PWM mode?
+          //UIF bits are interrupt flag
           TIM15->SR &= ~(1<<0); // clear the flag
         }
       }
-      //UIF bits are interrupt flag
+      
     
 
     
