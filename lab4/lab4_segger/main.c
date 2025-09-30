@@ -180,10 +180,10 @@ int main(void) {
     // this leaves 9765 hz feeding into clk 15 and 16. Those have their own further prescalers
     // AHB prescaler HPRE:
     // Address 0x08 write 1111 to divide by 512
-    RCC->CFGR |= (1111 << 4); //TODO: Or 7?
+    RCC->CFGR |= (0xF << 4);//1111
     // APB Prescaler -> 16
     // Address 0x08 bits 13:11, write 111
-    RCC->CFGR |= (111 << 11); //TODO: or 13?
+    RCC->CFGR |= (0x7 << 11); // 111
     // we have 16 bits, which is enough to have 0.14 h, aka 6 seconds
     // we don't need any prescaler to make the clock slower
     /////////////////////////////////////////////////////
@@ -206,17 +206,24 @@ int main(void) {
 
       if(durationFlag == 1){
         // song information
-        currentNoteIdx +=1;
-        int pitch = notes[currentNoteIdx][0]; // hz
-        int duration = notes[currentNoteIdx][1]; // ms
+        if(duration != 0){
+          
+          currentNoteIdx +=1;
+          int pitch = notes[currentNoteIdx][0]; // hz
+          int duration = notes[currentNoteIdx][1]; // ms
         
-        setTIM16Count(duration);
-        setTIM15FREQ(pitch);
+          setTIM16Count(duration);
+          setTIM15FREQ(pitch);
+          TIM16->SR &= ~(1<<0);
+        }
+        
       }
 
       if(freqFlag == 1){
-        currentNoteIdx +=1;
-        togglePin(AUDIO_PIN);
+        if(pitch != 0){
+          togglePin(AUDIO_PIN);
+          TIM15->SR &= ~(1<<0);
+        }
       }
       //UIF bits are interrupt flag
     
