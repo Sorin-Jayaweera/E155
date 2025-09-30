@@ -9,6 +9,7 @@
 
 // Standard libraries
 #include <stdbool.h>
+#include <stdio.h>
 
 // Includes for libraries
 #include "STM32L432KC_RCC.h"
@@ -130,14 +131,20 @@
 
 
 const int notes[][2] = {
-  {100,	4000},
-  {1,	4000},
-  {2,	4000},
-  {3,	4000},
-  {10,	4000},
-  {1,	4000},
-  {2,	4000},
-  {  0,	0}
+  {1,	1000},
+  {2,	1000},
+  {3,	1000},
+  {4,	1000},
+  {5,	1000},
+  {6,	1000},
+  {7,	1000},
+  {8,	1000},
+  {9,	1000},
+  {10,	1000},
+  {11,	1000},
+  {12,	1000},
+  {13,	1000},
+  {0,	0}
 };
 
 
@@ -181,11 +188,6 @@ int main(void) {
     // use 80MHz timer 
     configureClock();
     
-    // set up clks 15 and 16
-    initializeTIM16Counter();
-    initializeTIM15Counter();
-  
-    
     /////////////////////////////////////////////////////
     // Clock Configuration Register Handling
     // section 6.4.3
@@ -213,6 +215,11 @@ int main(void) {
     //RCC->AHB2ENR |= (1 << 0); // GPIO A for PWM connection special functions
     RCC->AHB2ENR |= (1 << 1); // GPIO B
 
+        // set up clks 15 and 16
+    initializeTIM16Counter();
+    initializeTIM15Counter();
+  
+
     // Set speaker output as output
     pinMode(AUDIO_PIN, GPIO_OUTPUT);
 
@@ -221,12 +228,19 @@ int main(void) {
     int duration = notes[currentNoteIdx][1]; // ms
     setTIM16Count(duration);
     setTIM15FREQ(pitch);
-    
+   
+   // outputting to pin working
+   // freq too slow
+   // while(true){ // debug testing output
+   //     ms_delay(DELAY_DURATION_MS);
+   //     togglePin(AUDIO_PIN);
+   //}
+
+
     while(true){
-      while(true){
-        ms_delay(DELAY_DURATION_MS);
-        togglePin(AUDIO_PIN);
-      }
+      
+      printf("Duration cnt: %d Freq cnt: %d \n", TIM15->CNT, TIM16->CNT);
+
       while(duration == 0 && pitch == 0){}; // end the song
 
       durationFlagMask = (1<<0);

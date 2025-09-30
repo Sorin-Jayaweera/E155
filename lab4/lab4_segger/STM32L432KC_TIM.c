@@ -60,18 +60,28 @@ void initializeTIM15Counter(void){
     // so much easier
     ///////////////////////////////////
     
-    //counter enable
-    TIM15->CR1 |= (1<<0);
+    // clear
+    TIM15->CR1 &= ~(0xF);
+
+    //set prescaler = 1
+    TIM16->PSC &= ~(0xF);
+
+    //turn off UDIS bit
+    TIM15->CR1 &= ~(0b1<<1);
 
     //auto reload preload enable
-    TIM15->CR1 |= (1<<7);
+    TIM15->CR1 |= (0b1<<7);
 
     // make sure slave mode is DISABLED
-    TIM15->SMCR &= ~(1<<7);
-   
+    TIM15->SMCR &= ~(0b1<<7);
+
+    //clear flag
+    TIM16->EGR |= (1<<0);
+      
+    //counter enable
+    TIM15->CR1 |= (0b1<<0);
 
 }
-
 
 void setTIM15FREQ(int freqHz){
 
@@ -81,9 +91,8 @@ void setTIM15FREQ(int freqHz){
   const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
   uint16_t maxcnt = floor(TIM16Freq/freqHz); // -1 or no?
   
-  
-  TIM15->PSC = 0; // No division.
-  TIM15->ARR = maxcnt;//- 1; //?
+  TIM15->PSC = 0; // freq/ (num + 1) -> No division.
+  TIM15->ARR = maxcnt;//
   //TIM15->CCR1 = floor(maxcnt/2); // Duty cycle. 50% = 1/2 (ARR+1)
 
 }
@@ -93,14 +102,24 @@ void setTIM15FREQ(int freqHz){
 void initializeTIM16Counter(void){
  //smth so that we have enough bits to 
  //represent a 4 hz signal
+  
+ // clear
+ TIM16->CR1 &= ~(0xF);
 
+ //set prescaler = 1
  TIM16->PSC = 0;
- //count enable
- TIM16->CR1 |= (1<<0);
+
+ //turn off UDIS bit
+ TIM16->CR1 &= ~(0b1<<1);
 
  // auto reload preload enable
- TIM16->CR1 |= (1<<7);
-  
+ TIM16->CR1 |= (0b1<<7);
+
+ //clear flag
+ TIM16->EGR |= (0b1<<0);
+ 
+ //count enable
+ TIM16->CR1 |= (0b1<<0);
 }
 
 void setTIM16Count(int ms){
@@ -109,6 +128,6 @@ void setTIM16Count(int ms){
   const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
   uint16_t maxcnt = floor(TIM16Freq * ms / 1000);
   TIM16->PSC = 0; // No division.
-  TIM16-> ARR = maxcnt;   /* Auto-Reload Register        0x2C */
+  TIM16->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
   
 }
