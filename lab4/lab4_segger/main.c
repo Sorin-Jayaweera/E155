@@ -180,12 +180,18 @@ const int notes[][2] = {
 
 uint8_t durationFlagMask;  
 uint8_t freqFlagMask;
-bool durationFlag;
-bool freqFlag;
+bool durationFlag = 0;
+bool freqFlag = 0;
 
 
 
-
+void ms_delay(int ms) {
+   while (ms-- > 0) {
+      volatile int x=1000;
+      while (x-- > 0)
+         __asm("nop");
+   }
+}
 int main(void) {
     // unbrick the microcontroller
     configureFlash();
@@ -198,10 +204,8 @@ int main(void) {
     // Clock Configuration Register Handling
     // section 6.4.3
     // enable the clock source for timer 15 and 16
-    // TIM16EN address 0x60 + 16   write 1
-    // TIM16EN address 0x60 + 17   write 1
-    RCC->APB2ENR |= (1 << 17);
-    RCC->APB2ENR |= (1 << 16);
+    RCC->APB2ENR |= (1 << 17); // tim 16
+    RCC->APB2ENR |= (1 << 16); // tim 15
 
     //RCC->APB2ENR |= (1 << 17);
     // Set the frequency of the clock source going into TIM16 and TIM15
@@ -249,6 +253,15 @@ int main(void) {
     int pitch = notes[currentNoteIdx][0]; // hz
     int duration = notes[currentNoteIdx][1]; // ms
 
+
+    setTIM15Count(2);
+    setTIM16FREQ(9000);
+    
+    ms_delay(10000);
+    
+    setTIM15Count(duration);
+    setTIM16FREQ(pitch);
+    
     //setTIM15Count(duration);
     //while(1){
     //  setTIM16FREQ(2);
@@ -276,18 +289,18 @@ int main(void) {
       durationFlag = (TIM15->SR & durationFlagMask);// UIF = Update interrupt flag
       
 
-      freqFlagMask = (1<<0);
-      freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
+      //freqFlagMask = (1<<0);
+      //freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
 
       if(durationFlag == 1){
-
         currentNoteIdx +=1;
-
         pitch = notes[currentNoteIdx][0]; // hz
         duration = notes[currentNoteIdx][1]; // ms
        
+        
         setTIM15Count(duration);
         setTIM16FREQ(pitch);
+        
        // TIM16->SR &= ~(1<<0); // clear the flag
       }
 

@@ -6,6 +6,9 @@
   #define sysclockfreq 20000000 // 80 MHz
 #endif
 
+#ifndef STM32L4_RCC_H
+#include "STM32L432KC_RCC.h"
+#endif
 void initializeTIM16PWM(void){
    //////////////////////////////////////////////////////////////////
    // using TIM16 for driving a pin at pitch frequency
@@ -216,9 +219,11 @@ void setTIM16FREQ(int freqHz){
   // MOE 
   // TODO: this is unessisary but its not setting properly TT  
   TIM16->BDTR |= (1<<15);
-  if(freqHz == 0){TIM16->ARR = 0;}
+  if(freqHz == 0){TIM16->ARR = 2;TIM16->CCR1 =1;    
+    RCC->APB2ENR &= ~(1 << 17); // tim 16
+  }
   if(freqHz != 0){
-  
+    RCC->APB2ENR |= (1 << 17); // tim 16
     const int TIM16Freq = 100000;//hz. cycles/sec Calculated by: 80 Mhz / 800
     uint16_t maxcnt = ceil(TIM16Freq/freqHz) -1; // -1 or no?
 
