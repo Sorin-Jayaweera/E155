@@ -84,7 +84,7 @@ void initializeTIM15PWM(void){
   TIM15->PSC = 800; // 100000 hz
   // set PWM mode 1
   //OC1M to 110 in TIM15_CCMR1
-  TIM15->CCMR1 &= ~(0xF << 4);
+  TIM15->CCMR1 &= ~(0x7 << 4);
   TIM15->CCMR1 |= (0b110 << 4);
 
   //enable preload register
@@ -125,10 +125,9 @@ void initializeTIM15PWM(void){
   // Initialize all registers by setting UG bit in TIM15_EGR register
   TIM15->EGR |= (1<<0); // in instructions, this was earlier/ See page 906 of ref manual.
 
-  // set TIM15_CCR1 to be half of TIM15_ARR (TODO CHECK if it is arr)
   TIM15->CR1 |= (1<<0);
 
-
+  // set TIM15_CCR1 to be half of TIM15_ARR (TODO CHECK if it is arr)
 
   ///////////////////
   // from section 28.5.9 Output compare mode
@@ -180,12 +179,11 @@ void initializeTIM15PWM(void){
   
 void initializeTIM16Counter(void){
  //smth so that we have enough bits to 
- //represent a 4 hz signal
-  
+ //represent a 4 hz signalD
  // clear
  //TIM16->CR1 &= ~(0xF);
 
- //set prescaler = 1
+ //set prescaler = 2^13
   TIM16->PSC = 8000;// 20000 hz
 
  //turn off UDIS bit

@@ -204,16 +204,11 @@ int main(void) {
     int currentNoteIdx = 0;
     int pitch = notes[currentNoteIdx][0]; // hz
     int duration = notes[currentNoteIdx][1]; // ms
-    setTIM16Count(duration);
+    //setTIM16Count(duration);
     setTIM15FREQ(pitch);
-   
-   // outputting to pin working
-   // freq too slow
-   // while(true){ // debug testing output
-   //     ms_delay(DELAY_DURATION_MS);
-   //     togglePin(AUDIO_PIN);
-   //}
 
+   setTIM16Count(duration);
+   setTIM15FREQ(500);
 
     while(true){
       
@@ -240,8 +235,7 @@ int main(void) {
         pitch = notes[currentNoteIdx][0]; // hz
         duration = notes[currentNoteIdx][1]; // ms
         
-        setTIM16Count(duration);
-        setTIM15FREQ(pitch);
+     
 
         //UIF bits are interrupt flag
         TIM16->SR &= ~(1<<0);// read / clear write 0, turn off the interrupt flag

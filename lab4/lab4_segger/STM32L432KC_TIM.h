@@ -38,6 +38,7 @@ typedef struct
    __IO uint32_t RCR;   /* Repitition Counter Reg   0x30 */
    __IO uint32_t CCR1;  /* Capture Compare Reg      0x34 */
    __IO uint32_t CCR2;  /* Caputre Compare Reg 2    0x38 */
+  uint32_t reserved9;    /*                         0x3c */
   uint32_t reserved0;    /*                         0x40 */
    __IO uint32_t BDTR;  /* Break dead time reg      0x44 */
    __IO uint32_t DCR;   /* DMA Control Reg          0x48 */
