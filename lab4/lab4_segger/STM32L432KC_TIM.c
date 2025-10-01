@@ -5,6 +5,7 @@
 #ifndef sysclockfreq
   #define sysclockfreq 20000000 // 80 MHz
 #endif
+
 void initializeTIM16PWM(void){
    //////////////////////////////////////////////////////////////////
    // using TIM16 for driving a pin at pitch frequency
@@ -81,7 +82,8 @@ void initializeTIM16PWM(void){
 
   // try two, from scratch
   // using pwm channel 1
-  TIM16->PSC = 800; // 100000 hz
+  //16.6 bits per second, so  min freq is 1.5 hz (100000/(2^16))
+  TIM16->PSC = 799; // 100000 hz
   // set PWM mode 1
   //OC1M to 110 in TIM16_CCMR1
   TIM16->CCMR1 &= ~(0x7 << 4);
@@ -100,6 +102,7 @@ void initializeTIM16PWM(void){
   //TIM16->DIER |= (1<<1); // CC1IE interrupt enable.
 
   // OC1 polarity 
+  // not needed - reset state is active high
   // use CC1P bit in TIM16_CCER register, active high
   //TIM16->CCER |= (0b1 <<1);
 
@@ -146,34 +149,33 @@ void initializeTIM16PWM(void){
 
 }
 
-//void initializeTIM16Counter(void){
-//    ///////////////////////////////////
-//    // Instead of PWM, just use an upcounter
-//    // so much easier
-//    ///////////////////////////////////
+void initializeTIM16Counter(void){
+    ///////////////////////////////////
+    // Instead of PWM, just use an upcounter
+    // so much easier
+    ///////////////////////////////////
     
-//    // clear
-//    //TIM16->CR1 &= ~(0xF);
+    // clear
+    //TIM16->CR1 &= ~(0xF);
 
-//    //set prescaler = 200
-//    TIM16->PSC &= ~(0xF);
-//    TIM16->PSC = 200; //100000 hz
+    TIM16->PSC &= ~(0xF);
+    TIM16->PSC = 799;//800; //100000 hz
 
-//    //turn off UDIS bit
-//    TIM16->CR1 &= ~(0b1<<1);
+    //turn off UDIS bit
+    TIM16->CR1 &= ~(0b1<<1);
 
-//    //auto reload preload enable
-//    TIM16->CR1 |= (0b1<<7);
+    //auto reload preload enable
+    TIM16->CR1 |= (0b1<<7);
 
-//    // make sure slave mode is DISABLED
-//    TIM16->SMCR &= ~(0b1<<7);
+    // make sure slave mode is DISABLED
+    TIM16->SMCR &= ~(0b1<<7);
 
-//    //clear flag
-//    TIM16->EGR &= ~(0b1<<0);
+    //clear flag
+    TIM16->EGR &= ~(0b1<<0);
       
-//    //counter enable
-//    TIM16->CR1 |= (0b1<<0);
-//}
+    //counter enable
+    TIM16->CR1 |= (0b1<<0);
+}
 
 
   
@@ -184,7 +186,7 @@ void initializeTIM15Counter(void){
  //TIM15->CR1 &= ~(0xF);
 
  //set prescaler = 2^13
-  TIM15->PSC = 8000;// 20000 hz
+  TIM15->PSC = 7999;//8000;// 10000 hz, which needs 13 bits for one second - so we have 8 seconds max
 
  //turn off UDIS bit
  TIM15->CR1 &= ~(0b1<<1);
@@ -194,7 +196,7 @@ void initializeTIM15Counter(void){
 
  //TODO: feels wrong
  //set an initial thing to count up to
- TIM15->ARR |= (0b1<<4);
+ //TIM15->ARR |= (0b1<<4);
 
  //clear flag
  TIM15->EGR &= ~(0b1<<0);
@@ -219,7 +221,7 @@ void setTIM16FREQ(int freqHz){
     TIM16->CCR1 = ceil(maxcnt/2); // Duty cycle 50% = 1/2 (ARR+1)
     TIM16->EGR |= (1<<0); 
     TIM16->CNT = 0;
-    //
+    
   }
 
 }
