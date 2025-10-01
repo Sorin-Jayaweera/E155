@@ -63,8 +63,8 @@ void initializeTIM15Counter(void){
     // clear
     TIM15->CR1 &= ~(0xF);
 
-    //set prescaler = 1
-    TIM16->PSC &= ~(0xF);
+    //set prescaler = 0
+    TIM15->PSC &= ~(0xF);
 
     //turn off UDIS bit
     TIM15->CR1 &= ~(0b1<<1);
@@ -75,25 +75,15 @@ void initializeTIM15Counter(void){
     // make sure slave mode is DISABLED
     TIM15->SMCR &= ~(0b1<<7);
 
+    //TODO: feels wrong
+    //set an initial thing to count up to
+    TIM15->ARR |= (1<<4);
+
     //clear flag
-    TIM16->EGR |= (1<<0);
+    TIM15->EGR |= (1<<0);
       
     //counter enable
     TIM15->CR1 |= (0b1<<0);
-
-}
-
-void setTIM15FREQ(int freqHz){
-
-  // SET TIM15_ARR 
-  //TIM15->ARR = 
-  // duty cycle in TIM15_CCR15
-  const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
-  uint16_t maxcnt = floor(TIM16Freq/freqHz); // -1 or no?
-  
-  TIM15->PSC = 0; // freq/ (num + 1) -> No division.
-  TIM15->ARR = maxcnt;//
-  //TIM15->CCR1 = floor(maxcnt/2); // Duty cycle. 50% = 1/2 (ARR+1)
 
 }
 
@@ -107,13 +97,18 @@ void initializeTIM16Counter(void){
  TIM16->CR1 &= ~(0xF);
 
  //set prescaler = 1
- TIM16->PSC = 0;
+ TIM16->PSC &= ~(0xF);
 
  //turn off UDIS bit
  TIM16->CR1 &= ~(0b1<<1);
 
  // auto reload preload enable
  TIM16->CR1 |= (0b1<<7);
+
+ //TODO: feels wrong
+ //set an initial thing to count up to
+ TIM16->ARR |= (1<<4);
+
 
  //clear flag
  TIM16->EGR |= (0b1<<0);
@@ -122,12 +117,28 @@ void initializeTIM16Counter(void){
  TIM16->CR1 |= (0b1<<0);
 }
 
+
+void setTIM15FREQ(int freqHz){
+
+  // SET TIM15_ARR 
+  //TIM15->ARR = 
+  // duty cycle in TIM15_CCR15
+  const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
+  uint16_t maxcnt = floor(TIM16Freq/freqHz); // -1 or no?
+  
+  //TIM15->PSC = 0; // freq/ (num + 1) -> No division.
+  TIM15->ARR = maxcnt;// on reload new count register
+  //TIM15->CCR1 = floor(maxcnt/2); // Duty cycle. 50% = 1/2 (ARR+1)
+
+}
+
 void setTIM16Count(int ms){
   // set the wait time
   
   const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
   uint16_t maxcnt = floor(TIM16Freq * ms / 1000);
-  TIM16->PSC = 0; // No division.
+
+  //TIM16->PSC = 0; // No division.
   TIM16->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
   
 }
