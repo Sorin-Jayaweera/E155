@@ -131,37 +131,53 @@
 
 
 const int notes[][2] = {
-  {5,5000000},
-  
-  {1,1000},
-  {20,20000},
-  {500,500000},
-  {700,7000000},
-  {900,9000000},
+ {500, 1002},
+ {200, 1002},
+ {300, 1192},
+ {400, 1002},
+ {500, 1002},
+ {600, 1002},
+ {700, 1002},
+ {800, 1002},
+ {900, 1002},
+ {100, 1002},
+ {200, 1002},
+ {300, 1002},
+ {400, 1002},
+ {500, 1002},
+ {600, 1002},
+ {700, 1002},
+ {800, 1002},
+ {900, 1002},
+ {100, 1002},
+ {200, 1002},
+ {300, 1002},
+ {400, 1002},
+ {500, 1002},
+ {600, 1002},
+ {700, 1002},
+ {800, 1002},
+ {900, 1002},
   {0,	0}
 };
 
 
 
 // Define macros for constants
-#define AUDIO_PIN          3 //6 //A6
-#define sysclockfreq 80000000 // 80 MHz
+#define AUDIO_PIN          2 //3 //6 //A6
+
+#ifndef sysclockfreq
+  #define sysclockfreq 80000000 // 80 MHz
+#endif
 
 #define TIM15_CNTADDR 0x24 // bits 15:0 are counter
 #define TIM15_CNTOVF //flag for when the count up triggers
-
-
 #define TIM16_CNTADDR 0x24 // bits 15:0 are counter
 
 uint8_t durationFlagMask;  
 uint8_t freqFlagMask;
 bool durationFlag;
 bool freqFlag;
-
-// 
-// GPIO: connect a pin to the PWM signal. Alternate functions in MODER
-// Figure out what MOE and CCER for pwm generation
-//
 
 
 int main(void) {
@@ -199,18 +215,23 @@ int main(void) {
     /////////////////////////////////////////////////////
     
     RCC->AHB2ENR |= (1 << 0); // GPIO A for PWM connection special functions
-    RCC->AHB2ENR |= (1 << 1); // GPIO B
+    //RCC->AHB2ENR |= (1 << 1); // GPIO B
 
     printf("RCC APB2ENR %d \n", RCC->APB2ENR);
     printf("RCC CFGR    %d \n", RCC->CFGR);
     printf("RCC AHB2ENR %d \n", RCC->AHB2ENR);
     // set up clks 15 and 16
     initializeTIM16Counter();
-    initializeTIM15Counter();
-  
+    //initializeTIM15Counter();
+    initializeTIM15PWM();
+
+    
     // Set speaker output as output
-    pinMode(AUDIO_PIN, GPIO_OUTPUT);
-    // connect alternate function to PA6
+    pinMode(AUDIO_PIN, GPIO_ALT); // GPIO_OUTPUT
+  
+    // set pin A2 to special function AF14 to be driven by TIM15PWM
+    GPIO->AFRL &= ~(0xF << 8); // clear
+    GPIO->AFRL |= (0XE << 8);  //1110 pin 2 alternate function 14 page 272 (ref manual) and 57 (datasheet)
 
     int currentNoteIdx = 0;
     int pitch = notes[currentNoteIdx][0]; // hz
@@ -228,20 +249,21 @@ int main(void) {
 
     while(true){
       
-      //printf("Duration cnt: %d Freq cnt: %d \n", TIM15->CNT, TIM16->CNT);
-      //printf("TIM15ARR: %d TIM16ARR: %d \n", TIM15->ARR, TIM16->ARR);
-      //printf("TIM15PRES: %d TIM16PRES: %d \n", TIM15->PSC, TIM16->PSC);
-      //printf("TIM15CR1: %d TIM16CR1: %d \n", TIM15->CR1, TIM16->CR1); 
-      //printf("TIM15SR: %d TIM16SR: %d \n",TIM15->SR,TIM16->SR);
+      printf("Note: %d \n", currentNoteIdx);
+      printf("Duration cnt: %d Freq cnt: %d \n", TIM15->CNT, TIM16->CNT);
+      printf("TIM15ARR: %d TIM16ARR: %d \n", TIM15->ARR, TIM16->ARR);
+      printf("TIM15PRES: %d TIM16PRES: %d \n", TIM15->PSC, TIM16->PSC);
+      printf("TIM15CR1: %d TIM16CR1: %d \n", TIM15->CR1, TIM16->CR1); 
+      printf("TIM15SR: %d TIM16SR: %d \n",TIM15->SR,TIM16->SR);
 
-      while(duration == 0 && pitch == 0){digitalWrite(AUDIO_PIN, 0);} // end the song
+      while(duration == 0 && pitch == 0){}//digitalWrite(AUDIO_PIN, 0);} // end the song
 
       durationFlagMask = (1<<0);
       durationFlag = (TIM16->SR & durationFlagMask) >> 0;// UIF = Update interrupt flag
       
 
-      freqFlagMask = (1<<0);
-      freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
+      //freqFlagMask = (1<<0);
+      //freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
 
       if(durationFlag == 1){
 
@@ -257,7 +279,11 @@ int main(void) {
         TIM16->SR &= ~(1<<0);// read / clear write 0, turn off the interrupt flag
  
       }
+      if(durationFlag == 0){
+      printf("PLEASE");
+      }
 
+    // HANDLED BY PWM SPECIAL FXN 14
       if(freqFlag == 1){
         if(pitch != 0){ 
           togglePin(AUDIO_PIN); // manually toggle with countup mode, or drive with PWM mode?
@@ -265,9 +291,6 @@ int main(void) {
           TIM15->SR &= ~(1<<0); // clear the flag
         }
       }
-      
-    
-
     
     }
 }

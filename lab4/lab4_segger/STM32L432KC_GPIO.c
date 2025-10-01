@@ -3,11 +3,6 @@
 
 #include "STM32L432KC_GPIO.h"
 
-//TODO: what the fux
-void initAltFxn(void){
-
-}
-
 
 void pinMode(int pin, int function) {
     switch(function) {
