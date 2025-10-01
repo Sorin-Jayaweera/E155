@@ -3,7 +3,7 @@
 
 #include "STM32L432KC_TIM.h"
 #ifndef sysclockfreq
-  #define sysclockfreq 80000000 // 80 MHz
+  #define sysclockfreq 20000000 // 80 MHz
 #endif
 void initializeTIM15PWM(void){
    //////////////////////////////////////////////////////////////////
@@ -81,9 +81,10 @@ void initializeTIM15PWM(void){
 
   // try two, from scratch
   // using pwm channel 1
-  
+  TIM15->PSC = 800; // 100000 hz
   // set PWM mode 1
   //OC1M to 110 in TIM15_CCMR1
+  TIM15->CCMR1 &= ~(0xF << 4);
   TIM15->CCMR1 |= (0b110 << 4);
 
   //enable preload register
@@ -92,10 +93,7 @@ void initializeTIM15PWM(void){
 
   // set auto reload preload register in upcounting
   // APRE bit in TIM15_CR1
-  TIM15->CR1 |= (1<<7); // TIMx_ARR register is buffered
-
-  // Initialize all registers by setting UG bit in TIM15_EGR register
-  TIM15->EGR |= (1<<0);
+  TIM15->CR1 |= (0b1<<7); // TIMx_ARR register is buffered
 
   //TODO: IFFY, based off my own thoughts
   // done because of description for CC1P bit
@@ -103,7 +101,7 @@ void initializeTIM15PWM(void){
 
   // OC1 polarity 
   // use CC1P bit in TIM15_CCER register, active high
-  TIM15->CCER |= (1 <<1);
+  //TIM15->CCER |= (0b1 <<1);
 
   // OC1 output enabled by CC1E, CC1NE, MOE, OSSI, OSSR (TIM15_CCER and TIM15_BDTR registers)
   //  sig out on pin depending on MOE, OSSI, OSSR, OIS1, OIS1N and CC1NE bits.
@@ -123,10 +121,12 @@ void initializeTIM15PWM(void){
 
   //CC1NE 0
   TIM15->CCER &= ~(1 << 2); 
-  
-  
-  // set TIM15_CCR1 to be half of TIM15_ARR (TODO CHECK if it is arr)
 
+  // Initialize all registers by setting UG bit in TIM15_EGR register
+  TIM15->EGR |= (1<<0); // in instructions, this was earlier/ See page 906 of ref manual.
+
+  // set TIM15_CCR1 to be half of TIM15_ARR (TODO CHECK if it is arr)
+  TIM15->CR1 |= (1<<0);
 
 
 
@@ -147,33 +147,34 @@ void initializeTIM15PWM(void){
 
 }
 
-void initializeTIM15Counter(void){
-    ///////////////////////////////////
-    // Instead of PWM, just use an upcounter
-    // so much easier
-    ///////////////////////////////////
+//void initializeTIM15Counter(void){
+//    ///////////////////////////////////
+//    // Instead of PWM, just use an upcounter
+//    // so much easier
+//    ///////////////////////////////////
     
-    // clear
-    //TIM15->CR1 &= ~(0xF);
+//    // clear
+//    //TIM15->CR1 &= ~(0xF);
 
-    //set prescaler = 0
-    TIM15->PSC &= ~(0xF);
+//    //set prescaler = 200
+//    TIM15->PSC &= ~(0xF);
+//    TIM15->PSC = 200; //100000 hz
 
-    //turn off UDIS bit
-    TIM15->CR1 &= ~(0b1<<1);
+//    //turn off UDIS bit
+//    TIM15->CR1 &= ~(0b1<<1);
 
-    //auto reload preload enable
-    TIM15->CR1 |= (0b1<<7);
+//    //auto reload preload enable
+//    TIM15->CR1 |= (0b1<<7);
 
-    // make sure slave mode is DISABLED
-    TIM15->SMCR &= ~(0b1<<7);
+//    // make sure slave mode is DISABLED
+//    TIM15->SMCR &= ~(0b1<<7);
 
-    //clear flag
-    TIM15->EGR &= ~(0b1<<0);
+//    //clear flag
+//    TIM15->EGR &= ~(0b1<<0);
       
-    //counter enable
-    TIM15->CR1 |= (0b1<<0);
-}
+//    //counter enable
+//    TIM15->CR1 |= (0b1<<0);
+//}
 
 
   
@@ -185,7 +186,7 @@ void initializeTIM16Counter(void){
  //TIM16->CR1 &= ~(0xF);
 
  //set prescaler = 1
- TIM16->PSC &= ~(0xF);
+  TIM16->PSC = 8000;// 20000 hz
 
  //turn off UDIS bit
  TIM16->CR1 &= ~(0b1<<1);
@@ -212,13 +213,15 @@ void setTIM15FREQ(int freqHz){
   // duty cycle in TIM15_CCR15
   if(freqHz != 0){
   
-    const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
-    uint16_t maxcnt = ceil(TIM16Freq/freqHz) -1; // -1 or no?
+    const int TIM15Freq = 100000;//hz. cycles/sec Calculated by: 80 Mhz / 
+    uint16_t maxcnt = ceil(TIM15Freq/freqHz) -1; // -1 or no?
 
     //TIM15->PSC = 0; // freq/ (num + 1) -> No division.
     TIM15->ARR = maxcnt;// on reload new count register
     TIM15->CCR1 = ceil(maxcnt/2); // Duty cycle 50% = 1/2 (ARR+1)
     TIM15->EGR |= (1<<0); 
+    TIM15->CNT = 0;
+    //
   }
 
 }
@@ -226,10 +229,11 @@ void setTIM15FREQ(int freqHz){
 void setTIM16Count(int ms){
   // set the wait time
   
-  const int TIM16Freq = 9765;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
+  const int TIM16Freq = 10000;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
   uint16_t maxcnt = ceil(TIM16Freq * ms / 1000); // cycles / second * seconds = cycles
 
   //TIM16->PSC = 0; // No division.
   TIM16->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
   TIM16->EGR |= (0b1<<0); // force things to update by writing UG bit to 0
+  TIM16->SR &= ~(1<<0);
 }
