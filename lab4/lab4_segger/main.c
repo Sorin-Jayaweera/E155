@@ -255,7 +255,7 @@ int main(void) {
 
 
     setTIM15Count(2);
-    setTIM16FREQ(9000);
+    setTIM16FREQ(9999);
     
     ms_delay(10000);
     
