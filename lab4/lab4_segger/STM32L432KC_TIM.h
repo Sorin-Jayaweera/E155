@@ -30,6 +30,7 @@ typedef struct
    __IO uint32_t SR;    /* Status Register          0x10 */
    __IO uint32_t EGR;   /* Event Generation reg     0x14 */
    __IO uint32_t CCMR1; /* CCMR1                    0x18 */
+   uint32_t reserved;   /*                          0x1C */
    __IO uint32_t CCER;  /* Capture compare en reg   0x20 */
    __IO uint32_t CNT;   /* Counter                  0x24 */
    __IO uint32_t PSC;   /* Prescaler                0x28 */
@@ -37,38 +38,21 @@ typedef struct
    __IO uint32_t RCR;   /* Repitition Counter Reg   0x30 */
    __IO uint32_t CCR1;  /* Capture Compare Reg      0x34 */
    __IO uint32_t CCR2;  /* Caputre Compare Reg 2    0x38 */
+  uint32_t reserved0;    /*                         0x40 */
    __IO uint32_t BDTR;  /* Break dead time reg      0x44 */
    __IO uint32_t DCR;   /* DMA Control Reg          0x48 */
    __IO uint32_t DMAR;  /* DMA addr full transfer   0x4c */
    __IO uint32_t OR1;   /* Option Reg 1             0x50 */
+   uint32_t reserved1;   /* Option Reg 1            0x54 */
+   uint32_t reserved2;   /* Option Reg 1            0x58 */
+   uint32_t reserved3;   /* Option Reg 1            0x5C */
    __IO uint32_t OR2;   /* Option Reg 2             0x60 */
 
-} TIM15_TypeDef;
+} TIM_TypeDef;
 
-typedef struct
-{
-   __IO uint32_t CR1;   /* Control register 1          0x00 */
-   __IO uint32_t CR2;   /* Control register 2          0x04 */
-   __IO uint32_t DIER;  /* DMA interrupt enable        0x0C */
-   __IO uint32_t SR;    /* Status register             0x10 */
-   __IO uint32_t EGR;   /* Event Generation register   0x14 */
-   __IO uint32_t CCMR1; /* Capture Compare Mode Reg 1  0x18 */
-   __IO uint32_t CCER;  /* Capture compare enable reg  0x20 */
-   __IO uint32_t CNT;   /* Counter                     0x24 */
-   __IO uint32_t PSC;   /* Prescaler                   0x28 */
-   __IO uint32_t ARR;   /* Auto-Reload Register        0x2C */
-   __IO uint32_t RCR;   /* Repitition counter register 0x30 */
-   __IO uint32_t CCR1;  /* Capture compare register 1  0x34 */
-   __IO uint32_t BDTR;  /* Break & dead-time register  0x44 */
-   __IO uint32_t DCR;   /* DMA Control                 0x48 */
-   __IO uint32_t DMAR;  /* DMA address for full trans  0x4C */
-   __IO uint32_t OR1;   /* option register 1           0x50 */
-   __IO uint32_t OR2;   /* option register 2           0x60 */
 
-} TIM16_TypeDef;
-
-#define TIM15 ((TIM15_TypeDef *) TIM15_BASE)
-#define TIM16 ((TIM16_TypeDef *) TIM16_BASE)
+#define TIM15 ((TIM_TypeDef *) TIM15_BASE)
+#define TIM16 ((TIM_TypeDef *) TIM16_BASE)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes

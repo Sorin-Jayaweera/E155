@@ -14,41 +14,56 @@ void initializeTIM15PWM(void){
    //////////////////////////////////////////////////////////////////
 
     //counter enable
-    TIM15->CR1 |= (1<<0);
+    TIM15->CR1 |= (0b1<<0);
 
     //auto reload preload enable
-    TIM15->CR1 |= (1<<7);
+    TIM15->CR1 |= (0b1<<7);
 
-    // make sure slave mode is DISABLED
-    TIM15->SMCR &= ~(1<<7);
+    // make sure slave mode is DISABLED MSM
+    TIM15->SMCR &= ~(0b1<<7);
    
     // Reset CCMR1 OC1M bits 
-    TIM15->CCMR1 &= (0x7 << 4);
-    // PWMMODE 1 write 110 to OC1M bits of TIM15_CCMR15 register
-    TIM15->CCMR1 |= (0x6 << 4); // 110
+    TIM15->CCMR1 &= ~(0x7 << 4); //reset bit 4 5 6
 
+    // PWMMODE 1 write 110 to OC1M bits of TIM15_CCMR15 register
+    TIM15->CCMR1 |= (0x7 << 4); //clear
+    TIM15->CCMR1 |= (0x6 << 4); //set 110
+    
     //enable preload register OCxPE bit in TIM15_CCMR1
-    TIM15->CCMR1  |= (1 << 3);
+    TIM15->CCMR1  |= (0b1 << 3); // write 
 
     // enable auto-reload preload register for upcounting 
     // set ARPE bit in TIM15_CR1 register
-    TIM15->CR1 |= (1 << 7);
+    TIM15->CR1 |= (0b1 << 7); // only one bit, so just turn on
   
     // Initialize registers by setting UG bit in TIM15_EGR
-    TIM15->EGR |= (1<<0);
+    TIM15->EGR |= (0b1<<0);
     
-    //Set to compare mode so that when the cnt hits shadow reg we do smth
-    TIM15->CCER |= (1<<0);
+    //Set to compare mode so that when the cnt hits shadow reg we do smth'
+    // corresponding output pin depending on MOE, OSSI, OSSR, OIS1, OIS1N and CC1NE bits
+    TIM15->CCER |= (0b1<<0); 
 
     // route with BDTR
     // MOE
-    TIM15->BDTR |= (1<<15); 
+    TIM15->BDTR |= (0b1<<15); 
 
-    // output control bits oc ref + polarity
-    // page 938 of reference manual
-    // ccer
-  
+    // want OCxREF + polarity
+    //ossr bit 0
+    TIM15->BDTR &= ~(0b1 << 11);
+
+    //ccxE bit 1
+    TIM15->CCER |= (0b1 << 0);
+
+    //CCxNE bit 0
+    TIM15->CCER &= ~(0b1 << 2);  
+
+    // set preload register 
+    TIM15->CCMR1 |= (0b1<<3); //OC1PE
+
     
+
+    //back to page 748
+
     // set pwm to gpio through
     //alternate function
    
@@ -61,7 +76,7 @@ void initializeTIM15Counter(void){
     ///////////////////////////////////
     
     // clear
-    TIM15->CR1 &= ~(0xF);
+    //TIM15->CR1 &= ~(0xF);
 
     //set prescaler = 0
     TIM15->PSC &= ~(0xF);
@@ -77,10 +92,10 @@ void initializeTIM15Counter(void){
 
     //TODO: feels wrong
     //set an initial thing to count up to
-    TIM15->ARR |= (1<<4);
+    TIM15->ARR |= (0b1<<4);
 
     //clear flag
-    TIM15->EGR |= (1<<0);
+    TIM15->EGR &= ~(0b1<<0);
       
     //counter enable
     TIM15->CR1 |= (0b1<<0);
@@ -94,7 +109,7 @@ void initializeTIM16Counter(void){
  //represent a 4 hz signal
   
  // clear
- TIM16->CR1 &= ~(0xF);
+ //TIM16->CR1 &= ~(0xF);
 
  //set prescaler = 1
  TIM16->PSC &= ~(0xF);
@@ -107,11 +122,10 @@ void initializeTIM16Counter(void){
 
  //TODO: feels wrong
  //set an initial thing to count up to
- TIM16->ARR |= (1<<4);
-
+ TIM16->ARR |= (0b1<<4);
 
  //clear flag
- TIM16->EGR |= (0b1<<0);
+ TIM16->EGR &= ~(0b1<<0);
  
  //count enable
  TIM16->CR1 |= (0b1<<0);

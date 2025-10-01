@@ -150,7 +150,7 @@ const int notes[][2] = {
 
 
 // Define macros for constants
-#define AUDIO_PIN           3
+#define AUDIO_PIN           6 //A6
 #define sysclockfreq 80000000 // 80 MHz
 
 #define TIM15_CNTADDR 0x24 // bits 15:0 are counter
@@ -194,8 +194,10 @@ int main(void) {
     // enable the clock source for timer 15 and 16
     // TIM15EN address 0x60 + 16   write 1
     // TIM15EN address 0x60 + 17   write 1
-    RCC->APB2ENR |= (1 << 16);
     RCC->APB2ENR |= (1 << 17);
+    RCC->APB2ENR |= (1 << 16);
+
+    //RCC->APB2ENR |= (1 << 17);
     // Set the frequency of the clock source going into tim15 and tim16
     // the max freq is 2000hz (for ease)
     // min freq is 200 hz 
@@ -212,16 +214,19 @@ int main(void) {
     // we don't need any prescaler to make the clock slower
     /////////////////////////////////////////////////////
     
-    //RCC->AHB2ENR |= (1 << 0); // GPIO A for PWM connection special functions
-    RCC->AHB2ENR |= (1 << 1); // GPIO B
+    RCC->AHB2ENR |= (1 << 0); // GPIO A for PWM connection special functions
+    //RCC->AHB2ENR |= (1 << 1); // GPIO B
 
-        // set up clks 15 and 16
+    printf("RCC APB2ENR %d \n", RCC->APB2ENR);
+    printf("RCC CFGR    %d \n", RCC->CFGR);
+    printf("RCC AHB2ENR %d \n", RCC->AHB2ENR);
+    // set up clks 15 and 16
     initializeTIM16Counter();
-    initializeTIM15Counter();
+    initializeTIM15PWM();
   
-
     // Set speaker output as output
     pinMode(AUDIO_PIN, GPIO_OUTPUT);
+    // connect alternate function to PA6
 
     int currentNoteIdx = 0;
     int pitch = notes[currentNoteIdx][0]; // hz
@@ -240,12 +245,17 @@ int main(void) {
     while(true){
       
       printf("Duration cnt: %d Freq cnt: %d \n", TIM15->CNT, TIM16->CNT);
+      printf("TIM15ARR: %d TIM16ARR: %d \n", TIM15->ARR, TIM16->ARR);
+      printf("TIM15PRES: %d TIM16PRES: %d \n", TIM15->PSC, TIM16->PSC);
+      printf("TIM15CR1: %d TIM16CR1: %d \n", TIM15->CR1, TIM16->CR1); 
+      printf("TIM15SR: %d TIM16SR: %d \n",TIM15->SR,TIM16->SR);
 
       while(duration == 0 && pitch == 0){}; // end the song
 
       durationFlagMask = (1<<0);
       durationFlag = (TIM16->SR & durationFlagMask) >> 0;// UIF = Update interrupt flag
       
+
       freqFlagMask = (1<<0);
       freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
 
