@@ -132,7 +132,7 @@ const int notes[][2] = {
 
 
 // Define macros for constants
-#define AUDIO_PIN          2 //3 //6 //A6
+#define AUDIO_PIN          6 //3 //6 //A6
 
 #ifndef sysclockfreq
   #define sysclockfreq 80000000 // 80 MHz
@@ -197,8 +197,8 @@ int main(void) {
     // Set speaker output as output
   
     // set pin A2 to special function AF14 to be driven by TIM15PWM
-    GPIO->AFRL &= ~(0xF << 8); // clear
-    GPIO->AFRL |= (0XE << 8);  //1110 pin 2 alternate function 14 page 272 (ref manual) and 57 (datasheet)
+    GPIO->AFRL &= ~(0xF << 27); // clear
+    GPIO->AFRL |= (0XE << 27);  //1110 pin A6 alternate function 14 page 272 (ref manual) and 57 (datasheet)
 
     pinMode(AUDIO_PIN, GPIO_ALT); // GPIO_OUTPUT
     int currentNoteIdx = 0;
