@@ -100,11 +100,12 @@ void initializeTIM16PWM(void){
   //TODO: IFFY, based off my own thoughts
   // done because of description for CC1P bit
   //TIM16->DIER |= (1<<1); // CC1IE interrupt enable.
+  TIM16->DIER &= ~(1<<1); // CC1IE interrupt DISABLE.
 
   // OC1 polarity 
   // not needed - reset state is active high
   // use CC1P bit in TIM16_CCER register, active high
-  //TIM16->CCER |= (0b1 <<1);
+  TIM16->CCER |= (0b1 <<1);
 
   // OC1 output enabled by CC1E, CC1NE, MOE, OSSI, OSSR (TIM16_CCER and TIM16_BDTR registers)
   //  sig out on pin depending on MOE, OSSI, OSSR, OIS1, OIS1N and CC1NE bits.
@@ -128,7 +129,8 @@ void initializeTIM16PWM(void){
   // Initialize all registers by setting UG bit in TIM16_EGR register
   TIM16->EGR |= (1<<0); // in instructions, this was earlier/ See page 906 of ref manual.
 
-  TIM16->CR1 |= (1<<0);
+  //enable
+  TIM16->CR1 |= (1<<0); 
 
   // set TIM16_CCR1 to be half of TIM16_ARR (TODO CHECK if it is arr)
 
@@ -168,7 +170,7 @@ void initializeTIM16Counter(void){
     TIM16->CR1 |= (0b1<<7);
 
     // make sure slave mode is DISABLED
-    TIM16->SMCR &= ~(0b1<<7);
+    //TIM16->SMCR &= ~(0b1<<7);
 
     //clear flag
     TIM16->EGR &= ~(0b1<<0);
@@ -211,6 +213,10 @@ void setTIM16FREQ(int freqHz){
   // SET TIM16_ARR 
   // duty cycle in TIM16_CCR1
 
+  // MOE 
+  // TODO: this is unessisary but its not setting properly TT  
+  TIM16->BDTR |= (1<<15);
+  if(freqHz == 0){TIM16->ARR = 0;}
   if(freqHz != 0){
   
     const int TIM16Freq = 100000;//hz. cycles/sec Calculated by: 80 Mhz / 800
@@ -219,7 +225,10 @@ void setTIM16FREQ(int freqHz){
     //TIM16->PSC = 0; // freq/ (num + 1) -> No division.
     TIM16->ARR = maxcnt;// on reload new count register
     TIM16->CCR1 = ceil(maxcnt/2); // Duty cycle 50% = 1/2 (ARR+1)
-    TIM16->EGR |= (1<<0); 
+    //TIM16->EGR |= (1<<0); 
+    TIM16->SR &= ~(1<<0); // TODO: UIF THIS IS BEING FORCED HIGH FOR SOME REASON SHDFLkHDSA
+   //*((uint32_t*)(0x40014410)) &= ~(1<<0);
+
     TIM16->CNT = 0;
   }
 }
