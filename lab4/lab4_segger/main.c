@@ -131,14 +131,23 @@
 
 const int notes[][2] = {
   {100,	1000},
-  {200,	2000},
-  {300, 3000},
-  {400,	4000},
-  {500,	5000},
-  {600, 6000},
-  {700,	7000},
-  {800,	8000},
-  {900, 9000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  {100,	1000},
+  //{200,	2000},
+  //{300, 3000},
+  //{400,	4000},
+  //{500,	5000},
+  //{600, 6000},
+  //{700,	7000},
+  //{800,	8000},
+  //{900, 9000},
   {0,0}
 };
 
@@ -198,19 +207,19 @@ int main(void) {
     printf("RCC AHB2ENR %d \n", RCC->AHB2ENR);
     // set up clks 15 and 16
     initializeTIM15Counter();
-    initializeTIM16Counter();
-    //initializeTIM16PWM();
+    //initializeTIM16Counter();
+    initializeTIM16PWM();
 
     
     // Set speaker output as output
-    pinMode(AUDIO_PIN, GPIO_ALT); //GPIO_OUTPUT); // alternate function already handles these steps
+    pinMode(AUDIO_PIN,  GPIO_OUTPUT);//GPIO_ALT);  // alternate function already handles these steps
     /// gpios IN ALTERNATE FUNCTION IN gpioX_moder
     //GPIO->MODER &= ~(0x7 << 2*AUDIO_PIN); //clear
     //GPIO->MODER |=  (0x2 << 2*AUDIO_PIN); // 10
 
     //// set pin A2 to special function AF14 to be driven by TIM16PWM
-    GPIO->AFRL &= ~(0xF << 4*AUDIO_PIN); // clear
-    GPIO->AFRL |= (0XE << 4*AUDIO_PIN);  //1110 pin 2 alternate function 14 page 272 (ref manual) and 57 (datasheet)
+    //GPIO->AFRL &= ~(0xF << 4*AUDIO_PIN); // clear
+    //GPIO->AFRL |= (0XE << 4*AUDIO_PIN);  //1110 pin 2 alternate function 14 page 272 (ref manual) and 57 (datasheet)
     
     //printf("AFRL: %d \n", GPIO->AFRL);
 
@@ -241,8 +250,8 @@ int main(void) {
       durationFlag = (TIM15->SR & durationFlagMask) >> 0;// UIF = Update interrupt flag
       
 
-      //freqFlagMask = (1<<0);
-      //freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
+      freqFlagMask = (1<<0);
+      freqFlag = (TIM15->SR & freqFlagMask) >> 0;// UIF = Update interrupt 
 
       if(durationFlag == 1){
 
@@ -261,13 +270,13 @@ int main(void) {
 
 
       //HANDLED BY PWM SPECIAL FXN 14
-      //if(freqFlag == 1){
-      //  if(pitch != 0){ 
-      //    //togglePin(AUDIO_PIN); // manually toggle with countup mode, or drive with PWM mode?
-      //    //UIF bits are interrupt flag
-      //    TIM16->SR &= ~(1<<0); // clear the flag
-      //  }
-      //}
+      if(freqFlag == 1){
+        if(pitch != 0){ 
+          togglePin(AUDIO_PIN); // manually toggle with countup mode, or drive with PWM mode?
+          //UIF bits are interrupt flag
+          TIM16->SR &= ~(1<<0); // clear the flag
+        }
+      }
     
     }
 }

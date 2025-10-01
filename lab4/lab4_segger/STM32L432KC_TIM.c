@@ -209,11 +209,11 @@ void initializeTIM15Counter(void){
 void setTIM16FREQ(int freqHz){
 
   // SET TIM16_ARR 
-  //TIM16->ARR = 
-  // duty cycle in TIM16_CCR15
+  // duty cycle in TIM16_CCR1
+
   if(freqHz != 0){
   
-    const int TIM16Freq = 100000;//hz. cycles/sec Calculated by: 80 Mhz / 
+    const int TIM16Freq = 100000;//hz. cycles/sec Calculated by: 80 Mhz / 800
     uint16_t maxcnt = ceil(TIM16Freq/freqHz) -1; // -1 or no?
 
     //TIM16->PSC = 0; // freq/ (num + 1) -> No division.
@@ -221,16 +221,14 @@ void setTIM16FREQ(int freqHz){
     TIM16->CCR1 = ceil(maxcnt/2); // Duty cycle 50% = 1/2 (ARR+1)
     TIM16->EGR |= (1<<0); 
     TIM16->CNT = 0;
-    
   }
-
 }
 
 void setTIM15Count(int ms){
   // set the wait time
   
   const int TIM15Freq = 10000;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
-  uint16_t maxcnt = ceil(TIM15Freq * ms / 1000); // cycles / second * seconds = cycles
+  uint16_t maxcnt = ceil(TIM15Freq * ms / 1000)-1; // cycles / second * seconds = cycles
 
   //TIM15->PSC = 0; // No division.
   TIM15->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
