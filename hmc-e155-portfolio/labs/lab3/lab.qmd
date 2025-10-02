@@ -1,5 +1,5 @@
 ---
-title: "Lab 3 - Keypad Debounce""
+title: "Lab 3 - Keypad Debounce"
 description: "Testing an FPGA reading a keypad and pushing to two 7 segment displays"
 author: "Sorin Jayaweera"
 date: "8/27/2025"
@@ -12,18 +12,56 @@ draft: false
 
 ## Introduction
 
+In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. 
+This tests the principles of debouncing and asynchrony. 
+
+This was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k. 
+
 ## Design and Testing Methodology
 
-## Technical Documentatoin
+Osilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 40 ms each.
+
+A simulation testbench for each module was also created to ensure desired functionality. (albeit they were constructed after it already worked).
+ 
+## Technical Documentation
+
+The logic for this design is partitioned into many functions. 
+
+Asynchronous key presses are aligned to the clock with a synchronizer - just a flop taking input on the fastest clock cycle. 
+
+A clock module handles a counter for time based conditions.
+
+A Keypad handler drives each row of the keypad high one at a time, then reads out the associated columns. If any of the columns was active, then a button was pressed within the cycle of checking.
+
+A debouncer module ensures that each button is only activated once. When the button is first pressed, a 40 ms timer is started. New inputs are only accepted after the button is released after the 40ms timer and an additional 40 ms after release has passed.
+
+A single 7 segment driver is time multiplexed to drive two 7 segment displays, alternating which is powered at 90 hz. 
+
+### State Machine Debounce Logic
+![](/images/lab3/fsm.png) 
+
 
 ### Block Diagram
+![](/images/lab3/block_diagram.png)
 
 ### Schematic
+![](/images/lab3/schematic.png)
+
+
+## Testbench Simulation
+A testbench was constructed for every module.
+
+![](/images/lab3/synchroniezerandkeypadtestbench.png)
+
 
 ## Results and Discussion
 
-### Testbench Simulation
+The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.
 
-## Conclusion
+The debounce length chosen is somewhat lengthy, and may be reduced for optimization. 
+
+Time spent: No clue, maybe ~ 15 hrs
 
 ## AI overview
+
+Works a lot better with modular spec
