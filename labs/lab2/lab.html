@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-52aac903ff610c2b3cd6903c9562da61.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b3aed8deb8408878d0e4e165d993d59e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -264,19 +264,19 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
 <section id="block-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
-<p><img src="../../images/lab2/block.png" class="img-fluid"></p>
+<p><img src="../..\images/lab2/block.png" class="img-fluid"></p>
 <p>A single look up table is multiplexed with inputs from two inputs, alternating at 80 hz.</p>
 </section>
 <section id="schematic" class="level3">
 <h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
-<p><img src="../../images/lab2/schematic.png" class="img-fluid"></p>
+<p><img src="../..\images/lab2/schematic.png" class="img-fluid"></p>
 <p>The output 7 segment control pins are fed to the inputs of both 7 segment displays. The power for each display is controlled by a PNP transistor, which connects the weak enable signal from the FPGA to a 3.3v source.</p>
 </section>
 <section id="testing" class="level3">
 <h3 class="anchored" data-anchor-id="testing">Testing</h3>
 <p>Two simulations were used to verify the behavior of this system. The first checked that the sum of the two binary numbers was properly computed, and the second tested the switching functionality between two displays with the 7 segment output.</p>
-<p>The following displays holding one display constant while changing the inputs for the other, and we see the display code updating on alternating inputs following the enable for that display. More tests are not screenshot,due to the sheer number (and zooming in to see the binary numbers as validatoin). <img src="../../images/lab2/testbench_segs.png" class="img-fluid"></p>
-<p>The following shows that the sum output from the top module is indeed the sum of the two inputs, for every combination of inputs. <img src="../../images/lab2/testbench_sum.png" class="img-fluid"></p>
+<p>The following displays holding one display constant while changing the inputs for the other, and we see the display code updating on alternating inputs following the enable for that display. More tests are not screenshot,due to the sheer number (and zooming in to see the binary numbers as validatoin). <img src="../..\images/lab2/testbench_segs.png" class="img-fluid"></p>
+<p>The following shows that the sum output from the top module is indeed the sum of the two inputs, for every combination of inputs. <img src="../..\images/lab2/testbench_sum.png" class="img-fluid"></p>
 <p>The frequency of the clock alternating between segment 0 and 1 had to be determined and verified in situ, due to the nature of human eye to discerne which frequency was applicable.</p>
 </section>
 <section id="physical-design-calculations" class="level3">
