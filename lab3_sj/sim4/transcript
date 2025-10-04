@@ -1,0 +1,132 @@
+# //  Questa Lattice OEM Edition-64
+# //  Version 2024.2 win64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# qrun -clean -f "C:/Users/sojayaweera/E155/lab3_sj/sim4/sim4.f"
+# Creating library 'qrun.out/work'.
+# Questa Lattice OEM Edition-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+# 
+# 
+# Start time: 22:13:59 on Sep 17,2025
+# 
+# vlog -reportprogress 300 -L work -sv "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/top.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/sevensegLUT.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/keypad_handler.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/debouncer.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/count_module.sv C:/Users/sojayaweera/E155/lab3_sj/source/impl_1/synchronizer.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
+# 
+# -- Compiling module top
+# 
+# -- Compiling module sevensegLUT
+# 
+# -- Compiling module keypad_handler
+# 
+# -- Compiling module debouncer
+# 
+# -- Compiling module count_module
+# 
+# -- Compiling module synchronizer
+# 
+# 
+# 
+# Top level modules:
+# 
+# 	top
+# 
+# End time: 22:13:59 on Sep 17,2025, Elapsed time: 0:00:00
+# 
+# Errors: 0, Warnings: 0
+# 
+# Questa Lattice OEM Edition-64 vopt 2024.2 Compiler 2024.05 May 20 2024
+# 
+# 
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+# 
+# Start time: 22:13:59 on Sep 17,2025
+# 
+# vopt -reportprogress 300 -L work "+acc" "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up top -suppress vopt-7033 -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=2 
+# 
+# 
+# 
+# Top level modules:
+# 
+# 	top
+# 
+# 
+# 
+# Analyzing design...
+# 
+# -- Loading module top
+# 
+# -- Loading module count_module
+# 
+# -- Loading module ovi_ice40up.HSOSC
+# 
+# -- Loading module ovi_ice40up.VLO
+# 
+# -- Loading module ovi_ice40up.HSOSC_CORE
+# 
+# -- Loading module ovi_ice40up.HFOSC
+# 
+# -- Loading module ovi_ice40up.HFOSC_CORE
+# 
+# -- Loading module synchronizer
+# 
+# -- Loading module sevensegLUT
+# 
+# -- Loading module keypad_handler
+# 
+# -- Loading module debouncer
+# 
+# ** Warning: (vopt-2108) Cannot find module '*' specified in +noacc option.
+# 
+# Optimizing 11 design-units (inlining 4/11 module instances):
+# 
+# -- Inlining module ovi_ice40up.VLO(fast)
+# 
+# -- Inlining module ovi_ice40up.HFOSC_CORE(fast)
+# 
+# -- Inlining module ovi_ice40up.HFOSC(fast)
+# 
+# -- Inlining module ovi_ice40up.HSOSC_CORE(fast)
+# 
+# -- Optimizing module ovi_ice40up.HSOSC(fast)
+# 
+# -- Optimizing module keypad_handler(fast)
+# 
+# -- Optimizing module debouncer(fast)
+# 
+# ** Note: (vopt-143) Recognized 1 FSM in module "debouncer(fast)".
+# 
+# -- Optimizing module top(fast)
+# 
+# -- Optimizing module sevensegLUT(fast)
+# 
+# -- Optimizing module count_module(fast)
+# 
+# -- Optimizing module synchronizer(fast)
+# 
+# Optimized design name is qrun_opt
+# 
+# End time: 22:14:00 on Sep 17,2025, Elapsed time: 0:00:01
+# 
+# Errors: 0, Warnings: 2
+# 
+vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do {view wave} -do {add wave /*} -do {run 100 ns} -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log
+# Compile of count_module.sv was successful.
+# Compile of debouncer.sv was successful.
+# Compile of keypad_handler.sv was successful.
+# Compile of keypadLUT.sv was successful.
+# Compile of sevensegLUT.sv was successful.
+# Compile of synchronizer.sv was successful.
+# Compile of testbench_debouncer.sv was successful.
+# Compile of testbench_keypad.sv failed with 24 errors.
+# Compile of testbench_synchronizer.sv was successful.
+# Compile of top.sv was successful.
+# 10 compiles, 1 failed with 24 errors.
