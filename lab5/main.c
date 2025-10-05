@@ -69,7 +69,7 @@ int main(void) {
     
     
     // Enable Software timer 2 interrupt
-    NVIC->ISER[0] |= (1<<);
+    NVIC->ISER[0] |= (1<< TIM2_IRQn);
 
     //  software interrupt section 13.3.6 reference manual
     // 1. configure bit mask (EXTI_IMR, EXTI_EMR)
@@ -85,6 +85,11 @@ int main(void) {
     
     // Configure interrupt from tim2
     // update generation
+    
+    while(1){
+      delay_millis(TIM2,1000);
+    }
+    
 }
 
 //TODO:
@@ -92,8 +97,8 @@ int main(void) {
 void TIM2_IRQHandler(void){
     // TIM2 is position 28 of the Vector table
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 28)){
-        EXTI->PR1 |= (1 << 28); // clear the bit by writing a 1, see 13.5.5 in Ref Manual
+    if (EXTI->PR1 & (1 << TIM2_IRQn)){ // 28
+        EXTI->PR1 |= (1 << TIM2_IRQn); //28  clear the bit by writing a 1, see 13.5.5 in Ref Manual
         int freqHz = ( encCounter) / (24); // 24 edges per cycle
         printf("Speed: %d hz", freqHz);
   
@@ -109,9 +114,9 @@ void TIM2_IRQHandler(void){
 void EXTI2_IRQHandler(void){
 // NVIC is position 8
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 8)){
+    if (EXTI->PR1 & (1 << EXTI2_IRQn)){ // 8
         // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 |= (1 << 8); // clear with 1
+        EXTI->PR1 |= (1 << EXTI2_IRQn);//8 // clear with 1
         encCounter +=1;
     }
 }
@@ -121,9 +126,9 @@ void EXTI2_IRQHandler(void){
 void EXTI3_IRQHandler(void){
 // NVIC is position 7
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 7)){
+    if (EXTI->PR1 & (1 << EXTI3_IRQn)){ // 7
         // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 |= (1 << 7); // read clear write 1. 
+        EXTI->PR1 |= (1 << EXTI3_IRQn);//7 // read clear write 1. 
         encCounter += 1;
 
     }
