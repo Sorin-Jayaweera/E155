@@ -117,7 +117,7 @@ Sections by address:
   08000264-08000293  MSIRangeTable                      48   4  Cnst  RO  system_stm32l4xx.o
   08000294-080003d3  main                              320   4  Code  RX  main.o
   080003d4-08000423  TIM2_IRQHandler                    80   4  Code  RX  main.o
-  08000424-08000473  EXTI2_IRQHandler                   80   4  Code  RX  main.o
+  08000424-08000473  EXTI1_IRQHandler                   80   4  Code  RX  main.o
   08000474-080004c3  gpioEnable                         80   4  Code  RX  STM32L432KC_GPIO.o
   080004c4-080004cf  gpioPinToPort                      12   4  Code  RX  STM32L432KC_GPIO.o
   080004d0-0800050f  gpioPortToBase                     64   4  Code  RX  STM32L432KC_GPIO.o
@@ -139,7 +139,7 @@ Sections by address:
                                                         88   4  Cnst  RO  mbops.o (mbops_timeops_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
   08000aac-08000c1d  SystemCoreClockUpdate             370   4  Code  RX  system_stm32l4xx.o
   08000c1e-08000c1f  BusFault_Handler                    2   2  Code  RX  stm32l432xx_Vectors.o
-  08000c20-08000c6d  EXTI3_IRQHandler                   78   4  Code  RX  main.o
+  08000c20-08000c6d  EXTI2_IRQHandler                   78   4  Code  RX  main.o
   08000c6e-08000c6f  UsageFault_Handler                  2   2  Code  RX  stm32l432xx_Vectors.o
   08000c70-08000c89  configureFlash                     26   4  Code  RX  STM32L432KC_FLASH.o
   08000c8a-08000c8b  SVC_Handler                         2   2  Code  RX  stm32l432xx_Vectors.o
@@ -159,7 +159,7 @@ Sections by address:
   080010d0-080010d1  FLASH_IRQHandler                    2   2  Code  RX  stm32l432xx_Vectors.o
   080010d2-080010d3  RCC_IRQHandler                      2   2  Code  RX  stm32l432xx_Vectors.o
   080010d4-080010d5  EXTI0_IRQHandler                    2   2  Code  RX  stm32l432xx_Vectors.o
-  080010d6-080010d7  EXTI1_IRQHandler                    2   2  Code  RX  stm32l432xx_Vectors.o
+  080010d6-080010d7  EXTI3_IRQHandler                    2   2  Code  RX  stm32l432xx_Vectors.o
   080010d8-080010d9  EXTI4_IRQHandler                    2   2  Code  RX  stm32l432xx_Vectors.o
   080010da-080010db  DMA1_Channel1_IRQHandler            2   2  Code  RX  stm32l432xx_Vectors.o
   080010dc-080010dd  DMA1_Channel2_IRQHandler            2   2  Code  RX  stm32l432xx_Vectors.o
@@ -337,9 +337,9 @@ Function symbols by name:
   DebugMon_Handler           0x08000C9B                  2  Code  Wk  stm32l432xx_Vectors.o
   EXTI0_IRQHandler           0x080010D5                  2  Code  Wk  stm32l432xx_Vectors.o
   EXTI15_10_IRQHandler       0x08001107                  2  Code  Wk  stm32l432xx_Vectors.o
-  EXTI1_IRQHandler           0x080010D7                  2  Code  Wk  stm32l432xx_Vectors.o
-  EXTI2_IRQHandler           0x08000425          80      4  Code  Gb  main.o
-  EXTI3_IRQHandler           0x08000C21          78      4  Code  Gb  main.o
+  EXTI1_IRQHandler           0x08000425          80      4  Code  Gb  main.o
+  EXTI2_IRQHandler           0x08000C21          78      4  Code  Gb  main.o
+  EXTI3_IRQHandler           0x080010D7                  2  Code  Wk  stm32l432xx_Vectors.o
   EXTI4_IRQHandler           0x080010D9                  2  Code  Wk  stm32l432xx_Vectors.o
   EXTI9_5_IRQHandler         0x080010F3                  2  Code  Wk  stm32l432xx_Vectors.o
   FLASH_IRQHandler           0x080010D1                  2  Code  Wk  stm32l432xx_Vectors.o
@@ -467,7 +467,7 @@ Function symbols by address:
   0x08000209  SystemInit                         92      4  Code  Gb  system_stm32l4xx.o
   0x08000295  main                              320      4  Code  Gb  main.o
   0x080003D5  TIM2_IRQHandler                    80      4  Code  Gb  main.o
-  0x08000425  EXTI2_IRQHandler                   80      4  Code  Gb  main.o
+  0x08000425  EXTI1_IRQHandler                   80      4  Code  Gb  main.o
   0x08000475  gpioEnable                         80      4  Code  Gb  STM32L432KC_GPIO.o
   0x080004C5  gpioPinToPort                      12      4  Code  Gb  STM32L432KC_GPIO.o
   0x080004D1  gpioPortToBase                     64      4  Code  Gb  STM32L432KC_GPIO.o
@@ -496,7 +496,7 @@ Function symbols by address:
   0x080009C9  memset                                     4  Code  Wk  strasmops_arm.o (strops_unaligned_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
   0x08000AAD  SystemCoreClockUpdate             370      4  Code  Gb  system_stm32l4xx.o
   0x08000C1F  BusFault_Handler                           2  Code  Wk  stm32l432xx_Vectors.o
-  0x08000C21  EXTI3_IRQHandler                   78      4  Code  Gb  main.o
+  0x08000C21  EXTI2_IRQHandler                   78      4  Code  Gb  main.o
   0x08000C6F  UsageFault_Handler                         2  Code  Wk  stm32l432xx_Vectors.o
   0x08000C71  configureFlash                     26      4  Code  Gb  STM32L432KC_FLASH.o
   0x08000C8B  SVC_Handler                                2  Code  Wk  stm32l432xx_Vectors.o
@@ -517,7 +517,7 @@ Function symbols by address:
   0x080010D1  FLASH_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   0x080010D3  RCC_IRQHandler                             2  Code  Wk  stm32l432xx_Vectors.o
   0x080010D5  EXTI0_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
-  0x080010D7  EXTI1_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
+  0x080010D7  EXTI3_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   0x080010D9  EXTI4_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   0x080010DB  DMA1_Channel1_IRQHandler                   2  Code  Wk  stm32l432xx_Vectors.o
   0x080010DD  DMA1_Channel2_IRQHandler                   2  Code  Wk  stm32l432xx_Vectors.o
@@ -628,10 +628,10 @@ Function symbols by descending size:
   memcpy                             92      4  Code  Wk  strasmops_arm.o (strops_unaligned_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
   SEGGER_RTT_WriteNoLock             90      2  Code  Gb  SEGGER_RTT.o (prinops_rtt_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
   _WriteBlocking                     86      2  Code  Lc  SEGGER_RTT.o (prinops_rtt_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
-  EXTI2_IRQHandler                   80      4  Code  Gb  main.o
+  EXTI1_IRQHandler                   80      4  Code  Gb  main.o
   TIM2_IRQHandler                    80      4  Code  Gb  main.o
   gpioEnable                         80      4  Code  Gb  STM32L432KC_GPIO.o
-  EXTI3_IRQHandler                   78      4  Code  Gb  main.o
+  EXTI2_IRQHandler                   78      4  Code  Gb  main.o
   _WriteNoCheck                      68      2  Code  Lc  SEGGER_RTT.o (prinops_rtt_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
   gpioPortToBase                     64      4  Code  Gb  STM32L432KC_GPIO.o
   __SEGGER_RTL_X_file_stat           56      2  Code  Gb  prinops_rtt.o (prinops_rtt_v7em_fpv4_sp_d16_hard_t_le_eabi_balanced.a)
@@ -700,7 +700,7 @@ Function symbols by descending size:
   DebugMon_Handler                           2  Code  Wk  stm32l432xx_Vectors.o
   EXTI0_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   EXTI15_10_IRQHandler                       2  Code  Wk  stm32l432xx_Vectors.o
-  EXTI1_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
+  EXTI3_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   EXTI4_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o
   EXTI9_5_IRQHandler                         2  Code  Wk  stm32l432xx_Vectors.o
   FLASH_IRQHandler                           2  Code  Wk  stm32l432xx_Vectors.o

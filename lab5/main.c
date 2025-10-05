@@ -60,38 +60,12 @@ int main(void) {
     EXTI->FTSR1 |= (1 << gpioPinOffset(quadencA));// Enable falling edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(quadencB));// Enable falling edge trigger
     // 4. Turn on EXTI interrupt in NVIC_ISER
-    NVIC->ISER[0] |= (1 << EXTI2_IRQn); // 2 TURN ON ALL THE EXTI2 INTERRUPTS
-    NVIC->ISER[0] |= (1 << EXTI3_IRQn); // 3 TURN ON ALL THE EXTI3 INTERRUPTS
+    NVIC->ISER[0] |= (1 << EXTI1_IRQn); // 2 TURN ON ALL THE EXTI2 INTERRUPTS
+    NVIC->ISER[0] |= (1 << EXTI2_IRQn); // 3 TURN ON ALL THE EXTI3 INTERRUPTS
     
     // Enable Software timer 2 interrupt
     NVIC->ISER[0] |= (1<< TIM2_IRQn); // TIM2 is position 28 of the Vector table
 
-    //  software interrupt section 13.3.6 reference manual
-    // 1. configure bit mask (EXTI_IMR, EXTI_EMR)
-    // 2. Set required bit of software interrupt register EXTI_SWIER
-    // #################################################################
-    // 1
-    //EXTI->IMR1 |= (1<<0); // turn on interrupt zero
-    //EXTI->EMR1 |= (1<<0); // Event not masked, aka active
-    //// 2
-    //// writing 1 sets the corresponding bit in EXTI_PR and makes an interrupt request.
-    //// Cleared by writing 1 to EXTI_PR
-    //EXTI->SWIER1  |= (1<<0); 
-    
-    // Configure interrupt from tim2
-    // update generation
-    
-
-    //while(1){
-    //  //delay_millis(TIM2,1000);
-    //  if(TIM2->SR & (1<<0)){
-    //    int freqHz = ( encCounter) / (24); // 24 edges per cycle
-    //    printf("Speed: %d hz \n", freqHz);
-    
-    //    encCounter = 0;
-    //    TIM2->SR &= ~(1<<0); //TODO this seems to be rc_w0, but i thought it was rc_w1
-    //  }      
-    //}
     
 }
 
@@ -111,19 +85,17 @@ void TIM2_IRQHandler(void){
 
 
 // reading the first toggle
-void EXTI2_IRQHandler(void){
+void EXTI1_IRQHandler(void){
 // NVIC is position 8
     if (EXTI->PR1 & (1 << gpioPinOffset(quadencA))){// PA1
         // If so, clear the interrupt (NB: Write 1 to reset.)
         EXTI->PR1 |= (1 << gpioPinOffset(quadencA));// clear with 1
         encCounter +=1;
-
-
     }
 }
 
 // reading the second toggle
-void EXTI3_IRQHandler(void){
+void EXTI2_IRQHandler(void){
 // NVIC is position 7
     if (EXTI->PR1 & (1 << gpioPinOffset(quadencB))){// Pin A2
         // If so, clear the interrupt (NB: Write 1 to reset.)
