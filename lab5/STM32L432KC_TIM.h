@@ -64,8 +64,8 @@
 
 void initializeTIM15Counter(void);
 void setTIM15Count(int ms);
-
-
+void setTIMxCount(TIM_TypeDef * TIMx, uint32_t ms);
+void clearTIMx(TIM_TypeDef * TIMx);
 void initTIM(TIM_TypeDef * TIMx);
 void delay_millis(TIM_TypeDef * TIMx, uint32_t ms);
 void delay_micros(TIM_TypeDef * TIMx, uint32_t us);

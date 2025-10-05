@@ -14,6 +14,10 @@ void initTIM(TIM_TypeDef * TIMx){
   TIMx->EGR |= 1;
   // Enable counter
   TIMx->CR1 |= 1; // Set CEN = 1
+
+  // set timer to have interrupts
+  TIMx->DIER |= (1<<6);// Trigger interrupt enable
+  TIMx->DIER |= (1<<0);// Trigger interrupt enable
 }
 
 void delay_millis(TIM_TypeDef * TIMx, uint32_t ms){
@@ -23,6 +27,31 @@ void delay_millis(TIM_TypeDef * TIMx, uint32_t ms){
   TIMx->CNT = 0;      // Reset count
 
   while(!(TIMx->SR & 1)); // Wait for UIF to go high
+}
+
+
+void setTIMxCount(TIM_TypeDef * TIMx, uint32_t ms){
+  // set the wait time
+  
+  //const int TIMFreq = 10000;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
+  //uint16_t maxcnt = ceil(TIMFreq * ms / 1000)-1; // cycles / second * seconds = cycles
+
+  ////TIM15->PSC = 0; // No division.
+  //TIMx->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
+  //TIMx->EGR |= (0b1<<0); // force things to update by writing UG bit to 0
+  //TIMx->SR &= ~(1<<0);
+
+  TIMx->ARR = ms;// Set timer max count
+  TIMx->EGR |= 1;     // Force update
+  TIMx->SR &= ~(0x1); // Clear UIF
+  TIMx->CNT = 0;     
+
+}
+
+void clearTIMx(TIM_TypeDef * TIMx){
+  TIMx->EGR |= 1;     // Force update
+  TIMx->SR &= ~(0x1); // Clear UIF
+  TIMx->CNT = 0;     
 }
 
 
