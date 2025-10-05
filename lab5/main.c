@@ -66,29 +66,34 @@ int main(void) {
     // 4. Turn on EXTI interrupt in NVIC_ISER
     NVIC->ISER[0] |= (1 << EXTI2_IRQn); // 2
     NVIC->ISER[0] |= (1 << EXTI3_IRQn); // 3 Position on the Vector Table
-
+    
+    
+    // Enable Software timer 2 interrupt
+    NVIC->ISER[0] |= (1<<);
 
     //  software interrupt section 13.3.6 reference manual
     // 1. configure bit mask (EXTI_IMR, EXTI_EMR)
     // 2. Set required bit of software interrupt register EXTI_SWIER
     // #################################################################
     // 1
-    EXTI->IMR1 |= (1<<0); // turn on interrupt zero
-    EXTI->EMR1 |= (1<<0); // Event not masked, aka active
-    // 2
-    // writing 1 sets the corresponding bit in EXTI_PR and makes an interrupt request.
-    // Cleared by writing 1 to EXTI_PR
-    EXTI->SWIER1  |= (1<<0); 
+    //EXTI->IMR1 |= (1<<0); // turn on interrupt zero
+    //EXTI->EMR1 |= (1<<0); // Event not masked, aka active
+    //// 2
+    //// writing 1 sets the corresponding bit in EXTI_PR and makes an interrupt request.
+    //// Cleared by writing 1 to EXTI_PR
+    //EXTI->SWIER1  |= (1<<0); 
     
-
+    // Configure interrupt from tim2
+    // update generation
 }
 
 //TODO:
 // handle printing every second
-void randname(void){ // NOT FOR TIMER INTERRUPT< CHECK DATASHEET. internal!
+void TIM2_IRQHandler(void){
+    // TIM2 is position 28 of the Vector table
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 0)){
-        EXTI->PR1 |= (1 << 0); // clear the bit by writing a 1, see 13.5.5 in Ref Manual
+    if (EXTI->PR1 & (1 << 28)){
+        EXTI->PR1 |= (1 << 28); // clear the bit by writing a 1, see 13.5.5 in Ref Manual
         int freqHz = ( encCounter) / (24); // 24 edges per cycle
         printf("Speed: %d hz", freqHz);
   
@@ -97,13 +102,16 @@ void randname(void){ // NOT FOR TIMER INTERRUPT< CHECK DATASHEET. internal!
     }
 }
 
+
+
 //TODO: Are these the right fields for EXTI2?
 // reading the first toggle
 void EXTI2_IRQHandler(void){
+// NVIC is position 8
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 2)){
+    if (EXTI->PR1 & (1 << 8)){
         // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 |= (1 << 2); // clear with 1
+        EXTI->PR1 |= (1 << 8); // clear with 1
         encCounter +=1;
     }
 }
@@ -111,10 +119,11 @@ void EXTI2_IRQHandler(void){
 //TODO: Are these the right fields for EXTI3?
 // reading the second toggle
 void EXTI3_IRQHandler(void){
+// NVIC is position 7
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 1)){
+    if (EXTI->PR1 & (1 << 7)){
         // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 |= (1 << 1); // read clear write 1. 
+        EXTI->PR1 |= (1 << 7); // read clear write 1. 
         encCounter += 1;
 
     }

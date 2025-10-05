@@ -10,8 +10,8 @@
 // Custom defines
 ///////////////////////////////////////////////////////////////////////////////
 
-#define quadencA PA5
-#define quadencB PA4
+#define quadencA PA2
+#define quadencB PA1
 #define DELAY_TIM TIM2
 
 void randname(void);
