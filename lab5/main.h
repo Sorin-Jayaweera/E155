@@ -1,8 +1,5 @@
-// main.h
-// Josh Brake
-// jbrake@hmc.edu
-// 10/31/22 
-
+//Sorin Jayaweera
+//10/4/2025
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -16,5 +13,8 @@
 #define quadencA PA5
 #define quadencB PA4
 #define DELAY_TIM TIM2
+
+void randname(void);
+
 
 #endif // MAIN_H

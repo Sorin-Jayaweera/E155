@@ -7,27 +7,34 @@
 int encCounter = 0;
 
 int main(void) {
-    // Enable LED as output
-    //gpioEnable(GPIO_PORT_B);
-    //pinMode(LED_PIN, GPIO_OUTPUT);
-
+    
+    // Configure 
+    // Flash and Clock to unbrick
+    // 80 MHz PLL for system clock
+    // enable clock 15 for 1 second timer
+    // turn two pins for reading the encoders to input
+    // #################################################################
     configureFlash();
     configureClock();
 
+    // GPIO
     // Enable each reader as input
     gpioEnable(GPIO_PORT_A);
     pinMode(quadencA, GPIO_INPUT);
     pinMode(quadencB, GPIO_INPUT);
-
-    // use timer 15 for the 1 second timer
-    RCC->APB2ENR |= (1 << 16); // tim 15
-    initializeTIM15Counter();
     
     //TODO: Find the right GPIO pins for interrupt control
     GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD4, 0b01); // Set PA4 as pull-up
     GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD5, 0b01); // Set PA5 as pull-up
 
-    // Initialize timer
+
+    // TIMERS
+    // use timer 15 for the 1 second timer
+    //RCC->APB2ENR |= (1 << 16); // tim 15
+    //initializeTIM15Counter();
+    //setTIM15Count(1000);
+    
+    //// Initialize timer
     RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
     initTIM(DELAY_TIM);
 
@@ -35,9 +42,10 @@ int main(void) {
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
     // 2. Configure EXTICR for the input button interrupt
     SYSCFG->EXTICR[1] |= _VAL2FLD(SYSCFG_EXTICR1_EXTI2, 0b000); // Select PA2
+    SYSCFG->EXTICR[1] |= _VAL2FLD(SYSCFG_EXTICR1_EXTI1, 0b000); // Select PA1
 
     // Enable interrupts globally
-    __enable_irq();
+    __enable_irq(); // 4.3.10 of programmers manual
 
 
     // hardware interrupt selection 13.3.4 in reference manual
@@ -45,7 +53,7 @@ int main(void) {
     // 2) configure trigger selection EXTI_RSTR and eXTI_FTSR
     // 3) Configure the enable and mask bits that control NVIC IRQ channel mapped to the EXTI 
     //    so that an interrupt from EXTI lines can be awknowledged. 
-
+    // #################################################################
     // 1. Configure mask bit
     EXTI->IMR1 |= (1 << gpioPinOffset(quadencA)); // Configure the mask bit
     EXTI->IMR1 |= (1 << gpioPinOffset(quadencB)); // Configure the mask bit
@@ -57,12 +65,13 @@ int main(void) {
     EXTI->FTSR1 |= (1 << gpioPinOffset(quadencB));// Enable falling edge trigger
     // 4. Turn on EXTI interrupt in NVIC_ISER
     NVIC->ISER[0] |= (1 << EXTI2_IRQn); // 2
-    NVIC->ISER[0] |= (1 << EXTI3_IRQn); // 3
+    NVIC->ISER[0] |= (1 << EXTI3_IRQn); // 3 Position on the Vector Table
+
 
     //  software interrupt section 13.3.6 reference manual
     // 1. configure bit mask (EXTI_IMR, EXTI_EMR)
     // 2. Set required bit of software interrupt register EXTI_SWIER
-    //
+    // #################################################################
     // 1
     EXTI->IMR1 |= (1<<0); // turn on interrupt zero
     EXTI->EMR1 |= (1<<0); // Event not masked, aka active
@@ -71,24 +80,24 @@ int main(void) {
     // Cleared by writing 1 to EXTI_PR
     EXTI->SWIER1  |= (1<<0); 
     
-    setTIM15Count(1000);
 
 }
 
 //TODO:
 // handle printing every second
-void (){ // NOT FOR TIMER INTERRUPT< CHECK DATASHEET. internal!
+void randname(void){ // NOT FOR TIMER INTERRUPT< CHECK DATASHEET. internal!
     // Check that the button was what triggered our interrupt
     if (EXTI->PR1 & (1 << 0)){
         EXTI->PR1 |= (1 << 0); // clear the bit by writing a 1, see 13.5.5 in Ref Manual
-        int freqHz = ( encCounter) / (24) //  /2 for avergae, /6 for cycles instead of counts. /2 bc every edge instead of only rising edge
+        int freqHz = ( encCounter) / (24); // 24 edges per cycle
         printf("Speed: %d hz", freqHz);
-      
-      // TURN OFF THE FLAG FOR TIM15
+  
+        //TODO TURN OFF THE UIF FLAG FOR TIM2
         encCounter = 0;
     }
 }
 
+//TODO: Are these the right fields for EXTI2?
 // reading the first toggle
 void EXTI2_IRQHandler(void){
     // Check that the button was what triggered our interrupt
@@ -99,12 +108,13 @@ void EXTI2_IRQHandler(void){
     }
 }
 
+//TODO: Are these the right fields for EXTI3?
 // reading the second toggle
 void EXTI3_IRQHandler(void){
     // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << 3)){
+    if (EXTI->PR1 & (1 << 1)){
         // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 |= (1 << 3); // read clear write 1. 
+        EXTI->PR1 |= (1 << 1); // read clear write 1. 
         encCounter += 1;
 
     }
