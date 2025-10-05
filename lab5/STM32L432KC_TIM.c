@@ -6,8 +6,8 @@
 
 void initTIM(TIM_TypeDef * TIMx){
   // Set prescaler to give 1 ms time base
-  uint32_t psc_div = (uint32_t) ((SystemCoreClock/1e3));
-
+  uint32_t psc_div = 8000;//(uint32_t) ((SystemCoreClock/1e3));
+  
   // Set prescaler division factor
   TIMx->PSC = (psc_div - 1);
   // Generate an update event to update prescaler value
@@ -33,17 +33,12 @@ void delay_millis(TIM_TypeDef * TIMx, uint32_t ms){
 void setTIMxCount(TIM_TypeDef * TIMx, uint32_t ms){
   // set the wait time
   
-  //const int TIMFreq = 10000;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
-  //uint16_t maxcnt = ceil(TIMFreq * ms / 1000)-1; // cycles / second * seconds = cycles
+  const int TIMFreq = 10000;//hz. cycles/sec Calculated by: 80 Mhz / (512*16)
+  uint16_t maxcnt = ceil(TIMFreq * ms / 1000)-1; // cycles / second * seconds = cycles
 
-  ////TIM15->PSC = 0; // No division.
-  //TIMx->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
-  //TIMx->EGR |= (0b1<<0); // force things to update by writing UG bit to 0
-  //TIMx->SR &= ~(1<<0);
-
-  TIMx->ARR = ms;// Set timer max count
-  TIMx->EGR |= 1;     // Force update
-  TIMx->SR &= ~(0x1); // Clear UIF
+  TIMx->ARR = maxcnt;   /* Auto-Reload Register        0x2C */
+  TIMx->EGR |= (0b1<<0); // force things to update by writing UG bit to 0
+  TIMx->SR &= ~(1<<0);
   TIMx->CNT = 0;     
 
 }

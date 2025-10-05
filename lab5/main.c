@@ -74,7 +74,7 @@ void TIM2_IRQHandler(void){
 //TODO: THIS TIMER IS TOO FAST
 // NVIC is position 28
   if(DELAY_TIM->SR & (1<<0)){ // UIF flag
-    int freqHz = ( encCounter) / (24); // 24 edges per cycle
+    uint8_t freqHz = (encCounter) / (587);//576); // 24 edges per cycle
     printf("Speed: %d hz \n", freqHz);
     
     encCounter = 0;
