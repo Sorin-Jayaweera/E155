@@ -23,4 +23,5 @@ Output/Debug/Obj/Executable_1/main.o: \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\__SEGGER_RTL_FP.h \
   C:\Users\sojayaweera\E155\lab5\STM32L432KC_FLASH.h \
   C:\Users\sojayaweera\E155\lab5\STM32L432KC_USART.h \
-  C:\Users\sojayaweera\E155\lab5\STM32L432KC_SPI.h
+  C:\Users\sojayaweera\E155\lab5\STM32L432KC_SPI.h \
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdbool.h
