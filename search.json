@@ -301,39 +301,53 @@
     "text": "AI overview\nWorks a lot better with modular spec"
   },
   {
+    "objectID": "labs/lab5/lab.html",
+    "href": "labs/lab5/lab.html",
+    "title": "Lab 5!",
+    "section": "",
+    "text": "In this lab, the speed and polarity of a motor was read."
+  },
+  {
+    "objectID": "labs/lab5/lab.html#introduction",
+    "href": "labs/lab5/lab.html#introduction",
+    "title": "Lab 5!",
+    "section": "",
+    "text": "In this lab, the speed and polarity of a motor was read."
+  },
+  {
     "objectID": "labs/lab5/lab.html#design-and-testing-methodology",
     "href": "labs/lab5/lab.html#design-and-testing-methodology",
-    "title": "Lab 4!",
+    "title": "Lab 5!",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology"
+    "text": "Design and Testing Methodology\nInstead of using continuous polling, three interrupts were configured. One was for time - every second a software iterrupt to prints the motor’s speed and direction. The other two interrupts were based off of two signals coming from the motor to read its internal state."
   },
   {
     "objectID": "labs/lab5/lab.html#technical-documentation",
     "href": "labs/lab5/lab.html#technical-documentation",
-    "title": "Lab 4!",
+    "title": "Lab 5!",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
+    "text": "Technical Documentation\nPins A1 and A2 were used (although A2 has the alias A7) to read the speed of the motor. The motor has 408 magnets per revolution internally. Activating on every rising and falling edge from the hall effect sensors passing those magnets yields 408 ticks/rev * 2 pulses/detection* 2 detections / tick.\n\nSchematic\n\n\n\nFlow Chart"
   },
   {
-    "objectID": "labs/lab5/lab.html#results-and-discussion",
-    "href": "labs/lab5/lab.html#results-and-discussion",
-    "title": "Lab 4!",
-    "section": "Results and Discussion",
-    "text": "Results and Discussion\n\nTestbench Simulation"
+    "objectID": "labs/lab5/lab.html#comparison-to-polling",
+    "href": "labs/lab5/lab.html#comparison-to-polling",
+    "title": "Lab 5!",
+    "section": "Comparison to polling",
+    "text": "Comparison to polling\nAt low speeds, the pulses to detect are sparse. Polling would waste system resources. At high frequency comprable to the sampling rate of the microprocessor, polling and interrupts would be nearly indistinguishable - relevant functions would be continuously called.\nNo technical quantatative analysis of polling vs interrupt was performed for this lab."
   },
   {
-    "objectID": "labs/lab5/lab.html#conclusion",
-    "href": "labs/lab5/lab.html#conclusion",
-    "title": "Lab 4!",
-    "section": "Conclusion",
-    "text": "Conclusion"
+    "objectID": "labs/lab5/lab.html#results",
+    "href": "labs/lab5/lab.html#results",
+    "title": "Lab 5!",
+    "section": "Results",
+    "text": "Results\nThe lab was successfully completed to show the speed of the motor at 1 Hz update. No polling was used - the entire system is based off of interrupts while still catching every clock edge and detecting polarity. This leaves free space for other programs to run."
   },
   {
     "objectID": "labs/lab5/lab.html#ai-overview",
     "href": "labs/lab5/lab.html#ai-overview",
-    "title": "Lab 4!",
+    "title": "Lab 5!",
     "section": "AI overview",
-    "text": "AI overview"
+    "text": "AI overview\nSummary: Got the code structure somewhat well, but messed up on grabbing the right pins and bit mappings.\nOutput:\nGreat question! For quadrature encoder interfacing on the STM32L432KC, you should use the hardware encoder mode with a timer rather than basic GPIO interrupts. This is much more efficient and handles quadrature decoding automatically. Recommended Pins Use TIM2 in encoder mode with these pins:\nPA0 (TIM2_CH1) - Pin 10 - Encoder A PA1 (TIM2_CH2) - Pin 11 - Encoder B\nThese pins are adjacent on the physical package and TIM2 is a 32-bit timer, giving you a large count range. Complete Encoder Interface Code c#include “stm32l4xx_hal.h”\nTIM_HandleTypeDef htim2; volatile int32_t encoder_overflow_count = 0;\n// Initialize TIM2 in Encoder Mode void Encoder_Init(void) { GPIO_InitTypeDef GPIO_InitStruct = {0};\n// Enable clocks\n__HAL_RCC_GPIOA_CLK_ENABLE();\n__HAL_RCC_TIM2_CLK_ENABLE();\n\n// Configure GPIO pins PA0 and PA1 for TIM2\nGPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;\nGPIO_InitStruct.Mode = GPIO_MODE_AF_PP;\nGPIO_InitStruct.Pull = GPIO_PULLUP;  // Use pullup for encoder signals\nGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;\nGPIO_InitStruct.Alternate = GPIO_AF1_TIM2;\nHAL_GPIO_Init(GPIOA, &GPIO_InitStruct);\n\n// Configure TIM2 in Encoder Mode\nhtim2.Instance = TIM2;\nhtim2.Init.Prescaler = 0;\nhtim2.Init.CounterMode = TIM_COUNTERMODE_UP;\nhtim2.Init.Period = 0xFFFFFFFF;  // 32-bit timer\nhtim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;\nhtim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;\n\n// Encoder mode: count on both TI1 and TI2 edges\nTIM_Encoder_InitTypeDef encoderConfig = {0};\nencoderConfig.EncoderMode = TIM_ENCODERMODE_TI12;\nencoderConfig.IC1Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC1Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC1Filter = 10;  // Filter to debounce\nencoderConfig.IC2Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC2Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC2Filter = 10;  // Filter to debounce\n\nif (HAL_TIM_Encoder_Init(&htim2, &encoderConfig) != HAL_OK)\n{\n    Error_Handler();\n}\n\n// Enable overflow/underflow interrupt (optional, for extended counting)\n__HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);\nHAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\nHAL_NVIC_EnableIRQ(TIM2_IRQn);\n\n// Start encoder interface\nHAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);\n\n// Initialize counter to middle value to allow bidirectional counting\n__HAL_TIM_SET_COUNTER(&htim2, 0x80000000);\n}\n// Interrupt handler for overflow/underflow void TIM2_IRQHandler(void) { if (__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET) { if (__HAL_TIM_GET_IT_SOURCE(&htim2, TIM_IT_UPDATE) != RESET) { __HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE);\n        // Detect direction of overflow\n        if (__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim2))\n        {\n            encoder_overflow_count--;  // Underflow\n        }\n        else\n        {\n            encoder_overflow_count++;  // Overflow\n        }\n    }\n}\n}\n// Read encoder position (signed 32-bit) int32_t Encoder_GetPosition(void) { return (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; }\n// Read encoder position with overflow tracking (64-bit range) int64_t Encoder_GetPositionExtended(void) { int64_t position = (int64_t)encoder_overflow_count * 0x100000000LL; position += (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; return position; }\n// Reset encoder position to zero void Encoder_Reset(void) { __HAL_TIM_SET_COUNTER(&htim2, 0x80000000); encoder_overflow_count = 0; }\n// Get encoder velocity (counts per sample period) int32_t Encoder_GetVelocity(void) { static int32_t last_position = 0; int32_t current_position = Encoder_GetPosition(); int32_t velocity = current_position - last_position; last_position = current_position; return velocity; }"
   },
   {
     "objectID": "labs/lab7/lab.html#design-and-testing-methodology",
