@@ -1,6 +1,6 @@
 ---
-title: "Lab 4!"
-description: ""
+title: "Lab 5!"
+description: "Interrupts and Motor Control"
 author: "Sorin Jayaweera"
 date: "8/27/2025"
 categories:
@@ -11,19 +11,35 @@ draft: false
 
 
 ## Introduction
+In this lab, the speed and polarity of a motor was read.
 
 ## Design and Testing Methodology
 
-## Technical Documentation
+Instead of using continuous polling, three interrupts were configured. 
+One was for time - every second a software iterrupt to prints the motor's speed and direction.
+The other two interrupts were based off of two signals coming from the motor to read its internal state.
 
-### Block Diagram
+## Technical Documentation
+Pins A1 and A2 were used (although A2 has the alias A7) to read the speed of the motor. The motor has 408 magnets per revolution internally. 
+Activating on every rising and falling edge from the hall effect sensors passing those magnets yields 408 ticks/rev * 2 pulses/detection* 2 detections / tick.
 
 ### Schematic
+![](/images/lab5/schematic.png)
 
-## Results and Discussion
+### Flow Chart
+![](/images/lab5/flowchart.png)
 
-### Testbench Simulation
+## Comparison to polling
+At low speeds, the pulses to detect are sparse. Polling would waste system resources.
+At high frequency comprable to the sampling rate of the microprocessor, polling and interrupts would be 
+nearly indistinguishable - relevant functions would be continuously called. 
 
-## Conclusion
+No technical quantatative analysis of polling vs interrupt was performed for this lab. 
+
+
+## Results
+The lab was successfully completed to show the speed of the motor at 1 Hz update. No polling was used - the entire system is based off of interrupts while still catching every clock edge 
+and detecting polarity. This leaves free space for other programs to run. 
+
 
 ## AI overview
