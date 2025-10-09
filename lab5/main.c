@@ -37,8 +37,6 @@ int main(void) {
     RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
     initTIM(DELAY_TIM);
     setTIMxCount(DELAY_TIM,1000);
-
-    
     
     // 1. Enable SYSCFG clock domain in RCC 
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
@@ -75,8 +73,8 @@ int main(void) {
     // Enable Software timer 2 interrupt
     NVIC->ISER[0] |= (1<< TIM2_IRQn); // TIM2 is position 28 of the Vector 
 
-
-    //while(true){};
+    
+    while(true){};
 }
 
 float freqHz;
@@ -84,7 +82,7 @@ float freqHz;
 void TIM2_IRQHandler(void){
 // NVIC is position 28
   if(DELAY_TIM->SR & (1<<0)){ // UIF flag
-    const float ppr = 1632;
+    const float ppr = 1632; //408
     freqHz = ((float)encCounter)/ppr;//408*2*2); 
     printf(" Speed: %f hz ", freqHz);
     printf(" polarity: %d \n", polarity);
@@ -95,8 +93,9 @@ void TIM2_IRQHandler(void){
   }      
 }
 
-// reading the first toggle
 void EXTI1_IRQHandler(void){
+// Interrupt Handler for Pin A1
+// Triggered on positive and negative edges of the Hall effect Sensor A
 // NVIC is position 8
     if (EXTI->PR1 & (1 << gpioPinOffset(quadencA))){// PA1 activated interrupt
         // If so, clear the interrupt (NB: Write 1 to reset.)
@@ -111,6 +110,8 @@ void EXTI1_IRQHandler(void){
 
 // reading the second toggle
 void EXTI2_IRQHandler(void){
+// Interrupt handler for Pin A2 
+// Triggered on positive and negative edges of the Hall effect Sensor B
     // NVIC is position 7
     if (EXTI->PR1 & (1 << gpioPinOffset(quadencB))){// Pin A2
         // If so, clear the interrupt (NB: Write 1 to reset.)
