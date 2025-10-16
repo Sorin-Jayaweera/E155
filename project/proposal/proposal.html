@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sorin Jayaweera">
-<meta name="dcterms.date" content="2025-08-27">
-<meta name="description" content="FPGA PCB with two 7 segment displays with one LUT resource">
+<meta name="dcterms.date" content="2025-10-15">
 
-<title>Lab 2 - Time Multiplexing – E155 Portfolio</title>
+<title>Project Proposal – E155 Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,35 +70,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -196,24 +166,27 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
-  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a>
   <ul class="collapse">
-  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
-  <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
-  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
-  <li><a href="#physical-design-calculations" id="toc-physical-design-calculations" class="nav-link" data-scroll-target="#physical-design-calculations">Physical Design Calculations</a></li>
+  <li><a href="#design-success-conditions" id="toc-design-success-conditions" class="nav-link" data-scroll-target="#design-success-conditions">Design Success Conditions</a></li>
+  <li><a href="#specifications" id="toc-specifications" class="nav-link" data-scroll-target="#specifications">Specifications</a></li>
   </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
-  <li><a href="#misc" id="toc-misc" class="nav-link" data-scroll-target="#misc">MISC</a></li>
-  <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI overview</a></li>
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">CODE</a>
+  <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
+  <li><a href="#bom" id="toc-bom" class="nav-link" data-scroll-target="#bom">BOM</a>
   <ul class="collapse">
-  <li><a href="#top.sv" id="toc-top.sv" class="nav-link" data-scroll-target="#top.sv">TOP.sv</a></li>
-  <li><a href="#seglut.sv" id="toc-seglut.sv" class="nav-link" data-scroll-target="#seglut.sv">segLUT.sv</a></li>
-  <li><a href="#test_segs_v3.sv" id="toc-test_segs_v3.sv" class="nav-link" data-scroll-target="#test_segs_v3.sv">test_segs_v3.sv</a></li>
-  <li><a href="#test_sum_v2.sv" id="toc-test_sum_v2.sv" class="nav-link" data-scroll-target="#test_sum_v2.sv">test_sum_v2.sv</a></li>
+  <li><a href="#project-flow-diagram" id="toc-project-flow-diagram" class="nav-link" data-scroll-target="#project-flow-diagram">Project Flow Diagram</a></li>
+  </ul></li>
+  <li><a href="#fpga-design-details" id="toc-fpga-design-details" class="nav-link" data-scroll-target="#fpga-design-details">FPGA Design Details</a></li>
+  <li><a href="#mcu-design-details" id="toc-mcu-design-details" class="nav-link" data-scroll-target="#mcu-design-details">MCU Design Details</a></li>
+  <li><a href="#tesla-coil-design" id="toc-tesla-coil-design" class="nav-link" data-scroll-target="#tesla-coil-design">Tesla Coil Design</a>
+  <ul class="collapse">
+  <li><a href="#driving-circuit" id="toc-driving-circuit" class="nav-link" data-scroll-target="#driving-circuit">Driving Circuit</a></li>
+  <li><a href="#tesla-coil-calculations" id="toc-tesla-coil-calculations" class="nav-link" data-scroll-target="#tesla-coil-calculations">Tesla Coil Calculations</a></li>
+  </ul></li>
+  <li><a href="#resourses-and-acknowledgements" id="toc-resourses-and-acknowledgements" class="nav-link" data-scroll-target="#resourses-and-acknowledgements">Resourses and Acknowledgements</a>
+  <ul class="collapse">
+  <li><a href="#micro-ps-related" id="toc-micro-ps-related" class="nav-link" data-scroll-target="#micro-ps-related">Micro Ps Related</a></li>
+  <li><a href="#tesla-coil-1" id="toc-tesla-coil-1" class="nav-link" data-scroll-target="#tesla-coil-1">Tesla coil</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -223,18 +196,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 2 - Time Multiplexing</h1>
+<h1 class="title">Project Proposal</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">reflection</div>
-    <div class="quarto-category">labreport</div>
+    <div class="quarto-category">BOM</div>
+    <div class="quarto-category">Schedule</div>
+    <div class="quarto-category">Specifications</div>
   </div>
   </div>
 
-<div>
-  <div class="description">
-    FPGA PCB with two 7 segment displays with one LUT resource
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -249,7 +218,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 27, 2025</p>
+      <p class="date">October 15, 2025</p>
     </div>
   </div>
   
@@ -261,254 +230,77 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS.</p>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>This project uses the STM32L432KC Microcontroller, iCE40 UP5K FPGA, and an HC-05 bluetooth module to receive an audio signal over bluetooth and play it on a Tesla coil. The HC-05 will receive a real time bluetooth audio signal and transmit it over SPI to the STM32, which will convert the music into a list of active frequencies and transmit to the iCE40 UP5K over I2S (Inter-IC Sound). The iCE40 UP5K will output a square wave to control the power source of a miniature Tesla coil, which will effectively play the music.</p>
+<p>The riskiest element of this project is going to be calculating and creating a functioning Tesla coil with high voltage safety elements, and handling the inter-IC communication protocols to communicate the live streaming music information in a format suitable for usage on the tesla coil.</p>
+<section id="design-success-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="design-success-conditions">Design Success Conditions</h3>
+<p>To accomplish the project, we must have a system which: Connects via bluetooth to a user’s device Streams live music from the previous device through the MCU and FPGA Tesla Coil Component creates high voltage sparks The sparks toggle on and off at an appropriate frequency to somewhat match the music The music is audible to humans with a reasonably safe distance from the tesla coil</p>
 </section>
-<section id="design-and-testing-methodology" class="level2">
-<h2 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h2>
-<p>A multiplexer inside the FPGA chooses between inputs in0 and in1 (4 bit numbers) and connects the chosen signal to the look up table. These two inputs are connected alternating at 80 hz. At the same 80hz clock, an enable for the left and right display are activated (only one at a time). The pins controlling the seven segment code are connected to both displays, but only the display with an active enable will show. Because they are switching at high frequency, it appears that both are displaying simultaneously - while in reality it is only one at a time.</p>
-<p>This time multiplexing saves internal resources, and only uses one set of segment pins + an enable per display instead of using 7 pins per display.</p>
-<p>The sum of the two binary numbers is sent to the LEDS.</p>
+<section id="specifications" class="level3">
+<h3 class="anchored" data-anchor-id="specifications">Specifications</h3>
+<section id="bluetooth" class="level4">
+<h4 class="anchored" data-anchor-id="bluetooth">Bluetooth</h4>
+<p>Connects to transmitter Transmits signal to MCU over SPI</p>
 </section>
-<section id="technical-documentation" class="level2">
-<h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
-<section id="block-diagram" class="level3">
-<h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
-<p><img src="../..\images/lab2/block.png" class="img-fluid"></p>
-<p>A single look up table is multiplexed with inputs from two inputs, alternating at 80 hz.</p>
+<section id="mcu" class="level4">
+<h4 class="anchored" data-anchor-id="mcu">MCU</h4>
+<p>Receives SPI information from Bluetooth module Converts to I2S to send to FPGA</p>
 </section>
-<section id="schematic" class="level3">
-<h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
-<p><img src="../..\images/lab2/schematic.png" class="img-fluid"></p>
-<p>The output 7 segment control pins are fed to the inputs of both 7 segment displays. The power for each display is controlled by a PNP transistor, which connects the weak enable signal from the FPGA to a 3.3v source.</p>
+<section id="fpga" class="level4">
+<h4 class="anchored" data-anchor-id="fpga">FPGA</h4>
+<p>Receives I2S information from MCU Processes information and outputs in desired format for analog circuit</p>
 </section>
-<section id="testing" class="level3">
-<h3 class="anchored" data-anchor-id="testing">Testing</h3>
-<p>Two simulations were used to verify the behavior of this system. The first checked that the sum of the two binary numbers was properly computed, and the second tested the switching functionality between two displays with the 7 segment output.</p>
-<p>The following displays holding one display constant while changing the inputs for the other, and we see the display code updating on alternating inputs following the enable for that display. More tests are not screenshot,due to the sheer number (and zooming in to see the binary numbers as validatoin). <img src="../..\images/lab2/testbench_segs.png" class="img-fluid"></p>
-<p>The following shows that the sum output from the top module is indeed the sum of the two inputs, for every combination of inputs. <img src="../..\images/lab2/testbench_sum.png" class="img-fluid"></p>
-<p>The frequency of the clock alternating between segment 0 and 1 had to be determined and verified in situ, due to the nature of human eye to discerne which frequency was applicable.</p>
-</section>
-<section id="physical-design-calculations" class="level3">
-<h3 class="anchored" data-anchor-id="physical-design-calculations">Physical Design Calculations</h3>
-<p>There are several sensitive components on this PCB.</p>
-<p>The FPGA pins can drive at most <span class="math inline">\(\pm\)</span> 8 mA of current through IO pins, at 3.3V. The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA.</p>
-<p>To restrict current going to the PNP transistors, a 200 <span class="math inline">\(\Omega\)</span> resistor was used. There is at max a 0.4 V drop from the collector to emmitter, which. For a maximum current flow of 2 mA, this yields (<span class="math inline">\(0.4V/0.02 mA = 200 \Omega s\)</span>).</p>
-<p>The LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 <span class="math inline">\(\Omega\)</span> resistor between the LEDs and ground to restrict current flow, as <span class="math inline">\((3.2V - 2.2V)/(20mA) = 50 \Omega\)</span>. A 200 <span class="math inline">\(\Omega\)</span> resistor was used.</p>
+<section id="tesla-coil" class="level4">
+<h4 class="anchored" data-anchor-id="tesla-coil">Tesla Coil</h4>
+<p>Receives input from FPGA Implements volume control Plays audio on the Tesla coil</p>
 </section>
 </section>
-<section id="results-and-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<p>80 Hz was determined to be near the optimal frequency, where the human eye can’t distinguish any flicker, but the power is on long enough to make the led’s appear sufficiently bright.</p>
-<p>The two seven segment displays were driven from a single LUT module with no visable failures, displaying the sum of the two numbers to LEDs. This lab was completed successfully.</p>
 </section>
-<section id="misc" class="level2">
-<h2 class="anchored" data-anchor-id="misc">MISC</h2>
-<p>Hours spent: ~15 ( STUPID STUPID PCB SHORT ON THE RESET PIN STUPID AARGGH)</p>
+<section id="schedule" class="level2">
+<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1ksiDLid-R-NYIbq2FQ6KwK4yjERst56szRpylCouQUo/edit?gid=0#gid=0">Schedule</a></p>
 </section>
-<section id="ai-overview" class="level2">
-<h2 class="anchored" data-anchor-id="ai-overview">AI overview</h2>
-<p>The output was very close to one that could work. I had to use several prompts with the thoughts and knowledge that I already had (i.e.&nbsp;using a single bus for the segments and an enable for power). However, when i was very detailed on how the code should work and what the end goals are (telling it to ask me questions about the design), it made something that would have saved me large amounts of time.</p>
-<p>The code synthesized properly, and I am familiar with all syntax used.</p>
+<section id="bom" class="level2">
+<h2 class="anchored" data-anchor-id="bom">BOM</h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1PpSJdLAugirSvzMBNCxlbClIvVkomqqivFFxnm3hw_g/edit?gid=0#gid=0">BOM</a></p>
+<section id="project-flow-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="project-flow-diagram">Project Flow Diagram</h3>
 </section>
-<section id="code" class="level2">
-<h2 class="anchored" data-anchor-id="code">CODE</h2>
-<section id="top.sv" class="level3">
-<h3 class="anchored" data-anchor-id="top.sv">TOP.sv</h3>
-<p>// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025</p>
-<p>module top( input logic [3:0] i0, input logic [3:0] i1, input logic reset, output logic sel, output logic nsel, output logic [6:0] segout, output logic [4:0] sum );</p>
-<pre><code>HSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
-
-logic [3:0] iActive;
-
-logic [24:0] counter = 0;
-
-// Look up table for the 7 segment displays
-segLUT lut(.s(iActive),.seg(segout));
-
-// add the inputs and display on LEDS
-assign sum = i1+i0;
-
-// choosing which set of connections for the resource use
-// sequential logic
-always_ff@(posedge int_osc) begin
-    
-        if(reset == 1) begin
-                iActive &lt;= 4'b0000;
-            end
-        else begin
-            iActive &lt;= sel ? i0 : i1;
-            end
-
-end
-
-// select as a slow clock logic
-always_ff@(posedge int_osc) begin
-    if(reset) begin
-            counter &lt;= 25'b0;
-        end
-    else begin
-        counter &lt;= counter + 1'b1;
-    end
-end
-
-assign sel = counter[18];// // 1.43 hz
-assign nsel = !sel;</code></pre>
-<p>endmodule</p>
 </section>
-<section id="seglut.sv" class="level3">
-<h3 class="anchored" data-anchor-id="seglut.sv">segLUT.sv</h3>
-<p>// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 module segLUT( input logic [3:0] s, output logic [6:0] seg );</p>
-<pre><code>always_comb
-    case(s)
-        4'b0000: seg = 7'b0000001; //0
-        4'b0001: seg = 7'b1001111; //1
-        4'b0010: seg = 7'b0010010; //2
-        4'b0011: seg = 7'b0000110; //3
-        4'b0100: seg = 7'b1001100; //4
-        4'b0101: seg = 7'b0100100; //5
-        4'b0110: seg = 7'b0100000; //6
-        4'b0111: seg = 7'b0001111; //7
-        4'b1000: seg = 7'b0000000; //8
-        4'b1001: seg = 7'b0001100; //9
-        4'b1010: seg = 7'b0001000; //A
-        4'b1011: seg = 7'b1100000; //B
-        4'b1100: seg = 7'b0110001; //C
-        4'b1101: seg = 7'b1000010; //D
-        4'b1110: seg = 7'b0110000; //E
-        4'b1111: seg = 7'b0111000; //F
-
-    default
-        seg = 7'b1111111;//7'b0000000;
-    endcase</code></pre>
-<p>endmodule</p>
+<section id="fpga-design-details" class="level2">
+<h2 class="anchored" data-anchor-id="fpga-design-details">FPGA Design Details</h2>
+<p>The iCE40 UP5K FPGA will receive the audio data from the STM32 over I2S (Inter-IC Sound), a protocol designed for transmitting stereo audio over three wires. The FPGA will unpack these packets that transmit left and right channels of audio over the same line and convert them into a single square wave with each rising and falling edge from both left and right channels.</p>
 </section>
-<section id="test_segs_v3.sv" class="level3">
-<h3 class="anchored" data-anchor-id="test_segs_v3.sv">test_segs_v3.sv</h3>
-<p>// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v3 ( output logic [6:0] seg0, output logic [6:0] seg1, output logic seg1good, output logic seg0good, output logic [7:0] clk );</p>
-<pre><code>// inputs
-logic [3:0] i0;
-logic [3:0] i1;
-logic reset;
-//outputs to test
-logic sel;
-logic nsel;
-logic [6:0] segout;
-logic [4:0] sum;
-
-assign i0 = {clk[4],clk[5],clk[6],clk[7]};
-assign i1 = {clk[0],clk[1],clk[2],clk[3]};
-top dut(i0,i1,reset,sel,nsel,segout,sum);
-
-assign seg1good = seg1 == (segout &amp;&amp; sel) || nsel;
-assign seg0good = seg0 == (segout &amp;&amp; nsel) || sel;
-
-
-initial
-    begin
-            clk = 8'b0;
-    end
-
-// generate clock
-always 
-    begin
-      clk = clk + 1'b1; #1; 
-      
-      if(clk == 8'b111111) begin
-            $display("no cases left");
-            $stop;
-        end
-    end
-    
-always_comb
-    case(i1)
-        4'b0000: seg1 = 7'b0000001; //0
-        4'b0001: seg1 = 7'b1001111; //1
-        4'b0010: seg1 = 7'b0010010; //2
-        4'b0011: seg1 = 7'b0000110; //3
-        4'b0100: seg1 = 7'b1001100; //4
-        4'b0101: seg1 = 7'b0100100; //5
-        4'b0110: seg1 = 7'b0100000; //6
-        4'b0111: seg1 = 7'b0001111; //7
-        4'b1000: seg1 = 7'b0000000; //8
-        4'b1001: seg1 = 7'b0001100; //9
-        4'b1010: seg1 = 7'b0001000; //A
-        4'b1011: seg1 = 7'b1100000; //B
-        4'b1100: seg1 = 7'b0110001; //C
-        4'b1101: seg1 = 7'b1000010; //D
-        4'b1110: seg1 = 7'b0110000; //E
-        4'b1111: seg1 = 7'b0111000; //F
-
-    default
-        seg1 = 7'b1111111;//7'b0000000;
-    endcase
-
-
-always_comb
-    case(i0)
-        4'b0000: seg0 = 7'b0000001; //0
-        4'b0001: seg0 = 7'b1001111; //1
-        4'b0010: seg0 = 7'b0010010; //2
-        4'b0011: seg0 = 7'b0000110; //3
-        4'b0100: seg0 = 7'b1001100; //4
-        4'b0101: seg0 = 7'b0100100; //5
-        4'b0110: seg0 = 7'b0100000; //6
-        4'b0111: seg0 = 7'b0001111; //7
-        4'b1000: seg0 = 7'b0000000; //8
-        4'b1001: seg0 = 7'b0001100; //9
-        4'b1010: seg0 = 7'b0001000; //A
-        4'b1011: seg0 = 7'b1100000; //B
-        4'b1100: seg0 = 7'b0110001; //C
-        4'b1101: seg0 = 7'b1000010; //D
-        4'b1110: seg0 = 7'b0110000; //E
-        4'b1111: seg0 = 7'b0111000; //F
-
-    default
-        seg0 = 7'b1111111;//7'b0000000;
-    endcase</code></pre>
-<p>endmodule</p>
+<section id="mcu-design-details" class="level2">
+<h2 class="anchored" data-anchor-id="mcu-design-details">MCU Design Details</h2>
+<p>The main purpose of the STM32 in this project is to facilitate communication between the bluetooth transmitter and the FPGA by using a JDY-31 bluetooth module and implementing two communication protocols. The STM32 will communicate with the JDY-31 bluetooth module over SPI and then repackage the data to be transmitted over I2S to the FPGA.</p>
 </section>
-<section id="test_sum_v2.sv" class="level3">
-<h3 class="anchored" data-anchor-id="test_sum_v2.sv">test_sum_v2.sv</h3>
-<p>// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v2 ( output logic good_sum, output logic [7:0] clk );</p>
-<pre><code>// inputs
-logic [3:0] i0;
-logic [3:0] i1;
-
-//outputs to test
-logic sel;
-logic nsel;
-logic [6:0] segout;
-logic [4:0] sum;
-
-//expected output logic
-logic [4:0] esum;
-
-assign i0 = {clk[4],clk[5],clk[6],clk[7]};
-assign i1 = {clk[0],clk[1],clk[2],clk[3]};
-top dut(i0,i1,reset,sel,nsel,segout,sum);
-
-
-
-assign esum = i1 + i0;
-assign good_sum = i1+i0 == sum;
-
-initial
-    begin
-            clk = 8'b0;
-    end
-    // generate clock
-always 
-    begin
-      clk = clk + 1'b1; #1; 
-      
-      if(clk == 8'b111111) begin
-            $display("no cases left");
-            $stop;
-        end
-    end</code></pre>
-<p>endmodule</p>
+<section id="tesla-coil-design" class="level2">
+<h2 class="anchored" data-anchor-id="tesla-coil-design">Tesla Coil Design</h2>
+<section id="driving-circuit" class="level3">
+<h3 class="anchored" data-anchor-id="driving-circuit">Driving Circuit</h3>
+</section>
+<section id="tesla-coil-calculations" class="level3">
+<h3 class="anchored" data-anchor-id="tesla-coil-calculations">Tesla Coil Calculations</h3>
+<p><a href="https://docs.google.com/spreadsheets/d/109igXfaqVS3fRfR9IeJHc-fNuv5fjdSeQtVGv-yPBRM/edit?gid=0#gid=0">Calculations</a></p>
+</section>
+</section>
+<section id="resourses-and-acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="resourses-and-acknowledgements">Resourses and Acknowledgements</h2>
+<section id="micro-ps-related" class="level3">
+<h3 class="anchored" data-anchor-id="micro-ps-related">Micro Ps Related</h3>
+<p>I2S communication protocol: https://flexpcb.org/i2s-protocol-the-beginners-ultimate-guide/ Summary: Transmitting a number, clock, and a line for either left or right audio channel.</p>
+</section>
+<section id="tesla-coil-1" class="level3">
+<h3 class="anchored" data-anchor-id="tesla-coil-1">Tesla coil</h3>
+<p>Simple Class E tesla coil with circuit and coil parameters powered by 3.5mm jack with video: https://hackaday.io/project/188598-making-the-ultimate-class-e-musical-tesla-coil https://www.youtube.com/watch?v=Hez-R-WF5P0</p>
+<p>Instructable for the hackaday https://www.instructables.com/Building-the-Ultimate-Solid-State-Tesla-Coil-MUSIC/</p>
+<p>Explaining the circuit design used by Hackaday (WATCH) https://www.youtube.com/watch?v=zCf-PwXsG_E</p>
+<p>Following this one!!: https://www.instructables.com/Making-the-Ultimate-Class-E-Musical-Tesla-Coil-Sin/</p>
+<p>Tutorial for making a small Spark Gap Tesla Coil: https://rimstar.org/science_electronics_projects/tesla_coil_spark_gap_small.htm</p>
+<p>2 pt Video of guy making a simple small tesla coil work with audio https://www.youtube.com/watch?v=Ca2e3evwVK0</p>
 
 
 </section>

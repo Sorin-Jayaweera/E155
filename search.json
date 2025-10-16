@@ -7,165 +7,137 @@
     "text": "E155 Website\nGITHUB for this webpage"
   },
   {
-    "objectID": "labs/lab6/lab.html#design-and-testing-methodology",
-    "href": "labs/lab6/lab.html#design-and-testing-methodology",
+    "objectID": "labs/lab7/lab.html#design-and-testing-methodology",
+    "href": "labs/lab7/lab.html#design-and-testing-methodology",
     "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
   {
-    "objectID": "labs/lab6/lab.html#technical-documentation",
-    "href": "labs/lab6/lab.html#technical-documentation",
+    "objectID": "labs/lab7/lab.html#technical-documentation",
+    "href": "labs/lab7/lab.html#technical-documentation",
     "title": "Lab 4!",
     "section": "Technical Documentation",
     "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
   },
   {
-    "objectID": "labs/lab6/lab.html#results-and-discussion",
-    "href": "labs/lab6/lab.html#results-and-discussion",
+    "objectID": "labs/lab7/lab.html#results-and-discussion",
+    "href": "labs/lab7/lab.html#results-and-discussion",
     "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
-    "objectID": "labs/lab6/lab.html#conclusion",
-    "href": "labs/lab6/lab.html#conclusion",
+    "objectID": "labs/lab7/lab.html#conclusion",
+    "href": "labs/lab7/lab.html#conclusion",
     "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
-    "objectID": "labs/lab6/lab.html#ai-overview",
-    "href": "labs/lab6/lab.html#ai-overview",
+    "objectID": "labs/lab7/lab.html#ai-overview",
+    "href": "labs/lab7/lab.html#ai-overview",
     "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
   },
   {
-    "objectID": "labs/lab4/lab.html",
-    "href": "labs/lab4/lab.html",
-    "title": "Lab 4!",
+    "objectID": "labs/lab5/lab.html",
+    "href": "labs/lab5/lab.html",
+    "title": "Lab 5!",
     "section": "",
-    "text": "The goal of this lab was to play FUR elise by utulizing timers onboard an STM32L432KB. This was done using two of the STM’s general pupose timers - 15 and 16."
+    "text": "In this lab, the speed and polarity of a motor was read."
   },
   {
-    "objectID": "labs/lab4/lab.html#introduction",
-    "href": "labs/lab4/lab.html#introduction",
-    "title": "Lab 4!",
+    "objectID": "labs/lab5/lab.html#introduction",
+    "href": "labs/lab5/lab.html#introduction",
+    "title": "Lab 5!",
     "section": "",
-    "text": "The goal of this lab was to play FUR elise by utulizing timers onboard an STM32L432KB. This was done using two of the STM’s general pupose timers - 15 and 16."
+    "text": "In this lab, the speed and polarity of a motor was read."
   },
   {
-    "objectID": "labs/lab4/lab.html#design-and-testing-methodology",
-    "href": "labs/lab4/lab.html#design-and-testing-methodology",
-    "title": "Lab 4!",
+    "objectID": "labs/lab5/lab.html#design-and-testing-methodology",
+    "href": "labs/lab5/lab.html#design-and-testing-methodology",
+    "title": "Lab 5!",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology\nTIM16 was used to drive a PWM signal to pin A2 via the alternate function. This was chosen to TIM15 was used as an upcounter to set the duration of each note."
+    "text": "Design and Testing Methodology\nInstead of using continuous polling, three interrupts were configured. One was for time - every second a software iterrupt to prints the motor’s speed and direction. The other two interrupts were based off of two signals coming from the motor to read its internal state."
   },
   {
-    "objectID": "labs/lab4/lab.html#technical-documentation",
-    "href": "labs/lab4/lab.html#technical-documentation",
-    "title": "Lab 4!",
+    "objectID": "labs/lab5/lab.html#technical-documentation",
+    "href": "labs/lab5/lab.html#technical-documentation",
+    "title": "Lab 5!",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\n\nClock frequencies\nThe PLL System clock was configured to 80,000,000 HZ (80 MHz). Two timers were used, one to generate a PWM signal to play each note, and one to count each note’s duration/\nTIM15 was used for note duration. This was configured to 10KHZ by using prescaler 7999 (+1 implicit). The timer has 16 bits.\nTIM16 was used for the PWM. This was configured to 100 KHz by using prescaler 799 (+1 implicit). The timer has 16 bits.\nMinimum Duration: The clock has 10000 cycles / second and 16 bits. The minimum duration is 1 cycle, so 1/10000 seconds, or \\(10^{-4}\\) seconds.\nMaximum Duration:\nAt 16 bits, the maximum representable number is \\(2^{16} = 32768\\) cycles. (2^{16} since we count 2^n starting from n=0, and have every number from n=0-15 active, which is 2^{16} - 1) This gets a maximum duration \\((2^{16}) \\text{cycles} * \\frac{1\\text{cycle}}{10000 \\text{seconds}} = 6.55\\) seconds.\nMinimum Frequency: As before, the maximum division of the clock is \\(2^{16}\\). At 100,000 cycles/second /(2^15 cycles) = 1.52 Hz.\nMaximum Frequency: The clock goes at 100 KHz, so that is the minimum frequency.\n\n\nError Calculations\nWe are limited by the division of an integer clock, and can’t perfectly approximate frequencies. A frequency is represented as the closest number\nAny frequency is compressed with an error given by\n\\[\n1-\\frac{\\text{floor}(x)}{(x)}\n\\]\nThe error for this converges to 0 as the frequency increases (up to maximum frequency).\nThe frequency is done by counting up to some number. \\[10Khz/(\\text{floor}(\\frac{100kHz}{\\text{floor(frequency)}}))\\]. In an ideal world there would be no rounding error, hence th error is the ratio between this and the idea without flooring.\n\n\n\nSchematic"
+    "text": "Technical Documentation\nPins A1 and A2 were used (although A2 has the alias A7) to read the speed of the motor. The motor has 408 magnets per revolution internally. Activating on every rising and falling edge from the hall effect sensors passing those magnets yields 408 ticks/rev * 2 pulses/detection* 2 detections / tick.\n\nSchematic\n\n\n\nFlow Chart"
   },
   {
-    "objectID": "labs/lab4/lab.html#conclusion",
-    "href": "labs/lab4/lab.html#conclusion",
-    "title": "Lab 4!",
-    "section": "Conclusion",
-    "text": "Conclusion\nThe music player was successfully constructed.\nThere is no effective volume adjustment from the potentiometer in the amplification circuit. There is also a high gain (200x) and no filtering, so 60 HZ noise couples strongly to the speaker, distorting signal."
+    "objectID": "labs/lab5/lab.html#comparison-to-polling",
+    "href": "labs/lab5/lab.html#comparison-to-polling",
+    "title": "Lab 5!",
+    "section": "Comparison to polling",
+    "text": "Comparison to polling\nAt low speeds, the pulses to detect are sparse. Polling would waste system resources. At high frequency comprable to the sampling rate of the microprocessor, polling and interrupts would be nearly indistinguishable - relevant functions would be continuously called.\nNo technical quantatative analysis of polling vs interrupt was performed for this lab."
   },
   {
-    "objectID": "labs/lab4/lab.html#ai-overview",
-    "href": "labs/lab4/lab.html#ai-overview",
-    "title": "Lab 4!",
+    "objectID": "labs/lab5/lab.html#results",
+    "href": "labs/lab5/lab.html#results",
+    "title": "Lab 5!",
+    "section": "Results",
+    "text": "Results\nThe lab was successfully completed to show the speed of the motor at 1 Hz update. No polling was used - the entire system is based off of interrupts while still catching every clock edge and detecting polarity. This leaves free space for other programs to run."
+  },
+  {
+    "objectID": "labs/lab5/lab.html#ai-overview",
+    "href": "labs/lab5/lab.html#ai-overview",
+    "title": "Lab 5!",
     "section": "AI overview",
-    "text": "AI overview\nAttaching specific sections of the schematic seemed to help, but I can’t tell if it is very diferent from its own webscraping. I probed for how it would help with a problem that I was actively having, and it was useful."
+    "text": "AI overview\nSummary: Got the code structure somewhat well, but messed up on grabbing the right pins and bit mappings.\nOutput:\nGreat question! For quadrature encoder interfacing on the STM32L432KC, you should use the hardware encoder mode with a timer rather than basic GPIO interrupts. This is much more efficient and handles quadrature decoding automatically. Recommended Pins Use TIM2 in encoder mode with these pins:\nPA0 (TIM2_CH1) - Pin 10 - Encoder A PA1 (TIM2_CH2) - Pin 11 - Encoder B\nThese pins are adjacent on the physical package and TIM2 is a 32-bit timer, giving you a large count range. Complete Encoder Interface Code c#include “stm32l4xx_hal.h”\nTIM_HandleTypeDef htim2; volatile int32_t encoder_overflow_count = 0;\n// Initialize TIM2 in Encoder Mode void Encoder_Init(void) { GPIO_InitTypeDef GPIO_InitStruct = {0};\n// Enable clocks\n__HAL_RCC_GPIOA_CLK_ENABLE();\n__HAL_RCC_TIM2_CLK_ENABLE();\n\n// Configure GPIO pins PA0 and PA1 for TIM2\nGPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;\nGPIO_InitStruct.Mode = GPIO_MODE_AF_PP;\nGPIO_InitStruct.Pull = GPIO_PULLUP;  // Use pullup for encoder signals\nGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;\nGPIO_InitStruct.Alternate = GPIO_AF1_TIM2;\nHAL_GPIO_Init(GPIOA, &GPIO_InitStruct);\n\n// Configure TIM2 in Encoder Mode\nhtim2.Instance = TIM2;\nhtim2.Init.Prescaler = 0;\nhtim2.Init.CounterMode = TIM_COUNTERMODE_UP;\nhtim2.Init.Period = 0xFFFFFFFF;  // 32-bit timer\nhtim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;\nhtim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;\n\n// Encoder mode: count on both TI1 and TI2 edges\nTIM_Encoder_InitTypeDef encoderConfig = {0};\nencoderConfig.EncoderMode = TIM_ENCODERMODE_TI12;\nencoderConfig.IC1Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC1Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC1Filter = 10;  // Filter to debounce\nencoderConfig.IC2Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC2Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC2Filter = 10;  // Filter to debounce\n\nif (HAL_TIM_Encoder_Init(&htim2, &encoderConfig) != HAL_OK)\n{\n    Error_Handler();\n}\n\n// Enable overflow/underflow interrupt (optional, for extended counting)\n__HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);\nHAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\nHAL_NVIC_EnableIRQ(TIM2_IRQn);\n\n// Start encoder interface\nHAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);\n\n// Initialize counter to middle value to allow bidirectional counting\n__HAL_TIM_SET_COUNTER(&htim2, 0x80000000);\n}\n// Interrupt handler for overflow/underflow void TIM2_IRQHandler(void) { if (__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET) { if (__HAL_TIM_GET_IT_SOURCE(&htim2, TIM_IT_UPDATE) != RESET) { __HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE);\n        // Detect direction of overflow\n        if (__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim2))\n        {\n            encoder_overflow_count--;  // Underflow\n        }\n        else\n        {\n            encoder_overflow_count++;  // Overflow\n        }\n    }\n}\n}\n// Read encoder position (signed 32-bit) int32_t Encoder_GetPosition(void) { return (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; }\n// Read encoder position with overflow tracking (64-bit range) int64_t Encoder_GetPositionExtended(void) { int64_t position = (int64_t)encoder_overflow_count * 0x100000000LL; position += (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; return position; }\n// Reset encoder position to zero void Encoder_Reset(void) { __HAL_TIM_SET_COUNTER(&htim2, 0x80000000); encoder_overflow_count = 0; }\n// Get encoder velocity (counts per sample period) int32_t Encoder_GetVelocity(void) { static int32_t last_position = 0; int32_t current_position = Encoder_GetPosition(); int32_t velocity = current_position - last_position; last_position = current_position; return velocity; }"
   },
   {
-    "objectID": "labs/lab2/lab.html",
-    "href": "labs/lab2/lab.html",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html",
+    "href": "labs/lab3/lab.html",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "",
-    "text": "Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS."
+    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
   },
   {
-    "objectID": "labs/lab2/lab.html#introduction",
-    "href": "labs/lab2/lab.html#introduction",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html#introduction",
+    "href": "labs/lab3/lab.html#introduction",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "",
-    "text": "Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS."
+    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
   },
   {
-    "objectID": "labs/lab2/lab.html#design-and-testing-methodology",
-    "href": "labs/lab2/lab.html#design-and-testing-methodology",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html#design-and-testing-methodology",
+    "href": "labs/lab3/lab.html#design-and-testing-methodology",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology\nA multiplexer inside the FPGA chooses between inputs in0 and in1 (4 bit numbers) and connects the chosen signal to the look up table. These two inputs are connected alternating at 80 hz. At the same 80hz clock, an enable for the left and right display are activated (only one at a time). The pins controlling the seven segment code are connected to both displays, but only the display with an active enable will show. Because they are switching at high frequency, it appears that both are displaying simultaneously - while in reality it is only one at a time.\nThis time multiplexing saves internal resources, and only uses one set of segment pins + an enable per display instead of using 7 pins per display.\nThe sum of the two binary numbers is sent to the LEDS."
+    "text": "Design and Testing Methodology\nOsilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 40 ms each.\nA simulation testbench for each module was also created to ensure desired functionality. (albeit they were constructed after it already worked)."
   },
   {
-    "objectID": "labs/lab2/lab.html#technical-documentation",
-    "href": "labs/lab2/lab.html#technical-documentation",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html#technical-documentation",
+    "href": "labs/lab3/lab.html#technical-documentation",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\n\nBlock Diagram\n\nA single look up table is multiplexed with inputs from two inputs, alternating at 80 hz.\n\n\nSchematic\n\nThe output 7 segment control pins are fed to the inputs of both 7 segment displays. The power for each display is controlled by a PNP transistor, which connects the weak enable signal from the FPGA to a 3.3v source.\n\n\nTesting\nTwo simulations were used to verify the behavior of this system. The first checked that the sum of the two binary numbers was properly computed, and the second tested the switching functionality between two displays with the 7 segment output.\nThe following displays holding one display constant while changing the inputs for the other, and we see the display code updating on alternating inputs following the enable for that display. More tests are not screenshot,due to the sheer number (and zooming in to see the binary numbers as validatoin). \nThe following shows that the sum output from the top module is indeed the sum of the two inputs, for every combination of inputs. \nThe frequency of the clock alternating between segment 0 and 1 had to be determined and verified in situ, due to the nature of human eye to discerne which frequency was applicable.\n\n\nPhysical Design Calculations\nThere are several sensitive components on this PCB.\nThe FPGA pins can drive at most \\(\\pm\\) 8 mA of current through IO pins, at 3.3V. The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA.\nTo restrict current going to the PNP transistors, a 200 \\(\\Omega\\) resistor was used. There is at max a 0.4 V drop from the collector to emmitter, which. For a maximum current flow of 2 mA, this yields (\\(0.4V/0.02 mA = 200 \\Omega s\\)).\nThe LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 \\(\\Omega\\) resistor between the LEDs and ground to restrict current flow, as \\((3.2V - 2.2V)/(20mA) = 50 \\Omega\\). A 200 \\(\\Omega\\) resistor was used."
+    "text": "Technical Documentation\nThe logic for this design is partitioned into many functions.\nAsynchronous key presses are aligned to the clock with a synchronizer - just a flop taking input on the fastest clock cycle.\nA clock module handles a counter for time based conditions.\nA Keypad handler drives each row of the keypad high one at a time, then reads out the associated columns. If any of the columns was active, then a button was pressed within the cycle of checking.\nA debouncer module ensures that each button is only activated once. When the button is first pressed, a 40 ms timer is started. New inputs are only accepted after the button is released after the 40ms timer and an additional 40 ms after release has passed.\nA single 7 segment driver is time multiplexed to drive two 7 segment displays, alternating which is powered at 90 hz.\n\nState Machine Debounce Logic\n\n\n\nBlock Diagram\n\n\n\nSchematic"
   },
   {
-    "objectID": "labs/lab2/lab.html#results-and-discussion",
-    "href": "labs/lab2/lab.html#results-and-discussion",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html#testbench-simulation",
+    "href": "labs/lab3/lab.html#testbench-simulation",
+    "title": "Lab 3 - Keypad Debounce",
+    "section": "Testbench Simulation",
+    "text": "Testbench Simulation\nA testbench was constructed for every module."
+  },
+  {
+    "objectID": "labs/lab3/lab.html#results-and-discussion",
+    "href": "labs/lab3/lab.html#results-and-discussion",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "Results and Discussion",
-    "text": "Results and Discussion\n80 Hz was determined to be near the optimal frequency, where the human eye can’t distinguish any flicker, but the power is on long enough to make the led’s appear sufficiently bright.\nThe two seven segment displays were driven from a single LUT module with no visable failures, displaying the sum of the two numbers to LEDs. This lab was completed successfully."
+    "text": "Results and Discussion\nThe device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.\nThe debounce length chosen is somewhat lengthy, and may be reduced for optimization.\nTime spent: No clue, maybe ~ 15 hrs"
   },
   {
-    "objectID": "labs/lab2/lab.html#misc",
-    "href": "labs/lab2/lab.html#misc",
-    "title": "Lab 2 - Time Multiplexing",
-    "section": "MISC",
-    "text": "MISC\nHours spent: ~15 ( STUPID STUPID PCB SHORT ON THE RESET PIN STUPID AARGGH)"
-  },
-  {
-    "objectID": "labs/lab2/lab.html#ai-overview",
-    "href": "labs/lab2/lab.html#ai-overview",
-    "title": "Lab 2 - Time Multiplexing",
+    "objectID": "labs/lab3/lab.html#ai-overview",
+    "href": "labs/lab3/lab.html#ai-overview",
+    "title": "Lab 3 - Keypad Debounce",
     "section": "AI overview",
-    "text": "AI overview\nThe output was very close to one that could work. I had to use several prompts with the thoughts and knowledge that I already had (i.e. using a single bus for the segments and an enable for power). However, when i was very detailed on how the code should work and what the end goals are (telling it to ask me questions about the design), it made something that would have saved me large amounts of time.\nThe code synthesized properly, and I am familiar with all syntax used."
-  },
-  {
-    "objectID": "labs/lab2/lab.html#code",
-    "href": "labs/lab2/lab.html#code",
-    "title": "Lab 2 - Time Multiplexing",
-    "section": "CODE",
-    "text": "CODE\n\nTOP.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025\nmodule top( input logic [3:0] i0, input logic [3:0] i1, input logic reset, output logic sel, output logic nsel, output logic [6:0] segout, output logic [4:0] sum );\nHSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));\n\nlogic [3:0] iActive;\n\nlogic [24:0] counter = 0;\n\n// Look up table for the 7 segment displays\nsegLUT lut(.s(iActive),.seg(segout));\n\n// add the inputs and display on LEDS\nassign sum = i1+i0;\n\n// choosing which set of connections for the resource use\n// sequential logic\nalways_ff@(posedge int_osc) begin\n    \n        if(reset == 1) begin\n                iActive &lt;= 4'b0000;\n            end\n        else begin\n            iActive &lt;= sel ? i0 : i1;\n            end\n\nend\n\n// select as a slow clock logic\nalways_ff@(posedge int_osc) begin\n    if(reset) begin\n            counter &lt;= 25'b0;\n        end\n    else begin\n        counter &lt;= counter + 1'b1;\n    end\nend\n\nassign sel = counter[18];// // 1.43 hz\nassign nsel = !sel;\nendmodule\n\n\nsegLUT.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 module segLUT( input logic [3:0] s, output logic [6:0] seg );\nalways_comb\n    case(s)\n        4'b0000: seg = 7'b0000001; //0\n        4'b0001: seg = 7'b1001111; //1\n        4'b0010: seg = 7'b0010010; //2\n        4'b0011: seg = 7'b0000110; //3\n        4'b0100: seg = 7'b1001100; //4\n        4'b0101: seg = 7'b0100100; //5\n        4'b0110: seg = 7'b0100000; //6\n        4'b0111: seg = 7'b0001111; //7\n        4'b1000: seg = 7'b0000000; //8\n        4'b1001: seg = 7'b0001100; //9\n        4'b1010: seg = 7'b0001000; //A\n        4'b1011: seg = 7'b1100000; //B\n        4'b1100: seg = 7'b0110001; //C\n        4'b1101: seg = 7'b1000010; //D\n        4'b1110: seg = 7'b0110000; //E\n        4'b1111: seg = 7'b0111000; //F\n\n    default\n        seg = 7'b1111111;//7'b0000000;\n    endcase\nendmodule\n\n\ntest_segs_v3.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v3 ( output logic [6:0] seg0, output logic [6:0] seg1, output logic seg1good, output logic seg0good, output logic [7:0] clk );\n// inputs\nlogic [3:0] i0;\nlogic [3:0] i1;\nlogic reset;\n//outputs to test\nlogic sel;\nlogic nsel;\nlogic [6:0] segout;\nlogic [4:0] sum;\n\nassign i0 = {clk[4],clk[5],clk[6],clk[7]};\nassign i1 = {clk[0],clk[1],clk[2],clk[3]};\ntop dut(i0,i1,reset,sel,nsel,segout,sum);\n\nassign seg1good = seg1 == (segout && sel) || nsel;\nassign seg0good = seg0 == (segout && nsel) || sel;\n\n\ninitial\n    begin\n            clk = 8'b0;\n    end\n\n// generate clock\nalways \n    begin\n      clk = clk + 1'b1; #1; \n      \n      if(clk == 8'b111111) begin\n            $display(\"no cases left\");\n            $stop;\n        end\n    end\n    \nalways_comb\n    case(i1)\n        4'b0000: seg1 = 7'b0000001; //0\n        4'b0001: seg1 = 7'b1001111; //1\n        4'b0010: seg1 = 7'b0010010; //2\n        4'b0011: seg1 = 7'b0000110; //3\n        4'b0100: seg1 = 7'b1001100; //4\n        4'b0101: seg1 = 7'b0100100; //5\n        4'b0110: seg1 = 7'b0100000; //6\n        4'b0111: seg1 = 7'b0001111; //7\n        4'b1000: seg1 = 7'b0000000; //8\n        4'b1001: seg1 = 7'b0001100; //9\n        4'b1010: seg1 = 7'b0001000; //A\n        4'b1011: seg1 = 7'b1100000; //B\n        4'b1100: seg1 = 7'b0110001; //C\n        4'b1101: seg1 = 7'b1000010; //D\n        4'b1110: seg1 = 7'b0110000; //E\n        4'b1111: seg1 = 7'b0111000; //F\n\n    default\n        seg1 = 7'b1111111;//7'b0000000;\n    endcase\n\n\nalways_comb\n    case(i0)\n        4'b0000: seg0 = 7'b0000001; //0\n        4'b0001: seg0 = 7'b1001111; //1\n        4'b0010: seg0 = 7'b0010010; //2\n        4'b0011: seg0 = 7'b0000110; //3\n        4'b0100: seg0 = 7'b1001100; //4\n        4'b0101: seg0 = 7'b0100100; //5\n        4'b0110: seg0 = 7'b0100000; //6\n        4'b0111: seg0 = 7'b0001111; //7\n        4'b1000: seg0 = 7'b0000000; //8\n        4'b1001: seg0 = 7'b0001100; //9\n        4'b1010: seg0 = 7'b0001000; //A\n        4'b1011: seg0 = 7'b1100000; //B\n        4'b1100: seg0 = 7'b0110001; //C\n        4'b1101: seg0 = 7'b1000010; //D\n        4'b1110: seg0 = 7'b0110000; //E\n        4'b1111: seg0 = 7'b0111000; //F\n\n    default\n        seg0 = 7'b1111111;//7'b0000000;\n    endcase\nendmodule\n\n\ntest_sum_v2.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v2 ( output logic good_sum, output logic [7:0] clk );\n// inputs\nlogic [3:0] i0;\nlogic [3:0] i1;\n\n//outputs to test\nlogic sel;\nlogic nsel;\nlogic [6:0] segout;\nlogic [4:0] sum;\n\n//expected output logic\nlogic [4:0] esum;\n\nassign i0 = {clk[4],clk[5],clk[6],clk[7]};\nassign i1 = {clk[0],clk[1],clk[2],clk[3]};\ntop dut(i0,i1,reset,sel,nsel,segout,sum);\n\n\n\nassign esum = i1 + i0;\nassign good_sum = i1+i0 == sum;\n\ninitial\n    begin\n            clk = 8'b0;\n    end\n    // generate clock\nalways \n    begin\n      clk = clk + 1'b1; #1; \n      \n      if(clk == 8'b111111) begin\n            $display(\"no cases left\");\n            $stop;\n        end\n    end\nendmodule"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "E155 Portfolio",
-    "section": "",
-    "text": "HI! This is Sorin J, THIS IS SO COOL! WUNDERBAR!\nBIO: I’m a nerd who loves existential crises and electronics and physics and philosophy and good books and playing music and and and and and and and ……\nahem\nWelcome to the website! &lt;3 HMC\nMy github: Github Link\nMy LinkedIn: Linkedin Link\nSome pretty flowers!    \nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "blogposts/post1/post1.html",
-    "href": "blogposts/post1/post1.html",
-    "title": "Blog post 1!",
-    "section": "",
-    "text": "Hi! Woah this is so cool! Lets figure out the possibilities of this software! ## TESTING MARKDOWN ### THIS TOO? #### HI! ##### WOAH THATS A LOT OF ‘#’ ###### AARRGGHH. 6 ‘#’! # Now lets explore latex! ## $} a^{b} $ inline \\(a^{b}\\) not in header hmmm lets try multiline \\[\n\\begin{align}\n\\text{multiline}\\\\\n\\text{multiline}\\\\\n\\text{multiline}\\\\\n\\text{multiline}\\\\  \n\\end{align}\n\\]\nWoah! Nice. Lets reflect on this: We have a super easy way to generate html and css files and make a personal website. This is huge. I’ve always wanted to do this, but never had the excuse or time - and was always way too scared. It was totally unfounded. This is awesome.\nIn blog style, this shall remain short - but welcome to the start of a fun new adventure in life. Signing off &lt;3 ~ Snow"
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "E155 Blog",
-    "section": "",
-    "text": "Blog post 1!\n\n\nInitial reflections\n\n\n\n\n\nAug 27, 2025\n\n\nSorin Jayaweera\n\n\n\n\n\n\n\n\n\n\n\n\nTesting Blog Posts 2\n\n\nHI!\n\n\n\n\n\nAug 27, 2025\n\n\nSorin Jayaweera\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "blogposts/post2/post2.html",
-    "href": "blogposts/post2/post2.html",
-    "title": "Testing Blog Posts 2",
-    "section": "",
-    "text": "lab 2!\n\\(a^2\\)"
+    "text": "AI overview\nWorks a lot better with modular spec"
   },
   {
     "objectID": "labs/lab1/lab.html",
@@ -252,136 +224,220 @@
     "text": "Test Vector Files\n\nTestvectors.tv (overall)\nTo use these test vectors, run testbenchg.sv. Change the bit widths to match these inputs. The overall file has bitwidth 14. // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_000_0000001 //1 0001_010_1001111 //2 0010_010_0010010 //3 0011_000_0000110 //4 0100_000_1001100 //5 0101_010_0100100 //6 0110_010_0100000 //7 0111_000_0001111 //8 1000_000_0000000 //9 1001_010_0001100 //A 1010_010_0001000 //B 1011_000_1100000 //C 1100_100_0110001 //D 1101_110_1000010 //E 1110_110_0110000 //F 1111_100_0111000\n\n\nONBOARD LED\n//Bitwidth 7 // LED TESTING // S0 S1 S2 S3 _ LED1 LED2 0000_000 //1 0001_010 //2 0010_010 //3 0011_000 //4 0100_000 //5 0101_010 //6 0110_010 //7 0111_000 //8 1000_000 //9 1001_010 //A 1010_010 //B 1011_000 //C 1100_100 //D 1101_110 //E 1110_110 //F 1111_100\n\n\n7 Segment Testing\n// bitwidth 11 // This is the overall testing code to make it easier // S0 S1 S2 S3 _ LED1 LED2 _ 7Seg A B C D E F G // 0 0000_0000001 //1 0001_1001111 //2 0010_0010010 //3 0011_0000110 //4 0100_1001100 //5 0101_0100100 //6 0110_0100000 //7 0111_0001111 //8 1000_0000000 //9 1001_0001100 //A 1010_0001000 //B 1011_1100000 //C 1100_0110001 //D 1101_1000010 //E 1110_0110000 //F 1111_0111000"
   },
   {
-    "objectID": "labs/lab3/lab.html",
-    "href": "labs/lab3/lab.html",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "blogposts/post2/post2.html",
+    "href": "blogposts/post2/post2.html",
+    "title": "Testing Blog Posts 2",
     "section": "",
-    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
+    "text": "lab 2!\n\\(a^2\\)"
   },
   {
-    "objectID": "labs/lab3/lab.html#introduction",
-    "href": "labs/lab3/lab.html#introduction",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "E155 Blog",
     "section": "",
-    "text": "In this lab, a 16 pin keypad was used to read user input. The most recent two displays of which are shown on two seven segments. This tests the principles of debouncing and asynchrony.\nThis was designed for use with the HMC E155 Development board, which utulizes the UPduino v3.1 and iCE40 UP5k."
+    "text": "Blog post 1!\n\n\nInitial reflections\n\n\n\n\n\nAug 27, 2025\n\n\nSorin Jayaweera\n\n\n\n\n\n\n\n\n\n\n\n\nTesting Blog Posts 2\n\n\nHI!\n\n\n\n\n\nAug 27, 2025\n\n\nSorin Jayaweera\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "labs/lab3/lab.html#design-and-testing-methodology",
-    "href": "labs/lab3/lab.html#design-and-testing-methodology",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "blogposts/post1/post1.html",
+    "href": "blogposts/post1/post1.html",
+    "title": "Blog post 1!",
+    "section": "",
+    "text": "Hi! Woah this is so cool! Lets figure out the possibilities of this software! ## TESTING MARKDOWN ### THIS TOO? #### HI! ##### WOAH THATS A LOT OF ‘#’ ###### AARRGGHH. 6 ‘#’! # Now lets explore latex! ## $} a^{b} $ inline \\(a^{b}\\) not in header hmmm lets try multiline \\[\n\\begin{align}\n\\text{multiline}\\\\\n\\text{multiline}\\\\\n\\text{multiline}\\\\\n\\text{multiline}\\\\  \n\\end{align}\n\\]\nWoah! Nice. Lets reflect on this: We have a super easy way to generate html and css files and make a personal website. This is huge. I’ve always wanted to do this, but never had the excuse or time - and was always way too scared. It was totally unfounded. This is awesome.\nIn blog style, this shall remain short - but welcome to the start of a fun new adventure in life. Signing off &lt;3 ~ Snow"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "E155 Portfolio",
+    "section": "",
+    "text": "HI! This is Sorin J, THIS IS SO COOL! WUNDERBAR!\nBIO: I’m a nerd who loves existential crises and electronics and physics and philosophy and good books and playing music and and and and and and and ……\nahem\nWelcome to the website! &lt;3 HMC\nMy github: Github Link\nMy LinkedIn: Linkedin Link\nSome pretty flowers!"
+  },
+  {
+    "objectID": "labs/lab2/lab.html",
+    "href": "labs/lab2/lab.html",
+    "title": "Lab 2 - Time Multiplexing",
+    "section": "",
+    "text": "Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS."
+  },
+  {
+    "objectID": "labs/lab2/lab.html#introduction",
+    "href": "labs/lab2/lab.html#introduction",
+    "title": "Lab 2 - Time Multiplexing",
+    "section": "",
+    "text": "Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS."
+  },
+  {
+    "objectID": "labs/lab2/lab.html#design-and-testing-methodology",
+    "href": "labs/lab2/lab.html#design-and-testing-methodology",
+    "title": "Lab 2 - Time Multiplexing",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology\nOsilloscope traces were used to verify that the real world hold times for button press and release debounce timers matched expectation - 40 ms each.\nA simulation testbench for each module was also created to ensure desired functionality. (albeit they were constructed after it already worked)."
+    "text": "Design and Testing Methodology\nA multiplexer inside the FPGA chooses between inputs in0 and in1 (4 bit numbers) and connects the chosen signal to the look up table. These two inputs are connected alternating at 80 hz. At the same 80hz clock, an enable for the left and right display are activated (only one at a time). The pins controlling the seven segment code are connected to both displays, but only the display with an active enable will show. Because they are switching at high frequency, it appears that both are displaying simultaneously - while in reality it is only one at a time.\nThis time multiplexing saves internal resources, and only uses one set of segment pins + an enable per display instead of using 7 pins per display.\nThe sum of the two binary numbers is sent to the LEDS."
   },
   {
-    "objectID": "labs/lab3/lab.html#technical-documentation",
-    "href": "labs/lab3/lab.html#technical-documentation",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "labs/lab2/lab.html#technical-documentation",
+    "href": "labs/lab2/lab.html#technical-documentation",
+    "title": "Lab 2 - Time Multiplexing",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\nThe logic for this design is partitioned into many functions.\nAsynchronous key presses are aligned to the clock with a synchronizer - just a flop taking input on the fastest clock cycle.\nA clock module handles a counter for time based conditions.\nA Keypad handler drives each row of the keypad high one at a time, then reads out the associated columns. If any of the columns was active, then a button was pressed within the cycle of checking.\nA debouncer module ensures that each button is only activated once. When the button is first pressed, a 40 ms timer is started. New inputs are only accepted after the button is released after the 40ms timer and an additional 40 ms after release has passed.\nA single 7 segment driver is time multiplexed to drive two 7 segment displays, alternating which is powered at 90 hz.\n\nState Machine Debounce Logic\n\n\n\nBlock Diagram\n\n\n\nSchematic"
+    "text": "Technical Documentation\n\nBlock Diagram\n\nA single look up table is multiplexed with inputs from two inputs, alternating at 80 hz.\n\n\nSchematic\n\nThe output 7 segment control pins are fed to the inputs of both 7 segment displays. The power for each display is controlled by a PNP transistor, which connects the weak enable signal from the FPGA to a 3.3v source.\n\n\nTesting\nTwo simulations were used to verify the behavior of this system. The first checked that the sum of the two binary numbers was properly computed, and the second tested the switching functionality between two displays with the 7 segment output.\nThe following displays holding one display constant while changing the inputs for the other, and we see the display code updating on alternating inputs following the enable for that display. More tests are not screenshot,due to the sheer number (and zooming in to see the binary numbers as validatoin). \nThe following shows that the sum output from the top module is indeed the sum of the two inputs, for every combination of inputs. \nThe frequency of the clock alternating between segment 0 and 1 had to be determined and verified in situ, due to the nature of human eye to discerne which frequency was applicable.\n\n\nPhysical Design Calculations\nThere are several sensitive components on this PCB.\nThe FPGA pins can drive at most \\(\\pm\\) 8 mA of current through IO pins, at 3.3V. The 7 segment display can handle a maximum of 20 mA of current before burnout. The transistor has a 10x amplification from input current to output current - so to protect the displays that the transistors are driving, current at the base should be restricted to 2 mA.\nTo restrict current going to the PNP transistors, a 200 \\(\\Omega\\) resistor was used. There is at max a 0.4 V drop from the collector to emmitter, which. For a maximum current flow of 2 mA, this yields (\\(0.4V/0.02 mA = 200 \\Omega s\\)).\nThe LEDs have a forward voltage of 2.2V and a maximum current of 20 mA, which gives a minimum of 50 \\(\\Omega\\) resistor between the LEDs and ground to restrict current flow, as \\((3.2V - 2.2V)/(20mA) = 50 \\Omega\\). A 200 \\(\\Omega\\) resistor was used."
   },
   {
-    "objectID": "labs/lab3/lab.html#testbench-simulation",
-    "href": "labs/lab3/lab.html#testbench-simulation",
-    "title": "Lab 3 - Keypad Debounce",
-    "section": "Testbench Simulation",
-    "text": "Testbench Simulation\nA testbench was constructed for every module."
-  },
-  {
-    "objectID": "labs/lab3/lab.html#results-and-discussion",
-    "href": "labs/lab3/lab.html#results-and-discussion",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "labs/lab2/lab.html#results-and-discussion",
+    "href": "labs/lab2/lab.html#results-and-discussion",
+    "title": "Lab 2 - Time Multiplexing",
     "section": "Results and Discussion",
-    "text": "Results and Discussion\nThe device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.\nThe debounce length chosen is somewhat lengthy, and may be reduced for optimization.\nTime spent: No clue, maybe ~ 15 hrs"
+    "text": "Results and Discussion\n80 Hz was determined to be near the optimal frequency, where the human eye can’t distinguish any flicker, but the power is on long enough to make the led’s appear sufficiently bright.\nThe two seven segment displays were driven from a single LUT module with no visable failures, displaying the sum of the two numbers to LEDs. This lab was completed successfully."
   },
   {
-    "objectID": "labs/lab3/lab.html#ai-overview",
-    "href": "labs/lab3/lab.html#ai-overview",
-    "title": "Lab 3 - Keypad Debounce",
+    "objectID": "labs/lab2/lab.html#misc",
+    "href": "labs/lab2/lab.html#misc",
+    "title": "Lab 2 - Time Multiplexing",
+    "section": "MISC",
+    "text": "MISC\nHours spent: ~15 ( STUPID STUPID PCB SHORT ON THE RESET PIN STUPID AARGGH)"
+  },
+  {
+    "objectID": "labs/lab2/lab.html#ai-overview",
+    "href": "labs/lab2/lab.html#ai-overview",
+    "title": "Lab 2 - Time Multiplexing",
     "section": "AI overview",
-    "text": "AI overview\nWorks a lot better with modular spec"
+    "text": "AI overview\nThe output was very close to one that could work. I had to use several prompts with the thoughts and knowledge that I already had (i.e. using a single bus for the segments and an enable for power). However, when i was very detailed on how the code should work and what the end goals are (telling it to ask me questions about the design), it made something that would have saved me large amounts of time.\nThe code synthesized properly, and I am familiar with all syntax used."
   },
   {
-    "objectID": "labs/lab5/lab.html",
-    "href": "labs/lab5/lab.html",
-    "title": "Lab 5!",
+    "objectID": "labs/lab2/lab.html#code",
+    "href": "labs/lab2/lab.html#code",
+    "title": "Lab 2 - Time Multiplexing",
+    "section": "CODE",
+    "text": "CODE\n\nTOP.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025\nmodule top( input logic [3:0] i0, input logic [3:0] i1, input logic reset, output logic sel, output logic nsel, output logic [6:0] segout, output logic [4:0] sum );\nHSOSC hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));\n\nlogic [3:0] iActive;\n\nlogic [24:0] counter = 0;\n\n// Look up table for the 7 segment displays\nsegLUT lut(.s(iActive),.seg(segout));\n\n// add the inputs and display on LEDS\nassign sum = i1+i0;\n\n// choosing which set of connections for the resource use\n// sequential logic\nalways_ff@(posedge int_osc) begin\n    \n        if(reset == 1) begin\n                iActive &lt;= 4'b0000;\n            end\n        else begin\n            iActive &lt;= sel ? i0 : i1;\n            end\n\nend\n\n// select as a slow clock logic\nalways_ff@(posedge int_osc) begin\n    if(reset) begin\n            counter &lt;= 25'b0;\n        end\n    else begin\n        counter &lt;= counter + 1'b1;\n    end\nend\n\nassign sel = counter[18];// // 1.43 hz\nassign nsel = !sel;\nendmodule\n\n\nsegLUT.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 module segLUT( input logic [3:0] s, output logic [6:0] seg );\nalways_comb\n    case(s)\n        4'b0000: seg = 7'b0000001; //0\n        4'b0001: seg = 7'b1001111; //1\n        4'b0010: seg = 7'b0010010; //2\n        4'b0011: seg = 7'b0000110; //3\n        4'b0100: seg = 7'b1001100; //4\n        4'b0101: seg = 7'b0100100; //5\n        4'b0110: seg = 7'b0100000; //6\n        4'b0111: seg = 7'b0001111; //7\n        4'b1000: seg = 7'b0000000; //8\n        4'b1001: seg = 7'b0001100; //9\n        4'b1010: seg = 7'b0001000; //A\n        4'b1011: seg = 7'b1100000; //B\n        4'b1100: seg = 7'b0110001; //C\n        4'b1101: seg = 7'b1000010; //D\n        4'b1110: seg = 7'b0110000; //E\n        4'b1111: seg = 7'b0111000; //F\n\n    default\n        seg = 7'b1111111;//7'b0000000;\n    endcase\nendmodule\n\n\ntest_segs_v3.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v3 ( output logic [6:0] seg0, output logic [6:0] seg1, output logic seg1good, output logic seg0good, output logic [7:0] clk );\n// inputs\nlogic [3:0] i0;\nlogic [3:0] i1;\nlogic reset;\n//outputs to test\nlogic sel;\nlogic nsel;\nlogic [6:0] segout;\nlogic [4:0] sum;\n\nassign i0 = {clk[4],clk[5],clk[6],clk[7]};\nassign i1 = {clk[0],clk[1],clk[2],clk[3]};\ntop dut(i0,i1,reset,sel,nsel,segout,sum);\n\nassign seg1good = seg1 == (segout && sel) || nsel;\nassign seg0good = seg0 == (segout && nsel) || sel;\n\n\ninitial\n    begin\n            clk = 8'b0;\n    end\n\n// generate clock\nalways \n    begin\n      clk = clk + 1'b1; #1; \n      \n      if(clk == 8'b111111) begin\n            $display(\"no cases left\");\n            $stop;\n        end\n    end\n    \nalways_comb\n    case(i1)\n        4'b0000: seg1 = 7'b0000001; //0\n        4'b0001: seg1 = 7'b1001111; //1\n        4'b0010: seg1 = 7'b0010010; //2\n        4'b0011: seg1 = 7'b0000110; //3\n        4'b0100: seg1 = 7'b1001100; //4\n        4'b0101: seg1 = 7'b0100100; //5\n        4'b0110: seg1 = 7'b0100000; //6\n        4'b0111: seg1 = 7'b0001111; //7\n        4'b1000: seg1 = 7'b0000000; //8\n        4'b1001: seg1 = 7'b0001100; //9\n        4'b1010: seg1 = 7'b0001000; //A\n        4'b1011: seg1 = 7'b1100000; //B\n        4'b1100: seg1 = 7'b0110001; //C\n        4'b1101: seg1 = 7'b1000010; //D\n        4'b1110: seg1 = 7'b0110000; //E\n        4'b1111: seg1 = 7'b0111000; //F\n\n    default\n        seg1 = 7'b1111111;//7'b0000000;\n    endcase\n\n\nalways_comb\n    case(i0)\n        4'b0000: seg0 = 7'b0000001; //0\n        4'b0001: seg0 = 7'b1001111; //1\n        4'b0010: seg0 = 7'b0010010; //2\n        4'b0011: seg0 = 7'b0000110; //3\n        4'b0100: seg0 = 7'b1001100; //4\n        4'b0101: seg0 = 7'b0100100; //5\n        4'b0110: seg0 = 7'b0100000; //6\n        4'b0111: seg0 = 7'b0001111; //7\n        4'b1000: seg0 = 7'b0000000; //8\n        4'b1001: seg0 = 7'b0001100; //9\n        4'b1010: seg0 = 7'b0001000; //A\n        4'b1011: seg0 = 7'b1100000; //B\n        4'b1100: seg0 = 7'b0110001; //C\n        4'b1101: seg0 = 7'b1000010; //D\n        4'b1110: seg0 = 7'b0110000; //E\n        4'b1111: seg0 = 7'b0111000; //F\n\n    default\n        seg0 = 7'b1111111;//7'b0000000;\n    endcase\nendmodule\n\n\ntest_sum_v2.sv\n// Sorin Jayaweera // 909 957 6074 // sojayaweera@g.hmc.edu // 9/6/2025 `timescale 1ns/1ps module test_sum_v2 ( output logic good_sum, output logic [7:0] clk );\n// inputs\nlogic [3:0] i0;\nlogic [3:0] i1;\n\n//outputs to test\nlogic sel;\nlogic nsel;\nlogic [6:0] segout;\nlogic [4:0] sum;\n\n//expected output logic\nlogic [4:0] esum;\n\nassign i0 = {clk[4],clk[5],clk[6],clk[7]};\nassign i1 = {clk[0],clk[1],clk[2],clk[3]};\ntop dut(i0,i1,reset,sel,nsel,segout,sum);\n\n\n\nassign esum = i1 + i0;\nassign good_sum = i1+i0 == sum;\n\ninitial\n    begin\n            clk = 8'b0;\n    end\n    // generate clock\nalways \n    begin\n      clk = clk + 1'b1; #1; \n      \n      if(clk == 8'b111111) begin\n            $display(\"no cases left\");\n            $stop;\n        end\n    end\nendmodule"
+  },
+  {
+    "objectID": "labs/lab4/lab.html",
+    "href": "labs/lab4/lab.html",
+    "title": "Lab 4!",
     "section": "",
-    "text": "In this lab, the speed and polarity of a motor was read."
+    "text": "The goal of this lab was to play FUR elise by utulizing timers onboard an STM32L432KB. This was done using two of the STM’s general pupose timers - 15 and 16."
   },
   {
-    "objectID": "labs/lab5/lab.html#introduction",
-    "href": "labs/lab5/lab.html#introduction",
-    "title": "Lab 5!",
+    "objectID": "labs/lab4/lab.html#introduction",
+    "href": "labs/lab4/lab.html#introduction",
+    "title": "Lab 4!",
     "section": "",
-    "text": "In this lab, the speed and polarity of a motor was read."
+    "text": "The goal of this lab was to play FUR elise by utulizing timers onboard an STM32L432KB. This was done using two of the STM’s general pupose timers - 15 and 16."
   },
   {
-    "objectID": "labs/lab5/lab.html#design-and-testing-methodology",
-    "href": "labs/lab5/lab.html#design-and-testing-methodology",
-    "title": "Lab 5!",
+    "objectID": "labs/lab4/lab.html#design-and-testing-methodology",
+    "href": "labs/lab4/lab.html#design-and-testing-methodology",
+    "title": "Lab 4!",
     "section": "Design and Testing Methodology",
-    "text": "Design and Testing Methodology\nInstead of using continuous polling, three interrupts were configured. One was for time - every second a software iterrupt to prints the motor’s speed and direction. The other two interrupts were based off of two signals coming from the motor to read its internal state."
+    "text": "Design and Testing Methodology\nTIM16 was used to drive a PWM signal to pin A2 via the alternate function. This was chosen to TIM15 was used as an upcounter to set the duration of each note."
   },
   {
-    "objectID": "labs/lab5/lab.html#technical-documentation",
-    "href": "labs/lab5/lab.html#technical-documentation",
-    "title": "Lab 5!",
+    "objectID": "labs/lab4/lab.html#technical-documentation",
+    "href": "labs/lab4/lab.html#technical-documentation",
+    "title": "Lab 4!",
     "section": "Technical Documentation",
-    "text": "Technical Documentation\nPins A1 and A2 were used (although A2 has the alias A7) to read the speed of the motor. The motor has 408 magnets per revolution internally. Activating on every rising and falling edge from the hall effect sensors passing those magnets yields 408 ticks/rev * 2 pulses/detection* 2 detections / tick.\n\nSchematic\n\n\n\nFlow Chart"
+    "text": "Technical Documentation\n\nClock frequencies\nThe PLL System clock was configured to 80,000,000 HZ (80 MHz). Two timers were used, one to generate a PWM signal to play each note, and one to count each note’s duration/\nTIM15 was used for note duration. This was configured to 10KHZ by using prescaler 7999 (+1 implicit). The timer has 16 bits.\nTIM16 was used for the PWM. This was configured to 100 KHz by using prescaler 799 (+1 implicit). The timer has 16 bits.\nMinimum Duration: The clock has 10000 cycles / second and 16 bits. The minimum duration is 1 cycle, so 1/10000 seconds, or \\(10^{-4}\\) seconds.\nMaximum Duration:\nAt 16 bits, the maximum representable number is \\(2^{16} = 32768\\) cycles. (2^{16} since we count 2^n starting from n=0, and have every number from n=0-15 active, which is 2^{16} - 1) This gets a maximum duration \\((2^{16}) \\text{cycles} * \\frac{1\\text{cycle}}{10000 \\text{seconds}} = 6.55\\) seconds.\nMinimum Frequency: As before, the maximum division of the clock is \\(2^{16}\\). At 100,000 cycles/second /(2^15 cycles) = 1.52 Hz.\nMaximum Frequency: The clock goes at 100 KHz, so that is the minimum frequency.\n\n\nError Calculations\nWe are limited by the division of an integer clock, and can’t perfectly approximate frequencies. A frequency is represented as the closest number\nAny frequency is compressed with an error given by\n\\[\n1-\\frac{\\text{floor}(x)}{(x)}\n\\]\nThe error for this converges to 0 as the frequency increases (up to maximum frequency).\nThe frequency is done by counting up to some number. \\[10Khz/(\\text{floor}(\\frac{100kHz}{\\text{floor(frequency)}}))\\]. In an ideal world there would be no rounding error, hence th error is the ratio between this and the idea without flooring.\n\n\n\nSchematic"
   },
   {
-    "objectID": "labs/lab5/lab.html#comparison-to-polling",
-    "href": "labs/lab5/lab.html#comparison-to-polling",
-    "title": "Lab 5!",
-    "section": "Comparison to polling",
-    "text": "Comparison to polling\nAt low speeds, the pulses to detect are sparse. Polling would waste system resources. At high frequency comprable to the sampling rate of the microprocessor, polling and interrupts would be nearly indistinguishable - relevant functions would be continuously called.\nNo technical quantatative analysis of polling vs interrupt was performed for this lab."
+    "objectID": "labs/lab4/lab.html#conclusion",
+    "href": "labs/lab4/lab.html#conclusion",
+    "title": "Lab 4!",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe music player was successfully constructed.\nThere is no effective volume adjustment from the potentiometer in the amplification circuit. There is also a high gain (200x) and no filtering, so 60 HZ noise couples strongly to the speaker, distorting signal."
   },
   {
-    "objectID": "labs/lab5/lab.html#results",
-    "href": "labs/lab5/lab.html#results",
-    "title": "Lab 5!",
-    "section": "Results",
-    "text": "Results\nThe lab was successfully completed to show the speed of the motor at 1 Hz update. No polling was used - the entire system is based off of interrupts while still catching every clock edge and detecting polarity. This leaves free space for other programs to run."
-  },
-  {
-    "objectID": "labs/lab5/lab.html#ai-overview",
-    "href": "labs/lab5/lab.html#ai-overview",
-    "title": "Lab 5!",
+    "objectID": "labs/lab4/lab.html#ai-overview",
+    "href": "labs/lab4/lab.html#ai-overview",
+    "title": "Lab 4!",
     "section": "AI overview",
-    "text": "AI overview\nSummary: Got the code structure somewhat well, but messed up on grabbing the right pins and bit mappings.\nOutput:\nGreat question! For quadrature encoder interfacing on the STM32L432KC, you should use the hardware encoder mode with a timer rather than basic GPIO interrupts. This is much more efficient and handles quadrature decoding automatically. Recommended Pins Use TIM2 in encoder mode with these pins:\nPA0 (TIM2_CH1) - Pin 10 - Encoder A PA1 (TIM2_CH2) - Pin 11 - Encoder B\nThese pins are adjacent on the physical package and TIM2 is a 32-bit timer, giving you a large count range. Complete Encoder Interface Code c#include “stm32l4xx_hal.h”\nTIM_HandleTypeDef htim2; volatile int32_t encoder_overflow_count = 0;\n// Initialize TIM2 in Encoder Mode void Encoder_Init(void) { GPIO_InitTypeDef GPIO_InitStruct = {0};\n// Enable clocks\n__HAL_RCC_GPIOA_CLK_ENABLE();\n__HAL_RCC_TIM2_CLK_ENABLE();\n\n// Configure GPIO pins PA0 and PA1 for TIM2\nGPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;\nGPIO_InitStruct.Mode = GPIO_MODE_AF_PP;\nGPIO_InitStruct.Pull = GPIO_PULLUP;  // Use pullup for encoder signals\nGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;\nGPIO_InitStruct.Alternate = GPIO_AF1_TIM2;\nHAL_GPIO_Init(GPIOA, &GPIO_InitStruct);\n\n// Configure TIM2 in Encoder Mode\nhtim2.Instance = TIM2;\nhtim2.Init.Prescaler = 0;\nhtim2.Init.CounterMode = TIM_COUNTERMODE_UP;\nhtim2.Init.Period = 0xFFFFFFFF;  // 32-bit timer\nhtim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;\nhtim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;\n\n// Encoder mode: count on both TI1 and TI2 edges\nTIM_Encoder_InitTypeDef encoderConfig = {0};\nencoderConfig.EncoderMode = TIM_ENCODERMODE_TI12;\nencoderConfig.IC1Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC1Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC1Filter = 10;  // Filter to debounce\nencoderConfig.IC2Polarity = TIM_ICPOLARITY_RISING;\nencoderConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;\nencoderConfig.IC2Prescaler = TIM_ICPSC_DIV1;\nencoderConfig.IC2Filter = 10;  // Filter to debounce\n\nif (HAL_TIM_Encoder_Init(&htim2, &encoderConfig) != HAL_OK)\n{\n    Error_Handler();\n}\n\n// Enable overflow/underflow interrupt (optional, for extended counting)\n__HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE);\nHAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\nHAL_NVIC_EnableIRQ(TIM2_IRQn);\n\n// Start encoder interface\nHAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);\n\n// Initialize counter to middle value to allow bidirectional counting\n__HAL_TIM_SET_COUNTER(&htim2, 0x80000000);\n}\n// Interrupt handler for overflow/underflow void TIM2_IRQHandler(void) { if (__HAL_TIM_GET_FLAG(&htim2, TIM_FLAG_UPDATE) != RESET) { if (__HAL_TIM_GET_IT_SOURCE(&htim2, TIM_IT_UPDATE) != RESET) { __HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE);\n        // Detect direction of overflow\n        if (__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim2))\n        {\n            encoder_overflow_count--;  // Underflow\n        }\n        else\n        {\n            encoder_overflow_count++;  // Overflow\n        }\n    }\n}\n}\n// Read encoder position (signed 32-bit) int32_t Encoder_GetPosition(void) { return (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; }\n// Read encoder position with overflow tracking (64-bit range) int64_t Encoder_GetPositionExtended(void) { int64_t position = (int64_t)encoder_overflow_count * 0x100000000LL; position += (int32_t)__HAL_TIM_GET_COUNTER(&htim2) - 0x80000000; return position; }\n// Reset encoder position to zero void Encoder_Reset(void) { __HAL_TIM_SET_COUNTER(&htim2, 0x80000000); encoder_overflow_count = 0; }\n// Get encoder velocity (counts per sample period) int32_t Encoder_GetVelocity(void) { static int32_t last_position = 0; int32_t current_position = Encoder_GetPosition(); int32_t velocity = current_position - last_position; last_position = current_position; return velocity; }"
+    "text": "AI overview\nAttaching specific sections of the schematic seemed to help, but I can’t tell if it is very diferent from its own webscraping. I probed for how it would help with a problem that I was actively having, and it was useful."
   },
   {
-    "objectID": "labs/lab7/lab.html#design-and-testing-methodology",
-    "href": "labs/lab7/lab.html#design-and-testing-methodology",
+    "objectID": "labs/lab6/lab.html#design-and-testing-methodology",
+    "href": "labs/lab6/lab.html#design-and-testing-methodology",
     "title": "Lab 4!",
     "section": "Design and Testing Methodology",
     "text": "Design and Testing Methodology"
   },
   {
-    "objectID": "labs/lab7/lab.html#technical-documentation",
-    "href": "labs/lab7/lab.html#technical-documentation",
+    "objectID": "labs/lab6/lab.html#technical-documentation",
+    "href": "labs/lab6/lab.html#technical-documentation",
     "title": "Lab 4!",
     "section": "Technical Documentation",
     "text": "Technical Documentation\n\nBlock Diagram\n\n\nSchematic"
   },
   {
-    "objectID": "labs/lab7/lab.html#results-and-discussion",
-    "href": "labs/lab7/lab.html#results-and-discussion",
+    "objectID": "labs/lab6/lab.html#results-and-discussion",
+    "href": "labs/lab6/lab.html#results-and-discussion",
     "title": "Lab 4!",
     "section": "Results and Discussion",
     "text": "Results and Discussion\n\nTestbench Simulation"
   },
   {
-    "objectID": "labs/lab7/lab.html#conclusion",
-    "href": "labs/lab7/lab.html#conclusion",
+    "objectID": "labs/lab6/lab.html#conclusion",
+    "href": "labs/lab6/lab.html#conclusion",
     "title": "Lab 4!",
     "section": "Conclusion",
     "text": "Conclusion"
   },
   {
-    "objectID": "labs/lab7/lab.html#ai-overview",
-    "href": "labs/lab7/lab.html#ai-overview",
+    "objectID": "labs/lab6/lab.html#ai-overview",
+    "href": "labs/lab6/lab.html#ai-overview",
     "title": "Lab 4!",
     "section": "AI overview",
     "text": "AI overview"
+  },
+  {
+    "objectID": "project/proposal/proposal.html",
+    "href": "project/proposal/proposal.html",
+    "title": "Project Proposal",
+    "section": "",
+    "text": "This project uses the STM32L432KC Microcontroller, iCE40 UP5K FPGA, and an HC-05 bluetooth module to receive an audio signal over bluetooth and play it on a Tesla coil. The HC-05 will receive a real time bluetooth audio signal and transmit it over SPI to the STM32, which will convert the music into a list of active frequencies and transmit to the iCE40 UP5K over I2S (Inter-IC Sound). The iCE40 UP5K will output a square wave to control the power source of a miniature Tesla coil, which will effectively play the music.\nThe riskiest element of this project is going to be calculating and creating a functioning Tesla coil with high voltage safety elements, and handling the inter-IC communication protocols to communicate the live streaming music information in a format suitable for usage on the tesla coil.\n\n\nTo accomplish the project, we must have a system which: Connects via bluetooth to a user’s device Streams live music from the previous device through the MCU and FPGA Tesla Coil Component creates high voltage sparks The sparks toggle on and off at an appropriate frequency to somewhat match the music The music is audible to humans with a reasonably safe distance from the tesla coil\n\n\n\n\n\nConnects to transmitter Transmits signal to MCU over SPI\n\n\n\nReceives SPI information from Bluetooth module Converts to I2S to send to FPGA\n\n\n\nReceives I2S information from MCU Processes information and outputs in desired format for analog circuit\n\n\n\nReceives input from FPGA Implements volume control Plays audio on the Tesla coil"
+  },
+  {
+    "objectID": "project/proposal/proposal.html#description",
+    "href": "project/proposal/proposal.html#description",
+    "title": "Project Proposal",
+    "section": "",
+    "text": "This project uses the STM32L432KC Microcontroller, iCE40 UP5K FPGA, and an HC-05 bluetooth module to receive an audio signal over bluetooth and play it on a Tesla coil. The HC-05 will receive a real time bluetooth audio signal and transmit it over SPI to the STM32, which will convert the music into a list of active frequencies and transmit to the iCE40 UP5K over I2S (Inter-IC Sound). The iCE40 UP5K will output a square wave to control the power source of a miniature Tesla coil, which will effectively play the music.\nThe riskiest element of this project is going to be calculating and creating a functioning Tesla coil with high voltage safety elements, and handling the inter-IC communication protocols to communicate the live streaming music information in a format suitable for usage on the tesla coil.\n\n\nTo accomplish the project, we must have a system which: Connects via bluetooth to a user’s device Streams live music from the previous device through the MCU and FPGA Tesla Coil Component creates high voltage sparks The sparks toggle on and off at an appropriate frequency to somewhat match the music The music is audible to humans with a reasonably safe distance from the tesla coil\n\n\n\n\n\nConnects to transmitter Transmits signal to MCU over SPI\n\n\n\nReceives SPI information from Bluetooth module Converts to I2S to send to FPGA\n\n\n\nReceives I2S information from MCU Processes information and outputs in desired format for analog circuit\n\n\n\nReceives input from FPGA Implements volume control Plays audio on the Tesla coil"
+  },
+  {
+    "objectID": "project/proposal/proposal.html#schedule",
+    "href": "project/proposal/proposal.html#schedule",
+    "title": "Project Proposal",
+    "section": "Schedule",
+    "text": "Schedule\nSchedule"
+  },
+  {
+    "objectID": "project/proposal/proposal.html#bom",
+    "href": "project/proposal/proposal.html#bom",
+    "title": "Project Proposal",
+    "section": "BOM",
+    "text": "BOM\nBOM\n\nProject Flow Diagram"
+  },
+  {
+    "objectID": "project/proposal/proposal.html#fpga-design-details",
+    "href": "project/proposal/proposal.html#fpga-design-details",
+    "title": "Project Proposal",
+    "section": "FPGA Design Details",
+    "text": "FPGA Design Details\nThe iCE40 UP5K FPGA will receive the audio data from the STM32 over I2S (Inter-IC Sound), a protocol designed for transmitting stereo audio over three wires. The FPGA will unpack these packets that transmit left and right channels of audio over the same line and convert them into a single square wave with each rising and falling edge from both left and right channels."
+  },
+  {
+    "objectID": "project/proposal/proposal.html#mcu-design-details",
+    "href": "project/proposal/proposal.html#mcu-design-details",
+    "title": "Project Proposal",
+    "section": "MCU Design Details",
+    "text": "MCU Design Details\nThe main purpose of the STM32 in this project is to facilitate communication between the bluetooth transmitter and the FPGA by using a JDY-31 bluetooth module and implementing two communication protocols. The STM32 will communicate with the JDY-31 bluetooth module over SPI and then repackage the data to be transmitted over I2S to the FPGA."
+  },
+  {
+    "objectID": "project/proposal/proposal.html#tesla-coil-design",
+    "href": "project/proposal/proposal.html#tesla-coil-design",
+    "title": "Project Proposal",
+    "section": "Tesla Coil Design",
+    "text": "Tesla Coil Design\n\nDriving Circuit\n\n\nTesla Coil Calculations\nCalculations"
+  },
+  {
+    "objectID": "project/proposal/proposal.html#resourses-and-acknowledgements",
+    "href": "project/proposal/proposal.html#resourses-and-acknowledgements",
+    "title": "Project Proposal",
+    "section": "Resourses and Acknowledgements",
+    "text": "Resourses and Acknowledgements\n\nMicro Ps Related\nI2S communication protocol: https://flexpcb.org/i2s-protocol-the-beginners-ultimate-guide/ Summary: Transmitting a number, clock, and a line for either left or right audio channel.\n\n\nTesla coil\nSimple Class E tesla coil with circuit and coil parameters powered by 3.5mm jack with video: https://hackaday.io/project/188598-making-the-ultimate-class-e-musical-tesla-coil https://www.youtube.com/watch?v=Hez-R-WF5P0\nInstructable for the hackaday https://www.instructables.com/Building-the-Ultimate-Solid-State-Tesla-Coil-MUSIC/\nExplaining the circuit design used by Hackaday (WATCH) https://www.youtube.com/watch?v=zCf-PwXsG_E\nFollowing this one!!: https://www.instructables.com/Making-the-Ultimate-Class-E-Musical-Tesla-Coil-Sin/\nTutorial for making a small Spark Gap Tesla Coil: https://rimstar.org/science_electronics_projects/tesla_coil_spark_gap_small.htm\n2 pt Video of guy making a simple small tesla coil work with audio https://www.youtube.com/watch?v=Ca2e3evwVK0"
   }
 ]
