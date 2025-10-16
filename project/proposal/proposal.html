@@ -236,25 +236,34 @@ ul.task-list li input[type="checkbox"] {
 <p>The riskiest element of this project is going to be calculating and creating a functioning Tesla coil with high voltage safety elements, and handling the inter-IC communication protocols to communicate the live streaming music information in a format suitable for usage on the tesla coil.</p>
 <section id="design-success-conditions" class="level3">
 <h3 class="anchored" data-anchor-id="design-success-conditions">Design Success Conditions</h3>
-<p>To accomplish the project, we must have a system which: Connects via bluetooth to a user’s device Streams live music from the previous device through the MCU and FPGA Tesla Coil Component creates high voltage sparks The sparks toggle on and off at an appropriate frequency to somewhat match the music The music is audible to humans with a reasonably safe distance from the tesla coil</p>
+<p>To accomplish the project, we must have a system which: Connects via bluetooth to a user’s device</p>
+<p>Streams live music from the previous device through the MCU and FPGA</p>
+<p>Tesla Coil Component creates high voltage sparks</p>
+<p>The sparks toggle on and off at an appropriate frequency to somewhat match the music</p>
+<p>The music is audible to humans with a reasonably safe distance from the tesla coil</p>
 </section>
 <section id="specifications" class="level3">
 <h3 class="anchored" data-anchor-id="specifications">Specifications</h3>
 <section id="bluetooth" class="level4">
 <h4 class="anchored" data-anchor-id="bluetooth">Bluetooth</h4>
-<p>Connects to transmitter Transmits signal to MCU over SPI</p>
+<p>Connects to transmitter</p>
+<p>Transmits signal to MCU over SPI</p>
 </section>
 <section id="mcu" class="level4">
 <h4 class="anchored" data-anchor-id="mcu">MCU</h4>
-<p>Receives SPI information from Bluetooth module Converts to I2S to send to FPGA</p>
+<p>Receives SPI information from Bluetooth module</p>
+<p>Converts to I2S to send to FPGA</p>
 </section>
 <section id="fpga" class="level4">
 <h4 class="anchored" data-anchor-id="fpga">FPGA</h4>
-<p>Receives I2S information from MCU Processes information and outputs in desired format for analog circuit</p>
+<p>Receives I2S information from MCU</p>
+<p>Processes information and outputs in desired format for analog circuit</p>
 </section>
 <section id="tesla-coil" class="level4">
 <h4 class="anchored" data-anchor-id="tesla-coil">Tesla Coil</h4>
-<p>Receives input from FPGA Implements volume control Plays audio on the Tesla coil</p>
+<p>Receives input from FPGA</p>
+<p>Implements volume control</p>
+<p>Plays audio on the Tesla coil</p>
 </section>
 </section>
 </section>
