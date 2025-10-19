@@ -14,7 +14,9 @@
 #define quadencB PA2
 #define DELAY_TIM TIM2
 
-void randname(void);
 
 
+void setupChip(void);
+void initializeTimer(void);
+void configureInterrupts(void);
 #endif // MAIN_H
