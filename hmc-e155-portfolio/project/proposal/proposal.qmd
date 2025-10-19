@@ -1,0 +1,115 @@
+---
+title: "Project Proposal"
+description: ""
+author: "Sorin Jayaweera"
+date: "10/15/2025"
+categories:
+    -  BOM
+    - Schedule
+    - Specifications
+draft: false
+   
+---
+
+## Description
+
+This project uses the STM32L432KC Microcontroller, iCE40 UP5K FPGA, and an HC-05 bluetooth module to receive an audio signal over bluetooth and play it on a Tesla coil. The HC-05 will receive a real time bluetooth audio signal and transmit it over SPI to the STM32, which will convert the music into a list of active frequencies and transmit to the iCE40 UP5K over I2S (Inter-IC Sound). The iCE40 UP5K will output a square wave to control the power source of a miniature Tesla coil, which will effectively play the music. 
+
+The riskiest element of this project is going to be calculating and creating a functioning Tesla coil with high voltage safety elements, and handling the inter-IC communication protocols to communicate the live streaming music information in a format suitable for usage on the tesla coil.  
+
+
+### Design Success Conditions
+To accomplish the project, we must have a system which:
+Connects via bluetooth to a user’s device
+
+Streams live music from the previous device through the MCU and FPGA
+
+Tesla Coil Component creates high voltage sparks
+
+The sparks toggle on and off at an appropriate frequency to somewhat match the music
+
+The music is audible to humans with a reasonably safe distance from the tesla coil
+
+### Specifications
+#### Bluetooth
+
+Connects to transmitter
+
+Transmits signal to MCU over SPI
+
+#### MCU
+Receives SPI information from Bluetooth module
+
+Converts to I2S to send to FPGA
+
+#### FPGA
+Receives I2S information from MCU
+
+Processes information and outputs in desired format for analog circuit
+
+#### Tesla Coil
+Receives input from FPGA
+
+Implements volume control
+
+Plays audio on the Tesla coil
+
+
+## Schedule
+[Schedule](https://docs.google.com/spreadsheets/d/1ksiDLid-R-NYIbq2FQ6KwK4yjERst56szRpylCouQUo/edit?gid=0#gid=0)
+
+## BOM
+[BOM](https://docs.google.com/spreadsheets/d/1PpSJdLAugirSvzMBNCxlbClIvVkomqqivFFxnm3hw_g/edit?gid=0#gid=0)
+
+### Project Flow Diagram
+
+## FPGA Design Details
+
+The iCE40 UP5K FPGA will receive the audio data from the STM32 over I2S (Inter-IC Sound), a protocol designed for transmitting stereo audio over three wires. The FPGA will unpack these packets that transmit left and right channels of audio over the same line and convert them into a single square wave with each rising and falling edge from both left and right channels. 
+
+## MCU Design Details	
+The main purpose of the STM32 in this project is to facilitate communication between the bluetooth transmitter and the FPGA by using a JDY-31 bluetooth module and implementing two communication protocols. The STM32 will communicate with the JDY-31 bluetooth module over SPI and then repackage the data to be transmitted over I2S to the FPGA. 
+
+![](/images/proposal/Project_flow.png)
+
+## Tesla Coil Design
+
+### Driving Circuit
+
+![](/images/proposal/teslacoil_schematic.png)
+
+### Tesla Coil Calculations
+[Calculations](https://docs.google.com/spreadsheets/d/109igXfaqVS3fRfR9IeJHc-fNuv5fjdSeQtVGv-yPBRM/edit?gid=0#gid=0)
+
+## Resourses and Acknowledgements
+### Micro Ps Related
+
+I2S communication protocol:
+https://flexpcb.org/i2s-protocol-the-beginners-ultimate-guide/
+Summary:
+Transmitting a number, clock, and a line for either left or right audio channel.
+
+### Tesla coil
+
+Simple Class E tesla coil with circuit and coil parameters powered by 3.5mm jack with video:
+https://hackaday.io/project/188598-making-the-ultimate-class-e-musical-tesla-coil
+https://www.youtube.com/watch?v=Hez-R-WF5P0
+
+Instructable for the hackaday
+https://www.instructables.com/Building-the-Ultimate-Solid-State-Tesla-Coil-MUSIC/
+
+Explaining the circuit design used by Hackaday (WATCH)
+https://www.youtube.com/watch?v=zCf-PwXsG_E
+
+Following this one!!:
+https://www.instructables.com/Making-the-Ultimate-Class-E-Musical-Tesla-Coil-Sin/
+
+
+Tutorial for making a small Spark Gap Tesla Coil: https://rimstar.org/science_electronics_projects/tesla_coil_spark_gap_small.htm
+
+2 pt Video of guy making a simple small tesla coil work with audio
+https://www.youtube.com/watch?v=Ca2e3evwVK0
+
+
+
+

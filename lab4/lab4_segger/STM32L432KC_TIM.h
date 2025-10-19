@@ -38,15 +38,15 @@ typedef struct
    __IO uint32_t RCR;   /* Repitition Counter Reg   0x30 */
    __IO uint32_t CCR1;  /* Capture Compare Reg      0x34 */
    __IO uint32_t CCR2;  /* Caputre Compare Reg 2    0x38 */
-  uint32_t reserved9;    /*                         0x3c */
-  uint32_t reserved0;    /*                         0x40 */
+  uint32_t reserved0;    /*                         0x3C */
+  uint32_t reserved1;    /*                         0x40 */
    __IO uint32_t BDTR;  /* Break dead time reg      0x44 */
    __IO uint32_t DCR;   /* DMA Control Reg          0x48 */
-   __IO uint32_t DMAR;  /* DMA addr full transfer   0x4c */
+   __IO uint32_t DMAR;  /* DMA addr full transfer   0x4C */
    __IO uint32_t OR1;   /* Option Reg 1             0x50 */
-   uint32_t reserved1;   /* Option Reg 1            0x54 */
-   uint32_t reserved2;   /* Option Reg 1            0x58 */
-   uint32_t reserved3;   /* Option Reg 1            0x5C */
+   uint32_t reserved2;   /* Option Reg 1            0x54 */
+   uint32_t reserved3;   /* Option Reg 1            0x58 */
+   uint32_t reserved4;   /* Option Reg 1            0x5C */
    __IO uint32_t OR2;   /* Option Reg 2             0x60 */
 
 } TIM_TypeDef;
@@ -59,11 +59,11 @@ typedef struct
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
-void initializeTIM15PWM(void);
+void initializeTIM16PWM(void);
 void initializeTIM15Counter(void);
 void initializeTIM16Counter(void);
-void setTIM15FREQ(int freqHz);
-void setTIM16Count(int ms);
+void setTIM16FREQ(int freqHz);
+void setTIM15Count(int ms);
 
 
 #endif
