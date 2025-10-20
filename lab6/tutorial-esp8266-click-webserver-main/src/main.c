@@ -22,6 +22,8 @@ Date: 10/19/25
 //#define SPI_MOSI PB5
 //#define SPI_MISO PB4
 
+// USART 9 10 2 15
+
 /////////////////////////////////////////////////////////////////
 // Provided Constants and Functions
 /////////////////////////////////////////////////////////////////
@@ -66,11 +68,11 @@ int updateLEDStatus(char request[])
 
 
 // temperature sensor resolution
-int tempres;
+int tempres ;
 int templastres; // previous to see if it changes
 
 int updateTempResolution(char request[]){
-  int resolution = 8;
+  int resolution = 0;
   if(inString(request,"res8") == 1){resolution = 8;}
   if(inString(request,"res9") == 1){resolution = 9;}
   if(inString(request,"res10") == 1){resolution = 10;}
@@ -84,7 +86,7 @@ int updateTempResolution(char request[]){
 // Solution Functions
 /////////////////////////////////////////////////////////////////
 
-int main(void) {
+ int main(void) {
   configureFlash();
   configureClock();
 
@@ -92,7 +94,9 @@ int main(void) {
   // cpol: don't care. Choose 0 when idle
   // cpha: first clock edge
   // br, cpol, cpha
-  initSPI( 0b011, 0,0); 
+
+  //TODO: Uncomment
+  initSPI( 0b011, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -117,16 +121,17 @@ int main(void) {
     // Keep going until you get end of line character
     while(inString(request, "\n") == -1) {
       // Wait for a complete request to be transmitted before processing
-      while(!(USART->ISR & USART_ISR_RXNE));
+      while(!(USART->ISR & USART_ISR_RXNE)); // read data register not empty
       request[charIndex++] = readChar(USART);
     }
   
     // Update string with current LED state
     int led_status = updateLEDStatus(request);
     
-    tempres = updateTempResolution(request);
-    
-    // IF THE USER WANTS TO CHANGE THE RESOLUTION
+
+    int tmp = updateTempResolution(request);
+    if(tmp != 0){tempres = tmp;}
+    //// IF THE USER WANTS TO CHANGE THE RESOLUTION
     if(templastres != templastres){
       templastres = tempres;
       
@@ -171,9 +176,13 @@ int main(void) {
     }
 
     digitalWrite(SPI_CE, 0);
+    char temperaturebuffer[100];// = {0};
+    char resolutionbuffer[100]; //= {0};
+    //memset(temperaturebuffer, 0, sizeof(temperaturebuffer));
+    //memset(resolutionbuffer, 0, sizeof(resolutionbuffer));
 
-    char temperaturebuffer[50];
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
+    sprintf(resolutionbuffer,"Resolution: %d",tempres);
 
     char ledStatusStr[20];
     if (led_status == 1)
@@ -189,11 +198,16 @@ int main(void) {
     sendString(USART, "<p>");
     sendString(USART, ledStatusStr);
     sendString(USART, "</p>");
-    
-
+  
     sendString(USART, "<p>");
     sendString(USART, temperaturebuffer);
     sendString(USART,"</p>");
+    
+    sendString(USART, "<p>");
+    sendString(USART, resolutionbuffer);
+    sendString(USART,"</p>");
+
+    sendString(USART, resStr);
   
     sendString(USART, webpageEnd);
   }
