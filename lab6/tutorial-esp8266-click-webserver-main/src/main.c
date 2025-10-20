@@ -96,7 +96,7 @@ int updateTempResolution(char request[]){
   // br, cpol, cpha
 
   //TODO: Uncomment
-  initSPI( 0b011, 0,1);
+  //initSPI( 0b011, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
