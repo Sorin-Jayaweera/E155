@@ -13,7 +13,7 @@ Date: 10/19/25
 #include <stdlib.h>
 #include <stdio.h>
 
-#define LED_PIN PB3
+#define LED_PIN PA5
 #define BUFF_LEN 32
 
 //#define SPI_CE PA11
@@ -72,8 +72,8 @@ int main(void) {
   
   initTIM(TIM15);
 
-  pinMode(PB3, GPIO_OUTPUT);
-  digitalWrite(PB3, 0);
+  pinMode(LED_PIN, GPIO_OUTPUT);
+  digitalWrite(LED_PIN, 0);
   
   USART_TypeDef * USART = initUSART(USART1_ID, 125000);
 
@@ -97,6 +97,9 @@ int main(void) {
     // Update string with current LED state
   
     int led_status = updateLEDStatus(request);
+    double temperature = 109;
+    char temperaturebuffer[50];
+    sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
 
     char ledStatusStr[20];
     if (led_status == 1)
@@ -109,13 +112,14 @@ int main(void) {
     sendString(USART, ledStr); // button for controlling LED
 
     sendString(USART, "<h2>LED Status</h2>");
-
-
     sendString(USART, "<p>");
     sendString(USART, ledStatusStr);
     sendString(USART, "</p>");
+    
 
-    sendString(USART, "<p>This is a new line!</p>");
+    sendString(USART, "<p>");
+    sendString(USART, temperaturebuffer);
+    sendString(USART,"</p>");
   
     sendString(USART, webpageEnd);
   }
