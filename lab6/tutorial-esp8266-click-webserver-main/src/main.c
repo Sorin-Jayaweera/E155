@@ -64,7 +64,11 @@ int main(void) {
   configureFlash();
   configureClock();
 
-  //initSPI(int br, int cpol, int cpha); 
+  // br: needs to yield ~ 5 MHz. 80 MHz SYSCLK/5MHZ = 16, option 011
+  // cpol: don't care. Choose 0 when idle
+  // cpha: first clock edge
+  // br, cpol, cpha
+  initSPI( 0b011, 0,0); 
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -82,7 +86,9 @@ int main(void) {
     Requests take the form of '/REQ:<tag>\n', with TAG begin <= 10 characters.
     Therefore the request[] array must be able to contain 18 characters.
     */
-  
+    char msg = spiSendReceive('0');
+
+
     // Receive web request from the ESP
     char request[BUFF_LEN] = "                  "; // initialize to known value
     int charIndex = 0;
