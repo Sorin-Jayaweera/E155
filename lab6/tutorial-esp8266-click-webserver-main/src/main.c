@@ -12,6 +12,7 @@ Date: 10/19/25
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #define LED_PIN PA5
 #define BUFF_LEN 32
@@ -32,6 +33,13 @@ char* webpageStart = "<!DOCTYPE html><html><head><title>E155 Web Server Demo Web
 	<body><h1>E155 Web Server Demo Webpage</h1>";
 char* ledStr = "<p>LED Control:</p><form action=\"ledon\"><input type=\"submit\" value=\"Turn the LED on!\"></form>\
 	<form action=\"ledoff\"><input type=\"submit\" value=\"Turn the LED off!\"></form>";
+
+char* resStr = "<p>Resolution control:</p><form action=\"res8\"><input type=\"submit\" value=\"8 bit\"></form>\
+        <form action=\"res9\"><input type=\"submit\" value=\"9 bit\"></form>\
+        <form action=\"res10\"><input type=\"submit\" value=\"10 bit\"></form>\
+        <form action=\"res11\"><input type=\"submit\" value=\"11 bit\"></form>\
+        <form action=\"res12\"><input type=\"submit\" value=\"12 bit\"></form>";
+
 char* webpageEnd   = "</body></html>";
 
 //determines whether a given character sequence is in a char array request, returning 1 if present, -1 if not present
@@ -56,6 +64,22 @@ int updateLEDStatus(char request[])
 	return led_status;
 }
 
+
+// temperature sensor resolution
+int tempres;
+int templastres; // previous to see if it changes
+//
+int updateTempResolution(char request[]){
+  int resolution = 8;
+  if(inString(request,"res8") == 1){resolution = 8;}
+  if(inString(request,"res9") == 1){resolution = 9;}
+  if(inString(request,"res10") == 1){resolution = 10;}
+  if(inString(request,"res11") == 1){resolution = 11;}
+  if(inString(request,"res12") == 1){resolution = 12;}
+
+  return resolution;
+  
+}
 /////////////////////////////////////////////////////////////////
 // Solution Functions
 /////////////////////////////////////////////////////////////////
@@ -86,7 +110,7 @@ int main(void) {
     Requests take the form of '/REQ:<tag>\n', with TAG begin <= 10 characters.
     Therefore the request[] array must be able to contain 18 characters.
     */
-    char msg = spiSendReceive('0');
+    char tempSensorRead = spiSendReceive('0'); //TODO: Make the actual code for addr to read data
 
 
     // Receive web request from the ESP
@@ -103,7 +127,54 @@ int main(void) {
     // Update string with current LED state
   
     int led_status = updateLEDStatus(request);
-    double temperature = 109;
+    
+    tempres = updateTempResolution(request);
+    
+    // IF THE USER WANTS TO CHANGE THE RESOLUTION
+    if(templastres != templastres){
+      templastres = tempres;
+      
+      // enable communication
+      digitalWrite(SPI_CE, 1); // enable high
+      int resReg = 0;
+      spiSendReceive('1'); // Write cycles
+      // most to least significant bits.
+      // 111 1Shot(0) ### SD(0)
+      switch(tempres){
+        case 8:
+          spiSendReceive(0b11100000); // 000 for 8 bit
+        case 9:
+          spiSendReceive(0b11100010); // 001 9 bit
+        case 10:
+          spiSendReceive(0b11100100); // 010
+        case 11: 
+          spiSendReceive(0b11100110); // 011
+        case 12:
+          spiSendReceive(0b11101000); // 1xx
+      }
+    }
+
+    // read temperature
+    // 01 LSB
+    // 02 MSB
+    
+    char LSB = spiSendReceive(0b01);// addr 1
+    char MSB = spiSendReceive(0b10);// addr 2
+    double temperature;
+    // above zero powers of two
+    for (int i = 7; i >=0; i--){
+      int bit = (1 << i) & MSB;
+      temperature = temperature + bit *pow(2,(7-i));    
+    }
+    // below zero powers of two
+    for (int i = 7; i >=4; i--){
+      int bit = (1 << i) & LSB;
+      temperature = temperature + bit *pow(2,(6-i));    
+    }
+
+
+
+
     char temperaturebuffer[50];
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
 
