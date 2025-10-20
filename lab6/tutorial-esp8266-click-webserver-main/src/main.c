@@ -137,7 +137,7 @@ int updateTempResolution(char request[]){
 
       // most to least significant bits.
       // 111 1Shot(0) ### SD(0)
-      switch(tempres){
+      switch(resolution){
         spiSendReceive(0x80);
         case 8:
           spiSendReceive(0b11100000); // 000 for 8 bit
@@ -156,26 +156,28 @@ int updateTempResolution(char request[]){
      //read temperature
      //01 LSB
      //02 MSB
-    digitalWrite(SPI_CE, 1); 
-    char LSB = spiSendReceive(0x1);// addr 1
-    char MSB = spiSendReceive(0x2);// addr 2
+    //digitalWrite(SPI_CE, 1); 
+    //char LSB = spiSendReceive(0x1);// addr 1
+    //char MSB = spiSendReceive(0x2);// addr 2
     
-    uint8_t resolutionMask;
-    switch(resolution){
-    case 8:
-      resolutionMask = 0b00000000;
-    case 9:
-      resolutionMask = 0b10000000;
-    case 10:
-      resolutionMask = 0b11000000;
-    case 11:
-      resolutionMask = 0b11100000;
-    case 12:
-      resolutionMask = 0b11110000;
-    }
-    LSB &= resolutionMask; 
-    int16_t temperature_catenation = (MSB << 8) | LSB;
-    double temperature = temperature_catenation >> 4;
+    //uint8_t resolutionMask;
+    //switch(resolution){
+    //case 8:
+    //  resolutionMask = 0x00;//0b00000000;
+    //case 9:
+    //  resolutionMask = 0x80;//0b10000000;
+    //case 10:
+    //  resolutionMask = 0xC0;//0b11000000;
+    //case 11:
+    //  resolutionMask = 0xE0;//0b11100000;
+    //case 12:
+    //  resolutionMask = 0b11110000;
+    //}
+    //LSB &= resolutionMask; 
+    ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
+    //int16_t temperature_rawcatenation = (MSB << 8) | LSB;
+    //double temperature = temperature_rawcatenation >> 4; // put the decimals in place
+    double temperature = -12.4;
 
     digitalWrite(SPI_CE, 0);
     char temperaturebuffer[100];// = {0};
