@@ -18,4 +18,6 @@ Output/Debug/Obj/ESP8266\ Webserver\ Demo/main.o: \
   ..\lib\STM32L432KC_GPIO.h ..\lib\STM32L432KC_RCC.h \
   ..\lib\STM32L432KC_TIM.h ..\lib\STM32L432KC_FLASH.h \
   ..\lib\STM32L432KC_USART.h STM32L432KC_SPI.h \
-  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\string.h
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\string.h \
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\math.h \
+  C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\__SEGGER_RTL_FP.h

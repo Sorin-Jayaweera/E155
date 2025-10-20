@@ -45,7 +45,7 @@ char* webpageEnd   = "</body></html>";
 //determines whether a given character sequence is in a char array request, returning 1 if present, -1 if not present
 int inString(char request[], char des[]) {
 	if (strstr(request, des) != NULL) {return 1;}
-	return -1;
+	return 0;
 }
 
 int updateLEDStatus(char request[])
