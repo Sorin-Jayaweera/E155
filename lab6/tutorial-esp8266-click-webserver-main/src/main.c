@@ -49,10 +49,10 @@ int inString(char request[], char des[]) {
 	if (strstr(request, des) != NULL) {return 1;}
 	return -1;
 }
+int led_status = 0;
 
 int updateLEDStatus(char request[])
 {
-	int led_status = 0;
 	// The request has been received. now process to determine whether to turn the LED on or off
 	if (inString(request, "ledoff")==1) {
 		digitalWrite(LED_PIN, PIO_LOW);
@@ -67,12 +67,10 @@ int updateLEDStatus(char request[])
 }
 
 
-// temperature sensor resolution
-int tempres ;
-int templastres; // previous to see if it changes
-
+int resolution = 8;
+int last_resolution = 8;
 int updateTempResolution(char request[]){
-  int resolution = 0;
+
   if(inString(request,"res8") == 1){resolution = 8;}
   if(inString(request,"res9") == 1){resolution = 9;}
   if(inString(request,"res10") == 1){resolution = 10;}
@@ -126,14 +124,12 @@ int updateTempResolution(char request[]){
     }
   
     // Update string with current LED state
-    int led_status = updateLEDStatus(request);
+    updateLEDStatus(request);
+    updateTempResolution(request);
     
-
-    int tmp = updateTempResolution(request);
-    if(tmp != 0){tempres = tmp;}
     //// IF THE USER WANTS TO CHANGE THE RESOLUTION
-    if(templastres != templastres){
-      templastres = tempres;
+    if(resolution != last_resolution){
+      last_resolution = resolution;
       
       // enable communication
       digitalWrite(SPI_CE, 1); // enable high
@@ -163,17 +159,23 @@ int updateTempResolution(char request[]){
     digitalWrite(SPI_CE, 1); 
     char LSB = spiSendReceive(0x1);// addr 1
     char MSB = spiSendReceive(0x2);// addr 2
-    double temperature;
-    // above zero powers of two
-    for (int i = 7; i >=0; i--){
-      int bit = (1 << i) & MSB;
-      temperature = temperature + bit *pow(2,(7-i));    
+    
+    uint8_t resolutionMask;
+    switch(resolution){
+    case 8:
+      resolutionMask = 0b00000000;
+    case 9:
+      resolutionMask = 0b10000000;
+    case 10:
+      resolutionMask = 0b11000000;
+    case 11:
+      resolutionMask = 0b11100000;
+    case 12:
+      resolutionMask = 0b11110000;
     }
-    // below zero powers of two
-    for (int i = 7; i >=4; i--){
-      int bit = (1 << i) & LSB;
-      temperature = temperature + bit *pow(2,(6-i));    
-    }
+    LSB &= resolutionMask; 
+    int16_t temperature_catenation = (MSB << 8) | LSB;
+    double temperature = temperature_catenation >> 4;
 
     digitalWrite(SPI_CE, 0);
     char temperaturebuffer[100];// = {0};
@@ -182,7 +184,7 @@ int updateTempResolution(char request[]){
     //memset(resolutionbuffer, 0, sizeof(resolutionbuffer));
 
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
-    sprintf(resolutionbuffer,"Resolution: %d",tempres);
+    sprintf(resolutionbuffer,"Resolution: %d",resolution);
 
     char ledStatusStr[20];
     if (led_status == 1)
