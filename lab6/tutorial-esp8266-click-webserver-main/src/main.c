@@ -94,7 +94,7 @@ int updateTempResolution(char request[]){
   // br, cpol, cpha
 
   //TODO: Uncomment
-  //initSPI( 0b011, 0,1);
+  initSPI( 0b011, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -108,7 +108,7 @@ int updateTempResolution(char request[]){
   USART_TypeDef * USART = initUSART(USART1_ID, 125000);
 
   while(1) {
-    /* Wait for ESP8266 to send a request.
+    /* Wait for ESP8266 to send a request.    
     Requests take the form of '/REQ:<tag>\n', with TAG begin <= 10 characters.
     Therefore the request[] array must be able to contain 18 characters.
     */
@@ -156,28 +156,28 @@ int updateTempResolution(char request[]){
      //read temperature
      //01 LSB
      //02 MSB
-    //digitalWrite(SPI_CE, 1); 
-    //char LSB = spiSendReceive(0x1);// addr 1
-    //char MSB = spiSendReceive(0x2);// addr 2
+    digitalWrite(SPI_CE, 1); 
+    char LSB = spiSendReceive(0x1);// addr 1
+    char MSB = spiSendReceive(0x2);// addr 2
     
-    //uint8_t resolutionMask;
-    //switch(resolution){
-    //case 8:
-    //  resolutionMask = 0x00;//0b00000000;
-    //case 9:
-    //  resolutionMask = 0x80;//0b10000000;
-    //case 10:
-    //  resolutionMask = 0xC0;//0b11000000;
-    //case 11:
-    //  resolutionMask = 0xE0;//0b11100000;
-    //case 12:
-    //  resolutionMask = 0b11110000;
-    //}
-    //LSB &= resolutionMask; 
-    ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
-    //int16_t temperature_rawcatenation = (MSB << 8) | LSB;
-    //double temperature = temperature_rawcatenation >> 4; // put the decimals in place
-    double temperature = -12.4;
+    uint8_t resolutionMask;
+    switch(resolution){
+    case 8:
+      resolutionMask = 0x00;//0b00000000;
+    case 9:
+      resolutionMask = 0x80;//0b10000000;
+    case 10:
+      resolutionMask = 0xC0;//0b11000000;
+    case 11:
+      resolutionMask = 0xE0;//0b11100000;
+    case 12:
+      resolutionMask = 0xF0;//0b11110000;
+    }
+    LSB &= resolutionMask; 
+    //TODO: This is twos compliment in the sensor. How does C handle signed ints?
+    int16_t temperature_rawcatenation = (MSB << 8) | LSB;
+    double temperature = temperature_rawcatenation >> 4; // put the decimals in place
+    //double temperature = -12.4;
 
     digitalWrite(SPI_CE, 0);
     char temperaturebuffer[100];// = {0};
