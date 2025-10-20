@@ -45,7 +45,7 @@ char* webpageEnd   = "</body></html>";
 //determines whether a given character sequence is in a char array request, returning 1 if present, -1 if not present
 int inString(char request[], char des[]) {
 	if (strstr(request, des) != NULL) {return 1;}
-	return 0;
+	return -1;
 }
 
 int updateLEDStatus(char request[])
@@ -88,7 +88,7 @@ int main(void) {
   configureFlash();
   configureClock();
 
-  // br: needs to yield ~ 5 MHz. 80 MHz SYSCLK/5MHZ = 16, option 011
+  // br: needs to yield 5 MHz. 80 MHz SYSCLK/5MHZ = 16, option 011
   // cpol: don't care. Choose 0 when idle
   // cpha: first clock edge
   // br, cpol, cpha
@@ -110,9 +110,6 @@ int main(void) {
     Requests take the form of '/REQ:<tag>\n', with TAG begin <= 10 characters.
     Therefore the request[] array must be able to contain 18 characters.
     */
-    char tempSensorRead = spiSendReceive('0'); //TODO: Make the actual code for addr to read data
-
-
     // Receive web request from the ESP
     char request[BUFF_LEN] = "                  "; // initialize to known value
     int charIndex = 0;
@@ -125,58 +122,61 @@ int main(void) {
     }
   
     // Update string with current LED state
-  
     int led_status = updateLEDStatus(request);
     
-    tempres = updateTempResolution(request);
+    //tempres = updateTempResolution(request);
     
     // IF THE USER WANTS TO CHANGE THE RESOLUTION
-    if(templastres != templastres){
-      templastres = tempres;
+    //if(templastres != templastres){
+    //  templastres = tempres;
       
-      // enable communication
-      digitalWrite(SPI_CE, 1); // enable high
-      int resReg = 0;
-      spiSendReceive('1'); // Write cycles
-      // most to least significant bits.
-      // 111 1Shot(0) ### SD(0)
-      switch(tempres){
-        case 8:
-          spiSendReceive(0b11100000); // 000 for 8 bit
-        case 9:
-          spiSendReceive(0b11100010); // 001 9 bit
-        case 10:
-          spiSendReceive(0b11100100); // 010
-        case 11: 
-          spiSendReceive(0b11100110); // 011
-        case 12:
-          spiSendReceive(0b11101000); // 1xx
-      }
-    }
+    //  // enable communication
+    //  digitalWrite(SPI_CE, 1); // enable high
+    //  int resReg = 0;
+
+    //  // most to least significant bits.
+    //  // 111 1Shot(0) ### SD(0)
+    //  switch(tempres){
+    //    spiSendReceive(0x80);
+    //    case 8:
+    //      spiSendReceive(0b11100000); // 000 for 8 bit
+    //    case 9:
+    //      spiSendReceive(0b11100010); // 001 9 bit
+    //    case 10:
+    //      spiSendReceive(0b11100100); // 010
+    //    case 11: 
+    //      spiSendReceive(0b11100110); // 011
+    //    case 12:
+    //      spiSendReceive(0b11101000); // 1xx
+    //  }
+      
+    //  digitalWrite(SPI_CE, 0); // 
+    //}
 
     // read temperature
     // 01 LSB
     // 02 MSB
-    
-    char LSB = spiSendReceive(0b01);// addr 1
-    char MSB = spiSendReceive(0b10);// addr 2
-    double temperature;
-    // above zero powers of two
-    for (int i = 7; i >=0; i--){
-      int bit = (1 << i) & MSB;
-      temperature = temperature + bit *pow(2,(7-i));    
-    }
-    // below zero powers of two
-    for (int i = 7; i >=4; i--){
-      int bit = (1 << i) & LSB;
-      temperature = temperature + bit *pow(2,(6-i));    
-    }
+    //digitalWrite(SPI_CE, 1); // 
+    //char LSB = spiSendReceive(0x1);// addr 1
+    //char MSB = spiSendReceive(0x2);// addr 2
+    //double temperature;
+    //// above zero powers of two
+    //for (int i = 7; i >=0; i--){
+    //  int bit = (1 << i) & MSB;
+    //  temperature = temperature + bit *pow(2,(7-i));    
+    //}
+    //// below zero powers of two
+    //for (int i = 7; i >=4; i--){
+    //  int bit = (1 << i) & LSB;
+    //  temperature = temperature + bit *pow(2,(6-i));    
+    //}
+
+    //digitalWrite(SPI_CE, 0);
 
 
 
-
-    char temperaturebuffer[50];
-    sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
+    //char temperaturebuffer[50];
+    //sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
 
     char ledStatusStr[20];
     if (led_status == 1)
@@ -194,9 +194,9 @@ int main(void) {
     sendString(USART, "</p>");
     
 
-    sendString(USART, "<p>");
-    sendString(USART, temperaturebuffer);
-    sendString(USART,"</p>");
+    //sendString(USART, "<p>");
+    //sendString(USART, temperaturebuffer);
+    //sendString(USART,"</p>");
   
     sendString(USART, webpageEnd);
   }
