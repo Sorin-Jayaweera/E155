@@ -85,7 +85,7 @@ int updateTempResolution(char request[]){
 // Solution Functions
 /////////////////////////////////////////////////////////////////
 
- int main(void) {
+int main(void) {
   configureFlash();
   configureClock();
 
@@ -95,7 +95,7 @@ int updateTempResolution(char request[]){
   // br, cpol, cpha
 
   //TODO: Uncomment
-  initSPI( 0b011, 0,1);
+  //initSPI( 0b011, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -107,7 +107,7 @@ int updateTempResolution(char request[]){
   digitalWrite(LED_PIN, 0);
   
   //TODO: Changed from USART1_ID. 
-  USART_TypeDef * USART = initUSART(USART2_ID, 125000);
+  USART_TypeDef * USART = initUSART(USART1_ID, 125000);
 
   while(1) {
     /* Wait for ESP8266 to send a request.    
@@ -130,58 +130,56 @@ int updateTempResolution(char request[]){
     updateTempResolution(request);
     
     //// IF THE USER WANTS TO CHANGE THE RESOLUTION
-    if(resolution != last_resolution){
-      last_resolution = resolution;
-      
-      // enable communication
-      digitalWrite(SPI_CE, 1); // enable high
-      int resReg = 0;
-
-      // most to least significant bits.
-      // 111 1Shot(0) ### SD(0)
-      switch(resolution){
-        spiSendReceive(0x80);
-        case 8:
-          spiSendReceive(0b11100000); // 000 for 8 bit
-        case 9:
-          spiSendReceive(0b11100010); // 001 9 bit
-        case 10:
-          spiSendReceive(0b11100100); // 010
-        case 11: 
-          spiSendReceive(0b11100110); // 011
-        case 12:
-          spiSendReceive(0b11101000); // 1xx
-      }
-      digitalWrite(SPI_CE, 0); // 
-    }
+    //if(resolution != last_resolution){
+    //  last_resolution = resolution;
+    //  // enable communication
+    //  //digitalWrite(SPI_CE, 1); // enable high
+    //  //// most to least significant bits.
+    //  //// 111 1Shot(0) ### SD(0)
+    //  //switch(resolution){
+    //  //  spiSendReceive(0x80);
+    //  //  case 8:
+    //  //    spiSendReceive(0b11100000); // 000 for 8 bit
+    //  //  case 9:
+    //  //    spiSendReceive(0b11100010); // 001 9 bit
+    //  //  case 10:
+    //  //    spiSendReceive(0b11100100); // 010
+    //  //  case 11: 
+    //  //    spiSendReceive(0b11100110); // 011
+    //  //  case 12:
+    //  //    spiSendReceive(0b11101000); // 1xx
+    //  //}
+    //  //digitalWrite(SPI_CE, 0); // 
+    //}
 
      //read temperature
      //01 LSB
      //02 MSB
-    digitalWrite(SPI_CE, 1); 
-    char LSB = spiSendReceive(0x1);// addr 1
-    char MSB = spiSendReceive(0x2);// addr 2
+    //digitalWrite(SPI_CE, 1); 
+    //char LSB = spiSendReceive(0x1);// addr 1
+    //char MSB = spiSendReceive(0x2);// addr 2
     
-    uint8_t resolutionMask;
-    switch(resolution){
-    case 8:
-      resolutionMask = 0x00;//0b00000000;
-    case 9:
-      resolutionMask = 0x80;//0b10000000;
-    case 10:
-      resolutionMask = 0xC0;//0b11000000;
-    case 11:
-      resolutionMask = 0xE0;//0b11100000;
-    case 12:
-      resolutionMask = 0xF0;//0b11110000;
-    }
-    LSB &= resolutionMask; 
-    //TODO: This is twos compliment in the sensor. How does C handle signed ints?
-    int16_t temperature_rawcatenation = (MSB << 8) | LSB;
-    double temperature = temperature_rawcatenation >> 4; // put the decimals in place
-    //double temperature = -12.4;
+    //TODO: Uncomment
+    //uint8_t resolutionMask;
+    //switch(resolution){
+    //case 8:
+    //  resolutionMask = 0x00;//0b00000000;
+    //case 9:
+    //  resolutionMask = 0x80;//0b10000000;
+    //case 10:
+    //  resolutionMask = 0xC0;//0b11000000;
+    //case 11:
+    //  resolutionMask = 0xE0;//0b11100000;
+    //case 12:
+    //  resolutionMask = 0xF0;//0b11110000;
+    //}
+    //LSB &= resolutionMask; 
+    ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
+    //int16_t temperature_rawcatenation = (MSB << 8) | LSB;
+    //double temperature = temperature_rawcatenation >> 4; // put the decimals in place
+    //digitalWrite(SPI_CE, 0);
 
-    digitalWrite(SPI_CE, 0);
+    double temperature = -12.4; //TODO: Delete
     char temperaturebuffer[100];// = {0};
     char resolutionbuffer[100]; //= {0};
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
