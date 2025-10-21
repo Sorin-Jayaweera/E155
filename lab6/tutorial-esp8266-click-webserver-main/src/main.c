@@ -17,6 +17,7 @@ Date: 10/19/25
 #define LED_PIN PA5
 #define BUFF_LEN 32
 
+
 //#define SPI_CE PA11
 //#define SPI_SCK PB3
 //#define SPI_MOSI PB5
@@ -105,7 +106,8 @@ int updateTempResolution(char request[]){
   pinMode(LED_PIN, GPIO_OUTPUT);
   digitalWrite(LED_PIN, 0);
   
-  USART_TypeDef * USART = initUSART(USART1_ID, 125000);
+  //TODO: Changed from USART1_ID. 
+  USART_TypeDef * USART = initUSART(USART2_ID, 125000);
 
   while(1) {
     /* Wait for ESP8266 to send a request.    
@@ -182,9 +184,6 @@ int updateTempResolution(char request[]){
     digitalWrite(SPI_CE, 0);
     char temperaturebuffer[100];// = {0};
     char resolutionbuffer[100]; //= {0};
-    //memset(temperaturebuffer, 0, sizeof(temperaturebuffer));
-    //memset(resolutionbuffer, 0, sizeof(resolutionbuffer));
-
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
     sprintf(resolutionbuffer,"Resolution: %d",resolution);
 
