@@ -30,10 +30,10 @@ Date: 10/19/25
 /////////////////////////////////////////////////////////////////
 
 //Defining the web page in two chunks: everything before the current time, and everything after the current time
-char* webpageStart = "<!DOCTYPE html><html><head><title>E155 Web Server Demo Webpage</title>\
+char* webpageStart = "<!DOCTYPE html><html><head><title>Sorin Jayawera E155 Temp Sensor Control!</title>\
 	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\
 	</head>\
-	<body><h1>E155 Web Server Demo Webpage</h1>";
+	<body><h1>Sorin Jayawera E155 Temp Sensor Control!</h1>";
 char* ledStr = "<p>LED Control:</p><form action=\"ledon\"><input type=\"submit\" value=\"Turn the LED on!\"></form>\
 	<form action=\"ledoff\"><input type=\"submit\" value=\"Turn the LED off!\"></form>";
 
@@ -94,8 +94,7 @@ int main(void) {
   // cpha: first clock edge
   // br, cpol, cpha
 
-  //TODO: Uncomment
-  //initSPI( 0b011, 0,1);
+  initSPI( 0b011, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -106,6 +105,7 @@ int main(void) {
   pinMode(LED_PIN, GPIO_OUTPUT);
   digitalWrite(LED_PIN, 0);
   
+
   //TODO: Changed from USART1_ID. 
   USART_TypeDef * USART = initUSART(USART1_ID, 125000);
 
@@ -129,57 +129,64 @@ int main(void) {
     updateLEDStatus(request);
     updateTempResolution(request);
     
-    //// IF THE USER WANTS TO CHANGE THE RESOLUTION
-    //if(resolution != last_resolution){
-    //  last_resolution = resolution;
-    //  // enable communication
-    //  //digitalWrite(SPI_CE, 1); // enable high
-    //  //// most to least significant bits.
-    //  //// 111 1Shot(0) ### SD(0)
-    //  //switch(resolution){
-    //  //  spiSendReceive(0x80);
-    //  //  case 8:
-    //  //    spiSendReceive(0b11100000); // 000 for 8 bit
-    //  //  case 9:
-    //  //    spiSendReceive(0b11100010); // 001 9 bit
-    //  //  case 10:
-    //  //    spiSendReceive(0b11100100); // 010
-    //  //  case 11: 
-    //  //    spiSendReceive(0b11100110); // 011
-    //  //  case 12:
-    //  //    spiSendReceive(0b11101000); // 1xx
-    //  //}
-    //  //digitalWrite(SPI_CE, 0); // 
-    //}
+    // IF THE USER WANTS TO CHANGE THE RESOLUTION
+    if(resolution != last_resolution){
+      last_resolution = resolution;
+      // enable communication
+      digitalWrite(SPI_CE, 1); // enable high
+      // most to least significant bits.
+      // 111 1Shot(0) ### SD(0)
+      switch(resolution){
+        spiSendReceive(0x80);
+        case 8:
+          spiSendReceive(0b11100000); // 000 for 8 bit
+        case 9:
+          spiSendReceive(0b11100010); // 001 9 bit
+        case 10:
+          spiSendReceive(0b11100100); // 010
+        case 11: 
+          spiSendReceive(0b11100110); // 011
+        case 12:
+          spiSendReceive(0b11101000); // 1xx
+      }
+      digitalWrite(SPI_CE, 0); // 
+    }
 
      //read temperature
      //01 LSB
      //02 MSB
-    //digitalWrite(SPI_CE, 1); 
-    //char LSB = spiSendReceive(0x1);// addr 1
-    //char MSB = spiSendReceive(0x2);// addr 2
-    
+    digitalWrite(SPI_CE, 1); 
+    volatile char LSB = spiSendReceive(0x1);// addr 1
+    volatile char MSB = spiSendReceive(0x2);// addr 2
+    volatile char configRead = spiSendReceive(0x0);// addr 0
     //TODO: Uncomment
-    //uint8_t resolutionMask;
-    //switch(resolution){
-    //case 8:
-    //  resolutionMask = 0x00;//0b00000000;
-    //case 9:
-    //  resolutionMask = 0x80;//0b10000000;
-    //case 10:
-    //  resolutionMask = 0xC0;//0b11000000;
-    //case 11:
-    //  resolutionMask = 0xE0;//0b11100000;
-    //case 12:
-    //  resolutionMask = 0xF0;//0b11110000;
-    //}
-    //LSB &= resolutionMask; 
+    uint8_t resolutionMask;
+    switch(resolution){
+    case 8:
+      resolutionMask = 0x00;//0b00000000;
+      break;
+    case 9:
+      resolutionMask = 0x80;//0b10000000;
+       break;
+    case 10:
+      resolutionMask = 0xC0;//0b11000000;
+       break;
+    case 11:
+      resolutionMask = 0xE0;//0b11100000;
+       break;
+    case 12:
+      resolutionMask = 0xF0;//0b11110000;
+       break;
+    }
+    LSB &= resolutionMask; 
+    uint8_t sign = (uint8_t)(MSB >> 8); // get the sign
+    MSB &= ~(1<<8); // clear the S bit
     ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
-    //int16_t temperature_rawcatenation = (MSB << 8) | LSB;
-    //double temperature = temperature_rawcatenation >> 4; // put the decimals in place
-    //digitalWrite(SPI_CE, 0);
+    int16_t temperature_rawcatenation = (MSB << 8) | LSB;
+    double temperature = temperature_rawcatenation >> 4; // put the decimals in place
+    digitalWrite(SPI_CE, 0);
 
-    double temperature = -12.4; //TODO: Delete
+    //double temperature = -12.4; //TODO: Delete
     char temperaturebuffer[100];// = {0};
     char resolutionbuffer[100]; //= {0};
     sprintf(temperaturebuffer,"Temp (c): %.3f",temperature);
