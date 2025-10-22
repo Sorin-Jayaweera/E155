@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sorin Jayaweera">
-<meta name="dcterms.date" content="2025-08-27">
+<meta name="dcterms.date" content="2025-10-22">
 
-<title>Lab 4! – E155 Portfolio</title>
+<title>Lab 6! – E155 Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -166,19 +166,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
-  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
-  <ul class="collapse">
-  <li><a href="#block-diagram" id="toc-block-diagram" class="nav-link" data-scroll-target="#block-diagram">Block Diagram</a></li>
+  <li><a href="#logic-analyzer" id="toc-logic-analyzer" class="nav-link active" data-scroll-target="#logic-analyzer">Logic Analyzer</a></li>
   <li><a href="#schematic" id="toc-schematic" class="nav-link" data-scroll-target="#schematic">Schematic</a></li>
-  </ul></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a>
-  <ul class="collapse">
-  <li><a href="#testbench-simulation" id="toc-testbench-simulation" class="nav-link" data-scroll-target="#testbench-simulation">Testbench Simulation</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI overview</a></li>
+  <li><a href="#ai-overview" id="toc-ai-overview" class="nav-link" data-scroll-target="#ai-overview">AI Overview</a></li>
   </ul>
 </nav>
     </div>
@@ -187,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 4!</h1>
+<h1 class="title">Lab 6!</h1>
   <div class="quarto-categories">
     <div class="quarto-category">reflection</div>
     <div class="quarto-category">labreport</div>
@@ -208,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 27, 2025</p>
+      <p class="date">October 22, 2025</p>
     </div>
   </div>
   
@@ -220,32 +210,22 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Overview: The goal of this lab was to make an IOT device which could toggle an LED from a webserver, and could display temperature with a configurable resolution.</p>
+<section id="logic-analyzer" class="level2">
+<h2 class="anchored" data-anchor-id="logic-analyzer">Logic Analyzer</h2>
+<p>Spi sending resolution setting to 8 bits is displayed.</p>
+<p><img src="../..\images/lab6/spi_send.png" class="img-fluid"></p>
 </section>
-<section id="design-and-testing-methodology" class="level2">
-<h2 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h2>
-</section>
-<section id="technical-documentation" class="level2">
-<h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
-<section id="block-diagram" class="level3">
-<h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
-</section>
-<section id="schematic" class="level3">
-<h3 class="anchored" data-anchor-id="schematic">Schematic</h3>
-</section>
-</section>
-<section id="results-and-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<section id="testbench-simulation" class="level3">
-<h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<section id="schematic" class="level2">
+<h2 class="anchored" data-anchor-id="schematic">Schematic</h2>
+<p><img src="../..\images/lab6/schematic.png" class="img-fluid"></p>
+<p>Conclusion: This lab was not finished succesfully. While data is being read and sent to the temperature sensor, the sensor is not properly updating/communicating temperature information.</p>
+<p>The website does host the functionality desired.</p>
 </section>
 <section id="ai-overview" class="level2">
-<h2 class="anchored" data-anchor-id="ai-overview">AI overview</h2>
+<h2 class="anchored" data-anchor-id="ai-overview">AI Overview</h2>
+<p>Claude made a fully functioning UI <img src="../..\images/lab6/aiui.png" class="img-fluid"></p>
+<p>The code for SPI communications would not have worked however.</p>
 
 
 </section>
