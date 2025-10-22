@@ -107,7 +107,7 @@ int main(void) {
   
 
   //TODO: Changed from USART1_ID. 
-  USART_TypeDef * USART = initUSART(USART1_ID, 125000);
+  USART_TypeDef * USART = initUSART(USART2_ID, 125000);
 
   while(1) {
     /* Wait for ESP8266 to send a request.    
