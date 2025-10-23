@@ -68,8 +68,8 @@ int updateLEDStatus(char request[])
 }
 
 
-int resolution = 8;
-int last_resolution = 8;
+int resolution = 9;
+int last_resolution = 9;
 int updateTempResolution(char request[]){
 
   if(inString(request,"res8") == 1){resolution = 8;}
@@ -138,28 +138,56 @@ int main(void) {
       // 111 1Shot(0) ### SD(0)
       switch(resolution){
         spiSendReceive(0x80);
-        case 8:
-          spiSendReceive(0b11100000); // 000 for 8 bit
-        case 9:
-          spiSendReceive(0b11100010); // 001 9 bit
-        case 10:
-          spiSendReceive(0b11100100); // 010
-        case 11: 
-          spiSendReceive(0b11100110); // 011
         case 12:
-          spiSendReceive(0b11101000); // 1xx
-      }
-      digitalWrite(SPI_CE, 0); // 
+          if(resolution == 12) {
+            spiSendReceive(0xE8);//0b11101000
+          } // 1xx
+          break;
+        case 11: 
+          if(resolution == 11) {
+            spiSendReceive(0xE9);//0b11100110
+          } // 011
+           break;
+        case 10:
+          if(resolution == 10) {
+            spiSendReceive(0xE4);//0b11100100
+          } // 010
+          break;
+        case 9:
+          if(resolution == 9) {
+            spiSendReceive(0xE2);//0b11100010
+          } // 001 9 bit
+          break;
+        case 8:
+          if(resolution == 8) {
+            spiSendReceive(0xE0);//0b11100000
+          } // 000 for 8 bit
+          break;
+        default:
+          break;
+          break;
+      } // end switch
+      digitalWrite(SPI_CE, 0); // stop transmission
     }
 
      //read temperature
      //01 LSB
      //02 MSB
     digitalWrite(SPI_CE, 1); 
-    volatile char LSB = spiSendReceive(0x1);// addr 1
-    volatile char MSB = spiSendReceive(0x2);// addr 2
+    spiSendReceive(0x1);// addr 1
+    volatile char LSB = spiSendReceive(0x00);// addr 1
+    digitalWrite(SPI_CE, 0); 
+
+    digitalWrite(SPI_CE, 1); 
+    spiSendReceive(0x2);// addr 2
+    volatile char MSB = spiSendReceive(0x00);// addr 2
+    digitalWrite(SPI_CE, 0); 
+  
+    digitalWrite(SPI_CE, 1); 
+    spiSendReceive(0x0);// addr 0
     volatile char configRead = spiSendReceive(0x0);// addr 0
-    //TODO: Uncomment
+    digitalWrite(SPI_CE, 0);
+    
     uint8_t resolutionMask;
     switch(resolution){
     case 8:
@@ -179,12 +207,17 @@ int main(void) {
        break;
     }
     LSB &= resolutionMask; 
+  //  MSB = ~MSB; // clear the S bit
+//    LSB = ~MSB; // clear the S bit
+    
     uint8_t sign = (uint8_t)(MSB >> 8); // get the sign
     MSB &= ~(1<<8); // clear the S bit
     ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
     int16_t temperature_rawcatenation = (MSB << 8) | LSB;
-    double temperature = temperature_rawcatenation >> 4; // put the decimals in place
-    digitalWrite(SPI_CE, 0);
+    float temperature = temperature_rawcatenation/256; // put the decimals in place >> 4
+    if(sign == 1){
+      temperature = temperature * -1;
+    }
 
     //double temperature = -12.4; //TODO: Delete
     char temperaturebuffer[100];// = {0};
