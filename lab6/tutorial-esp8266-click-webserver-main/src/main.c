@@ -136,7 +136,7 @@ int main(void) {
       digitalWrite(SPI_CE, 1); // enable high
       // most to least significant bits.
       // 111 1Shot(0) ### SD(0)
-      spiSendReceive(0x80);
+      spiSendReceive(0x80);r
 
       //digitalWrite(SPI_CE, 0); // enable high
       //digitalWrite(SPI_CE, 1); // enable high
@@ -175,8 +175,6 @@ int main(void) {
       spiSendReceive(0x00);//0b11100000
       digitalWrite(SPI_CE, 0); // stop transmission
     }
-
-      int a = 1;
 
      //read temperature
      //01 LSB
