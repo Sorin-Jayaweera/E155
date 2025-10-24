@@ -82,7 +82,7 @@ int updateTempResolution(char request[]){
 }
 /////////////////////////////////////////////////////////////////
 // Solution Functions
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// 
 
 int main(void) {
   configureFlash();
@@ -93,7 +93,8 @@ int main(void) {
   // cpha: first clock edge
   // br, cpol, cpha
 
-  initSPI( 0b011, 0,1);
+  //initSPI( 0b011, 0,1);
+  initSPI( 0b100, 0,1);
 
   gpioEnable(GPIO_PORT_A);
   gpioEnable(GPIO_PORT_B);
@@ -135,8 +136,13 @@ int main(void) {
       digitalWrite(SPI_CE, 1); // enable high
       // most to least significant bits.
       // 111 1Shot(0) ### SD(0)
+      spiSendReceive(0x80);
+
+      //digitalWrite(SPI_CE, 0); // enable high
+      //digitalWrite(SPI_CE, 1); // enable high
+      
       switch(resolution){
-        spiSendReceive(0x80);
+        
         case 12:
           if(resolution == 12) {
             spiSendReceive(0xE8);//0b11101000
@@ -144,7 +150,7 @@ int main(void) {
           break;
         case 11: 
           if(resolution == 11) {
-            spiSendReceive(0xE9);//0b11100110
+            spiSendReceive(0xE6);//0b11100110
           } // 011
            break;
         case 10:
@@ -166,8 +172,11 @@ int main(void) {
           break;
           break;
       } // end switch
+      spiSendReceive(0x00);//0b11100000
       digitalWrite(SPI_CE, 0); // stop transmission
     }
+
+      int a = 1;
 
      //read temperature
      //01 LSB
@@ -213,7 +222,8 @@ int main(void) {
     MSB &= ~(1<<8); // clear the S bit
     ////TODO: This is twos compliment in the sensor. How does C handle signed ints?
     int16_t temperature_rawcatenation = (MSB << 8) | LSB;
-    float temperature = temperature_rawcatenation/256; // put the decimals in place >> 4
+    float temperature = (float) temperature_rawcatenation/256; // put the decimals in place >> 4
+    printf("%f",temperature);
     if(sign == 1){
       temperature = temperature * -1;
     }
