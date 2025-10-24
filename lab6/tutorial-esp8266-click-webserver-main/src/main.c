@@ -184,16 +184,22 @@ int main(void) {
     digitalWrite(SPI_CE, 1); 
     spiSendReceive(0x1);// addr 1
     volatile char LSB = spiSendReceive(0x00);// addr 1
+    spiSendReceive(0x0);
+
     digitalWrite(SPI_CE, 0); 
 
     digitalWrite(SPI_CE, 1); 
     spiSendReceive(0x2);// addr 2
     volatile char MSB = spiSendReceive(0x00);// addr 2
+    spiSendReceive(0x0);
+
     digitalWrite(SPI_CE, 0); 
   
     digitalWrite(SPI_CE, 1); 
     spiSendReceive(0x0);// addr 0
     volatile char configRead = spiSendReceive(0x0);// addr 0
+    spiSendReceive(0x0);
+
     digitalWrite(SPI_CE, 0);
     
     uint8_t resolutionMask;
