@@ -22,9 +22,12 @@ module keypad_handler(
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	
 	// scan between activating each of the rows individually
-	always_ff@(posedge counter[0],posedge counter[13], reset)  begin
+	always_ff@(posedge counter[0], posedge counter[13], posedge counter[18],posedge counter[7],posedge reset)  begin
 		if(reset) begin
-			pressedarr = 4'b0;
+			pressedarr[0] = 0;
+			pressedarr[1] = 0;
+			pressedarr[2] = 0;
+			pressedarr[3] = 0;
 		end
 		if(counter[13]) begin
 			case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
@@ -36,7 +39,7 @@ module keypad_handler(
 		end
 	end
 	
-	always_ff@(posedge counter[0],posedge counter[13], reset) begin
+	always_ff@(posedge counter[0], posedge counter[13], posedge counter[18], posedge counter[17], posedge reset) begin
 		if(reset) begin
 				storedpressedarr = 4'b0;
 		end
@@ -50,8 +53,8 @@ module keypad_handler(
 		end
 	end
 	
-	always_ff@(posedge counter[13]) begin
-		if(temp != none) begin
+	always_ff@(posedge counter[0]) begin
+		if(counter[13] & (temp != none)) begin
 			num = temp;
 		end
 	end

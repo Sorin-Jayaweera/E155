@@ -1,15 +1,15 @@
 ----------------------------------------------------------------------
 Report for cell top.TECH
-Register bits:  115 of 5280 (2.178%)
+Register bits:  41 of 5280 (0.777%)
 I/O cells:      19
                                   Cell usage:
                                cell     count   Res Usage(%)
                                CCU2        49          100.0
-                            FD1P3XZ       115          100.0
+                            FD1P3XZ        41          100.0
                               HSOSC         1          100.0
                                  IB         5          100.0
                               IOL_B         4          100.0
-                               LUT4       178          100.0
+                               LUT4       253          100.0
                                  OB        14          100.0
 SUB MODULES
                        count_module         1
@@ -17,23 +17,31 @@ SUB MODULES
                      keypad_handler         1
                         sevensegLUT         1
                        synchronizer         1
-                              TOTAL       371
+                              TOTAL       372
+----------------------------------------------------------------------
+Report for cell sevensegLUT.v1
+Instance Path : lut
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         7            2.8
+                              TOTAL         7
 ----------------------------------------------------------------------
 Report for cell count_module.v1
 Instance Path : clocker
                                   Cell usage:
                                cell     count   Res Usage(%)
                                 FA2        17           34.7
-                            FD1P3XZ        32           27.8
+                            FD1P3XZ        32           78.0
                               HSOSC         1          100.0
                               TOTAL        50
 ----------------------------------------------------------------------
-Report for cell sevensegLUT.v1
-Instance Path : lut
+Report for cell keypad_handler.v1
+Instance Path : keypad
                                   Cell usage:
                                cell     count   Res Usage(%)
-                               LUT4         7            3.9
-                              TOTAL         7
+                            FD1P3XZ         5           12.2
+                               LUT4        71           28.1
+                              TOTAL        76
 ----------------------------------------------------------------------
 Report for cell synchronizer.v1
 Instance Path : colsyncer
@@ -42,19 +50,10 @@ Instance Path : colsyncer
                               IOL_B         4          100.0
                               TOTAL         4
 ----------------------------------------------------------------------
-Report for cell keypad_handler.v1
-Instance Path : keypad
-                                  Cell usage:
-                               cell     count   Res Usage(%)
-                            FD1P3XZ         5            4.3
-                               LUT4        68           38.2
-                              TOTAL        73
-----------------------------------------------------------------------
 Report for cell debouncer.v1
 Instance Path : deb
                                   Cell usage:
                                cell     count   Res Usage(%)
                                 FA2        32           65.3
-                            FD1P3XZ        74           64.3
-                               LUT4        98           55.1
-                              TOTAL       204
+                               LUT4       170           67.2
+                              TOTAL       202

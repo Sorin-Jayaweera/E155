@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BuildStatus>
     <Strategy name="Strategy1">
-            <Task name="SynVerilogSimFile" build_result="0" update_result="2" update_time="1758570971"/>
+        <Milestone name="Export" build_result="0" build_time="1762369184">
+            <Task name="Bitgen" build_result="0" update_result="2" update_time="1762369184"/>
+            <Task name="IBIS" build_result="0" update_result="3" update_time="0"/>
+            <Task name="TimingSimFileVlg" build_result="0" update_result="3" update_time="0"/>
         </Milestone>
-        <Milestone name="TOOL_Report" build_result="0" build_time="0">
-            <Task name="HDLE" build_result="0" update_result="3" update_time="0"/>
-            <Task name="BKM" build_result="0" update_result="3" update_time="0"/>
-            <Task name="SSO" build_result="0" update_result="3" update_time="0"/>
-            <Task name="PIODRC" build_result="0" update_result="2" update_time="1757819987"/>
-            <Task name="DEC" build_result="0" update_result="3" update_time="0"/>
+        <Milestone name="Map" build_result="0" build_time="1762369198">
+            <Task name="Map" build_result="0" update_result="2" update_time="1762369198"/>
+            <Task name="MapTrace" build_result="0" update_result="3" update_time="0"/>
         </Milestone>
-        <Report name="lab3_sj_impl_1.bgn" last_build_time="1758758401" last_build_size="1092"/>
-        <Report name="lab3_sj_impl_1.bin" last_build_time="1758758401" last_build_size="104156"/>
+        <Milestone name="PAR" build_result="0" build_time="1762369198">
+            <Task name="PAR" build_result="0" update_result="2" update_time="1762369198"/>
+            <Task name="PostParVM" build_result="0" update_result="3" update_time="0"/>
+            <Task name="PARTrace" build_result="0" update_result="2" update_time="1762369198"/>
+            <Task name="IOTiming" build_result="0" update_result="3" update_time="0"/>
+        </Milestone>
+        <Milestone name="Synthesis" build_result="1" build_time="1762369696">
+            <Task name="Lattice_Synthesis" build_result="1" update_result="2" update_time="1762369696"/>
+            <Task name="LSE_Compile" build_result="0" update_result="2" update_time="1762369696"/>
+            <Task name="LSE_Lint" build_result="0" update_result="3" update_time="0"/>
+            <Task name="SynTrace" build_result="0" update_result="2" update_time="1762369198"/>
+            <Task name="SynVerilogSimFile" build_result="0" update_result="3" update_time="0"/>
+        </Milestone>
+        <Report name="lab3_sj_impl_1.bgn" last_build_time="1762366624" last_build_size="1092"/>
+        <Report name="lab3_sj_impl_1.bin" last_build_time="1762366624" last_build_size="104156"/>
         <Report name="lab3_sj_impl_1.lsedata" last_build_time="0" last_build_size="0"/>
-        <Report name="lab3_sj_impl_1.twr.html" last_build_time="1758758386" last_build_size="253539"/>
-        <Report name="lab3_sj_impl_1.tws.html" last_build_time="1758758359" last_build_size="444245"/>
-        <Report name="lab3_sj_impl_1.udb" last_build_time="1758758385" last_build_size="43913"/>
-        <Report name="lab3_sj_impl_1_map.udb" last_build_time="1758758368" last_build_size="27051"/>
-        <Report name="lab3_sj_impl_1_rtl.udb" last_build_time="1758758259" last_build_size="14318"/>
-        <Report name="lab3_sj_impl_1_syn.udb" last_build_time="1758758359" last_build_size="17824"/>
+        <Report name="lab3_sj_impl_1.twr.html" last_build_time="1762369172" last_build_size="497185"/>
+        <Report name="lab3_sj_impl_1.tws.html" last_build_time="1762369143" last_build_size="393871"/>
+        <Report name="lab3_sj_impl_1.udb" last_build_time="1762369171" last_build_size="43184"/>
+        <Report name="lab3_sj_impl_1_map.udb" last_build_time="1762369153" last_build_size="25913"/>
+        <Report name="lab3_sj_impl_1_rtl.udb" last_build_time="1762369696" last_build_size="11630"/>
+        <Report name="lab3_sj_impl_1_syn.udb" last_build_time="1762369143" last_build_size="17358"/>
     </Strategy>
 </BuildStatus>
-
+  
