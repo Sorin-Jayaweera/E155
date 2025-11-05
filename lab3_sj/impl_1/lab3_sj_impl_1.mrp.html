@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Wed Nov  5 10:59:12 2025
+Mapped on: Wed Nov  5 11:33:57 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -59,10 +59,11 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers:  41 out of  5280 (1%)
+   Number of slice registers: 131 out of  5280 (2%)
    Number of I/O registers:      4 out of   117 (3%)
-   Number of LUT4s:           351 out of  5280 (7%)
-      Number of logic LUT4s:             253
+   Number of LUT4s:           354 out of  5280 (7%)
+      Number of logic LUT4s:             182
+      Number of inserted feedthru LUT4s:  74
       Number of ripple logic:             49 (98 LUT4s)
    Number of IO sites used:   19 out of 39 (49%)
       Number of IO sites used for general PIO: 19
@@ -86,27 +87,34 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
    Number of Clocks:  3
-      Net int_osc: 21 loads, 21 rising, 0 falling (Driver: Pin
+      Net int_osc: 99 loads, 99 rising, 0 falling (Driver: Pin
      clocker.hf_osc.osc_inst/CLKHF)
-      Net counter[13]: 5 loads, 5 rising, 0 falling (Driver: Pin
-     clocker.counter_31__i13/Q)
       Net counter[0]: 4 loads, 4 rising, 0 falling (Driver: Pin
-     clocker.counter_31__i0/Q)
-   Number of Clock Enables:  1
+     clocker.counter_92__i0/Q)
+      Net counter[13]: 17 loads, 17 rising, 0 falling (Driver: Pin
+     clocker.counter_92__i13/Q)
+   Number of Clock Enables:  3
       Net VCC_net: 1 loads, 0 SLICEs
-   Number of LSRs:  1
-      Pin reset: 21 loads, 21 SLICEs (Net: reset_c)
+      Net n540: 40 loads, 40 SLICEs
+      Net n538: 32 loads, 32 SLICEs
+   Number of LSRs:  6
+      Net n532: 29 loads, 29 SLICEs
+      Net sel_c_18: 1 loads, 1 SLICEs
+      Net sel_c_18_N_143: 1 loads, 1 SLICEs
+      Net n1094: 1 loads, 1 SLICEs
+      Net n1819: 1 loads, 1 SLICEs
+      Net n1126: 1 loads, 1 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net reset_c: 69 loads
-      Net deb.i1_0__N_16: 38 loads
-      Net deb.pressedcountstart_0__N_144: 32 loads
-      Net sel_c: 19 loads
-      Net col[2]: 18 loads
-      Net row_c_1: 16 loads
-      Net row_c_2: 16 loads
-      Net row_c_3: 16 loads
-      Net col[1]: 15 loads
-      Net row_c_0: 15 loads
+      Net n540: 41 loads
+      Net n538: 32 loads
+      Net n532: 29 loads
+      Net sel_c_18: 22 loads
+      Net counter[17]: 17 loads
+      Net col[2]: 16 loads
+      Net row_c_2: 14 loads
+      Net row_c_3: 14 loads
+      Net col[1]: 12 loads
+      Net row_c_0: 12 loads
 
    Number of warnings:  0
    Number of criticals: 0
@@ -163,7 +171,7 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/lab3_sj/pins.pdc -i
 
 <A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
 
-Block colunstable_pad[0].vlo_inst was optimized away.
+Block i1_2 was optimized away.
 
 <A name="mrp_osc"></A><B><U><big>OSC Summary</big></U></B>
 
@@ -178,13 +186,13 @@ OSC 1:                                 Pin/Node Value
 
 Instance Name: clocker/hf_osc.osc_inst
          Type: HFOSC
+Instance Name: colsyncer/stableval_i2
+         Type: IOLOGIC
 Instance Name: colsyncer/stableval_i1
          Type: IOLOGIC
 Instance Name: colsyncer/stableval_i0
          Type: IOLOGIC
 Instance Name: colsyncer/stableval_i3
-         Type: IOLOGIC
-Instance Name: colsyncer/stableval_i2
          Type: IOLOGIC
 
 <A name="mrp_consum"></A><B><U><big>Constraint Summary</big></U></B>
@@ -197,7 +205,7 @@ Instance Name: colsyncer/stableval_i2
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
    Peak Memory Usage: 71 MB
-Checksum -- map: 5d533496d79a3211591328721e0260041085d4b2
+Checksum -- map: b12e7a535311268eb6ae3b522ce10a8cb5e496bc
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

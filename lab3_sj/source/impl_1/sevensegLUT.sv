@@ -28,3 +28,5 @@ module sevensegLUT( input logic [3:0] s, output logic [6:0] seg );
 			seg = 7'b1111111;//7'b0000000;
 		endcase
 endmodule
+
+
