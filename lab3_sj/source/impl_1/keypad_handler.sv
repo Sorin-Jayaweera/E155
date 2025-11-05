@@ -29,7 +29,7 @@ module keypad_handler(
 			2'b11: begin row <= 4'b1000;  pressedarr[3] <= (temp != none); end
 		endcase
 	end
-	always_ff@(posedge counter[16]) begin // 13
+	always_ff@(posedge counter[13]) begin // 13
 		case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
 			2'b00: begin storedpressedarr[0] <= |pressedarr; end
 			2'b01: begin storedpressedarr[1] <= |pressedarr; end
