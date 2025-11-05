@@ -21,7 +21,7 @@ module keypad_handler(
 	assign rowcol = {row[3],row[2],row[1],row[0],col[3],col[2],col[1],col[0]};
 	
 	// scan between activating each of the rows individually
-	always_ff@(posedge counter[13])  begin
+	always_ff@(posedge counter[13])  begin // 13
 		case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
 			2'b00: begin row <= 4'b0001;  pressedarr[0] <= (temp != none); end
 			2'b01: begin row <= 4'b0010;  pressedarr[1] <= (temp != none); end
@@ -29,7 +29,7 @@ module keypad_handler(
 			2'b11: begin row <= 4'b1000;  pressedarr[3] <= (temp != none); end
 		endcase
 	end
-	always_ff@(posedge counter[13]) begin
+	always_ff@(posedge counter[16]) begin // 13
 		case(counter[18:17]) // somewhat slow switching between all pins. Sampling the buttons medium fast
 			2'b00: begin storedpressedarr[0] <= |pressedarr; end
 			2'b01: begin storedpressedarr[1] <= |pressedarr; end
@@ -38,7 +38,7 @@ module keypad_handler(
 		endcase	
 	end
 	
-	always_ff@(posedge counter[13]) begin
+	always_ff@(posedge counter[13]) begin // 13
 		if(temp != none) begin
 			num = temp;
 		end
@@ -97,5 +97,7 @@ module keypad_handler(
 		
 
 endmodule
+
+
 
 
