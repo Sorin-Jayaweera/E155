@@ -37,7 +37,6 @@ module debouncer(
 				countstart = counter;
 			end
 		// pressed the first time, start the press debounce
-		// time conditions unnessisary
 		else if (pressed & cycleflag == accepting) begin // rising edge, only triggers once bc flag changes
 				i1 = i0; //push numbers
 				i0 = itemp;
