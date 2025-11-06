@@ -1,6 +1,6 @@
 ---
 title: "Lab 4!"
-description: ""
+description: "Playing FUR Elise"
 author: "Sorin Jayaweera"
 date: "8/27/2025"
 categories:
@@ -9,32 +9,79 @@ categories:
 draft: false
 ---
 
----
-title: "Lab 1 - E155 Startup"
-description: "Testing an MCU and FPGA PCB with a 7 segment display"
-author: "Sorin Jayaweera"
-date: "8/27/2025"
-categories:
-  - reflection
-  - labreport
-draft: false
----
 
 
 ## Introduction
+The goal of this lab was to play FUR elise by utulizing timers onboard an STM32L432KB.
+This was done using two of the STM's general pupose timers - 15 and 16.
+
 
 ## Design and Testing Methodology
 
-## Technical Documentatoin
+TIM16 was used to drive a PWM signal to pin A2 via the alternate function.
+This was chosen to
+TIM15 was used as an upcounter to set the duration of each note.
 
-### Block Diagram
+
+## Technical Documentation
+### Clock frequencies
+The PLL System clock was configured to 80,000,000 HZ (80 MHz).
+Two timers were used, one to generate a PWM signal to play each note, and one to count each note's duration/
+
+TIM15 was used for note duration. This was configured to 10KHZ by using prescaler 7999 (+1 implicit).
+The timer has 16 bits.
+
+TIM16 was used for the PWM. This was configured to 100 KHz by using prescaler 799 (+1 implicit).
+The timer has 16 bits.
+
+
+Minimum Duration:
+The clock has 10000 cycles / second and 16 bits. 
+The minimum duration is 1 cycle, so 1/10000 seconds, or $10^{-4}$ seconds.
+
+Maximum Duration:
+
+At 16 bits, the maximum representable number is
+$2^{16} = 32768$ cycles. (2^{16} since we count 2^n starting from n=0, and have every number from n=0-15 active, which is 2^{16} - 1)
+This gets a maximum duration $(2^{16}) \text{cycles} * \frac{1\text{cycle}}{10000 \text{seconds}} = 6.55$ seconds.
+
+Minimum Frequency:
+As before, the maximum division of the clock is
+$2^{16}$.
+At 100,000 cycles/second /(2^15 cycles) = 1.52 Hz.
+
+Maximum Frequency:
+The clock goes at 100 KHz, so that is the minimum frequency.
+
+### Error Calculations
+We are limited by the division of an integer clock, and can't perfectly approximate frequencies.
+A frequency is represented as the closest number 
+
+Any frequency is compressed with an error given by
+
+$$
+1-\frac{\text{floor}(x)}{(x)}
+$$
+
+The error for this converges to 0 as the frequency increases (up to maximum frequency).
+
+The frequency is done by counting up to some number.
+$$10Khz/(\text{floor}(\frac{100kHz}{\text{floor(frequency)}}))$$. In an ideal world there would be no rounding error, hence th
+error is the ratio between this and the idea without flooring.
+
+![](/images/lab4/error_calc.png)
 
 ### Schematic
 
-## Results and Discussion
-
-### Testbench Simulation
+![](/images/lab4/schematic.png)
 
 ## Conclusion
+The music player was successfully constructed.
+
+There is no effective volume adjustment from the potentiometer in the amplification circuit. There is also a high gain (200x) and no filtering,
+so 60 HZ noise couples strongly to the speaker, distorting signal. 
 
 ## AI overview
+
+Attaching specific sections of the schematic seemed to help, but I can't tell if it is very diferent from its own webscraping.
+I probed for how it would help with a problem that I was actively having, and it was useful. 
