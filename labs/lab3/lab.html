@@ -245,6 +245,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="state-machine-debounce-logic" class="level3">
 <h3 class="anchored" data-anchor-id="state-machine-debounce-logic">State Machine Debounce Logic</h3>
 <p><img src="../..\images/lab3/fsm.png" class="img-fluid"></p>
+<p><img src="../..\images/lab3/state_transition.png" class="img-fluid"></p>
 </section>
 <section id="block-diagram" class="level3">
 <h3 class="anchored" data-anchor-id="block-diagram">Block Diagram</h3>
@@ -263,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
 <p>The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.</p>
-<p>The debounce length chosen is somewhat lengthy, and may be reduced for optimization.</p>
+<p>The debounce length chosen is somewhat lengthy, and may be reduced for optimization. This method is easy to impliment and acts as a low pass filter to reduce noise from particularly bad buttons.</p>
 <p>Time spent: No clue, maybe ~ 15 hrs</p>
 </section>
 <section id="ai-overview" class="level2">

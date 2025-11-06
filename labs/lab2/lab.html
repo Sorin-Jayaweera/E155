@@ -196,7 +196,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#lab-2-redo" id="toc-lab-2-redo" class="nav-link active" data-scroll-target="#lab-2-redo">Lab 2 Redo</a></li>
+  <li><a href="#old-version-of-lab-2" id="toc-old-version-of-lab-2" class="nav-link" data-scroll-target="#old-version-of-lab-2">Old version of lab 2</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
   <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation</a>
   <ul class="collapse">
@@ -214,6 +217,7 @@ window.Quarto = {
   <li><a href="#seglut.sv" id="toc-seglut.sv" class="nav-link" data-scroll-target="#seglut.sv">segLUT.sv</a></li>
   <li><a href="#test_segs_v3.sv" id="toc-test_segs_v3.sv" class="nav-link" data-scroll-target="#test_segs_v3.sv">test_segs_v3.sv</a></li>
   <li><a href="#test_sum_v2.sv" id="toc-test_sum_v2.sv" class="nav-link" data-scroll-target="#test_sum_v2.sv">test_sum_v2.sv</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -261,6 +265,16 @@ window.Quarto = {
 </header>
 
 
+<section id="lab-2-redo" class="level1">
+<h1>Lab 2 Redo</h1>
+<p>The FPGA can sink at max 8 mA per pin (lets say 6 to be safe). There are 7 pins, so 42 mA has to be supplied from the transistor. At 42 mA from the collector, the transistor has a 60 X gain, so the FPGA needs to supply 0.7 mA.</p>
+<p>The FPGA outputs 3V, and there is a 0.7 V drop from VBE, so 2.3 V. To get 7 mA, this needs a 330 ohm resistor.</p>
+<p>When active, the transistor looses 0.3 V from VCE saturation, so 3 V from the transistor output to ground. This goes to the LEDS, which each have a 2 V drop. There is 1 V across the resistors to the FPGA ground. These resistors have to restrict the current to maximum 8 mA, so they must be a minimum of 125 ohms.</p>
+<p>The schematic was updated to provide a constant current supply to each led on the 8 segment display so that the brightness does not vary with the number of segments active. The resistors going into the transistor were decreased from to allow more current into the base, such that the amplified current (50x) is sufficient to fully power all segments.</p>
+<p>Datasheets: https://docs.broadcom.com/doc/HDSP-521A-523A-Dual-Digit-General-Purpose-7-Segment-Display-DS https://hmc-e155.github.io/assets/doc/FPGA-DS-02008-2-0-iCE40-UltraPlus-Family-Data-Sheet.pdf https://docs.broadcom.com/doc/HDSP-521A-523A-Dual-Digit-General-Purpose-7-Segment-Display-DS</p>
+</section>
+<section id="old-version-of-lab-2" class="level1">
+<h1>Old version of lab 2</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS.</p>
@@ -511,6 +525,7 @@ always
 <p>endmodule</p>
 
 
+</section>
 </section>
 </section>
 
