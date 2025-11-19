@@ -37,6 +37,7 @@ USART_TypeDef * initUSART(int USART_ID, int baud_rate) {
             // Configure pin modes as ALT function
             pinMode(PA9, GPIO_ALT); // TX
             pinMode(PA10, GPIO_ALT); // RX
+            
 
             break;
         case USART2_ID :
