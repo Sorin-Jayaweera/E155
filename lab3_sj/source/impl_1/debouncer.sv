@@ -24,7 +24,7 @@ module debouncer(
 	logic [31:0] countstart;
 	logic [31:0] pressedcountstart;
 	
-	assign timepassed = (counter - countstart ) > 1000000;//6000000;// 0.042 (42ms) * 12000000 (cycles per second) (HFOSC at half speed)
+	assign timepassed = (counter - countstart ) > 1000000;//1000000;
 	assign pressedtimepassed = (counter - pressedcountstart) > 1000000;//6000000;
 
 
@@ -37,7 +37,6 @@ module debouncer(
 				countstart = counter;
 			end
 		// pressed the first time, start the press debounce
-		// time conditions unnessisary
 		else if (pressed & cycleflag == accepting) begin // rising edge, only triggers once bc flag changes
 				i1 = i0; //push numbers
 				i0 = itemp;

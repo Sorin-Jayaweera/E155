@@ -6,7 +6,11 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Wed Sep 24 16:59:43 2025
+<<<<<<< HEAD
+Wed Sep 24 17:22:11 2025
+=======
+Wed Nov  5 12:22:35 2025
+>>>>>>> dbeb4a048e918ce986d5e0e33f6ca7665b4bcc82
 
 Pinout by Port Name:
 +----------------+----------+--------------+-------+------------------------------------------+
@@ -18,7 +22,7 @@ Pinout by Port Name:
 | colunstable[3] | 3/2      | LVCMOS33_IN  | PL10B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 | debugger       | 20/1     | LVCMOS33_OUT | PL20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | nsel           | 48/2     | LVCMOS33_OUT | PL8A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| reset          | 32/0     | LVCMOS33_IN  | PR17A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| reset          | 34/0     | LVCMOS33_IN  | PR14B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 | row[0]         | 47/2     | LVCMOS33_OUT | PL7A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | row[1]         | 11/1     | LVCMOS33_OUT | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | row[2]         | 10/1     | LVCMOS33_OUT | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
@@ -69,8 +73,8 @@ Pinout by Pin Number:
 | 27/0     |     unused, PULL:UP |            |              | PR19B |                  |
 | 28/0     |     unused, PULL:UP |            |              | PR18A |                  |
 | 31/0     |     unused, PULL:UP |            |              | PR17B |                  |
-| 32/0     | reset               | LOCATED    | LVCMOS33_IN  | PR17A |                  |
-| 34/0     |     unused, PULL:UP |            |              | PR14B |                  |
+| 32/0     |     unused, PULL:UP |            |              | PR17A |                  |
+| 34/0     | reset               | LOCATED    | LVCMOS33_IN  | PR14B |                  |
 | 35/0     |     unused, PULL:UP |            |              | PR13B | GPLL_IN/PCLKT0_1 |
 | 36/0     |     unused, PULL:UP |            |              | PR10B |                  |
 | 37/0     |     unused, PULL:UP |            |              | PR14A | PCLKT0_0         |
@@ -113,7 +117,7 @@ ldc_set_location -site {45} [ get_ports {colunstable[2]} ]
 ldc_set_location -site {3} [ get_ports {colunstable[3]} ]
 ldc_set_location -site {20} [ get_ports {debugger} ]
 ldc_set_location -site {48} [ get_ports {nsel} ]
-ldc_set_location -site {32} [ get_ports {reset} ]
+ldc_set_location -site {34} [ get_ports {reset} ]
 ldc_set_location -site {47} [ get_ports {row[0]} ]
 ldc_set_location -site {11} [ get_ports {row[1]} ]
 ldc_set_location -site {10} [ get_ports {row[2]} ]
@@ -133,5 +137,9 @@ ldc_set_location -site {4} [ get_ports {sel} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Wed Sep 24 16:59:43 2025
+<<<<<<< HEAD
+Wed Sep 24 17:22:11 2025
+=======
+Wed Nov  5 12:22:35 2025
+>>>>>>> dbeb4a048e918ce986d5e0e33f6ca7665b4bcc82
 

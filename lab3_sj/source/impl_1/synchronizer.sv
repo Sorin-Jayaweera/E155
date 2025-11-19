@@ -5,7 +5,8 @@ module synchronizer(
 	);
 
 	always_ff @(posedge clk) begin
-		stableval = unstableval;
+		stableval <= unstableval;
 	end
 
 endmodule
+
