@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Wed Nov 19 20:08:37 2025
+Thu Nov 20 11:47:27 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/project/fpga/impl_1/basiclights_impl_1_lattice.synproj -logfile basiclights_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/project/fpga/promote.xml 
@@ -172,10 +172,8 @@ INFO <35921014> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd(4): a
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/project/fpga/impl_1". VHDL-1504
 Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
-INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(7): compiling module top. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(2): compiling module top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
-WARNING <35901209> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(68): expression size 32 truncated to fit in target size 18. VERI-1209
-WARNING <35901209> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(81): expression size 32 truncated to fit in target size 14. VERI-1209
 [Parameter Setting Section Start]
 
 	[Parameter Settings for Instance(s): hf_osc]
@@ -186,15 +184,18 @@ WARNING <35901209> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/im
 
 
 
+Duplicate register/latch removal. reset_prev is a one-to-one match with led_i1.
+INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 ################### Begin Area Report (top)######################
-Number of register bits => 59 of 5280 (1 % )
-CCU2 => 18
-FD1P3XZ => 59
+Number of register bits => 51 of 5280 (0 % )
+CCU2 => 20
+FD1P3XZ => 51
 HSOSC => 1
 IB => 2
-LUT4 => 89
-OB => 10
+IOL_B => 13
+LUT4 => 24
+OB => 12
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
 Number of even-length carry chains : 2
@@ -207,16 +208,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : reset_c, loads : 59
-  Net : n2256, loads : 30
-  Net : n972, loads : 19
-  Net : n971, loads : 15
-  Net : n1762, loads : 14
-  Net : timer_17__N_1[10], loads : 14
-  Net : timer_17__N_1[5], loads : 14
-  Net : timer_17__N_1[6], loads : 14
-  Net : timer_17__N_1[8], loads : 14
-  Net : timer_17__N_1[9], loads : 14
+  Net : n544, loads : 28
+  Net : n24, loads : 27
+  Net : n19, loads : 18
+  Net : n537, loads : 17
+  Net : n16_adj_1, loads : 16
+  Net : n645, loads : 15
+  Net : n137[25], loads : 15
+  Net : n643, loads : 14
+  Net : n137[24], loads : 14
+  Net : n137[23], loads : 14
 ################### End Clock Report ##################
 
 ################### Begin Constraint Report ######################
@@ -229,6 +230,6 @@ Peak Memory Usage: 94 MB
 
 --------------------------------------------------------------
 Total CPU Time: 5 secs 
-Total REAL Time: 12 secs 
+Total REAL Time: 11 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: a60164f0e7a59ea45a80a0f349297f75f8fc5aaf
+Checksum -- synthesis -- netlist: e05c8155b6b56963916ad429ece73621d5f3f5e8

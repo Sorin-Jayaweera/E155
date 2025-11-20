@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Wed Nov 19 20:10:36 2025
+Mapped on: Thu Nov 20 11:47:47 2025
 
 Design Information
 ------------------
@@ -21,22 +21,21 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
 Design Summary
 --------------
 
-   Number of slice registers:  59 out of  5280 (1%)
-   Number of I/O registers:      0 out of   117 (0%)
-   Number of LUT4s:           144 out of  5280 (3%)
-      Number of logic LUT4s:              90
-      Number of inserted feedthru LUT4s:  17
-      Number of replicated LUT4s:          1
-      Number of ripple logic:             18 (36 LUT4s)
-   Number of IO sites used:   12 out of 39 (31%)
-      Number of IO sites used for general PIO: 12
+   Number of slice registers:  51 out of  5280 (1%)
+   Number of I/O registers:     13 out of   117 (11%)
+   Number of LUT4s:            79 out of  5280 (1%)
+      Number of logic LUT4s:              25
+      Number of inserted feedthru LUT4s:  14
+      Number of ripple logic:             20 (40 LUT4s)
+   Number of IO sites used:   14 out of 39 (36%)
+      Number of IO sites used for general PIO: 14
       Number of IO sites used for I3C: 0 out of 2 (0%)
       (note: If I3C is not used, its site can be used as general PIO)
-      Number of IO sites used for PIO+I3C: 12 out of 36 (33%)
+      Number of IO sites used for PIO+I3C: 14 out of 36 (39%)
       Number of IO sites used for OD+RGB IO buffers: 0 out of 3 (0%)
       (note: If RGB LED drivers are not used, sites can be used as OD outputs,
        see TN1288 iCE40 LED Driver Usage Guide)
-      Number of IO sites used for PIO+I3C+OD+RGB: 12 out of 39 (31%)
+      Number of IO sites used for PIO+I3C+OD+RGB: 14 out of 39 (36%)
    Number of DSPs:             0 out of 8 (0%)
    Number of I2Cs:             0 out of 2 (0%)
    Number of High Speed OSCs:  1 out of 1 (100%)
@@ -50,16 +49,17 @@ Design Summary
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
    Number of Clocks:  1
-      Net int_osc: 53 loads, 53 rising, 0 falling (Driver: Pin
+      Net int_osc: 48 loads, 48 rising, 0 falling (Driver: Pin
      hf_osc.osc_inst/CLKHF)
    Number of Clock Enables:  3
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n972: 14 loads, 14 SLICEs
-      Net n971: 10 loads, 10 SLICEs
-   Number of LSRs:  1
-      Pin reset: 53 loads, 53 SLICEs (Net: reset_c)
+      Net n537: 10 loads, 10 SLICEs
+      Net n544: 14 loads, 14 SLICEs
+   Number of LSRs:  2
+      Net n23: 11 loads, 11 SLICEs
+      Net n24: 14 loads, 14 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net reset_c: 53 loads
+      Net n24: 14 loads
 
                                     Page 1
 
@@ -69,15 +69,15 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net n2256: 18 loads
-      Net n972: 14 loads
-      Net pulse_count_latched[13]: 11 loads
-      Net n971: 10 loads
-      Net pulse_count_latched[9]: 9 loads
-      Net pulse_count_latched[8]: 8 loads
-      Net pulse_count_latched[3]: 7 loads
-      Net pulse_count_latched[7]: 7 loads
-      Net pulse_count_latched[2]: 6 loads
+      Net n544: 14 loads
+      Net n23: 11 loads
+      Net n537: 10 loads
+      Net reset_sync2: 6 loads
+      Net collecting: 4 loads
+      Net reset_prev: 4 loads
+      Net timer[0]: 3 loads
+      Net timer[18]: 3 loads
+      Net timer[19]: 3 loads
 
 
 
@@ -99,36 +99,37 @@ IO (PIO) Attributes
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[8]              | OUTPUT    |           |       |       |           |
+| led[10]             | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[7]              | OUTPUT    |           |       |       |           |
+| led[11]             | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[9]              | OUTPUT    |           |       |       |           |
+| led[9]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[6]              | OUTPUT    |           |       |       |           |
+| led[8]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[5]              | OUTPUT    |           |       |       |           |
+| led[7]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[4]              | OUTPUT    |           |       |       |           |
+| led[6]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[3]              | OUTPUT    |           |       |       |           |
+| led[5]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[2]              | OUTPUT    |           |       |       |           |
+| led[4]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[1]              | OUTPUT    |           |       |       |           |
+| led[3]              | OUTPUT    |           | O     |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| led[2]              | OUTPUT    |           | O     |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| led[1]              | OUTPUT    |           | O     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | led[0]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| reset               | INPUT     |           |       |       |           |
+| reset               | INPUT     |           | I     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| square              | INPUT     |           |       |       |           |
+| square              | INPUT     |           | I     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-
-
-
-
 
                                     Page 2
+
 
 
 
@@ -152,13 +153,39 @@ OSC 1:                                 Pin/Node Value
 ASIC Components
 ---------------
 
+Instance Name: square_sync1_c
+         Type: IOLOGIC
+Instance Name: led_i12
+         Type: IOLOGIC
+Instance Name: reset_sync1_c
+         Type: IOLOGIC
+Instance Name: led_i2
+         Type: IOLOGIC
+Instance Name: led_i3
+         Type: IOLOGIC
+Instance Name: led_i4
+         Type: IOLOGIC
+Instance Name: led_i5
+         Type: IOLOGIC
+Instance Name: led_i6
+         Type: IOLOGIC
+Instance Name: led_i7
+         Type: IOLOGIC
+Instance Name: led_i8
+         Type: IOLOGIC
+Instance Name: led_i9
+         Type: IOLOGIC
+Instance Name: led_i10
+         Type: IOLOGIC
+Instance Name: led_i11
+         Type: IOLOGIC
 Instance Name: hf_osc.osc_inst
          Type: HFOSC
 
 Constraint Summary
 ------------------
 
-   Total number of constraints: 13
+   Total number of constraints: 15
    Total number of constraints dropped: 0
 
 Run Time and Memory Usage
@@ -166,35 +193,74 @@ Run Time and Memory Usage
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
-   Peak Memory Usage: 68 MB
-Checksum -- map: c7b0d2a0a92dd47b923866f55b4543aec4741b92
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                     Page 3
+
+
+
+
+
+Run Time and Memory Usage (cont)
+--------------------------------
+   Peak Memory Usage: 67 MB
+Checksum -- map: 6f7db1efa266ec70d2259767622c3b249695f2c4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    Page 4
 
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.

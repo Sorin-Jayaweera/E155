@@ -6,13 +6,15 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Wed Nov 19 20:10:49 2025
+Thu Nov 20 11:48:01 2025
 
 Pinout by Port Name:
 +-----------+----------+--------------+-------+------------------------------------------+
 | Port Name | Pin/Bank | Buffer Type  | Site  | Properties                               |
 +-----------+----------+--------------+-------+------------------------------------------+
 | led[0]    | 10/1     | LVCMOS33_OUT | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| led[10]   | 13/1     | LVCMOS33_OUT | PL20A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
+| led[11]   | 18/1     | LVCMOS33_OUT | PL23B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[1]    | 21/1     | LVCMOS33_OUT | PL19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[2]    | 19/1     | LVCMOS33_OUT | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[3]    | 11/1     | LVCMOS33_OUT | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
@@ -47,12 +49,12 @@ Pinout by Pin Number:
 | 10/1     | led[0]              | LOCATED    | LVCMOS33_OUT | PL17A |                  |
 | 11/1     | led[3]              | LOCATED    | LVCMOS33_OUT | PL18A |                  |
 | 12/1     | square              | LOCATED    | LVCMOS33_IN  | PL19A |                  |
-| 13/1     |     unused, PULL:UP |            |              | PL20A |                  |
+| 13/1     | led[10]             | LOCATED    | LVCMOS33_OUT | PL20A |                  |
 | 14/1     |     unused, PULL:UP |            |              | PL24A | SPI_SO           |
 | 15/1     |     unused, PULL:UP |            |              | PL25A | SPISCK           |
 | 16/1     |     unused, PULL:UP |            |              | PL25B | SPI_SS           |
 | 17/1     |     unused, PULL:UP |            |              | PL24B | SPI_SI           |
-| 18/1     |     unused, PULL:UP |            |              | PL23B |                  |
+| 18/1     | led[11]             | LOCATED    | LVCMOS33_OUT | PL23B |                  |
 | 19/1     | led[2]              | LOCATED    | LVCMOS33_OUT | PL22B |                  |
 | 20/1     | led[9]              | LOCATED    | LVCMOS33_OUT | PL20B | PCLKT1_0         |
 | 21/1     | led[1]              | LOCATED    | LVCMOS33_OUT | PL19B |                  |
@@ -101,6 +103,8 @@ Pinout by Pin Number:
 Locate Constraints for each Pin: 
 
 ldc_set_location -site {10} [ get_ports {led[0]} ]
+ldc_set_location -site {13} [ get_ports {led[10]} ]
+ldc_set_location -site {18} [ get_ports {led[11]} ]
 ldc_set_location -site {21} [ get_ports {led[1]} ]
 ldc_set_location -site {19} [ get_ports {led[2]} ]
 ldc_set_location -site {11} [ get_ports {led[3]} ]
@@ -119,5 +123,5 @@ ldc_set_location -site {12} [ get_ports {square} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Wed Nov 19 20:10:49 2025
+Thu Nov 20 11:48:01 2025
 
