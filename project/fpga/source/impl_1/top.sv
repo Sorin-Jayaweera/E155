@@ -108,7 +108,7 @@ module top(
                 end else if (pulse_count_latched < 2080) begin
                     led <= 11'b000_0000_0010;  // led[1] = 218-416 Hz
                 end else if (pulse_count_latched < 3070) begin
-                    led <= 11'b000_0000_0100;  // led[2] = 416-614 Hz
+                    led <= 11'b000_0000_0100;  // led[2] = 416-614 Hz 
                 end else if (pulse_count_latched < 4060) begin
                     led <= 11'b000_0000_1000;  // led[3] = 614-812 Hz
                 end else if (pulse_count_latched < 5050) begin
