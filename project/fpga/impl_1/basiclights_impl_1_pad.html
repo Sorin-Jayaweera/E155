@@ -48,14 +48,13 @@ Performance Grade:      High-Performance_1.2V
 PACKAGE:          SG48
 Package Status:                     Preliminary    Version 1.5
 
-Wed Nov 19 17:17:23 2025
+Wed Nov 19 20:10:49 2025
 
 Pinout by Port Name:
 +-----------+----------+--------------+-------+------------------------------------------+
 | Port Name | Pin/Bank | Buffer Type  | Site  | Properties                               |
 +-----------+----------+--------------+-------+------------------------------------------+
 | led[0]    | 10/1     | LVCMOS33_OUT | PL17A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
-| led[10]   | 12/1     | LVCMOS33_OUT | PL19A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[1]    | 21/1     | LVCMOS33_OUT | PL19B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[2]    | 19/1     | LVCMOS33_OUT | PL22B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[3]    | 11/1     | LVCMOS33_OUT | PL18A | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
@@ -66,7 +65,7 @@ Pinout by Port Name:
 | led[8]    | 2/2      | LVCMOS33_OUT | PL9A  | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | led[9]    | 20/1     | LVCMOS33_OUT | PL20B | DRIVE:8mA IO_TYPE:LVCMOS33 PULLMODE:NA   |
 | reset     | 34/0     | LVCMOS33_IN  | PR14B | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
-| square    | 43/0     | LVCMOS33_IN  | PR10A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
+| square    | 12/1     | LVCMOS33_IN  | PL19A | DRIVE:NA IO_TYPE:LVCMOS33 PULLMODE:100K  |
 +-----------+----------+--------------+-------+------------------------------------------+
 
 Vccio by Bank:
@@ -89,7 +88,7 @@ Vccio by Bank:
 | 9/1      |     unused, PULL:UP |            |              | PL16A |                  |
 | 10/1     | led[0]              | LOCATED    | LVCMOS33_OUT | PL17A |                  |
 | 11/1     | led[3]              | LOCATED    | LVCMOS33_OUT | PL18A |                  |
-| 12/1     | led[10]             | LOCATED    | LVCMOS33_OUT | PL19A |                  |
+| 12/1     | square              | LOCATED    | LVCMOS33_IN  | PL19A |                  |
 | 13/1     |     unused, PULL:UP |            |              | PL20A |                  |
 | 14/1     |     unused, PULL:UP |            |              | PL24A | SPI_SO           |
 | 15/1     |     unused, PULL:UP |            |              | PL25A | SPISCK           |
@@ -115,7 +114,7 @@ Vccio by Bank:
 | 40/0     |                     |            |              | PR6A  | RGB1             |
 | 41/0     |                     |            |              | PR7A  | RGB2             |
 | 42/0     |     unused, PULL:UP |            |              | PR9A  |                  |
-| 43/0     | square              | LOCATED    | LVCMOS33_IN  | PR10A |                  |
+| 43/0     |     unused, PULL:UP |            |              | PR10A |                  |
 | 44/2     |     unused, PULL:UP |            |              | PL7B  | PCLKT2_0         |
 | 45/2     |     unused, PULL:UP |            |              | PL8B  |                  |
 | 46/2     |     unused, PULL:UP |            |              | PL6A  |                  |
@@ -144,7 +143,6 @@ Vccio by Bank:
 Locate Constraints for each Pin: 
 
 ldc_set_location -site {10} [ get_ports {led[0]} ]
-ldc_set_location -site {12} [ get_ports {led[10]} ]
 ldc_set_location -site {21} [ get_ports {led[1]} ]
 ldc_set_location -site {19} [ get_ports {led[2]} ]
 ldc_set_location -site {11} [ get_ports {led[3]} ]
@@ -155,7 +153,7 @@ ldc_set_location -site {47} [ get_ports {led[7]} ]
 ldc_set_location -site {2} [ get_ports {led[8]} ]
 ldc_set_location -site {20} [ get_ports {led[9]} ]
 ldc_set_location -site {34} [ get_ports {reset} ]
-ldc_set_location -site {43} [ get_ports {square} ]
+ldc_set_location -site {12} [ get_ports {square} ]
 
 
 
@@ -163,7 +161,7 @@ ldc_set_location -site {43} [ get_ports {square} ]
 
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
 
-Wed Nov 19 17:17:23 2025
+Wed Nov 19 20:10:49 2025
 
 
 

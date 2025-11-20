@@ -2,11 +2,12 @@
 // Sorin Jayaweera
 // Frequency counter with LED bucket display
 // Counts pulses in 5 ms window and lights up corresponding frequency bucket LED
+// Audio-focused distribution: 3 bass, 3 mid, 3 high
 
 module top(
     input  logic reset,
     input  logic square,
-    output logic [10:0] led  // led[9:0] = frequency buckets, led[10] = no signal
+    output logic [9:0] led  // led[8:0] = frequency buckets, led[9] = no signal
 );
 
     // Parameters
@@ -92,40 +93,43 @@ module top(
             end
         end
     end
-    
-    // Decode pulse count to LED bucket (only one LED lights up)
-    always_ff @(posedge int_osc or posedge reset) begin
-        if (reset) begin
-            led <= 11'b100_0000_0000;  // No signal LED on at reset
-        end else begin
-            if (timer == 0) begin  // Update LEDs at start of new window
-                // Determine which bucket based on pulse count
-                // Buckets are linearly spaced: 198 Hz per bucket = 990 pulses per 5ms
-                if (pulse_count_latched == 0) begin
-                    led <= 11'b100_0000_0000;  // led[10] = no signal
-                end else if (pulse_count_latched < 1090) begin
-                    led <= 11'b000_0000_0001;  // led[0] = 20-218 Hz
-                end else if (pulse_count_latched < 2080) begin
-                    led <= 11'b000_0000_0010;  // led[1] = 218-416 Hz
-                end else if (pulse_count_latched < 3070) begin
-                    led <= 11'b000_0000_0100;  // led[2] = 416-614 Hz 
-                end else if (pulse_count_latched < 4060) begin
-                    led <= 11'b000_0000_1000;  // led[3] = 614-812 Hz
-                end else if (pulse_count_latched < 5050) begin
-                    led <= 11'b000_0001_0000;  // led[4] = 812-1010 Hz
-                end else if (pulse_count_latched < 6040) begin
-                    led <= 11'b000_0010_0000;  // led[5] = 1010-1208 Hz
-                end else if (pulse_count_latched < 7030) begin
-                    led <= 11'b000_0100_0000;  // led[6] = 1208-1406 Hz
-                end else if (pulse_count_latched < 8020) begin
-                    led <= 11'b000_1000_0000;  // led[7] = 1406-1604 Hz
-                end else if (pulse_count_latched < 9010) begin
-                    led <= 11'b001_0000_0000;  // led[8] = 1604-1802 Hz
-                end else begin
-                    led <= 11'b010_0000_0000;  // led[9] = 1802-2000 Hz
-                end
-            end
-        end
-    end
-
+	// Decode pulse count to LED bucket (only one LED lights up)
+	// Industry-standard audio frequency distribution
+	always_ff @(posedge int_osc or posedge reset) begin
+		if (reset) begin
+			led <= 10'b10_0000_0000;  // No signal LED on at reset
+		end else begin
+			if (timer == 0) begin  // Update LEDs at start of new window
+				if (pulse_count_latched == 0) begin
+					led <= 10'b10_0000_0000;  // led[9] = no signal
+					
+				// BASS RANGE (20-250 Hz) - Foundation & Power
+				end else if (pulse_count_latched < 300) begin
+					led <= 10'b00_0000_0001;  // led[0] = 20-60 Hz (sub-bass)
+				end else if (pulse_count_latched < 625) begin
+					led <= 10'b00_0000_0010;  // led[1] = 60-125 Hz (bass fundamentals)
+				end else if (pulse_count_latched < 1250) begin
+					led <= 10'b00_0000_0100;  // led[2] = 125-250 Hz (upper bass)
+					
+				// MID RANGE (250-2000 Hz) - Vocals & Instrument Body
+				end else if (pulse_count_latched < 2500) begin
+					led <= 10'b00_0000_1000;  // led[3] = 250-500 Hz (low-mid warmth)
+				end else if (pulse_count_latched < 5000) begin
+					led <= 10'b00_0001_0000;  // led[4] = 500-1000 Hz (mid clarity)
+				end else if (pulse_count_latched < 7500) begin
+					led <= 10'b00_0010_0000;  // led[5] = 1000-1500 Hz (upper-mid presence)
+				
+				// HIGH RANGE (1500-2000 Hz) - Definition & Attack
+				// Split last 500 Hz into 3 bins for high-frequency detail
+				end else if (pulse_count_latched < 8333) begin
+					led <= 10'b00_0100_0000;  // led[6] = 1500-1667 Hz
+				end else if (pulse_count_latched < 9167) begin
+					led <= 10'b00_1000_0000;  // led[7] = 1667-1833 Hz
+				end else begin
+					led <= 10'b01_0000_0000;  // led[8] = 1833-2000 Hz
+				end
+			end
+		end
+	end
 endmodule
+
