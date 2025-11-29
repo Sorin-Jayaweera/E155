@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Thu Nov 20 11:47:27 2025
+Sat Nov 29 15:09:44 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/project/fpga/impl_1/basiclights_impl_1_lattice.synproj -logfile basiclights_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/project/fpga/promote.xml 
@@ -157,6 +157,7 @@ Output HDL filename: basiclights_impl_1.vm
 Mixed language design
 Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/top.sv
+Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/synchronizer.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -208,6 +209,7 @@ INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(16): an
 INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ram_dq_be.v(45): analyzing included file c:/lscc/radiant/2024.2/ip/pmi/../common/ram_dq/rtl/lscc_ram_dq.v. VERI-1328
 INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2024.2/ip/pmi/pmi_dsp.v. VERI-1328
 Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/synchronizer.sv. VERI-1482
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
 
@@ -217,6 +219,7 @@ Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(2): compiling module top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/synchronizer.sv(2): compiling module synchronizer. VERI-1018
 
 <A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
 
@@ -230,20 +233,19 @@ INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synth
 
 
 
-Duplicate register/latch removal. reset_prev is a one-to-one match with led_i1.
 INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
 
 
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top)######################
-Number of register bits => 51 of 5280 (0 % )
+Number of register bits => 62 of 5280 (1 % )
 CCU2 => 20
-FD1P3XZ => 51
+FD1P3XZ => 62
 HSOSC => 1
 IB => 2
-IOL_B => 13
-LUT4 => 24
+IOL_B => 1
+LUT4 => 46
 OB => 12
 ################### End Area Report ##################
 Number of odd-length carry chains : 0
@@ -260,16 +262,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : n544, loads : 28
-  Net : n24, loads : 27
-  Net : n19, loads : 18
-  Net : n537, loads : 17
-  Net : n16_adj_1, loads : 16
-  Net : n645, loads : 15
-  Net : n137[25], loads : 15
-  Net : n643, loads : 14
-  Net : n137[24], loads : 14
-  Net : n137[23], loads : 14
+  Net : reset_in_c_N_47, loads : 62
+  Net : reset_in_c, loads : 29
+  Net : reset_prev, loads : 28
+  Net : n471, loads : 28
+  Net : n469, loads : 17
+  Net : n472, loads : 16
+  Net : collecting_N_48, loads : 15
+  Net : n476, loads : 15
+  Net : n474, loads : 15
+  Net : n694, loads : 15
 ################### End Clock Report ##################
 
 
@@ -285,9 +287,9 @@ Peak Memory Usage: 94 MB
 
 --------------------------------------------------------------
 Total CPU Time: 5 secs 
-Total REAL Time: 11 secs 
+Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: e05c8155b6b56963916ad429ece73621d5f3f5e8
+Checksum -- synthesis -- netlist: 598c1d1a97d27b909dbb30b9c3e63ba22a45e0a2
 
 
 

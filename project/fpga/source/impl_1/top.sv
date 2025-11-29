@@ -1,20 +1,25 @@
-// 12 LEDs: LED[0]=reset status, LED[1]=collecting status, LED[11:2]=10-bit count
+// Main module
 module top(
-    input  logic reset,
+    input  logic reset_in,    // Active LOW (pressed = 0, released = 1)
     input  logic square,
-    output logic [11:0] led  // 12 LEDs
+    output logic [11:0] led
 );
     logic int_osc;
-    localparam [25:0] WINDOW_CYCLES = 26'd480_000;  // 10ms at 48 MHz
+    logic reset;              // Active HIGH internally
+    
+    // Invert reset so everything uses positive edge
+    assign reset = ~reset_in;
+    
+	localparam [25:0] WINDOW_CYCLES = 26'd4_800_000;  // 100ms at 48 MHz
     
     logic [25:0] timer;
-    logic [9:0] edge_count;         // 10-bit counter (0-1023)
+    logic [9:0] edge_count;
     logic [9:0] edge_count_display;
     logic collecting;
     
-    logic square_sync1, square_sync2, square_prev;
-    logic reset_sync1, reset_sync2, reset_prev;
-    logic square_edge, reset_released;
+    logic square_sync, square_prev;
+    logic square_edge;
+    logic reset_released;
     
     HSOSC #(.CLKHF_DIV("0b00")) hf_osc (
         .CLKHFPU(1'b1),
@@ -22,23 +27,41 @@ module top(
         .CLKHF(int_osc)
     );
     
-    // Synchronize inputs
-    always_ff @(posedge int_osc) begin
-        square_sync1 <= square;
-        square_sync2 <= square_sync1;
-        square_prev <= square_sync2;
-        
-        reset_sync1 <= reset;
-        reset_sync2 <= reset_sync1;
-        reset_prev <= reset_sync2;
+    // Synchronize square wave input
+    synchronizer square_synchronizer (
+        .clk(int_osc),
+        .async_in(square),
+        .sync_out(square_sync)
+    );
+    
+    // Edge detection on square wave
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            square_prev <= 1'b0;
+        end else begin
+            square_prev <= square_sync;
+        end
     end
     
-    assign square_edge = ~square_sync2 & square_prev;  // FALLING edge
-    assign reset_released = reset_sync2 & ~reset_prev;
+    assign square_edge = ~square_sync & square_prev;  // FALLING edge
     
-    // Collection state
-    always_ff @(posedge int_osc) begin
-        if (~reset_sync2) begin
+    // Detect when reset is released
+    logic reset_prev;
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            reset_prev <= 1'b1;
+        end else begin
+            reset_prev <= reset;
+        end
+    end
+    
+    assign reset_released = reset_prev & ~reset;
+    
+    //===========================================
+    // STATE MACHINE: Collection Control
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
             collecting <= 1'b0;
         end else if (reset_released) begin
             collecting <= 1'b1;
@@ -47,37 +70,58 @@ module top(
         end
     end
     
-    // Timer
-    always_ff @(posedge int_osc) begin
-        if (~reset_sync2 || reset_released) begin
+    //===========================================
+    // DATAPATH: Timer
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            timer <= 26'd0;
+        end else if (reset_released) begin
             timer <= 26'd0;
         end else if (collecting) begin
             timer <= timer + 26'd1;
         end
     end
     
-    // Edge counter (10 bits)
-    always_ff @(posedge int_osc) begin
-        if (~reset_sync2 || reset_released) begin
+    //===========================================
+    // DATAPATH: Edge Counter
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            edge_count <= 10'd0;
+        end else if (reset_released) begin
             edge_count <= 10'd0;
         end else if (collecting && square_edge) begin
             edge_count <= edge_count + 10'd1;
         end
     end
     
-    // Latch display at end
-    always_ff @(posedge int_osc) begin
-        if (~reset_sync2) begin
+    //===========================================
+    // DATAPATH: Display Latch
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
             edge_count_display <= 10'd0;
-        end else if (timer == WINDOW_CYCLES - 1) begin
+        end else if (timer == WINDOW_CYCLES - 2) begin
             edge_count_display <= edge_count;
         end
     end
     
-    // LED display
-    always_ff @(posedge int_osc) begin
-        led[0] <= reset_sync2;      // Leftmost: reset status
-        led[1] <= collecting;       // Second: collecting status
-        led[11:2] <= edge_count_display;  // Remaining 10 LEDs: binary count
+    //===========================================
+    // OUTPUT: LED Display - ALL HIGH DURING RESET
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            led <= 12'b111111111111;  // ALL LEDs ON when reset pressed
+        end else begin
+            led[0] <= 1'b0;           // LED[0] unused (off)
+            led[1] <= collecting;     // LED[1] = collecting pulse
+            // 10-bit count: MSB on LED[2], LSB on LED[11]
+            led[11:2] <= {edge_count_display[0], edge_count_display[1], 
+                          edge_count_display[2], edge_count_display[3],
+                          edge_count_display[4], edge_count_display[5],
+                          edge_count_display[6], edge_count_display[7],
+                          edge_count_display[8], edge_count_display[9]};
+        end
     end
 endmodule

@@ -8,7 +8,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Thu Nov 20 11:47:47 2025
+Mapped on: Sat Nov 29 15:10:05 2025
 
 Design Information
 ------------------
@@ -21,11 +21,12 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
 Design Summary
 --------------
 
-   Number of slice registers:  51 out of  5280 (1%)
-   Number of I/O registers:     13 out of   117 (11%)
-   Number of LUT4s:            79 out of  5280 (1%)
-      Number of logic LUT4s:              25
-      Number of inserted feedthru LUT4s:  14
+   Number of slice registers:  62 out of  5280 (1%)
+   Number of I/O registers:      1 out of   117 (1%)
+   Number of LUT4s:           112 out of  5280 (2%)
+      Number of logic LUT4s:              48
+      Number of inserted feedthru LUT4s:  23
+      Number of replicated LUT4s:          1
       Number of ripple logic:             20 (40 LUT4s)
    Number of IO sites used:   14 out of 39 (36%)
       Number of IO sites used for general PIO: 14
@@ -49,17 +50,16 @@ Design Summary
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
    Number of Clocks:  1
-      Net int_osc: 48 loads, 48 rising, 0 falling (Driver: Pin
+      Net int_osc: 59 loads, 59 rising, 0 falling (Driver: Pin
      hf_osc.osc_inst/CLKHF)
    Number of Clock Enables:  3
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n537: 10 loads, 10 SLICEs
-      Net n544: 14 loads, 14 SLICEs
-   Number of LSRs:  2
-      Net n23: 11 loads, 11 SLICEs
-      Net n24: 14 loads, 14 SLICEs
+      Net n469: 10 loads, 10 SLICEs
+      Net n471: 26 loads, 26 SLICEs
+   Number of LSRs:  1
+      Net reset_in_c_N_47: 57 loads, 57 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net n24: 14 loads
+      Net reset_in_c_N_47: 57 loads
 
                                     Page 1
 
@@ -69,15 +69,15 @@ Design Summary
 
 Design Summary (cont)
 ---------------------
-      Net n544: 14 loads
-      Net n23: 11 loads
-      Net n537: 10 loads
-      Net reset_sync2: 6 loads
+      Net reset_in_c: 30 loads
+      Net reset_prev: 28 loads
+      Net n471: 26 loads
+      Net n469: 10 loads
       Net collecting: 4 loads
-      Net reset_prev: 4 loads
       Net timer[0]: 3 loads
-      Net timer[18]: 3 loads
+      Net timer[16]: 3 loads
       Net timer[19]: 3 loads
+      Net timer[22]: 3 loads
 
 
 
@@ -99,31 +99,31 @@ IO (PIO) Attributes
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[10]             | OUTPUT    |           | O     |       |           |
+| led[10]             | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[11]             | OUTPUT    |           | O     |       |           |
+| led[11]             | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[9]              | OUTPUT    |           | O     |       |           |
+| led[9]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[8]              | OUTPUT    |           | O     |       |           |
+| led[8]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[7]              | OUTPUT    |           | O     |       |           |
+| led[7]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[6]              | OUTPUT    |           | O     |       |           |
+| led[6]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[5]              | OUTPUT    |           | O     |       |           |
+| led[5]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[4]              | OUTPUT    |           | O     |       |           |
+| led[4]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[3]              | OUTPUT    |           | O     |       |           |
+| led[3]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[2]              | OUTPUT    |           | O     |       |           |
+| led[2]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[1]              | OUTPUT    |           | O     |       |           |
+| led[1]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | led[0]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| reset               | INPUT     |           | I     |       |           |
+| reset_in            | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | square              | INPUT     |           | I     |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -153,31 +153,7 @@ OSC 1:                                 Pin/Node Value
 ASIC Components
 ---------------
 
-Instance Name: square_sync1_c
-         Type: IOLOGIC
-Instance Name: led_i12
-         Type: IOLOGIC
-Instance Name: reset_sync1_c
-         Type: IOLOGIC
-Instance Name: led_i2
-         Type: IOLOGIC
-Instance Name: led_i3
-         Type: IOLOGIC
-Instance Name: led_i4
-         Type: IOLOGIC
-Instance Name: led_i5
-         Type: IOLOGIC
-Instance Name: led_i6
-         Type: IOLOGIC
-Instance Name: led_i7
-         Type: IOLOGIC
-Instance Name: led_i8
-         Type: IOLOGIC
-Instance Name: led_i9
-         Type: IOLOGIC
-Instance Name: led_i10
-         Type: IOLOGIC
-Instance Name: led_i11
+Instance Name: square_synchronizer/sync1_c
          Type: IOLOGIC
 Instance Name: hf_osc.osc_inst
          Type: HFOSC
@@ -193,74 +169,32 @@ Run Time and Memory Usage
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
+   Peak Memory Usage: 67 MB
+Checksum -- map: cd4d62a3de92d234528af07a60789a7fc41f313c
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     Page 3
-
-
-
-
-
-Run Time and Memory Usage (cont)
---------------------------------
-   Peak Memory Usage: 67 MB
-Checksum -- map: 6f7db1efa266ec70d2259767622c3b249695f2c4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    Page 4
 
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
