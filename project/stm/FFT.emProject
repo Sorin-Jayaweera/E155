@@ -47,7 +47,7 @@
     <configuration
       Name="Debug"
       c_preprocessor_definitions="ARM_MATH_CM4;__FPU_PRESENT=1;STM32L432xx"
-      c_user_include_directories="$(ProjectDir)\;$(ProjectDir)/lib\;$(ProjectDir)/src\;$(ProjectDir)/CMSIS-DSP/Include\;$(ProjectDir)/CMSIS-DSP/Include/dsp\;$(ProjectDir)/CMSIS_5/CMSIS/Core/Include\;$(ProjectDir)/STM32L4xx/Device/Include" />
+      c_user_include_directories="C:/Users/sojayaweera/E155/project/stm\;C:/Users/sojayaweera/E155/project/stm/lib\;C:/Users/sojayaweera/E155/project/stm/src\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include/dsp\;C:/Users/sojayaweera/E155/project/stm/CMSIS_5/CMSIS/Core/Include\;C:/Users/sojayaweera/E155/project/stm/STM32L4xx/Device/Include" />
     <folder Name="CMSIS Files">
       <file file_name="STM32L4xx/Device/Include/stm32l4xx.h" />
       <file file_name="STM32L4xx/Device/Source/system_stm32l4xx.c">
@@ -64,14 +64,7 @@
     </folder>
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
-      <file file_name="CMSIS-DSP/arm_bitreversal2.c" />
-      <file file_name="CMSIS-DSP/arm_cfft_f32.c" />
-      <file file_name="CMSIS-DSP/arm_cfft_init_f32.c" />
-      <file file_name="CMSIS-DSP/arm_cfft_radix8_f32.c" />
-      <file file_name="CMSIS-DSP/arm_common_tables.c" />
-      <file file_name="CMSIS-DSP/arm_const_structs.c" />
-      <file file_name="CMSIS-DSP/arm_rfft_f32.c" />
-      <file file_name="CMSIS-DSP/arm_rfft_fast_init_f32.c" />
+      <file file_name="CMSIS-DSP/Include/arm_math.h" />
       <file file_name="src/config.h" />
       <file file_name="lib/fft_processing.c" />
       <file file_name="lib/fft_processing.h" />
@@ -88,6 +81,7 @@
       <file file_name="lib/STM32L432KC_RCC.h" />
       <file file_name="lib/STM32L432KC_TIM.c" />
       <file file_name="lib/STM32L432KC_TIM.h" />
+      <file file_name="CMSIS-DSP/Include/dsp/transform_functions.h" />
     </folder>
     <folder Name="System Files">
       <file file_name="SEGGER_THUMB_Startup.s" />

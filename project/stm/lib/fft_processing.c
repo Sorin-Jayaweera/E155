@@ -1,65 +1,90 @@
 // fft_processing.c
-// Source code for FFT processing functions
+// Simplified standalone FFT implementation
 
 #include "fft_processing.h"
-#include "arm_math.h"
+#include <math.h>
 #include <string.h>
+
+///////////////////////////////////////////////////////////////////////////////
+// Math constants
+///////////////////////////////////////////////////////////////////////////////
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846f
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+// Private structures
+///////////////////////////////////////////////////////////////////////////////
+
+typedef struct {
+    float real;
+    float imag;
+} Complex;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Private variables
 ///////////////////////////////////////////////////////////////////////////////
 
-// Input and output arrays for FFT
-static float fft_input[FFT_SIZE * 2];      // Interleaved real and imaginary (real, imag, real, imag, ...)
-static float fft_output[FFT_SIZE];         // Magnitude output
-static arm_rfft_fast_instance_f32 fft_instance;
+static Complex fft_buffer[FFT_SIZE];
+static float magnitudes[FFT_SIZE / 2];
 
 ///////////////////////////////////////////////////////////////////////////////
-// Function definitions
+// Private functions
 ///////////////////////////////////////////////////////////////////////////////
 
-void initFFT(void) {
-    // Initialize the RFFT (Real FFT) instance
-    arm_rfft_fast_init_f32(&fft_instance, FFT_SIZE);
-}
-
-void processFFT(uint16_t* adc_buffer, FrequencyPeak* peaks) {
-    // Convert ADC samples (12-bit unsigned) to float and normalize
-    // ADC range: 0-4095, convert to -1.0 to 1.0
-    for (int i = 0; i < FFT_SIZE; i++) {
-        fft_input[i] = ((float)adc_buffer[i] - 2048.0f) / 2048.0f;
+// Simple FFT implementation (Cooley-Tukey radix-2)
+void fft_compute(Complex* data, int n) {
+    // Bit-reversal permutation
+    int i, j, k;
+    for (i = 1, j = 0; i < n; i++) {
+        int bit = n >> 1;
+        for (; j >= bit; bit >>= 1) {
+            j -= bit;
+        }
+        j += bit;
+        if (i < j) {
+            Complex temp = data[i];
+            data[i] = data[j];
+            data[j] = temp;
+        }
     }
 
-    // Perform FFT
-    arm_rfft_fast_f32(&fft_instance, fft_input, fft_output, 0);
-
-    // Calculate magnitude for each frequency bin
-    // fft_output contains interleaved real and imaginary components
-    float magnitudes[FFT_SIZE / 2];
-
-    // DC component (bin 0)
-    magnitudes[0] = fft_output[0];
-
-    // Other frequency bins
-    for (int i = 1; i < FFT_SIZE / 2; i++) {
-        float real = fft_output[2 * i];
-        float imag = fft_output[2 * i + 1];
-        magnitudes[i] = arm_sqrt_f32(real * real + imag * imag);
+    // Cooley-Tukey FFT
+    for (int len = 2; len <= n; len <<= 1) {
+        float angle = -2.0f * M_PI / len;
+        Complex wlen = {cosf(angle), sinf(angle)};
+        
+        for (i = 0; i < n; i += len) {
+            Complex w = {1.0f, 0.0f};
+            for (j = 0; j < len / 2; j++) {
+                Complex u = data[i + j];
+                Complex v = {
+                    data[i + j + len/2].real * w.real - data[i + j + len/2].imag * w.imag,
+                    data[i + j + len/2].real * w.imag + data[i + j + len/2].imag * w.real
+                };
+                
+                data[i + j].real = u.real + v.real;
+                data[i + j].imag = u.imag + v.imag;
+                data[i + j + len/2].real = u.real - v.real;
+                data[i + j + len/2].imag = u.imag - v.imag;
+                
+                float w_temp = w.real;
+                w.real = w.real * wlen.real - w.imag * wlen.imag;
+                w.imag = w_temp * wlen.imag + w.imag * wlen.real;
+            }
+        }
     }
-
-    // Find top frequencies
-    findTopFrequencies(magnitudes, peaks);
 }
 
-void findTopFrequencies(float* magnitudes, FrequencyPeak* peaks) {
+void findTopFrequencies(FrequencyPeak* peaks) {
     // Initialize peaks array
     for (int i = 0; i < NUM_FREQUENCIES; i++) {
         peaks[i].frequency = 0.0f;
         peaks[i].magnitude = 0.0f;
     }
 
-    // Find top N peaks
-    // Skip DC component (bin 0) as it's not useful for audio
+    // Find top N peaks (skip DC bin 0)
     for (int bin = 1; bin < FFT_SIZE / 2; bin++) {
         float mag = magnitudes[bin];
 
@@ -78,4 +103,33 @@ void findTopFrequencies(float* magnitudes, FrequencyPeak* peaks) {
             }
         }
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Public functions
+///////////////////////////////////////////////////////////////////////////////
+
+void initFFT(void) {
+    // Nothing to initialize for standalone version
+}
+
+void processFFT(uint16_t* adc_buffer, FrequencyPeak* peaks) {
+    // Convert ADC samples to complex (real part only, normalize to -1 to 1)
+    for (int i = 0; i < FFT_SIZE; i++) {
+        fft_buffer[i].real = ((float)adc_buffer[i] - 2048.0f) / 2048.0f;
+        fft_buffer[i].imag = 0.0f;
+    }
+
+    // Perform FFT
+    fft_compute(fft_buffer, FFT_SIZE);
+
+    // Calculate magnitudes
+    for (int i = 0; i < FFT_SIZE / 2; i++) {
+        float real = fft_buffer[i].real;
+        float imag = fft_buffer[i].imag;
+        magnitudes[i] = sqrtf(real * real + imag * imag);
+    }
+
+    // Find top frequencies
+    findTopFrequencies(peaks);
 }
