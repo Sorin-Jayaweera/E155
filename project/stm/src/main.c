@@ -1,6 +1,14 @@
 // main.c
 // Musical Tesla Coil - STM32 FFT Processing (Simplified)
 
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+// STM32 Device Headers (MUST come first!)
+//#include "stm32l432xx.h"
+
+// Project Headers
 #include "../lib/STM32L432KC_RCC.h"
 #include "../lib/STM32L432KC_GPIO.h"
 #include "../lib/STM32L432KC_TIM.h"
@@ -8,7 +16,7 @@
 #include "../lib/STM32L432KC_ADC.h"
 #include "../lib/STM32L432KC_DMA.h"
 #include "../lib/fft_processing.h"
-#include "stdbool.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // Configuration
 ///////////////////////////////////////////////////////////////////////////////
