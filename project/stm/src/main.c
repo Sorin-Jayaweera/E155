@@ -1,12 +1,22 @@
 // main.c
 // Musical Tesla Coil - STM32 FFT Processing (Simplified)
-
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
 
-// STM32 Device Headers (MUST come first!)
-//#include "stm32l432xx.h"
+// Define NVIC for interrupt control
+typedef struct {
+    volatile uint32_t ISER[8];
+} NVIC_Type;
+#define NVIC ((NVIC_Type *) 0xE000E100UL)
+
+// Define DMA1 ISR/IFCR for interrupt handling  
+typedef struct {
+    volatile uint32_t ISR;
+    volatile uint32_t IFCR;
+} DMA_IRQ_Type;
+#define DMA1 ((DMA_IRQ_Type *) 0x40020000UL)
+
 
 // Project Headers
 #include "../lib/STM32L432KC_RCC.h"

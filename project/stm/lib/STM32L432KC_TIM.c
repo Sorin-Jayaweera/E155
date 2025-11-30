@@ -211,7 +211,7 @@ void initializeTIM15Counter(void){
 }
 
 
-void setTIM16FREQ(int freqHz){
+void setTIM16FREQ(uint32_t freqHz){
 
   // SET TIM16_ARR 
   // duty cycle in TIM16_CCR1

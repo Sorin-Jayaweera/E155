@@ -5,6 +5,7 @@
 #define STM32L4_RCC_H
 
 #include <stdint.h>
+//#include "stm32l432xx.h"  // For NVIC and core definitions
 
 ///////////////////////////////////////////////////////////////////////////////
 // Definitions

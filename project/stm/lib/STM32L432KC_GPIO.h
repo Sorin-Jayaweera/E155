@@ -29,21 +29,21 @@
 
 // GPIO register structs here
 typedef struct {
-    volatile uint32_t MODER;   // GPIO Offset 0x00 GPIO port mode register
-    volatile uint32_t OTYPER;  // GPIO Offset 0x04
-    volatile uint32_t OSPEEDR; // GPIO Offset 0x08
-    volatile uint32_t PURPDR;  // GPIO Offset 0x0C
-    volatile uint32_t IDR;     // GPIO Offset 0x10
-    volatile uint32_t ODR;     // GPIO Offset 0x14
-    volatile uint32_t BSRR;    // GPIO Offset 0x18
-    volatile uint32_t LCKR;    // GPIO Offset 0x1C
-    volatile uint32_t AFRL;    // GPIO Offset 0x20
-    volatile uint32_t AFRH;    // GPIO Offset 0x24
-} GPIO;
+    volatile uint32_t MODER;
+    volatile uint32_t OTYPER;
+    volatile uint32_t OSPEEDR;
+    volatile uint32_t PURPDR;
+    volatile uint32_t IDR;
+    volatile uint32_t ODR;
+    volatile uint32_t BSRR;
+    volatile uint32_t LCKR;
+    volatile uint32_t AFRL;
+    volatile uint32_t AFRH;
+} GPIO_TypeDef;
 
 // Pointers to GPIO-sized chunks of memory for each peripheral
-#define GPIOA ((GPIO *) GPIOA_BASE)
 
+#define GPIOA ((GPIO_TypeDef *) GPIOA_BASE)
 #define GPIO GPIOA
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,5 +59,7 @@ void digitalWrite(int pin, int val);
 void togglePin(int pin);
 
 void initAltFxn(void);
+
+
 
 #endif
