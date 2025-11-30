@@ -1,25 +1,47 @@
-// Main module
+
+// Main module - Spectrum analyzer with smooth persistence/fading
 module top(
-    input  logic reset_in,    // Active LOW (pressed = 0, released = 1)
+    input  logic reset_in,    // Active LOW (pressed = 0)
     input  logic square,
     output logic [11:0] led
 );
     logic int_osc;
-    logic reset;              // Active HIGH internally
+    logic reset;
     
-    // Invert reset so everything uses positive edge
     assign reset = ~reset_in;
     
-	localparam [25:0] WINDOW_CYCLES = 26'd4_800_000;  // 100ms at 48 MHz
+    // 100ms window at 48 MHz
+    localparam [25:0] WINDOW_CYCLES = 26'd4_800_000;
+    
+    // PWM and fade timing
+    localparam [11:0] PWM_PERIOD = 12'd2400;       // 20kHz PWM (48MHz / 2400)
+    localparam [22:0] FADE_PERIOD = 23'd375_000;   // ~7.8ms per fade step (2 seconds / 256 steps)
+    
+    // State machine
+    typedef enum logic [1:0] {
+        COLLECTING,
+        LATCHING
+    } state_t;
+    
+    state_t state;
     
     logic [25:0] timer;
-    logic [9:0] edge_count;
-    logic [9:0] edge_count_display;
-    logic collecting;
+    logic [7:0] edge_count;
+    logic [7:0] edge_count_latched;
+    logic [3:0] bucket;
+    logic [3:0] bucket_display;
     
-    logic square_sync, square_prev;
-    logic square_edge;
-    logic reset_released;
+    logic square_sync, square_prev, square_edge;
+    
+    // Brightness array - one 8-bit brightness value per bucket (0-255)
+    logic [7:0] brightness [11:0];
+    
+    // PWM counter for brightness control
+    logic [7:0] pwm_counter;
+    logic [11:0] pwm_timer;
+    
+    // Fade timer
+    logic [22:0] fade_timer;
     
     HSOSC #(.CLKHF_DIV("0b00")) hf_osc (
         .CLKHFPU(1'b1),
@@ -30,6 +52,7 @@ module top(
     // Synchronize square wave input
     synchronizer square_synchronizer (
         .clk(int_osc),
+        .reset(reset),
         .async_in(square),
         .sync_out(square_sync)
     );
@@ -45,28 +68,26 @@ module top(
     
     assign square_edge = ~square_sync & square_prev;  // FALLING edge
     
-    // Detect when reset is released
-    logic reset_prev;
+    //===========================================
+    // STATE MACHINE
+    //===========================================
     always_ff @(posedge int_osc, posedge reset) begin
         if (reset) begin
-            reset_prev <= 1'b1;
+            state <= COLLECTING;
         end else begin
-            reset_prev <= reset;
-        end
-    end
-    
-    assign reset_released = reset_prev & ~reset;
-    
-    //===========================================
-    // STATE MACHINE: Collection Control
-    //===========================================
-    always_ff @(posedge int_osc, posedge reset) begin
-        if (reset) begin
-            collecting <= 1'b0;
-        end else if (reset_released) begin
-            collecting <= 1'b1;
-        end else if (collecting && timer >= WINDOW_CYCLES - 1) begin
-            collecting <= 1'b0;
+            case (state)
+                COLLECTING: begin
+                    if (timer >= WINDOW_CYCLES - 1) begin
+                        state <= LATCHING;
+                    end
+                end
+                
+                LATCHING: begin
+                    state <= COLLECTING;  // Auto-restart
+                end
+                
+                default: state <= COLLECTING;
+            endcase
         end
     end
     
@@ -76,10 +97,16 @@ module top(
     always_ff @(posedge int_osc, posedge reset) begin
         if (reset) begin
             timer <= 26'd0;
-        end else if (reset_released) begin
-            timer <= 26'd0;
-        end else if (collecting) begin
-            timer <= timer + 26'd1;
+        end else begin
+            case (state)
+                COLLECTING: begin
+                    timer <= timer + 26'd1;
+                end
+                
+                LATCHING: begin
+                    timer <= 26'd0;  // Reset for next window
+                end
+            endcase
         end
     end
     
@@ -88,40 +115,132 @@ module top(
     //===========================================
     always_ff @(posedge int_osc, posedge reset) begin
         if (reset) begin
-            edge_count <= 10'd0;
-        end else if (reset_released) begin
-            edge_count <= 10'd0;
-        end else if (collecting && square_edge) begin
-            edge_count <= edge_count + 10'd1;
-        end
-    end
-    
-    //===========================================
-    // DATAPATH: Display Latch
-    //===========================================
-    always_ff @(posedge int_osc, posedge reset) begin
-        if (reset) begin
-            edge_count_display <= 10'd0;
-        end else if (timer == WINDOW_CYCLES - 2) begin
-            edge_count_display <= edge_count;
-        end
-    end
-    
-    //===========================================
-    // OUTPUT: LED Display - ALL HIGH DURING RESET
-    //===========================================
-    always_ff @(posedge int_osc, posedge reset) begin
-        if (reset) begin
-            led <= 12'b111111111111;  // ALL LEDs ON when reset pressed
+            edge_count <= 8'd0;
         end else begin
-            led[0] <= 1'b0;           // LED[0] unused (off)
-            led[1] <= collecting;     // LED[1] = collecting pulse
-            // 10-bit count: MSB on LED[2], LSB on LED[11]
-            led[11:2] <= {edge_count_display[0], edge_count_display[1], 
-                          edge_count_display[2], edge_count_display[3],
-                          edge_count_display[4], edge_count_display[5],
-                          edge_count_display[6], edge_count_display[7],
-                          edge_count_display[8], edge_count_display[9]};
+            case (state)
+                COLLECTING: begin
+                    if (square_edge) begin
+                        edge_count <= edge_count + 8'd1;
+                    end
+                end
+                
+                LATCHING: begin
+                    edge_count <= 8'd0;  // Reset for next window
+                end
+            endcase
         end
     end
+    
+    //===========================================
+    // DATAPATH: Latch Count
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            edge_count_latched <= 8'd0;
+        end else if (state == LATCHING) begin
+            edge_count_latched <= edge_count;
+        end
+    end
+    
+    //===========================================
+    // BUCKET DETERMINATION (Combinational)
+    //===========================================
+    always_comb begin
+        bucket = 4'd0;
+        
+        if (edge_count_latched > 8'd184)       bucket = 4'd11;
+        else if (edge_count_latched > 8'd167)  bucket = 4'd10;
+        else if (edge_count_latched > 8'd150)  bucket = 4'd9;
+        else if (edge_count_latched > 8'd134)  bucket = 4'd8;
+        else if (edge_count_latched > 8'd117)  bucket = 4'd7;
+        else if (edge_count_latched > 8'd100)  bucket = 4'd6;
+        else if (edge_count_latched > 8'd83)   bucket = 4'd5;
+        else if (edge_count_latched > 8'd67)   bucket = 4'd4;
+        else if (edge_count_latched > 8'd50)   bucket = 4'd3;
+        else if (edge_count_latched > 8'd33)   bucket = 4'd2;
+        else if (edge_count_latched > 8'd16)   bucket = 4'd1;
+        else                                   bucket = 4'd0;
+    end
+    
+    //===========================================
+    // LATCH BUCKET FOR DISPLAY
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            bucket_display <= 4'd0;
+        end else if (state == LATCHING) begin
+            bucket_display <= bucket;
+        end
+    end
+    
+    //===========================================
+    // BRIGHTNESS MANAGEMENT + FADE TIMER (Combined)
+    // Fade over 2 seconds: 256 steps × 7.8ms = 2 seconds
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            fade_timer <= 23'd0;
+            for (int i = 0; i < 12; i++) begin
+                brightness[i] <= 8'd0;
+            end
+        end else begin
+            // Update fade timer
+            if (fade_timer >= FADE_PERIOD - 1) begin
+                fade_timer <= 23'd0;
+            end else begin
+                fade_timer <= fade_timer + 23'd1;
+            end
+            
+            // Priority 1: Set active bucket to full brightness (happens in LATCHING state)
+            if (state == LATCHING) begin
+                brightness[bucket_display] <= 8'd255;
+            end
+            
+            // Priority 2: Fade all buckets (happens every FADE_PERIOD)
+            if (fade_timer >= FADE_PERIOD - 1) begin
+                for (int i = 0; i < 12; i++) begin
+                    // Don't fade the bucket we just set to full brightness
+                    if (!(state == LATCHING && i == bucket_display)) begin
+                        if (brightness[i] > 8'd0) begin
+                            brightness[i] <= brightness[i] - 8'd1;
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    //===========================================
+    // PWM COUNTER - Runs at 20kHz (imperceptible flicker)
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            pwm_timer <= 12'd0;
+            pwm_counter <= 8'd0;
+        end else begin
+            if (pwm_timer >= PWM_PERIOD - 1) begin
+                pwm_timer <= 12'd0;
+                pwm_counter <= pwm_counter + 8'd1;  // Wraps around at 256
+            end else begin
+                pwm_timer <= pwm_timer + 12'd1;
+            end
+        end
+    end
+    
+    //===========================================
+    // LED DISPLAY: PWM output based on brightness
+    // LED[0] = bucket 11, LED[11] = bucket 0
+    // Registered output for cleaner PWM
+    //===========================================
+    always_ff @(posedge int_osc, posedge reset) begin
+        if (reset) begin
+            led <= 12'b0;
+        end else begin
+            for (int i = 0; i < 12; i++) begin
+                // LED is on when brightness > pwm_counter
+                led[11-i] <= (brightness[i] > pwm_counter);
+            end
+        end
+    end
+    
 endmodule

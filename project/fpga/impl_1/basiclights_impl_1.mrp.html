@@ -49,7 +49,7 @@ Package: SG48
 Performance Grade:  High-Performance_1.2V
 
 Mapper:    version Radiant Software (64-bit) 2024.2.0.3.0
-Mapped on: Sat Nov 29 15:10:05 2025
+Mapped on: Sat Nov 29 17:16:22 2025
 
 <A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
 
@@ -60,13 +60,12 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
 
 <A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
 
-   Number of slice registers:  62 out of  5280 (1%)
-   Number of I/O registers:      1 out of   117 (1%)
-   Number of LUT4s:           112 out of  5280 (2%)
-      Number of logic LUT4s:              48
-      Number of inserted feedthru LUT4s:  23
-      Number of replicated LUT4s:          1
-      Number of ripple logic:             20 (40 LUT4s)
+   Number of slice registers: 201 out of  5280 (4%)
+   Number of I/O registers:      0 out of   117 (0%)
+   Number of LUT4s:           595 out of  5280 (11%)
+      Number of logic LUT4s:             378
+      Number of inserted feedthru LUT4s:  11
+      Number of ripple logic:            103 (206 LUT4s)
    Number of IO sites used:   14 out of 39 (36%)
       Number of IO sites used for general PIO: 14
       Number of IO sites used for I3C: 0 out of 2 (0%)
@@ -89,25 +88,36 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
    Number of EBRs:             0 out of 30 (0%)
    Number of PLLs:             0 out of 1 (0%)
    Number of Clocks:  1
-      Net int_osc: 59 loads, 59 rising, 0 falling (Driver: Pin
+      Net int_osc: 198 loads, 198 rising, 0 falling (Driver: Pin
      hf_osc.osc_inst/CLKHF)
-   Number of Clock Enables:  3
+   Number of Clock Enables:  14
       Net VCC_net: 1 loads, 0 SLICEs
-      Net n469: 10 loads, 10 SLICEs
-      Net n471: 26 loads, 26 SLICEs
+      Net state[0]: 12 loads, 12 SLICEs
+      Net n2958: 8 loads, 8 SLICEs
+      Net n2976: 8 loads, 8 SLICEs
+      Net n2992: 8 loads, 8 SLICEs
+      Net n3012: 8 loads, 8 SLICEs
+      Net n3018: 8 loads, 8 SLICEs
+      Net n3044: 8 loads, 8 SLICEs
+      Net n3062: 8 loads, 8 SLICEs
+      Net n3084: 8 loads, 8 SLICEs
+      Net n3094: 8 loads, 8 SLICEs
+      Net n3118: 8 loads, 8 SLICEs
+      Net n3138: 8 loads, 8 SLICEs
+      Net n3156: 8 loads, 8 SLICEs
    Number of LSRs:  1
-      Net reset_in_c_N_47: 57 loads, 57 SLICEs
+      Net reset_in_c_N_207: 198 loads, 198 SLICEs
    Top 10 highest fanout non-clock nets:
-      Net reset_in_c_N_47: 57 loads
-      Net reset_in_c: 30 loads
-      Net reset_prev: 28 loads
-      Net n471: 26 loads
-      Net n469: 10 loads
-      Net collecting: 4 loads
-      Net timer[0]: 3 loads
-      Net timer[16]: 3 loads
-      Net timer[19]: 3 loads
-      Net timer[22]: 3 loads
+      Net reset_in_c_N_207: 198 loads
+      Net VCC_net: 101 loads
+      Net state[0]: 62 loads
+      Net n4941: 35 loads
+      Net bucket_display[0]: 13 loads
+      Net bucket_display[1]: 13 loads
+      Net pwm_counter[0]: 13 loads
+      Net pwm_counter[5]: 13 loads
+      Net pwm_counter[6]: 13 loads
+      Net pwm_counter[7]: 13 loads
 
    Number of warnings:  0
    Number of criticals: 0
@@ -123,13 +133,13 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
 | IO Name             | Direction | Levelmode |  IO   |  IO   | Special   |
 |                     |           |  IO_TYPE  |  REG  |  DDR  | IO Buffer |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| led[10]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
-| led[11]             | OUTPUT    |           |       |       |           |
-+---------------------+-----------+-----------+-------+-------+-----------+
 | led[9]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
+| led[10]             | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
 | led[8]              | OUTPUT    |           |       |       |           |
++---------------------+-----------+-----------+-------+-------+-----------+
+| led[11]             | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 | led[7]              | OUTPUT    |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
@@ -149,7 +159,7 @@ Command line:   map -pdc C:/Users/sojayaweera/E155/project/fpga/pins.pdc -i
 +---------------------+-----------+-----------+-------+-------+-----------+
 | reset_in            | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
-| square              | INPUT     |           | I     |       |           |
+| square              | INPUT     |           |       |       |           |
 +---------------------+-----------+-----------+-------+-------+-----------+
 
 <A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
@@ -167,8 +177,6 @@ OSC 1:                                 Pin/Node Value
 
 <A name="mrp_asic"></A><B><U><big>ASIC Components</big></U></B>
 
-Instance Name: square_synchronizer/sync1_c
-         Type: IOLOGIC
 Instance Name: hf_osc.osc_inst
          Type: HFOSC
 
@@ -181,8 +189,8 @@ Instance Name: hf_osc.osc_inst
 
    Total CPU Time: 0 secs
    Total REAL Time: 0 secs
-   Peak Memory Usage: 67 MB
-Checksum -- map: cd4d62a3de92d234528af07a60789a7fc41f313c
+   Peak Memory Usage: 74 MB
+Checksum -- map: c1d78a208c2dfc5781532230f4339826263932f2
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995
      AT&amp;T Corp.   All rights reserved.

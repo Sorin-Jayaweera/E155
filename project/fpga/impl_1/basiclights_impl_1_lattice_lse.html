@@ -48,13 +48,14 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Nov 29 15:09:44 2025
+Sat Nov 29 17:16:01 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/project/fpga/impl_1/basiclights_impl_1_lattice.synproj -logfile basiclights_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/project/fpga/promote.xml 
 
 INFO <35002000> - synthesis: Lattice Synthesis Engine launched.
 
+The -top option is not used.
 Synthesis options:
 The -a option is iCE40UP.
 The -t option is SG48.
@@ -94,7 +95,7 @@ Resolving user-selected strategy settings...
 ----------------------------------------------------------------
 Optimization Goal     | Area
 ----------------------------------------------------------------
-Top-level Module Name | top
+Top-level Module Name | 
 ----------------------------------------------------------------
 Target Frequency      | 200.000 MHz
 ----------------------------------------------------------------
@@ -155,6 +156,7 @@ Output HDL filename: basiclights_impl_1.vm
 -path C:/Users/sojayaweera/E155/project/fpga/impl_1 (searchpath added)
 -path C:/lscc/radiant/2024.2/ispfpga/ice40tp/data (searchpath added)
 Mixed language design
+CRITICAL <35001476> - synthesis: A top-level module has not been specified for the mixed language design.
 Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/top.sv
 Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/synchronizer.sv
@@ -214,10 +216,11 @@ Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
 
 INFO <35921014> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd(4): analyzing package components. VHDL-1014
+WARNING <35001200> - synthesis: Setting top as the top-level module. To specify the top-level module explicitly, go to View->Set Views->Hierarchy or Project->Active Implementation->Set Top-Level Unit.
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/project/fpga/impl_1". VHDL-1504
 Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
-INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(2): compiling module top. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(3): compiling module top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/synchronizer.sv(2): compiling module synchronizer. VERI-1018
 
@@ -230,26 +233,26 @@ INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_
 		CLKHF_DIV                 "0b00"
 
 [Parameter Setting Section End]
+WARNING <35001771> - synthesis: Initial value found on net gnd_2 will be ignored due to unrecognized driver type
 
 
 
-INFO <35002039> - synthesis: Special Primitives IFD1P3AZ and OFD1P3AZ for ThunderPlus are synthesized using IOL_B.
+CRITICAL <35001747> - synthesis: Bit(s) of register driving state[1:0] stuck at '0': 1
 
 
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top)######################
-Number of register bits => 62 of 5280 (1 % )
-CCU2 => 20
-FD1P3XZ => 62
+Number of register bits => 201 of 5280 (3 % )
+CCU2 => 103
+FD1P3XZ => 201
 HSOSC => 1
 IB => 2
-IOL_B => 1
-LUT4 => 46
+LUT4 => 377
 OB => 12
 ################### End Area Report ##################
-Number of odd-length carry chains : 0
-Number of even-length carry chains : 2
+Number of odd-length carry chains : 1
+Number of even-length carry chains : 16
 
 
 <A name="lse_clock"></A><B><U><big>Clock Report</big></U></B>
@@ -262,16 +265,16 @@ Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : reset_in_c_N_47, loads : 62
-  Net : reset_in_c, loads : 29
-  Net : reset_prev, loads : 28
-  Net : n471, loads : 28
-  Net : n469, loads : 17
-  Net : n472, loads : 16
-  Net : collecting_N_48, loads : 15
-  Net : n476, loads : 15
-  Net : n474, loads : 15
-  Net : n694, loads : 15
+  Net : reset_in_c_N_207, loads : 201
+  Net : state[0], loads : 62
+  Net : n4941, loads : 53
+  Net : n2807, loads : 29
+  Net : n3094, loads : 29
+  Net : n3138, loads : 29
+  Net : n3018, loads : 29
+  Net : n2711, loads : 29
+  Net : n2775, loads : 29
+  Net : n2791, loads : 28
 ################### End Clock Report ##################
 
 
@@ -283,13 +286,13 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 94 MB
+Peak Memory Usage: 104 MB
 
 --------------------------------------------------------------
-Total CPU Time: 5 secs 
+Total CPU Time: 6 secs 
 Total REAL Time: 12 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: 598c1d1a97d27b909dbb30b9c3e63ba22a45e0a2
+Checksum -- synthesis -- netlist: cd252782634f39f632bd237cd429b83777c869f
 
 
 
