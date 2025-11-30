@@ -9,7 +9,7 @@
 #ifndef STM32L4_RCC_H
 #include "STM32L432KC_RCC.h"
 #endif
-void initializeTIM16PWM(void){
+void initTIM16PWM(void){
    //////////////////////////////////////////////////////////////////
    // using TIM16 for driving a pin at pitch frequency
    // PWM MODE (section 28.5.10)
@@ -154,7 +154,7 @@ void initializeTIM16PWM(void){
 
 }
 
-void initializeTIM16Counter(void){
+void initTIM16Counter(void){
     ///////////////////////////////////
     // Instead of PWM, just use an upcounter
     // so much easier
@@ -184,7 +184,7 @@ void initializeTIM16Counter(void){
 
 
   
-void initializeTIM15Counter(void){
+void initTIM15Counter(void){
  //smth so that we have enough bits to 
  //represent a 4 hz signalD
  // clear
