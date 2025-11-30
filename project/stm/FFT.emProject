@@ -3,7 +3,7 @@
   <configuration
     Name="Debug"
     c_preprocessor_definitions="DEBUG"
-    c_user_include_directories=".;$(ProjectDir)/CMSIS_5/CMSIS/Core/Include\;$(ProjectDir)/STM32L4xx/Device/Include\;$(ProjectDir)/CMSIS-DSP/Include\;$(ProjectDir)/lib\;$(ProjectDir)/src"
+    c_user_include_directories="$(ProjectDir)\;$(ProjectDir)/lib\;$(ProjectDir)/src\;$(ProjectDir)/CMSIS-DSP/Include\;$(ProjectDir)/CMSIS_5/CMSIS/Core/Include\;$(ProjectDir)/STM32L4xx/Device/Include"
     gcc_debugging_level="Level 3"
     gcc_omit_frame_pointer="Yes"
     gcc_optimization_level="None" />
@@ -46,7 +46,8 @@
       target_reset_script="Reset();" />
     <configuration
       Name="Debug"
-      c_preprocessor_definitions="ARM_MATH_CM4;__FPU_PRESENT=1" />
+      c_preprocessor_definitions="ARM_MATH_CM4;__FPU_PRESENT=1;STM32L432xx"
+      c_user_include_directories="$(ProjectDir)\;$(ProjectDir)/lib\;$(ProjectDir)/src\;$(ProjectDir)/CMSIS-DSP/Include\;$(ProjectDir)/CMSIS-DSP/Include/dsp\;$(ProjectDir)/CMSIS_5/CMSIS/Core/Include\;$(ProjectDir)/STM32L4xx/Device/Include" />
     <folder Name="CMSIS Files">
       <file file_name="STM32L4xx/Device/Include/stm32l4xx.h" />
       <file file_name="STM32L4xx/Device/Source/system_stm32l4xx.c">
