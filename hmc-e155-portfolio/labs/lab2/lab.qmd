@@ -9,6 +9,30 @@ categories:
 draft: false
 ---
 
+# Lab 2 Redo
+
+The FPGA can sink at max 8 mA per pin (lets say 6 to be safe). There are 7 pins, so 42 mA has to be supplied from the transistor. 
+At 42 mA from the collector, the transistor has a 60 X gain, so the FPGA needs to supply 0.7 mA. 
+
+The FPGA outputs 3V, and there is a 0.7 V drop from VBE, so 2.3 V. To get 7 mA, this needs a 330 ohm resistor. 
+
+When active, the transistor looses 0.3 V from VCE saturation, so 3 V from the transistor output to ground. 
+This goes to the LEDS, which each have a 2 V drop. There is 1 V across the resistors to the FPGA ground. These resistors have to restrict the current to maximum 8 mA, 
+so they must be a minimum of 125 ohms. 
+
+
+The schematic was updated to provide a constant current supply to each led on the 8 segment display so that the brightness does not vary with the number of segments active.
+The resistors going into the transistor were decreased from to allow more current into the base, such that the amplified current (50x) is sufficient to fully power all segments.
+
+![](/images/lab2/transistor_schematic.png)
+
+Datasheets:
+https://docs.broadcom.com/doc/HDSP-521A-523A-Dual-Digit-General-Purpose-7-Segment-Display-DS
+https://hmc-e155.github.io/assets/doc/FPGA-DS-02008-2-0-iCE40-UltraPlus-Family-Data-Sheet.pdf
+https://docs.broadcom.com/doc/HDSP-521A-523A-Dual-Digit-General-Purpose-7-Segment-Display-DS
+
+
+# Old version of lab 2
 
 ## Introduction
 Two 4 pin DIP switches are used to control HEX numbers on two seven segment displays. Time multiplexing was used such that only one look up table was needed, with each each 7 segment display being alternatively driven at 80 hz. The sum of the numbers is displayed in binary on 5 LEDS.
