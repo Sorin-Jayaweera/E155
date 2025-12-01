@@ -33,51 +33,51 @@ typedef struct {
 // Global variables
 ///////////////////////////////////////////////////////////////////////////////
 
-// Simple 100 Hz test - toggle every 500 interrupts (100kHz / 500 = 200Hz toggles = 100Hz square wave)
-volatile uint16_t toggle_counter = 0;
-#define TOGGLE_PERIOD 500  // 100kHz / 500 = 200 toggles/sec = 100Hz
+// Multi-frequency synthesis
+#define SYNTHESIS_RATE 100000  // 100 kHz update rate
+#define NUM_TEST_FREQ 2        // Testing with 2 frequencies
 
-// Commented out for simple test
-// #define SYNTHESIS_RATE 100000  // 100 kHz update rate
-// typedef struct {
-//     float frequency;
-//     float phase;
-//     float magnitude;
-//     bool is_active;
-// } FrequencyOscillator;
-// FrequencyOscillator oscillators[NUM_FREQUENCIES];
-// uint16_t adc_buffer[BUFFER_SIZE];
-// volatile bool buffer_ready = false;
-// FrequencyPeak top_frequencies[NUM_FREQUENCIES];
+typedef struct {
+    float frequency;
+    float phase;        // Phase accumulator (0.0 to 1.0)
+    bool is_active;
+} FrequencyOscillator;
+
+FrequencyOscillator oscillators[NUM_TEST_FREQ];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interrupt handlers
 ///////////////////////////////////////////////////////////////////////////////
 
-// Simple TIM15 interrupt - just toggle PA6 at 100 Hz
+// TIM15 interrupt - Multi-frequency synthesis
 void TIM1_BRK_TIM15_IRQHandler(void) {
     if (TIM15->SR & (1 << 0)) {  // UIF - Update Interrupt Flag
         TIM15->SR &= ~(1 << 0);   // Clear flag
 
-        toggle_counter++;
-        if (toggle_counter >= TOGGLE_PERIOD) {
-            toggle_counter = 0;
-            // Toggle PA6
-            GPIOA->ODR ^= (1 << SQUARE_OUT_PIN);
+        bool output_state = false;
+
+        // Update all oscillators and OR their outputs
+        for (int i = 0; i < NUM_TEST_FREQ; i++) {
+            if (oscillators[i].is_active) {
+                // Increment phase accumulator
+                oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
+
+                // Wrap phase (0.0 to 1.0)
+                if (oscillators[i].phase >= 1.0f) {
+                    oscillators[i].phase -= 1.0f;
+                }
+
+                // Check if this oscillator is in high state (50% duty cycle)
+                if (oscillators[i].phase < 0.5f) {
+                    output_state = true;  // OR together
+                }
+            }
         }
+
+        // Update GPIO
+        digitalWrite(SQUARE_OUT_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
     }
 }
-
-// Commented out for simple test
-// void DMA1_Channel1_IRQHandler(void) {
-//     if (DMA1->ISR & (1 << 1)) {
-//         DMA1->IFCR |= (1 << 1);
-//         buffer_ready = true;
-//     }
-//     if (DMA1->ISR & (1 << 2)) {
-//         DMA1->IFCR |= (1 << 2);
-//     }
-// }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Helper functions
@@ -128,14 +128,30 @@ int main(void) {
     // Match Lab 4 initialization
     initSystem();
 
-    printf("Toggling PA6 at 100 Hz (5ms HIGH, 5ms LOW)...\n");
+    printf("Multi-frequency synthesis test: 10 Hz + 30 Hz\n");
 
+    // Initialize oscillator 0: 10 Hz
+    oscillators[0].frequency = 10.0f;
+    oscillators[0].phase = 0.0f;
+    oscillators[0].is_active = true;
+
+    // Initialize oscillator 1: 30 Hz
+    oscillators[1].frequency = 30.0f;
+    oscillators[1].phase = 0.0f;
+    oscillators[1].is_active = true;
+
+    printf("Oscillator 0: %.1f Hz\n", oscillators[0].frequency);
+    printf("Oscillator 1: %.1f Hz\n", oscillators[1].frequency);
+    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
+
+    // Start TIM15 at 100 kHz for synthesis
+    setupSynthesisTimer();
+
+    printf("Synthesis started - PA6 outputs OR of both frequencies\n");
+
+    // Main loop - just wait, interrupt handles everything
     while (1) {
-        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-        for (volatile uint32_t i = 0; i < 33333; i++);  // ~5ms calibrated
-
-        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-        for (volatile uint32_t i = 0; i < 33333; i++);  // ~5ms calibrated
+        // Could update frequencies here later when FFT is added
     }
 
     return 0;
