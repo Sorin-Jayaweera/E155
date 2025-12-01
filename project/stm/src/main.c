@@ -139,35 +139,50 @@ void initSystem(void) {
 
 void initADC_Manual(uint8_t channel) {
     // Following STM32L432KC reference manual sequence exactly
+    printf("Starting ADC init...\n");
 
     // 1. Enable ADC clock
     RCC->AHB2ENR |= (1 << 13);  // ADCEN bit
+    printf("1. ADC clock enabled\n");
 
     // 2. Configure ADC clock prescaler (default: /1)
     ADC_COMMON->CCR = 0;  // CKMODE = 00 (use default)
+    printf("2. Clock prescaler configured\n");
 
     // 3. Ensure ADC is disabled before calibration
+    printf("3. Checking if ADC needs disabling...\n");
     if (ADC1->CR & (1 << 0)) {  // ADEN
+        printf("   ADC is enabled, disabling...\n");
         ADC1->CR |= (1 << 1);   // ADDIS - disable ADC
         while (ADC1->CR & (1 << 0));  // Wait until ADEN = 0
+        printf("   ADC disabled\n");
+    } else {
+        printf("   ADC already disabled\n");
     }
 
     // 4. Calibrate ADC
+    printf("4. Starting calibration...\n");
     ADC1->CR |= (1 << 31);  // ADCAL - start calibration
     while (ADC1->CR & (1 << 31));  // Wait until ADCAL = 0
+    printf("   Calibration complete\n");
 
     // 5. Clear ADRDY flag
     ADC1->ISR |= (1 << 0);  // Clear ADRDY
+    printf("5. ADRDY flag cleared\n");
 
     // 6. Enable ADC
+    printf("6. Enabling ADC...\n");
     ADC1->CR |= (1 << 0);  // ADEN
     while (!(ADC1->ISR & (1 << 0)));  // Wait for ADRDY
+    printf("   ADC enabled and ready\n");
 
     // 7. Configure: 12-bit, right align, single conversion
     ADC1->CFGR = 0;  // All defaults (12-bit, right align, software trigger)
+    printf("7. Configuration register set\n");
 
     // 8. Select channel in SQR1 (first/only conversion)
     ADC1->SQR1 = (channel << 6);  // SQ1 bits [10:6]
+    printf("8. Channel %d selected\n", channel);
 
     // 9. Set sampling time for the channel
     // Channel 11 uses SMPR2 bits [5:3]
@@ -180,6 +195,7 @@ void initADC_Manual(uint8_t channel) {
         ADC1->SMPR2 &= ~(7U << ((channel - 10) * 3));
         ADC1->SMPR2 |= (4U << ((channel - 10) * 3));  // 47.5 cycles
     }
+    printf("9. Sampling time configured\n");
 
     printf("ADC manually initialized for channel %d\n", channel);
 }
