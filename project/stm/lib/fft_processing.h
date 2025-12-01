@@ -15,7 +15,7 @@
 #define NUM_FREQUENCIES 5
 
 // Sampling rate in Hz
-#define SAMPLE_RATE     1000  // 1 kHz for better low-frequency resolution (3.9 Hz per bin)
+#define SAMPLE_RATE     8000  // 1 kHz for better low-frequency resolution (3.9 Hz per bin)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Data structures

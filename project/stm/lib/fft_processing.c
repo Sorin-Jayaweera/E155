@@ -1,7 +1,7 @@
 // fft_processing.c
 // Simplified standalone FFT implementation
 
-#include "fft_processing.h"
+#include "../lib/fft_processing.h"
 #include <math.h>
 #include <string.h>
 
