@@ -160,6 +160,14 @@ void initADC_Manual(uint8_t channel) {
         printf("   ADC already disabled\n");
     }
 
+    // 3.5. Enable ADC voltage regulator (CRITICAL for STM32L4!)
+    printf("3.5. Enabling ADC voltage regulator...\n");
+    ADC1->CR &= ~(0b11 << 28);  // Clear ADVREGEN bits [29:28]
+    ADC1->CR |= (0b01 << 28);   // ADVREGEN = 01 (enable regulator)
+    // Wait for voltage regulator to stabilize (tADCVREG_STUP = 20 µs typical)
+    for (volatile int i = 0; i < 2000; i++);  // ~20 µs at 80 MHz
+    printf("     Voltage regulator stable\n");
+
     // 4. Calibrate ADC
     printf("4. Starting calibration...\n");
     ADC1->CR |= (1 << 31);  // ADCAL - start calibration
