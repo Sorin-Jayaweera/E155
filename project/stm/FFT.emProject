@@ -2,11 +2,17 @@
 <solution Name="FFT" target="8" version="2">
   <configuration
     Name="Debug"
+    arm_architecture="v7EM"
+    arm_core_type="Cortex-M4"
+    arm_endian="Little"
+    arm_fpu_type="FPv4-SP-D16"
+    arm_target_device_name=""
     c_preprocessor_definitions="DEBUG"
     c_user_include_directories="$(ProjectDir)\;$(ProjectDir)/lib\;$(ProjectDir)/src\;$(ProjectDir)/CMSIS-DSP/Include\;$(ProjectDir)/CMSIS_5/CMSIS/Core/Include\;$(ProjectDir)/STM32L4xx/Device/Include"
     gcc_debugging_level="Level 3"
     gcc_omit_frame_pointer="Yes"
-    gcc_optimization_level="None" />
+    gcc_optimization_level="None"
+    linker_section_placements_segments="FLASH1 RX 0x08000000 0x00040000;RAM1 RWX 0x20000000 0x00008000;" />
   <configuration
     Name="Release"
     c_preprocessor_definitions="NDEBUG"
@@ -46,8 +52,15 @@
       target_reset_script="Reset();" />
     <configuration
       Name="Debug"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M4"
+      arm_endian="Little"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_target_device_name="STM32L432KC"
       c_preprocessor_definitions="ARM_MATH_CM4;__FPU_PRESENT=1;STM32L432xx"
-      c_user_include_directories="C:/Users/sojayaweera/E155/project/stm\;C:/Users/sojayaweera/E155/project/stm/lib\;C:/Users/sojayaweera/E155/project/stm/src\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include/dsp\;C:/Users/sojayaweera/E155/project/stm/CMSIS_5/CMSIS/Core/Include\;C:/Users/sojayaweera/E155/project/stm/STM32L4xx/Device/Include" />
+      c_user_include_directories="C:/Users/sojayaweera/E155/project/stm\;C:/Users/sojayaweera/E155/project/stm/lib\;C:/Users/sojayaweera/E155/project/stm/src\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include\;C:/Users/sojayaweera/E155/project/stm/CMSIS-DSP/Include/dsp\;C:/Users/sojayaweera/E155/project/stm/CMSIS_5/CMSIS/Core/Include\;C:/Users/sojayaweera/E155/project/stm/STM32L4xx/Device/Include"
+      debug_target_connection="J-Link"
+      linker_section_placements_segments="FLASH1 RX 0x08000000 0x00040000;RAM1 RWX 0x20000000 0x00008000;" />
     <folder Name="CMSIS Files">
       <file file_name="STM32L4xx/Device/Include/stm32l4xx.h" />
       <file file_name="STM32L4xx/Device/Source/system_stm32l4xx.c">
