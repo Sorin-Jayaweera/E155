@@ -33,51 +33,66 @@ typedef struct {
 // Global variables
 ///////////////////////////////////////////////////////////////////////////////
 
-// Multi-frequency synthesis
-#define SYNTHESIS_RATE 100000  // 100 kHz update rate
-#define NUM_TEST_FREQ 2        // Testing with 2 frequencies
+// FFT-based frequency detection
+uint16_t adc_buffer[BUFFER_SIZE];
+volatile bool buffer_ready = false;
+FrequencyPeak top_frequencies[NUM_FREQUENCIES];
 
-typedef struct {
-    float frequency;
-    float phase;        // Phase accumulator (0.0 to 1.0)
-    bool is_active;
-} FrequencyOscillator;
-
-FrequencyOscillator oscillators[NUM_TEST_FREQ];
+// ============================================================================
+// WORKING: Multi-frequency synthesis (10 Hz + 30 Hz OR-ed together)
+// ============================================================================
+// #define SYNTHESIS_RATE 100000  // 100 kHz update rate
+// #define NUM_TEST_FREQ 2        // Testing with 2 frequencies
+//
+// typedef struct {
+//     float frequency;
+//     float phase;        // Phase accumulator (0.0 to 1.0)
+//     bool is_active;
+// } FrequencyOscillator;
+//
+// FrequencyOscillator oscillators[NUM_TEST_FREQ];
+// ============================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interrupt handlers
 ///////////////////////////////////////////////////////////////////////////////
 
-// TIM15 interrupt - Multi-frequency synthesis
-void TIM1_BRK_TIM15_IRQHandler(void) {
-    if (TIM15->SR & (1 << 0)) {  // UIF - Update Interrupt Flag
-        TIM15->SR &= ~(1 << 0);   // Clear flag
+// DMA1 Channel 1 interrupt handler (for ADC)
+void DMA1_Channel1_IRQHandler(void) {
+    // Check if transfer complete flag is set
+    if (DMA1->ISR & (1 << 1)) {  // TCIF1
+        DMA1->IFCR |= (1 << 1);  // Clear flag
+        buffer_ready = true;      // Signal main loop
+    }
 
-        bool output_state = false;
-
-        // Update all oscillators and OR their outputs
-        for (int i = 0; i < NUM_TEST_FREQ; i++) {
-            if (oscillators[i].is_active) {
-                // Increment phase accumulator
-                oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
-
-                // Wrap phase (0.0 to 1.0)
-                if (oscillators[i].phase >= 1.0f) {
-                    oscillators[i].phase -= 1.0f;
-                }
-
-                // Check if this oscillator is in high state (50% duty cycle)
-                if (oscillators[i].phase < 0.5f) {
-                    output_state = true;  // OR together
-                }
-            }
-        }
-
-        // Update GPIO
-        digitalWrite(SQUARE_OUT_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+    // Half transfer flag (optional for double buffering)
+    if (DMA1->ISR & (1 << 2)) {  // HTIF1
+        DMA1->IFCR |= (1 << 2);
     }
 }
+
+// ============================================================================
+// WORKING: Multi-frequency synthesis interrupt handler
+// ============================================================================
+// void TIM1_BRK_TIM15_IRQHandler(void) {
+//     if (TIM15->SR & (1 << 0)) {
+//         TIM15->SR &= ~(1 << 0);
+//         bool output_state = false;
+//         for (int i = 0; i < NUM_TEST_FREQ; i++) {
+//             if (oscillators[i].is_active) {
+//                 oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
+//                 if (oscillators[i].phase >= 1.0f) {
+//                     oscillators[i].phase -= 1.0f;
+//                 }
+//                 if (oscillators[i].phase < 0.5f) {
+//                     output_state = true;
+//                 }
+//             }
+//         }
+//         digitalWrite(SQUARE_OUT_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+//     }
+// }
+// ============================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
 // Helper functions
@@ -125,37 +140,73 @@ void setupSynthesisTimer(void) {
 ///////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
-    // Match Lab 4 initialization
+    // Initialize system
     initSystem();
+    initFFT();
 
-    printf("Multi-frequency synthesis test: 10 Hz + 30 Hz\n");
+    printf("\n===== FFT-Based Frequency Detection =====\n");
+    printf("FFT size: %d\n", FFT_SIZE);
+    printf("Sample rate: %d Hz\n", SAMPLE_RATE);
+    printf("Frequency resolution: %.2f Hz per bin\n", (float)SAMPLE_RATE / FFT_SIZE);
+    printf("Feed 50 Hz signal to PA0\n\n");
 
-    // Initialize oscillator 0: 10 Hz
-    oscillators[0].frequency = 10.0f;
-    oscillators[0].phase = 0.0f;
-    oscillators[0].is_active = true;
+    // Configure ADC for DMA
+    configureADCForDMA(ADC_CHANNEL);
+    initDMA_ADC(adc_buffer, BUFFER_SIZE);
 
-    // Initialize oscillator 1: 30 Hz
-    oscillators[1].frequency = 30.0f;
-    oscillators[1].phase = 0.0f;
-    oscillators[1].is_active = true;
+    // Enable DMA interrupt
+    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn = 11
 
-    printf("Oscillator 0: %.1f Hz\n", oscillators[0].frequency);
-    printf("Oscillator 1: %.1f Hz\n", oscillators[1].frequency);
-    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
+    // Start ADC with DMA
+    enableDMA_ADC();
+    startADC();
 
-    // Start TIM15 at 100 kHz for synthesis
-    setupSynthesisTimer();
+    printf("ADC started, waiting for samples...\n\n");
 
-    printf("Synthesis started - PA6 outputs OR of both frequencies\n");
-
-    // Main loop - just wait, interrupt handles everything
+    // Main loop - process FFT when buffer is ready
     while (1) {
-        // Could update frequencies here later when FFT is added
+        if (buffer_ready) {
+            buffer_ready = false;
+
+            // Process FFT to find dominant frequencies
+            processFFT(adc_buffer, top_frequencies);
+
+            // Print top 5 frequencies
+            printf("Top 5 Frequencies:\n");
+            for (int i = 0; i < NUM_FREQUENCIES; i++) {
+                printf("  %d: %.1f Hz (magnitude: %.1f)\n",
+                       i + 1,
+                       top_frequencies[i].frequency,
+                       top_frequencies[i].magnitude);
+            }
+            printf("\n");
+        }
     }
 
     return 0;
 }
+
+// ============================================================================
+// WORKING: Multi-frequency synthesis main code
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     printf("Multi-frequency synthesis test: 10 Hz + 30 Hz\n");
+//     oscillators[0].frequency = 10.0f;
+//     oscillators[0].phase = 0.0f;
+//     oscillators[0].is_active = true;
+//     oscillators[1].frequency = 30.0f;
+//     oscillators[1].phase = 0.0f;
+//     oscillators[1].is_active = true;
+//     printf("Oscillator 0: %.1f Hz\n", oscillators[0].frequency);
+//     printf("Oscillator 1: %.1f Hz\n", oscillators[1].frequency);
+//     printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
+//     setupSynthesisTimer();
+//     printf("Synthesis started - PA6 outputs OR of both frequencies\n");
+//     while (1) { }
+//     return 0;
+// }
+// ============================================================================
 
 // Commented out for simple test
 // int main(void) {
