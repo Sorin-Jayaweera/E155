@@ -31,13 +31,8 @@ int digitalRead(int pin) {
 void digitalWrite(int pin, int val) {
     if (val) {
         GPIO->ODR |= (1 << pin);   // Set pin HIGH
-        printf("  digitalWrite(%d, %d) - Setting HIGH, ODR before=0x%lX, after=0x%lX\n",
-               pin, val, GPIO->ODR & ~(1 << pin), GPIO->ODR);
     } else {
-        uint32_t before = GPIO->ODR;
         GPIO->ODR &= ~(1 << pin);  // Set pin LOW
-        printf("  digitalWrite(%d, %d) - Setting LOW, ODR before=0x%lX, after=0x%lX\n",
-               pin, val, before, GPIO->ODR);
     }
 }
 
