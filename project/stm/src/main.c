@@ -1,6 +1,6 @@
 // main.c
 // Musical Tesla Coil - ADC Threshold Test
-// PA6 (ADC input) → PA9 (square wave output)
+// PA6 (ADC input) → PA11 (square wave output)
 // LED ON when PA6 voltage > 1.65V, OFF when < 1.65V
 
 #include <stdio.h>
@@ -28,7 +28,7 @@ typedef struct {
 
 #define AUDIO_INPUT_PIN     6       // PA6 - ADC Channel 11
 #define ADC_CHANNEL         11      // ADC1_IN11 on PA6
-#define SQUARE_OUT_PIN      9       // PA9 - Square wave output to FPGA
+#define SQUARE_OUT_PIN      11      // PA11 - Square wave output to FPGA
 #define TEST_INPUT_PIN      7       // PB7 - Test input pin
 #define BUFFER_SIZE         256     // Match FFT_SIZE
 
@@ -201,13 +201,13 @@ int main(void) {
 
     printf("\n===== ADC Threshold Test =====\n");
     printf("Reading PA6 (ADC1_IN11) analog input\n");
-    printf("Square wave output on PA9\n");
-    printf("PA9 HIGH when PA6 voltage > 1.65V\n");
-    printf("PA9 LOW when PA6 voltage < 1.65V\n\n");
-    printf("With 500 Hz sine wave, PA9 should toggle at 500 Hz\n\n");
+    printf("Square wave output on PA11\n");
+    printf("PA11 HIGH when PA6 voltage > 1.65V\n");
+    printf("PA11 LOW when PA6 voltage < 1.65V\n\n");
+    printf("With 500 Hz sine wave, PA11 should toggle at 500 Hz\n\n");
 
     // First test: Turn LED ON for 1 second to verify GPIO works
-    printf("Testing PA9 GPIO: LED should turn ON for 1 second...\n");
+    printf("Testing PA11 GPIO: LED should turn ON for 1 second...\n");
     digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
     for (volatile int i = 0; i < 8000000; i++);  // ~1s delay
     digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
