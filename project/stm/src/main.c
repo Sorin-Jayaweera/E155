@@ -127,7 +127,7 @@ void initADC_Manual(uint8_t channel) {
     RCC->AHB2ENR |= (1 << 13);  // ADCEN bit
 
     // 2. Configure ADC clock prescaler (default: /1)
-    ADC1_COMMON->CCR = 0;  // CKMODE = 00 (use default)
+    ADC_COMMON->CCR = 0;  // CKMODE = 00 (use default)
 
     // 3. Ensure ADC is disabled before calibration
     if (ADC1->CR & (1 << 0)) {  // ADEN
