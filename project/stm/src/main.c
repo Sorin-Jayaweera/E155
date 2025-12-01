@@ -132,9 +132,12 @@ void setupSynthesisTimer(void) {
 ///////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
+//    configureFlash();
+//    configureClock();
     initSystem();
     initFFT();
     
+    printf("Musical Tesla Coil - Multi-Frequency Synthesis\n");
     // Initialize oscillators
     for (int i = 0; i < NUM_FREQUENCIES; i++) {
         oscillators[i].phase = 0.0f;
