@@ -109,15 +109,32 @@ void initSystem(void) {
     // Enable GPIOA clock
     RCC->AHB2ENR |= (1 << 0);  // GPIO A
 
-    // Configure pins
+    // Configure PA6 as analog for ADC
     pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);
-    pinMode(SQUARE_OUT_PIN, GPIO_OUTPUT);
-    digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+
+    // Configure PA11 as output with explicit register settings
+    // MODER: 01 = General purpose output mode
+    GPIOA->MODER &= ~(3U << (SQUARE_OUT_PIN * 2));  // Clear bits
+    GPIOA->MODER |= (1U << (SQUARE_OUT_PIN * 2));   // Set to output (01)
+
+    // OTYPER: 0 = Push-pull (NOT open-drain)
+    GPIOA->OTYPER &= ~(1U << SQUARE_OUT_PIN);
+
+    // OSPEEDR: 11 = Very high speed
+    GPIOA->OSPEEDR |= (3U << (SQUARE_OUT_PIN * 2));
+
+    // PUPDR: 00 = No pull-up, no pull-down
+    GPIOA->PUPDR &= ~(3U << (SQUARE_OUT_PIN * 2));
+
+    // Start with output LOW
+    GPIOA->ODR &= ~(1U << SQUARE_OUT_PIN);
 
     printf("System initialized\n");
     printf("RCC APB2ENR: %lu\n", RCC->APB2ENR);
     printf("RCC CFGR: %lu\n", RCC->CFGR);
     printf("RCC AHB2ENR: %lu\n", RCC->AHB2ENR);
+    printf("GPIOA MODER[PA11]: %lu\n", (GPIOA->MODER >> (SQUARE_OUT_PIN * 2)) & 3);
+    printf("GPIOA OTYPER[PA11]: %lu\n", (GPIOA->OTYPER >> SQUARE_OUT_PIN) & 1);
 }
 
 void initADC_Manual(uint8_t channel) {
