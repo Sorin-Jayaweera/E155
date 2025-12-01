@@ -128,20 +128,18 @@ int main(void) {
     // Match Lab 4 initialization
     initSystem();
 
-    printf("Starting blink test on PA6...\n");
-    printf("Should blink at ~1 Hz (1 second on, 1 second off)\n");
+    printf("Setting PA6 HIGH permanently...\n");
+    printf("Check with multimeter - should read ~3.3V\n");
 
-    int count = 0;
+    // Set PA6 HIGH and leave it there
+    digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+
+    printf("PA6 is now HIGH\n");
+    printf("Voltage should be stable at 3.3V\n");
+
+    // Just loop forever, keep it HIGH
     while (1) {
-        printf("Blink %d - HIGH\n", count);
-        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-        for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
-
-        printf("Blink %d - LOW\n", count);
-        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-        for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
-
-        count++;
+        // Do nothing - PA6 stays HIGH
     }
 
     return 0;
