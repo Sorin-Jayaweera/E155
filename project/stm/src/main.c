@@ -129,18 +129,25 @@ int main(void) {
     initSystem();
 
     printf("Toggling PA6 at 2 Hz (0.25s HIGH, 0.25s LOW)...\n");
+    printf("PA6 MODER bits: 0x%lX (should be 0x1 for output)\n", (GPIOA->MODER >> (2*SQUARE_OUT_PIN)) & 0x3);
+    printf("Initial ODR: 0x%lX\n", GPIOA->ODR);
 
     int count = 0;
     while (1) {
         digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-        printf("Cycle %d - HIGH\n", count);
+        printf("Cycle %d - HIGH, ODR=0x%lX\n", count, GPIOA->ODR);
         for (volatile uint32_t i = 0; i < 10000000; i++);  // ~0.25s at 80MHz
 
         digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-        printf("Cycle %d - LOW\n", count);
+        printf("Cycle %d - LOW, ODR=0x%lX\n", count, GPIOA->ODR);
         for (volatile uint32_t i = 0; i < 10000000; i++);  // ~0.25s at 80MHz
 
         count++;
+
+        if (count > 5) {
+            printf("Stopping after 5 cycles for analysis\n");
+            while(1);  // Stop for debugging
+        }
     }
 
     return 0;
