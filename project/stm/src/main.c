@@ -212,8 +212,11 @@ void initADC_Manual(uint8_t channel) {
     printf("7. Configuration register set\n");
 
     // 8. Select channel in SQR1 (first/only conversion)
-    ADC1->SQR1 = (channel << 6);  // SQ1 bits [10:6]
-    printf("8. Channel %d selected\n", channel);
+    // L[3:0] = 0000 means 1 conversion, SQ1[10:6] = channel
+    ADC1->SQR1 = 0;  // Clear register first
+    ADC1->SQR1 |= (0 << 0);      // L = 0 (1 conversion)
+    ADC1->SQR1 |= (channel << 6); // SQ1 = channel number
+    printf("8. Channel %d selected, SQR1 = 0x%lx\n", channel, ADC1->SQR1);
 
     // 9. Set sampling time for the channel
     // Channel 11 uses SMPR2 bits [5:3]
@@ -275,19 +278,43 @@ int main(void) {
     digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
     for (volatile int i = 0; i < 8000000; i++);  // ~1s delay
     digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-    printf("GPIO test done. Starting ADC polling...\n\n");
+    printf("GPIO test done. Starting ADC polling...\n");
+    printf("Initial ADC status: CR = 0x%lx, ISR = 0x%lx\n\n", ADC1->CR, ADC1->ISR);
 
     // Main loop - simple threshold detection with debug output
     int loop_count = 0;
     while (1) {
+        // Debug first iteration
+        if (loop_count == 0) {
+            printf("Starting first ADC conversion...\n");
+            printf("  Before ADSTART: CR = 0x%lx, ISR = 0x%lx\n", ADC1->CR, ADC1->ISR);
+        }
+
         // Start ADC conversion
         ADC1->CR |= (1 << 2);  // ADSTART
 
-        // Wait for conversion to complete
-        while (!(ADC1->ISR & (1 << 2)));  // Wait for EOC (End Of Conversion)
+        if (loop_count == 0) {
+            printf("  After ADSTART: CR = 0x%lx, ISR = 0x%lx\n", ADC1->CR, ADC1->ISR);
+        }
+
+        // Wait for conversion to complete with timeout
+        uint32_t eoc_timeout = 1000000;
+        while (!(ADC1->ISR & (1 << 2)) && eoc_timeout > 0) {
+            eoc_timeout--;
+        }
+
+        if (eoc_timeout == 0 && loop_count == 0) {
+            printf("  ERROR: EOC timeout! ISR = 0x%lx, CR = 0x%lx\n", ADC1->ISR, ADC1->CR);
+            printf("  Possible issues: ADC not converting, wrong trigger config\n");
+            while(1);  // Halt for debugging
+        }
 
         // Read ADC value (12-bit: 0-4095)
         uint16_t adc_value = ADC1->DR;
+
+        if (loop_count == 0) {
+            printf("  First conversion successful! ADC value: %u\n\n", adc_value);
+        }
 
         // Print ADC value every 10000 iterations
         if (loop_count % 10000 == 0) {
