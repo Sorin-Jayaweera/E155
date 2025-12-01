@@ -1,6 +1,6 @@
 // main.c
 // Musical Tesla Coil - ADC Threshold Test
-// LED ON when PA11 voltage > 1.65V, OFF when < 1.65V
+// LED ON when PA0 voltage > 1.65V, OFF when < 1.65V
 // Tests if ADC is reading analog signal correctly
 
 #include <stdio.h>
@@ -26,8 +26,8 @@ typedef struct {
 // Configuration
 ///////////////////////////////////////////////////////////////////////////////
 
-#define AUDIO_INPUT_PIN     11      // PA11 - ADC Channel 15
-#define ADC_CHANNEL         15      // ADC1_IN15 on PA11
+#define AUDIO_INPUT_PIN     0       // PA0 - ADC Channel 5
+#define ADC_CHANNEL         5       // ADC1_IN5 on PA0
 #define SQUARE_OUT_PIN      6       // PA6 - Square wave output to FPGA
 #define TEST_INPUT_PIN      7       // PB7 - Test input pin
 #define BUFFER_SIZE         256     // Match FFT_SIZE
@@ -154,7 +154,7 @@ int main(void) {
     const uint16_t THRESHOLD = 2048;
 
     printf("\n===== ADC Threshold Test =====\n");
-    printf("Reading PA11 analog input\n");
+    printf("Reading PA0 (ADC1_IN5) analog input\n");
     printf("LED ON when voltage > 1.65V\n");
     printf("LED OFF when voltage < 1.65V\n\n");
     printf("With 500 Hz sine wave, LED should flicker at 500 Hz\n\n");
