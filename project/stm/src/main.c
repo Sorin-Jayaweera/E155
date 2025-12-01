@@ -160,12 +160,18 @@ void initADC_Manual(uint8_t channel) {
         printf("   ADC already disabled\n");
     }
 
-    // 3.5. Enable ADC voltage regulator (CRITICAL for STM32L4!)
-    printf("3.5. Enabling ADC voltage regulator...\n");
-    ADC1->CR &= ~(0b11 << 28);  // Clear ADVREGEN bits [29:28]
-    ADC1->CR |= (0b01 << 28);   // ADVREGEN = 01 (enable regulator)
+    // 3.5. Exit deep power-down mode and enable voltage regulator
+    printf("3.5. Exiting deep power-down mode...\n");
+    // First, exit deep power-down by clearing DEEPPWD (bit 29)
+    ADC1->CR &= ~(1 << 29);  // DEEPPWD = 0 (exit deep power-down)
+    printf("     Deep power-down mode exited\n");
+
+    // Now enable ADC voltage regulator
+    printf("     Enabling ADC voltage regulator...\n");
+    ADC1->CR |= (1 << 28);   // ADVREGEN = 1 (enable regulator)
+
     // Wait for voltage regulator to stabilize (tADCVREG_STUP = 20 µs typical)
-    for (volatile int i = 0; i < 2000; i++);  // ~20 µs at 80 MHz
+    for (volatile int i = 0; i < 2000; i++);  // ~25 µs at 80 MHz
     printf("     Voltage regulator stable\n");
 
     // 4. Calibrate ADC (single-ended mode)
