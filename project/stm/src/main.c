@@ -144,52 +144,65 @@ int main(void) {
     // Initialize system
     initSystem();
 
-    printf("\n===== ADC Input Test =====\n");
-    printf("Reading analog signal from PA0 (ADC1_IN5)\n");
-    printf("Connect sine wave (0-3.3V) to PA0\n");
-    printf("Sampling continuously and printing values...\n\n");
+    printf("\n");
+    printf("========================================\n");
+    printf("  UART Communication Test\n");
+    printf("========================================\n");
+    printf("If you can see this, UART is working!\n");
+    printf("System clock: 80 MHz\n");
+    printf("Baud rate: 115200\n");
+    printf("\n");
+    printf("Printing heartbeat messages every second...\n");
+    printf("\n");
 
-    // Configure ADC for single-shot reading (not DMA yet)
-    RCC->AHB2ENR |= (1 << 13);  // Enable ADC clock
+    int counter = 0;
 
-    // Configure PA0 as analog (already done in initSystem, but verify)
-    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);
-
-    // Simple ADC initialization for channel 5 (PA0)
-    configureADCForDMA(ADC_CHANNEL);
-    startADC();
-
-    printf("ADC initialized, starting continuous sampling...\n\n");
-
-    int sample_count = 0;
-
-    // Main loop - read ADC and print values
+    // Main loop - print heartbeat
     while (1) {
-        // Trigger single conversion
-        ADC1->CR |= (1 << 2);  // ADSTART
+        printf("Heartbeat %d - UART is alive!\n", counter);
 
-        // Wait for conversion complete
-        while (!(ADC1->ISR & (1 << 2)));  // EOC (End of Conversion)
+        // Blink LED to show activity
+        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+        for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
 
-        // Read ADC value (12-bit: 0-4095)
-        uint16_t adc_value = ADC1->DR;
+        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+        for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
 
-        // Convert to voltage (0-3.3V)
-        float voltage = (adc_value * 3.3f) / 4095.0f;
-
-        // Print every 100 samples to avoid overwhelming UART
-        if (sample_count % 100 == 0) {
-            printf("Sample %d: ADC=%u (%.3f V)\n", sample_count, adc_value, voltage);
-        }
-
-        sample_count++;
-
-        // Small delay between samples (~1 kHz sampling for observation)
-        for (volatile int i = 0; i < 8000; i++);
+        counter++;
     }
 
     return 0;
 }
+
+// ============================================================================
+// ADC Input Test (commented out)
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     printf("\n===== ADC Input Test =====\n");
+//     printf("Reading analog signal from PA0 (ADC1_IN5)\n");
+//     printf("Connect sine wave (0-3.3V) to PA0\n");
+//     printf("Sampling continuously and printing values...\n\n");
+//     RCC->AHB2ENR |= (1 << 13);
+//     pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);
+//     configureADCForDMA(ADC_CHANNEL);
+//     startADC();
+//     printf("ADC initialized, starting continuous sampling...\n\n");
+//     int sample_count = 0;
+//     while (1) {
+//         ADC1->CR |= (1 << 2);
+//         while (!(ADC1->ISR & (1 << 2)));
+//         uint16_t adc_value = ADC1->DR;
+//         float voltage = (adc_value * 3.3f) / 4095.0f;
+//         if (sample_count % 100 == 0) {
+//             printf("Sample %d: ADC=%u (%.3f V)\n", sample_count, adc_value, voltage);
+//         }
+//         sample_count++;
+//         for (volatile int i = 0; i < 8000; i++);
+//     }
+//     return 0;
+// }
+// ============================================================================
 
 // ============================================================================
 // GPIO Input Test (PB7 → PA6 passthrough - WORKING)
