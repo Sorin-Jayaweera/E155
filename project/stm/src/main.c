@@ -1,5 +1,6 @@
 // main.c
-// Musical Tesla Coil - STM32 FFT Processing with Multi-Frequency Synthesis
+// Musical Tesla Coil - Frequency Detection with LED Feedback
+// LED turns ON when input frequency is 400-600 Hz (500 Hz ± 100 Hz)
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -143,36 +144,75 @@ void setupSynthesisTimer(void) {
 int main(void) {
     // Initialize system
     initSystem();
+    initFFT();
 
-    printf("\n");
-    printf("========================================\n");
-    printf("  UART Communication Test\n");
-    printf("========================================\n");
-    printf("If you can see this, UART is working!\n");
-    printf("System clock: 80 MHz\n");
-    printf("Baud rate: 115200\n");
-    printf("\n");
-    printf("Printing heartbeat messages every second...\n");
-    printf("\n");
+    // Initialize ADC with DMA
+    configureADCForDMA(ADC_CHANNEL);
+    initDMA_ADC(adc_buffer, BUFFER_SIZE);
 
-    int counter = 0;
+    // Enable DMA1 Channel 1 interrupt in NVIC
+    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
 
-    // Main loop - print heartbeat
+    // Enable DMA and start ADC
+    enableDMA_ADC();
+    startADC();
+
+    // Target frequency: 500 Hz ± 100 Hz (400-600 Hz range)
+    const float TARGET_FREQ_MIN = 400.0f;
+    const float TARGET_FREQ_MAX = 600.0f;
+
+    // Main loop - LED-based frequency detection
     while (1) {
-        printf("Heartbeat %d - UART is alive!\n", counter);
+        // Wait for DMA buffer to be ready
+        if (buffer_ready) {
+            buffer_ready = false;
 
-        // Blink LED to show activity
-        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-        for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
+            // Process FFT to get top frequencies
+            processFFT(adc_buffer, top_frequencies);
 
-        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-        for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
+            // Check if dominant frequency (top_frequencies[0]) is in target range
+            float dominant_freq = top_frequencies[0].frequency;
 
-        counter++;
+            if (dominant_freq >= TARGET_FREQ_MIN && dominant_freq <= TARGET_FREQ_MAX) {
+                // Frequency is in range (400-600 Hz) - turn LED ON
+                digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+            } else {
+                // Frequency is out of range - turn LED OFF
+                digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+            }
+        }
     }
 
     return 0;
 }
+
+// ============================================================================
+// UART Communication Test (commented out)
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     printf("\n");
+//     printf("========================================\n");
+//     printf("  UART Communication Test\n");
+//     printf("========================================\n");
+//     printf("If you can see this, UART is working!\n");
+//     printf("System clock: 80 MHz\n");
+//     printf("Baud rate: 115200\n");
+//     printf("\n");
+//     printf("Printing heartbeat messages every second...\n");
+//     printf("\n");
+//     int counter = 0;
+//     while (1) {
+//         printf("Heartbeat %d - UART is alive!\n", counter);
+//         digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+//         for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
+//         digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+//         for (volatile int i = 0; i < 4000000; i++);  // ~0.5s
+//         counter++;
+//     }
+//     return 0;
+// }
+// ============================================================================
 
 // ============================================================================
 // ADC Input Test (commented out)
