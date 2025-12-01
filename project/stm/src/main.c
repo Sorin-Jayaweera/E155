@@ -168,11 +168,23 @@ void initADC_Manual(uint8_t channel) {
     for (volatile int i = 0; i < 2000; i++);  // ~20 µs at 80 MHz
     printf("     Voltage regulator stable\n");
 
-    // 4. Calibrate ADC
-    printf("4. Starting calibration...\n");
-    ADC1->CR |= (1 << 31);  // ADCAL - start calibration
-    while (ADC1->CR & (1 << 31));  // Wait until ADCAL = 0
-    printf("   Calibration complete\n");
+    // 4. Calibrate ADC (single-ended mode)
+    printf("4. Starting calibration (single-ended mode)...\n");
+    ADC1->CR &= ~(1 << 30);  // ADCALDIF = 0 (single-ended calibration)
+    ADC1->CR |= (1 << 31);   // ADCAL = 1 (start calibration)
+    printf("   Calibration started, waiting...\n");
+
+    // Add timeout to prevent infinite loop
+    int timeout = 100000;
+    while ((ADC1->CR & (1 << 31)) && timeout > 0) {
+        timeout--;
+    }
+
+    if (timeout == 0) {
+        printf("   WARNING: Calibration timeout!\n");
+    } else {
+        printf("   Calibration complete\n");
+    }
 
     // 5. Clear ADRDY flag
     ADC1->ISR |= (1 << 0);  // Clear ADRDY
