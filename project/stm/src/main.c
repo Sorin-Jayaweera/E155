@@ -13,19 +13,7 @@ typedef struct {
 } NVIC_Type;
 #define NVIC ((NVIC_Type *) 0xE000E100UL)
 
-// Define ADC common registers (not in library headers)
-typedef struct {
-    volatile uint32_t CSR;    // ADC Common status register
-    volatile uint32_t RESERVED;
-    volatile uint32_t CCR;    // ADC common control register
-    volatile uint32_t CDR;    // ADC common regular data register
-} ADC_Common_TypeDef;
-
-#define ADC1_BASE           0x50040000UL
-#define ADC1_COMMON_BASE    (ADC1_BASE + 0x300UL)
-#define ADC1_COMMON         ((ADC_Common_TypeDef *) ADC1_COMMON_BASE)
-
-// Project Headers - these define TIM15, TIM_TypeDef, DMA1, DMA_TypeDef
+// Project Headers - these define TIM15, TIM_TypeDef, DMA1, DMA_TypeDef, ADC
 #include "../lib/STM32L432KC_RCC.h"
 #include "../lib/STM32L432KC_GPIO.h"
 #include "../lib/STM32L432KC_TIM.h"
