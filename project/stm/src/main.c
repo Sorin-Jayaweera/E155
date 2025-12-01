@@ -132,10 +132,10 @@ int main(void) {
 
     while (1) {
         digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-        for (volatile uint32_t i = 0; i < 400000; i++);  // ~5ms at 80MHz
+        for (volatile uint32_t i = 0; i < 33333; i++);  // ~5ms calibrated
 
         digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-        for (volatile uint32_t i = 0; i < 400000; i++);  // ~5ms at 80MHz
+        for (volatile uint32_t i = 0; i < 33333; i++);  // ~5ms calibrated
     }
 
     return 0;
