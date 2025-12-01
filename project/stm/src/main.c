@@ -1,5 +1,6 @@
 // main.c
-// Musical Tesla Coil - STM32 FFT Processing (Simplified)
+// Musical Tesla Coil - STM32 FFT Processing with Multi-Frequency Synthesis
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -17,6 +18,24 @@ typedef struct {
 } DMA_IRQ_Type;
 #define DMA1 ((DMA_IRQ_Type *) 0x40020000UL)
 
+// Define TIM15 for synthesis timer
+typedef struct {
+    volatile uint32_t CR1;
+    volatile uint32_t CR2;
+    volatile uint32_t SMCR;
+    volatile uint32_t DIER;
+    volatile uint32_t SR;
+    volatile uint32_t EGR;
+    volatile uint32_t CCMR1;
+    uint32_t RESERVED0;
+    volatile uint32_t CCER;
+    volatile uint32_t CNT;
+    volatile uint32_t PSC;
+    volatile uint32_t ARR;
+    volatile uint32_t RCR;
+    volatile uint32_t CCR1;
+} TIM_TypeDef;
+#define TIM15 ((TIM_TypeDef *) 0x40014000UL)
 
 // Project Headers
 #include "../lib/STM32L432KC_RCC.h"
@@ -40,6 +59,18 @@ typedef struct {
 // Global variables
 ///////////////////////////////////////////////////////////////////////////////
 
+// Multi-frequency synthesis
+#define SYNTHESIS_RATE 100000  // 100 kHz update rate
+
+typedef struct {
+    float frequency;
+    float phase;        // Phase accumulator (0.0 to 1.0)
+    float magnitude;
+    bool is_active;
+} FrequencyOscillator;
+
+FrequencyOscillator oscillators[NUM_FREQUENCIES];
+
 uint16_t adc_buffer[BUFFER_SIZE];
 volatile bool buffer_ready = false;
 
@@ -60,6 +91,35 @@ void DMA1_Channel1_IRQHandler(void) {
     }
 }
 
+void TIM1_BRK_TIM15_IRQHandler(void) {
+    if (TIM15->SR & (1 << 0)) {  // UIF
+        TIM15->SR &= ~(1 << 0);   // Clear flag
+        
+        bool output_state = false;
+        
+        // Update all oscillators
+        for (int i = 0; i < NUM_FREQUENCIES; i++) {
+            if (oscillators[i].is_active) {
+                // Increment phase
+                oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
+                
+                // Wrap phase
+                if (oscillators[i].phase >= 1.0f) {
+                    oscillators[i].phase -= 1.0f;
+                }
+                
+                // Check if this oscillator is in high state (50% duty cycle)
+                if (oscillators[i].phase < 0.5f) {
+                    output_state = true;  // OR together
+                }
+            }
+        }
+        
+        // Update GPIO
+        digitalWrite(SQUARE_OUT_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Helper functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,25 +135,22 @@ void initSystem(void) {
     digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
 }
 
-void setupTimerForSquareWave(void) {
-    // Enable Timer 16 clock
-    RCC->APB2ENR |= (1 << 17);  // TIM16EN
-
-    // Configure PA6 for alternate function (TIM16_CH1)
-    pinMode(SQUARE_OUT_PIN, GPIO_ALT);
-    GPIOA->AFRL &= ~(0xF << (4 * SQUARE_OUT_PIN));
-    GPIOA->AFRL |= (0xE << (4 * SQUARE_OUT_PIN));  // AF14 for TIM16
-
-    initTIM16PWM();
-}
-
-void updateSquareWaveFrequency(float frequency) {
-    if (frequency > 50.0f && frequency < 10000.0f) {
-        setTIM16FREQ((uint32_t)frequency);
-    } else {
-        // Out of range - turn off
-        setTIM16FREQ(0);
-    }
+void setupSynthesisTimer(void) {
+    // Enable TIM15
+    RCC->APB2ENR |= (1 << 16);  // TIM15EN
+    
+    // Configure for 100 kHz interrupt
+    TIM15->PSC = 0;                        // No prescaler (80 MHz)
+    TIM15->ARR = 800 - 1;                  // 80 MHz / 800 = 100 kHz
+    
+    // Enable update interrupt
+    TIM15->DIER |= (1 << 0);  // UIE
+    
+    // Enable TIM15 interrupt in NVIC
+    NVIC->ISER[0] |= (1 << 24);  // TIM1_BRK_TIM15_IRQn
+    
+    // Start timer
+    TIM15->CR1 |= (1 << 0);  // CEN
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,7 +160,17 @@ void updateSquareWaveFrequency(float frequency) {
 int main(void) {
     initSystem();
     initFFT();
-
+    
+    // Initialize oscillators
+    for (int i = 0; i < NUM_FREQUENCIES; i++) {
+        oscillators[i].phase = 0.0f;
+        oscillators[i].frequency = 0.0f;
+        oscillators[i].magnitude = 0.0f;
+        oscillators[i].is_active = false;
+    }
+    
+    setupSynthesisTimer();  // Multi-frequency output via TIM15 interrupt
+    
     configureADCForDMA(ADC_CHANNEL);
     initDMA_ADC(adc_buffer, BUFFER_SIZE);
 
@@ -113,10 +180,9 @@ int main(void) {
     enableDMA_ADC();
     startADC();
 
-    setupTimerForSquareWave();
-
-    printf("Musical Tesla Coil - Simplified FFT Started\n");
+    printf("Musical Tesla Coil - Multi-Frequency Synthesis\n");
     printf("FFT size: %d, Sample rate: %d Hz\n", FFT_SIZE, SAMPLE_RATE);
+    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
 
     while (1) {
         if (buffer_ready) {
@@ -124,18 +190,24 @@ int main(void) {
 
             // Process FFT
             processFFT(adc_buffer, top_frequencies);
+            
+            // Update oscillators with new frequencies
+            for (int i = 0; i < NUM_FREQUENCIES; i++) {
+                oscillators[i].frequency = top_frequencies[i].frequency;
+                oscillators[i].magnitude = top_frequencies[i].magnitude;
+                oscillators[i].is_active = (top_frequencies[i].magnitude > 100.0f);
+                // Keep existing phase for smooth transitions
+            }
 
             // Debug output
             printf("Top 5 Frequencies:\n");
             for (int i = 0; i < NUM_FREQUENCIES; i++) {
-                printf("  %d: %.1f Hz (mag: %.1f)\n",
+                printf("  %d: %.1f Hz (mag: %.1f) %s\n",
                        i + 1,
                        top_frequencies[i].frequency,
-                       top_frequencies[i].magnitude);
+                       top_frequencies[i].magnitude,
+                       oscillators[i].is_active ? "[ACTIVE]" : "");
             }
-
-            // Output to FPGA via timer PWM
-            updateSquareWaveFrequency(top_frequencies[0].frequency);
         }
     }
 
