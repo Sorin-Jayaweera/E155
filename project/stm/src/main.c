@@ -84,14 +84,22 @@ void TIM1_BRK_TIM15_IRQHandler(void) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void initSystem(void) {
+    // Match Lab 4 initialization sequence
     configureFlash();
     configureClock();  // 80 MHz PLL
 
-    RCC->AHB2ENR |= (1 << 0);  // GPIOA
+    // Enable GPIOA clock
+    RCC->AHB2ENR |= (1 << 0);  // GPIO A
 
+    // Configure pins
     pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);
     pinMode(SQUARE_OUT_PIN, GPIO_OUTPUT);
     digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+
+    printf("System initialized\n");
+    printf("RCC APB2ENR: %lu\n", RCC->APB2ENR);
+    printf("RCC CFGR: %lu\n", RCC->CFGR);
+    printf("RCC AHB2ENR: %lu\n", RCC->AHB2ENR);
 }
 
 void setupSynthesisTimer(void) {
@@ -117,22 +125,24 @@ void setupSynthesisTimer(void) {
 ///////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
-    // Minimal initialization
+    // Match Lab 4 initialization
     initSystem();
 
-    // DIAGNOSTIC: Blink PA6 at 1 Hz using delay to verify clock speed
-    // If this blinks at correct rate, clock is 80 MHz
-    // Each loop iteration ~= 1 cycle at 80 MHz, so 40M loops ~= 0.5 sec
+    printf("Starting blink test on PA6...\n");
+    printf("Should blink at ~1 Hz (1 second on, 1 second off)\n");
+
+    int count = 0;
     while (1) {
+        printf("Blink %d - HIGH\n", count);
         digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
         for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
+
+        printf("Blink %d - LOW\n", count);
         digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
         for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
-    }
 
-    // TIMER TEST (commented out for now)
-    // setupSynthesisTimer();
-    // while (1) { }
+        count++;
+    }
 
     return 0;
 }
