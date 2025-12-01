@@ -1,6 +1,7 @@
 // main.c
 // Musical Tesla Coil - Frequency Detection with LED Feedback
 // LED turns ON when input frequency is 400-600 Hz (500 Hz ± 100 Hz)
+// Input: PA11 (ADC1_IN15) | Output: PA6 (LED)
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -25,8 +26,8 @@ typedef struct {
 // Configuration
 ///////////////////////////////////////////////////////////////////////////////
 
-#define AUDIO_INPUT_PIN     0       // PA0 - ADC Channel 5
-#define ADC_CHANNEL         5       // ADC1_IN5 on PA0
+#define AUDIO_INPUT_PIN     11      // PA11 - ADC Channel 15
+#define ADC_CHANNEL         15      // ADC1_IN15 on PA11
 #define SQUARE_OUT_PIN      6       // PA6 - Square wave output to FPGA
 #define TEST_INPUT_PIN      7       // PB7 - Test input pin
 #define BUFFER_SIZE         256     // Match FFT_SIZE
