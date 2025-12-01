@@ -120,13 +120,19 @@ int main(void) {
     // Minimal initialization
     initSystem();
 
-    // Start TIM15 at 100 kHz to toggle PA6 at 100 Hz
-    setupSynthesisTimer();
-
-    // Infinite loop - TIM15 interrupt handles everything
+    // DIAGNOSTIC: Blink PA6 at 1 Hz using delay to verify clock speed
+    // If this blinks at correct rate, clock is 80 MHz
+    // Each loop iteration ~= 1 cycle at 80 MHz, so 40M loops ~= 0.5 sec
     while (1) {
-        // Nothing to do - just let the interrupt toggle PA6
+        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+        for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
+        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+        for (volatile uint32_t i = 0; i < 40000000; i++);  // ~0.5s at 80MHz
     }
+
+    // TIMER TEST (commented out for now)
+    // setupSynthesisTimer();
+    // while (1) { }
 
     return 0;
 }
