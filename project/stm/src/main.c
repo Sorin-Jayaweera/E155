@@ -142,49 +142,60 @@ void setupSynthesisTimer(void) {
 int main(void) {
     // Initialize system
     initSystem();
-    initFFT();
 
-    printf("\n===== FFT-Based Frequency Detection =====\n");
-    printf("FFT size: %d\n", FFT_SIZE);
-    printf("Sample rate: %d Hz\n", SAMPLE_RATE);
-    printf("Frequency resolution: %.2f Hz per bin\n", (float)SAMPLE_RATE / FFT_SIZE);
-    printf("Feed 50 Hz signal to PA0\n\n");
+    printf("\n===== GPIO Input → LED Test =====\n");
+    printf("PA0 (input) → PA6 (LED output)\n");
+    printf("Connect signal to PA0, LED mirrors input state\n\n");
 
-    // Configure ADC for DMA
-    configureADCForDMA(ADC_CHANNEL);
-    initDMA_ADC(adc_buffer, BUFFER_SIZE);
+    // Configure PA0 as digital input (instead of analog)
+    pinMode(AUDIO_INPUT_PIN, GPIO_INPUT);
 
-    // Enable DMA interrupt
-    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn = 11
-
-    // Start ADC with DMA
-    enableDMA_ADC();
-    startADC();
-
-    printf("ADC started, waiting for samples...\n\n");
-
-    // Main loop - process FFT when buffer is ready
+    // Simple passthrough loop
     while (1) {
-        if (buffer_ready) {
-            buffer_ready = false;
+        // Read PA0 input
+        int input_state = digitalRead(AUDIO_INPUT_PIN);
 
-            // Process FFT to find dominant frequencies
-            processFFT(adc_buffer, top_frequencies);
-
-            // Print top 5 frequencies
-            printf("Top 5 Frequencies:\n");
-            for (int i = 0; i < NUM_FREQUENCIES; i++) {
-                printf("  %d: %.1f Hz (magnitude: %.1f)\n",
-                       i + 1,
-                       top_frequencies[i].frequency,
-                       top_frequencies[i].magnitude);
-            }
-            printf("\n");
-        }
+        // Mirror to PA6 LED
+        digitalWrite(SQUARE_OUT_PIN, input_state);
     }
 
     return 0;
 }
+
+// ============================================================================
+// FFT-based frequency detection (commented out for GPIO test)
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     initFFT();
+//     printf("\n===== FFT-Based Frequency Detection =====\n");
+//     printf("FFT size: %d\n", FFT_SIZE);
+//     printf("Sample rate: %d Hz\n", SAMPLE_RATE);
+//     printf("Frequency resolution: %.2f Hz per bin\n", (float)SAMPLE_RATE / FFT_SIZE);
+//     printf("Feed 50 Hz signal to PA0\n\n");
+//     configureADCForDMA(ADC_CHANNEL);
+//     initDMA_ADC(adc_buffer, BUFFER_SIZE);
+//     NVIC->ISER[0] |= (1 << 11);
+//     enableDMA_ADC();
+//     startADC();
+//     printf("ADC started, waiting for samples...\n\n");
+//     while (1) {
+//         if (buffer_ready) {
+//             buffer_ready = false;
+//             processFFT(adc_buffer, top_frequencies);
+//             printf("Top 5 Frequencies:\n");
+//             for (int i = 0; i < NUM_FREQUENCIES; i++) {
+//                 printf("  %d: %.1f Hz (magnitude: %.1f)\n",
+//                        i + 1,
+//                        top_frequencies[i].frequency,
+//                        top_frequencies[i].magnitude);
+//             }
+//             printf("\n");
+//         }
+//     }
+//     return 0;
+// }
+// ============================================================================
 
 // ============================================================================
 // WORKING: Multi-frequency synthesis main code
