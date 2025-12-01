@@ -123,8 +123,8 @@ void initSystem(void) {
     // OSPEEDR: 11 = Very high speed
     GPIOA->OSPEEDR |= (3U << (SQUARE_OUT_PIN * 2));
 
-    // PUPDR: 00 = No pull-up, no pull-down
-    GPIOA->PUPDR &= ~(3U << (SQUARE_OUT_PIN * 2));
+    // PURPDR: 00 = No pull-up, no pull-down (library has typo: PURPDR not PUPDR)
+    GPIOA->PURPDR &= ~(3U << (SQUARE_OUT_PIN * 2));
 
     // Start with output LOW
     GPIOA->ODR &= ~(1U << SQUARE_OUT_PIN);
