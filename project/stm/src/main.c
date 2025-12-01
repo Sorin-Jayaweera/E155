@@ -27,6 +27,7 @@ typedef struct {
 #define AUDIO_INPUT_PIN     0       // PA0 - ADC Channel 5
 #define ADC_CHANNEL         5       // ADC1_IN5 on PA0
 #define SQUARE_OUT_PIN      6       // PA6 - Square wave output to FPGA
+#define TEST_INPUT_PIN      7       // PB7 - Test input pin
 #define BUFFER_SIZE         256     // Match FFT_SIZE
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -144,16 +145,21 @@ int main(void) {
     initSystem();
 
     printf("\n===== GPIO Input → LED Test =====\n");
-    printf("PA0 (input) → PA6 (LED output)\n");
-    printf("Connect signal to PA0, LED mirrors input state\n\n");
+    printf("PB7 (input) → PA6 (LED output)\n");
+    printf("Connect signal to PB7, LED mirrors input state\n\n");
 
-    // Configure PA0 as digital input (instead of analog)
-    pinMode(AUDIO_INPUT_PIN, GPIO_INPUT);
+    // Enable GPIOB clock
+    RCC->AHB2ENR |= (1 << 1);  // GPIOB
+
+    // Configure PB7 as digital input (MODER = 00)
+    GPIOB->MODER &= ~(0b11 << (2 * TEST_INPUT_PIN));
+
+    printf("PB7 configured as input, starting passthrough...\n\n");
 
     // Simple passthrough loop
     while (1) {
-        // Read PA0 input
-        int input_state = digitalRead(AUDIO_INPUT_PIN);
+        // Read PB7 input
+        int input_state = (GPIOB->IDR >> TEST_INPUT_PIN) & 1;
 
         // Mirror to PA6 LED
         digitalWrite(SQUARE_OUT_PIN, input_state);
