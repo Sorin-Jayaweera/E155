@@ -1,7 +1,7 @@
 // main.c
-// Musical Tesla Coil - Frequency Detection with LED Feedback
-// LED turns ON when input frequency is 400-600 Hz (500 Hz ± 100 Hz)
-// Input: PA11 (ADC1_IN15) | Output: PA6 (LED)
+// Musical Tesla Coil - ADC Threshold Test
+// LED ON when PA11 voltage > 1.65V, OFF when < 1.65V
+// Tests if ADC is reading analog signal correctly
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -145,47 +145,70 @@ void setupSynthesisTimer(void) {
 int main(void) {
     // Initialize system
     initSystem();
-    initFFT();
 
-    // Initialize ADC with DMA
+    // Initialize ADC (no DMA needed for simple polling)
     configureADCForDMA(ADC_CHANNEL);
-    initDMA_ADC(adc_buffer, BUFFER_SIZE);
-
-    // Enable DMA1 Channel 1 interrupt in NVIC
-    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
-
-    // Enable DMA and start ADC
-    enableDMA_ADC();
     startADC();
 
-    // Target frequency: 500 Hz ± 100 Hz (400-600 Hz range)
-    const float TARGET_FREQ_MIN = 400.0f;
-    const float TARGET_FREQ_MAX = 600.0f;
+    // Threshold: 2048 = midpoint of 12-bit ADC (1.65V with 3.3V reference)
+    const uint16_t THRESHOLD = 2048;
 
-    // Main loop - LED-based frequency detection
+    printf("\n===== ADC Threshold Test =====\n");
+    printf("Reading PA11 analog input\n");
+    printf("LED ON when voltage > 1.65V\n");
+    printf("LED OFF when voltage < 1.65V\n\n");
+    printf("With 500 Hz sine wave, LED should flicker at 500 Hz\n\n");
+
+    // Main loop - simple threshold detection
     while (1) {
-        // Wait for DMA buffer to be ready
-        if (buffer_ready) {
-            buffer_ready = false;
+        // Start ADC conversion
+        ADC1->CR |= (1 << 2);  // ADSTART
 
-            // Process FFT to get top frequencies
-            processFFT(adc_buffer, top_frequencies);
+        // Wait for conversion to complete
+        while (!(ADC1->ISR & (1 << 2)));  // Wait for EOC (End Of Conversion)
 
-            // Check if dominant frequency (top_frequencies[0]) is in target range
-            float dominant_freq = top_frequencies[0].frequency;
+        // Read ADC value (12-bit: 0-4095)
+        uint16_t adc_value = ADC1->DR;
 
-            if (dominant_freq >= TARGET_FREQ_MIN && dominant_freq <= TARGET_FREQ_MAX) {
-                // Frequency is in range (400-600 Hz) - turn LED ON
-                digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-            } else {
-                // Frequency is out of range - turn LED OFF
-                digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-            }
+        // Simple threshold comparison
+        if (adc_value > THRESHOLD) {
+            digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);  // Voltage > 1.65V
+        } else {
+            digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);   // Voltage < 1.65V
         }
     }
 
     return 0;
 }
+
+// ============================================================================
+// FFT-based Frequency Detection with LED (commented out)
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     initFFT();
+//     configureADCForDMA(ADC_CHANNEL);
+//     initDMA_ADC(adc_buffer, BUFFER_SIZE);
+//     NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
+//     enableDMA_ADC();
+//     startADC();
+//     const float TARGET_FREQ_MIN = 400.0f;
+//     const float TARGET_FREQ_MAX = 600.0f;
+//     while (1) {
+//         if (buffer_ready) {
+//             buffer_ready = false;
+//             processFFT(adc_buffer, top_frequencies);
+//             float dominant_freq = top_frequencies[0].frequency;
+//             if (dominant_freq >= TARGET_FREQ_MIN && dominant_freq <= TARGET_FREQ_MAX) {
+//                 digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+//             } else {
+//                 digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+//             }
+//         }
+//     }
+//     return 0;
+// }
+// ============================================================================
 
 // ============================================================================
 // GPIO Passthrough Test (commented out - WORKING)
