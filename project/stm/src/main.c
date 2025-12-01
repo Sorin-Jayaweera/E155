@@ -120,20 +120,67 @@ void initSystem(void) {
     printf("RCC AHB2ENR: %lu\n", RCC->AHB2ENR);
 }
 
+void initADC_Manual(uint8_t channel) {
+    // Following STM32L432KC reference manual sequence exactly
+
+    // 1. Enable ADC clock
+    RCC->AHB2ENR |= (1 << 13);  // ADCEN bit
+
+    // 2. Configure ADC clock prescaler (default: /1)
+    ADC1_COMMON->CCR = 0;  // CKMODE = 00 (use default)
+
+    // 3. Ensure ADC is disabled before calibration
+    if (ADC1->CR & (1 << 0)) {  // ADEN
+        ADC1->CR |= (1 << 1);   // ADDIS - disable ADC
+        while (ADC1->CR & (1 << 0));  // Wait until ADEN = 0
+    }
+
+    // 4. Calibrate ADC
+    ADC1->CR |= (1 << 31);  // ADCAL - start calibration
+    while (ADC1->CR & (1 << 31));  // Wait until ADCAL = 0
+
+    // 5. Clear ADRDY flag
+    ADC1->ISR |= (1 << 0);  // Clear ADRDY
+
+    // 6. Enable ADC
+    ADC1->CR |= (1 << 0);  // ADEN
+    while (!(ADC1->ISR & (1 << 0)));  // Wait for ADRDY
+
+    // 7. Configure: 12-bit, right align, single conversion
+    ADC1->CFGR = 0;  // All defaults (12-bit, right align, software trigger)
+
+    // 8. Select channel in SQR1 (first/only conversion)
+    ADC1->SQR1 = (channel << 6);  // SQ1 bits [10:6]
+
+    // 9. Set sampling time for the channel
+    // Channel 11 uses SMPR2 bits [5:3]
+    if (channel <= 9) {
+        // Channels 0-9 use SMPR1
+        ADC1->SMPR1 &= ~(7U << (channel * 3));
+        ADC1->SMPR1 |= (4U << (channel * 3));  // 47.5 cycles
+    } else {
+        // Channels 10-18 use SMPR2
+        ADC1->SMPR2 &= ~(7U << ((channel - 10) * 3));
+        ADC1->SMPR2 |= (4U << ((channel - 10) * 3));  // 47.5 cycles
+    }
+
+    printf("ADC manually initialized for channel %d\n", channel);
+}
+
 void setupSynthesisTimer(void) {
     // Enable TIM15
     RCC->APB2ENR |= (1 << 16);  // TIM15EN
-    
+
     // Configure for 100 kHz interrupt
     TIM15->PSC = 0;                        // No prescaler (80 MHz)
     TIM15->ARR = 800 - 1;                  // 80 MHz / 800 = 100 kHz
-    
+
     // Enable update interrupt
     TIM15->DIER |= (1 << 0);  // UIE
-    
+
     // Enable TIM15 interrupt in NVIC
     NVIC->ISER[0] |= (1 << 24);  // TIM1_BRK_TIM15_IRQn
-    
+
     // Start timer
     TIM15->CR1 |= (1 << 0);  // CEN
 }
@@ -146,9 +193,8 @@ int main(void) {
     // Initialize system
     initSystem();
 
-    // Initialize ADC (no DMA needed for simple polling)
-    configureADCForDMA(ADC_CHANNEL);
-    startADC();
+    // Initialize ADC with manual bare-metal sequence
+    initADC_Manual(ADC_CHANNEL);
 
     // Threshold: 2048 = midpoint of 12-bit ADC (1.65V with 3.3V reference)
     const uint16_t THRESHOLD = 2048;
@@ -159,6 +205,13 @@ int main(void) {
     printf("PA9 HIGH when PA6 voltage > 1.65V\n");
     printf("PA9 LOW when PA6 voltage < 1.65V\n\n");
     printf("With 500 Hz sine wave, PA9 should toggle at 500 Hz\n\n");
+
+    // First test: Turn LED ON for 1 second to verify GPIO works
+    printf("Testing PA9 GPIO: LED should turn ON for 1 second...\n");
+    digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+    for (volatile int i = 0; i < 8000000; i++);  // ~1s delay
+    digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+    printf("GPIO test done. Starting ADC polling...\n\n");
 
     // Main loop - simple threshold detection
     while (1) {
