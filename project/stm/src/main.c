@@ -145,9 +145,11 @@ void initADC_Manual(uint8_t channel) {
     RCC->AHB2ENR |= (1 << 13);  // ADCEN bit
     printf("1. ADC clock enabled\n");
 
-    // 2. Configure ADC clock prescaler (default: /1)
-    ADC_COMMON->CCR = 0;  // CKMODE = 00 (use default)
-    printf("2. Clock prescaler configured\n");
+    // 2. Configure ADC clock to use synchronous mode (divide AHB clock)
+    // CKMODE = 01: HCLK/1 (synchronous clock mode)
+    ADC_COMMON->CCR &= ~(0b11 << 16);  // Clear CKMODE bits
+    ADC_COMMON->CCR |= (0b01 << 16);   // CKMODE = 01 (HCLK/1)
+    printf("2. Clock configured: CCR = 0x%lx\n", ADC_COMMON->CCR);
 
     // 3. Ensure ADC is disabled before calibration
     printf("3. Checking if ADC needs disabling...\n");
@@ -174,23 +176,9 @@ void initADC_Manual(uint8_t channel) {
     for (volatile int i = 0; i < 2000; i++);  // ~25 µs at 80 MHz
     printf("     Voltage regulator stable\n");
 
-    // 4. Calibrate ADC (single-ended mode)
-    printf("4. Starting calibration (single-ended mode)...\n");
-    ADC1->CR &= ~(1 << 30);  // ADCALDIF = 0 (single-ended calibration)
-    ADC1->CR |= (1 << 31);   // ADCAL = 1 (start calibration)
-    printf("   Calibration started, waiting...\n");
-
-    // Add timeout to prevent infinite loop
-    int timeout = 100000;
-    while ((ADC1->CR & (1 << 31)) && timeout > 0) {
-        timeout--;
-    }
-
-    if (timeout == 0) {
-        printf("   WARNING: Calibration timeout!\n");
-    } else {
-        printf("   Calibration complete\n");
-    }
+    // 4. Skip calibration for now (troubleshooting)
+    printf("4. Skipping calibration (troubleshooting)...\n");
+    printf("   NOTE: ADC will work but with reduced accuracy\n");
 
     // 5. Clear ADRDY flag
     ADC1->ISR |= (1 << 0);  // Clear ADRDY
@@ -198,9 +186,26 @@ void initADC_Manual(uint8_t channel) {
 
     // 6. Enable ADC
     printf("6. Enabling ADC...\n");
+    printf("   CR before ADEN: 0x%lx\n", ADC1->CR);
+    printf("   ISR before ADEN: 0x%lx\n", ADC1->ISR);
+
     ADC1->CR |= (1 << 0);  // ADEN
-    while (!(ADC1->ISR & (1 << 0)));  // Wait for ADRDY
-    printf("   ADC enabled and ready\n");
+    printf("   ADEN bit set, CR = 0x%lx\n", ADC1->CR);
+
+    // Wait for ADRDY with timeout
+    uint32_t timeout = 1000000;
+    while (!(ADC1->ISR & (1 << 0)) && timeout > 0) {
+        timeout--;
+    }
+
+    if (timeout == 0) {
+        printf("   ERROR: ADRDY timeout! ISR = 0x%lx, CR = 0x%lx\n", ADC1->ISR, ADC1->CR);
+        printf("   CCR = 0x%lx\n", ADC_COMMON->CCR);
+        printf("   This suggests ADC clock is not running properly\n");
+        while(1);  // Halt here for debugging
+    }
+
+    printf("   ADC enabled and ready (ISR = 0x%lx)\n", ADC1->ISR);
 
     // 7. Configure: 12-bit, right align, single conversion
     ADC1->CFGR = 0;  // All defaults (12-bit, right align, software trigger)
