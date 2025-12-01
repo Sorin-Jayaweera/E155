@@ -128,18 +128,19 @@ int main(void) {
     // Match Lab 4 initialization
     initSystem();
 
-    printf("Setting PA6 HIGH permanently...\n");
-    printf("Check with multimeter - should read ~3.3V\n");
+    printf("Toggling PA6 at 2 Hz (0.25s HIGH, 0.25s LOW)...\n");
 
-    // Set PA6 HIGH and leave it there
-    digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-
-    printf("PA6 is now HIGH\n");
-    printf("Voltage should be stable at 3.3V\n");
-
-    // Just loop forever, keep it HIGH
+    int count = 0;
     while (1) {
-        // Do nothing - PA6 stays HIGH
+        digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+        printf("Cycle %d - HIGH\n", count);
+        for (volatile uint32_t i = 0; i < 10000000; i++);  // ~0.25s at 80MHz
+
+        digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+        printf("Cycle %d - LOW\n", count);
+        for (volatile uint32_t i = 0; i < 10000000; i++);  // ~0.25s at 80MHz
+
+        count++;
     }
 
     return 0;
