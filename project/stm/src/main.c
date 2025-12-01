@@ -5,39 +5,13 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-// Define NVIC for interrupt control
+// Define NVIC for interrupt control (not in library headers)
 typedef struct {
     volatile uint32_t ISER[8];
 } NVIC_Type;
 #define NVIC ((NVIC_Type *) 0xE000E100UL)
 
-// Define DMA1 ISR/IFCR for interrupt handling  
-typedef struct {
-    volatile uint32_t ISR;
-    volatile uint32_t IFCR;
-} DMA_IRQ_Type;
-#define DMA1 ((DMA_IRQ_Type *) 0x40020000UL)
-
-// Define TIM15 for synthesis timer
-typedef struct {
-    volatile uint32_t CR1;
-    volatile uint32_t CR2;
-    volatile uint32_t SMCR;
-    volatile uint32_t DIER;
-    volatile uint32_t SR;
-    volatile uint32_t EGR;
-    volatile uint32_t CCMR1;
-    uint32_t RESERVED0;
-    volatile uint32_t CCER;
-    volatile uint32_t CNT;
-    volatile uint32_t PSC;
-    volatile uint32_t ARR;
-    volatile uint32_t RCR;
-    volatile uint32_t CCR1;
-} TIM_TypeDef;
-#define TIM15 ((TIM_TypeDef *) 0x40014000UL)
-
-// Project Headers
+// Project Headers - these define TIM15, TIM_TypeDef, DMA1, DMA_TypeDef
 #include "../lib/STM32L432KC_RCC.h"
 #include "../lib/STM32L432KC_GPIO.h"
 #include "../lib/STM32L432KC_TIM.h"
