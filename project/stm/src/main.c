@@ -33,66 +33,51 @@ typedef struct {
 // Global variables
 ///////////////////////////////////////////////////////////////////////////////
 
-// Multi-frequency synthesis
-#define SYNTHESIS_RATE 100000  // 100 kHz update rate
+// Simple 100 Hz test - toggle every 500 interrupts (100kHz / 500 = 200Hz toggles = 100Hz square wave)
+volatile uint16_t toggle_counter = 0;
+#define TOGGLE_PERIOD 500  // 100kHz / 500 = 200 toggles/sec = 100Hz
 
-typedef struct {
-    float frequency;
-    float phase;        // Phase accumulator (0.0 to 1.0)
-    float magnitude;
-    bool is_active;
-} FrequencyOscillator;
-
-FrequencyOscillator oscillators[NUM_FREQUENCIES];
-
-uint16_t adc_buffer[BUFFER_SIZE];
-volatile bool buffer_ready = false;
-
-FrequencyPeak top_frequencies[NUM_FREQUENCIES];
+// Commented out for simple test
+// #define SYNTHESIS_RATE 100000  // 100 kHz update rate
+// typedef struct {
+//     float frequency;
+//     float phase;
+//     float magnitude;
+//     bool is_active;
+// } FrequencyOscillator;
+// FrequencyOscillator oscillators[NUM_FREQUENCIES];
+// uint16_t adc_buffer[BUFFER_SIZE];
+// volatile bool buffer_ready = false;
+// FrequencyPeak top_frequencies[NUM_FREQUENCIES];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interrupt handlers
 ///////////////////////////////////////////////////////////////////////////////
 
-void DMA1_Channel1_IRQHandler(void) {
-    if (DMA1->ISR & (1 << 1)) {  // TCIF1 - Transfer Complete
-        DMA1->IFCR |= (1 << 1);
-        buffer_ready = true;
-    }
-
-    if (DMA1->ISR & (1 << 2)) {  // HTIF1 - Half Transfer
-        DMA1->IFCR |= (1 << 2);
-    }
-}
-
+// Simple TIM15 interrupt - just toggle PA6 at 100 Hz
 void TIM1_BRK_TIM15_IRQHandler(void) {
-    if (TIM15->SR & (1 << 0)) {  // UIF
+    if (TIM15->SR & (1 << 0)) {  // UIF - Update Interrupt Flag
         TIM15->SR &= ~(1 << 0);   // Clear flag
-        
-        bool output_state = false;
-        
-        // Update all oscillators
-        for (int i = 0; i < NUM_FREQUENCIES; i++) {
-            if (oscillators[i].is_active) {
-                // Increment phase
-                oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
-                
-                // Wrap phase
-                if (oscillators[i].phase >= 1.0f) {
-                    oscillators[i].phase -= 1.0f;
-                }
-                
-                // Check if this oscillator is in high state (50% duty cycle)
-                if (oscillators[i].phase < 0.5f) {
-                    output_state = true;  // OR together
-                }
-            }
+
+        toggle_counter++;
+        if (toggle_counter >= TOGGLE_PERIOD) {
+            toggle_counter = 0;
+            // Toggle PA6
+            GPIOA->ODR ^= (1 << SQUARE_OUT_PIN);
         }
-        
-        // Update GPIO
-        digitalWrite(SQUARE_OUT_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
     }
 }
+
+// Commented out for simple test
+// void DMA1_Channel1_IRQHandler(void) {
+//     if (DMA1->ISR & (1 << 1)) {
+//         DMA1->IFCR |= (1 << 1);
+//         buffer_ready = true;
+//     }
+//     if (DMA1->ISR & (1 << 2)) {
+//         DMA1->IFCR |= (1 << 2);
+//     }
+// }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Helper functions
@@ -132,61 +117,66 @@ void setupSynthesisTimer(void) {
 ///////////////////////////////////////////////////////////////////////////////
 
 int main(void) {
-//    configureFlash();
-//    configureClock();
+    // Minimal initialization
     initSystem();
-    initFFT();
-    
-    printf("Musical Tesla Coil - Multi-Frequency Synthesis\n");
-    // Initialize oscillators
-    for (int i = 0; i < NUM_FREQUENCIES; i++) {
-        oscillators[i].phase = 0.0f;
-        oscillators[i].frequency = 0.0f;
-        oscillators[i].magnitude = 0.0f;
-        oscillators[i].is_active = false;
-    }
-    
-    setupSynthesisTimer();  // Multi-frequency output via TIM15 interrupt
-    
-    configureADCForDMA(ADC_CHANNEL);
-    initDMA_ADC(adc_buffer, BUFFER_SIZE);
 
-    // Enable DMA interrupt
-    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
+    // Start TIM15 at 100 kHz to toggle PA6 at 100 Hz
+    setupSynthesisTimer();
 
-    enableDMA_ADC();
-    startADC();
-
-    printf("Musical Tesla Coil - Multi-Frequency Synthesis\n");
-    printf("FFT size: %d, Sample rate: %d Hz\n", FFT_SIZE, SAMPLE_RATE);
-    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
-
+    // Infinite loop - TIM15 interrupt handles everything
     while (1) {
-        if (buffer_ready) {
-            buffer_ready = false;
-
-            // Process FFT
-            processFFT(adc_buffer, top_frequencies);
-            
-            // Update oscillators with new frequencies
-            for (int i = 0; i < NUM_FREQUENCIES; i++) {
-                oscillators[i].frequency = top_frequencies[i].frequency;
-                oscillators[i].magnitude = top_frequencies[i].magnitude;
-                oscillators[i].is_active = (top_frequencies[i].magnitude > 100.0f);
-                // Keep existing phase for smooth transitions
-            }
-
-            // Debug output
-            printf("Top 5 Frequencies:\n");
-            for (int i = 0; i < NUM_FREQUENCIES; i++) {
-                printf("  %d: %.1f Hz (mag: %.1f) %s\n",
-                       i + 1,
-                       top_frequencies[i].frequency,
-                       top_frequencies[i].magnitude,
-                       oscillators[i].is_active ? "[ACTIVE]" : "");
-            }
-        }
+        // Nothing to do - just let the interrupt toggle PA6
     }
 
     return 0;
 }
+
+// Commented out for simple test
+// int main(void) {
+//     initSystem();
+//     initFFT();
+//     for (int i = 0; i < 10; i++) {
+//         digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+//         for (volatile int j = 0; j < 800000; j++);
+//         digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+//         for (volatile int j = 0; j < 800000; j++);
+//     }
+//     for (int i = 0; i < NUM_FREQUENCIES; i++) {
+//         oscillators[i].phase = 0.0f;
+//         oscillators[i].frequency = 0.0f;
+//         oscillators[i].magnitude = 0.0f;
+//         oscillators[i].is_active = false;
+//     }
+//     oscillators[0].frequency = 100.0f;
+//     oscillators[0].magnitude = 200.0f;
+//     oscillators[0].is_active = true;
+//     setupSynthesisTimer();
+//     configureADCForDMA(ADC_CHANNEL);
+//     initDMA_ADC(adc_buffer, BUFFER_SIZE);
+//     NVIC->ISER[0] |= (1 << 11);
+//     enableDMA_ADC();
+//     startADC();
+//     printf("Musical Tesla Coil - Multi-Frequency Synthesis\n");
+//     printf("FFT size: %d, Sample rate: %d Hz\n", FFT_SIZE, SAMPLE_RATE);
+//     printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
+//     while (1) {
+//         if (buffer_ready) {
+//             buffer_ready = false;
+//             processFFT(adc_buffer, top_frequencies);
+//             for (int i = 0; i < NUM_FREQUENCIES; i++) {
+//                 oscillators[i].frequency = top_frequencies[i].frequency;
+//                 oscillators[i].magnitude = top_frequencies[i].magnitude;
+//                 oscillators[i].is_active = (top_frequencies[i].magnitude > 10.0f);
+//             }
+//             printf("Top 5 Frequencies:\n");
+//             for (int i = 0; i < NUM_FREQUENCIES; i++) {
+//                 printf("  %d: %.1f Hz (mag: %.1f) %s\n",
+//                        i + 1,
+//                        top_frequencies[i].frequency,
+//                        top_frequencies[i].magnitude,
+//                        oscillators[i].is_active ? "[ACTIVE]" : "");
+//             }
+//         }
+//     }
+//     return 0;
+// }
