@@ -144,29 +144,71 @@ int main(void) {
     // Initialize system
     initSystem();
 
-    printf("\n===== GPIO Input → LED Test =====\n");
-    printf("PB7 (input) → PA6 (LED output)\n");
-    printf("Connect signal to PB7, LED mirrors input state\n\n");
+    printf("\n===== ADC Input Test =====\n");
+    printf("Reading analog signal from PA0 (ADC1_IN5)\n");
+    printf("Connect sine wave (0-3.3V) to PA0\n");
+    printf("Sampling continuously and printing values...\n\n");
 
-    // Enable GPIOB clock
-    RCC->AHB2ENR |= (1 << 1);  // GPIOB
+    // Configure ADC for single-shot reading (not DMA yet)
+    RCC->AHB2ENR |= (1 << 13);  // Enable ADC clock
 
-    // Configure PB7 as digital input (MODER = 00)
-    GPIOB->MODER &= ~(0b11 << (2 * TEST_INPUT_PIN));
+    // Configure PA0 as analog (already done in initSystem, but verify)
+    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);
 
-    printf("PB7 configured as input, starting passthrough...\n\n");
+    // Simple ADC initialization for channel 5 (PA0)
+    configureADCForDMA(ADC_CHANNEL);
+    startADC();
 
-    // Simple passthrough loop
+    printf("ADC initialized, starting continuous sampling...\n\n");
+
+    int sample_count = 0;
+
+    // Main loop - read ADC and print values
     while (1) {
-        // Read PB7 input
-        int input_state = (GPIOB->IDR >> TEST_INPUT_PIN) & 1;
+        // Trigger single conversion
+        ADC1->CR |= (1 << 2);  // ADSTART
 
-        // Mirror to PA6 LED
-        digitalWrite(SQUARE_OUT_PIN, input_state);
+        // Wait for conversion complete
+        while (!(ADC1->ISR & (1 << 2)));  // EOC (End of Conversion)
+
+        // Read ADC value (12-bit: 0-4095)
+        uint16_t adc_value = ADC1->DR;
+
+        // Convert to voltage (0-3.3V)
+        float voltage = (adc_value * 3.3f) / 4095.0f;
+
+        // Print every 100 samples to avoid overwhelming UART
+        if (sample_count % 100 == 0) {
+            printf("Sample %d: ADC=%u (%.3f V)\n", sample_count, adc_value, voltage);
+        }
+
+        sample_count++;
+
+        // Small delay between samples (~1 kHz sampling for observation)
+        for (volatile int i = 0; i < 8000; i++);
     }
 
     return 0;
 }
+
+// ============================================================================
+// GPIO Input Test (PB7 → PA6 passthrough - WORKING)
+// ============================================================================
+// int main(void) {
+//     initSystem();
+//     printf("\n===== GPIO Input → LED Test =====\n");
+//     printf("PB7 (input) → PA6 (LED output)\n");
+//     printf("Connect signal to PB7, LED mirrors input state\n\n");
+//     RCC->AHB2ENR |= (1 << 1);  // GPIOB
+//     GPIOB->MODER &= ~(0b11 << (2 * TEST_INPUT_PIN));
+//     printf("PB7 configured as input, starting passthrough...\n\n");
+//     while (1) {
+//         int input_state = (GPIOB->IDR >> TEST_INPUT_PIN) & 1;
+//         digitalWrite(SQUARE_OUT_PIN, input_state);
+//     }
+//     return 0;
+// }
+// ============================================================================
 
 // ============================================================================
 // FFT-based frequency detection (commented out for GPIO test)
