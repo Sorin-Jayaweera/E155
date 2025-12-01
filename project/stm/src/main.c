@@ -1,7 +1,7 @@
 // main.c
 // Musical Tesla Coil - ADC Threshold Test
-// LED ON when PA0 voltage > 1.65V, OFF when < 1.65V
-// Tests if ADC is reading analog signal correctly
+// PA6 (ADC input) → PA9 (square wave output)
+// LED ON when PA6 voltage > 1.65V, OFF when < 1.65V
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -26,9 +26,9 @@ typedef struct {
 // Configuration
 ///////////////////////////////////////////////////////////////////////////////
 
-#define AUDIO_INPUT_PIN     0       // PA0 - ADC Channel 5
-#define ADC_CHANNEL         5       // ADC1_IN5 on PA0
-#define SQUARE_OUT_PIN      6       // PA6 - Square wave output to FPGA
+#define AUDIO_INPUT_PIN     6       // PA6 - ADC Channel 11
+#define ADC_CHANNEL         11      // ADC1_IN11 on PA6
+#define SQUARE_OUT_PIN      9       // PA9 - Square wave output to FPGA
 #define TEST_INPUT_PIN      7       // PB7 - Test input pin
 #define BUFFER_SIZE         256     // Match FFT_SIZE
 
@@ -154,10 +154,11 @@ int main(void) {
     const uint16_t THRESHOLD = 2048;
 
     printf("\n===== ADC Threshold Test =====\n");
-    printf("Reading PA0 (ADC1_IN5) analog input\n");
-    printf("LED ON when voltage > 1.65V\n");
-    printf("LED OFF when voltage < 1.65V\n\n");
-    printf("With 500 Hz sine wave, LED should flicker at 500 Hz\n\n");
+    printf("Reading PA6 (ADC1_IN11) analog input\n");
+    printf("Square wave output on PA9\n");
+    printf("PA9 HIGH when PA6 voltage > 1.65V\n");
+    printf("PA9 LOW when PA6 voltage < 1.65V\n\n");
+    printf("With 500 Hz sine wave, PA9 should toggle at 500 Hz\n\n");
 
     // Main loop - simple threshold detection
     while (1) {
