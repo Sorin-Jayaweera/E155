@@ -1,7 +1,7 @@
 // main.c
-// Musical Tesla Coil - GPIO Passthrough Test
-// Test: PA11 (digital input) → PA6 (LED output)
-// LED mirrors input state to verify GPIO is reading correctly
+// Musical Tesla Coil - Frequency Detection with LED Feedback
+// LED turns ON when input frequency is 400-600 Hz (500 Hz ± 100 Hz)
+// Input: PA11 (ADC1_IN15) | Output: PA6 (LED)
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -145,50 +145,60 @@ void setupSynthesisTimer(void) {
 int main(void) {
     // Initialize system
     initSystem();
+    initFFT();
 
-    // Reconfigure PA11 as digital input (was analog in initSystem)
-    pinMode(AUDIO_INPUT_PIN, GPIO_INPUT);
+    // Initialize ADC with DMA
+    configureADCForDMA(ADC_CHANNEL);
+    initDMA_ADC(adc_buffer, BUFFER_SIZE);
 
-    printf("\n===== GPIO Passthrough Test =====\n");
-    printf("PA11 (input) → PA6 (LED output)\n");
-    printf("Testing if GPIO input is reading correctly\n\n");
+    // Enable DMA1 Channel 1 interrupt in NVIC
+    NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
 
-    // Main loop - simple GPIO passthrough
+    // Enable DMA and start ADC
+    enableDMA_ADC();
+    startADC();
+
+    // Target frequency: 500 Hz ± 100 Hz (400-600 Hz range)
+    const float TARGET_FREQ_MIN = 400.0f;
+    const float TARGET_FREQ_MAX = 600.0f;
+
+    // Main loop - LED-based frequency detection
     while (1) {
-        // Read PA11 digital input state
-        int input_state = digitalRead(AUDIO_INPUT_PIN);
+        // Wait for DMA buffer to be ready
+        if (buffer_ready) {
+            buffer_ready = false;
 
-        // Copy to PA6 LED output
-        digitalWrite(SQUARE_OUT_PIN, input_state);
+            // Process FFT to get top frequencies
+            processFFT(adc_buffer, top_frequencies);
+
+            // Check if dominant frequency (top_frequencies[0]) is in target range
+            float dominant_freq = top_frequencies[0].frequency;
+
+            if (dominant_freq >= TARGET_FREQ_MIN && dominant_freq <= TARGET_FREQ_MAX) {
+                // Frequency is in range (400-600 Hz) - turn LED ON
+                digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
+            } else {
+                // Frequency is out of range - turn LED OFF
+                digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
+            }
+        }
     }
 
     return 0;
 }
 
 // ============================================================================
-// FFT-based Frequency Detection with LED (commented out)
+// GPIO Passthrough Test (commented out - WORKING)
 // ============================================================================
 // int main(void) {
 //     initSystem();
-//     initFFT();
-//     configureADCForDMA(ADC_CHANNEL);
-//     initDMA_ADC(adc_buffer, BUFFER_SIZE);
-//     NVIC->ISER[0] |= (1 << 11);  // DMA1_Channel1_IRQn
-//     enableDMA_ADC();
-//     startADC();
-//     const float TARGET_FREQ_MIN = 400.0f;
-//     const float TARGET_FREQ_MAX = 600.0f;
+//     pinMode(AUDIO_INPUT_PIN, GPIO_INPUT);
+//     printf("\n===== GPIO Passthrough Test =====\n");
+//     printf("PA11 (input) → PA6 (LED output)\n");
+//     printf("Testing if GPIO input is reading correctly\n\n");
 //     while (1) {
-//         if (buffer_ready) {
-//             buffer_ready = false;
-//             processFFT(adc_buffer, top_frequencies);
-//             float dominant_freq = top_frequencies[0].frequency;
-//             if (dominant_freq >= TARGET_FREQ_MIN && dominant_freq <= TARGET_FREQ_MAX) {
-//                 digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);
-//             } else {
-//                 digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
-//             }
-//         }
+//         int input_state = digitalRead(AUDIO_INPUT_PIN);
+//         digitalWrite(SQUARE_OUT_PIN, input_state);
 //     }
 //     return 0;
 // }
