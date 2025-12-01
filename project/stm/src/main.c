@@ -230,7 +230,8 @@ int main(void) {
     digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);
     printf("GPIO test done. Starting ADC polling...\n\n");
 
-    // Main loop - simple threshold detection
+    // Main loop - simple threshold detection with debug output
+    int loop_count = 0;
     while (1) {
         // Start ADC conversion
         ADC1->CR |= (1 << 2);  // ADSTART
@@ -241,12 +242,22 @@ int main(void) {
         // Read ADC value (12-bit: 0-4095)
         uint16_t adc_value = ADC1->DR;
 
+        // Print ADC value every 10000 iterations
+        if (loop_count % 10000 == 0) {
+            float voltage = (adc_value * 3.3f) / 4095.0f;
+            printf("ADC: %u (%.3f V) | Threshold: %u | Output: %s\n",
+                   adc_value, voltage, THRESHOLD,
+                   (adc_value > THRESHOLD) ? "HIGH" : "LOW");
+        }
+
         // Simple threshold comparison
         if (adc_value > THRESHOLD) {
             digitalWrite(SQUARE_OUT_PIN, GPIO_HIGH);  // Voltage > 1.65V
         } else {
             digitalWrite(SQUARE_OUT_PIN, GPIO_LOW);   // Voltage < 1.65V
         }
+
+        loop_count++;
     }
 
     return 0;
