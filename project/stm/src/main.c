@@ -128,6 +128,13 @@ typedef struct {
     float imag;     // Imaginary component
 } Complex;
 
+// Frequency oscillator for multi-frequency synthesis
+typedef struct {
+    float frequency;    // Frequency in Hz
+    float phase;        // Phase accumulator (0.0 to 1.0)
+    bool is_active;     // Whether this oscillator is enabled
+} FrequencyOscillator;
+
 /*******************************************************************************
  * GLOBAL VARIABLES
  ******************************************************************************/
@@ -140,6 +147,13 @@ volatile bool buffer_ready = false;
 
 // FFT buffer for frequency domain analysis
 Complex fft_buffer[FFT_SIZE];
+
+// Multi-frequency synthesis parameters
+#define SYNTHESIS_RATE 100000  // 100 kHz synthesis update rate
+#define MAX_OSCILLATORS 5      // Maximum simultaneous frequencies
+
+// Array of frequency oscillators for synthesis
+FrequencyOscillator oscillators[MAX_OSCILLATORS];
 
 /*******************************************************************************
  * FAST FOURIER TRANSFORM (FFT) IMPLEMENTATION
@@ -310,116 +324,78 @@ void initTimer_ADC(void) {
 }
 
 /**
- * @brief Initialize TIM1 Channel 2 for PWM output on PA9
+ * @brief TIM15 ISR - Multi-frequency synthesis via phase accumulator
  *
- * CONFIGURATION:
- *   Timer: TIM1 (Advanced Control Timer)
- *   Channel: Channel 2 (TIM1_CH2)
- *   Pin: PA9 (Alternate Function 1)
- *   Mode: PWM Mode 1 (active when CNT < CCR2)
- *   Duty Cycle: 50% (square wave)
+ * OPERATION:
+ *   - Called at SYNTHESIS_RATE (100 kHz)
+ *   - Updates phase accumulator for each active oscillator
+ *   - OR's all oscillator outputs together
+ *   - Writes result to PA9 (SQUARE_OUT_PIN)
  *
- * CLOCK CALCULATION:
- *   TIM1 is on APB2 bus (80 MHz at full speed)
- *   Prescaler can be adjusted for different frequency ranges
- *   Frequency = TIM1_CLK / (PSC+1) / (ARR+1)
+ * PHASE ACCUMULATOR:
+ *   phase += frequency / SYNTHESIS_RATE
+ *   When phase >= 1.0, wrap to phase - 1.0
+ *   Output HIGH when phase < 0.5 (50% duty cycle)
  */
-void initTIM1_PWM(void) {
-    // Enable TIM1 clock (APB2 bus)
-    RCC->APB2ENR |= (1 << 11);  // TIM1EN
+void TIM1_BRK_TIM15_IRQHandler(void) {
+    if (TIM15->SR & (1 << 0)) {  // UIF - Update Interrupt Flag
+        TIM15->SR &= ~(1 << 0);   // Clear flag
 
-    // Configure PA9 as Alternate Function (TIM1_CH2 = AF1)
-    // PA9 is currently set as GPIO_OUTPUT, need to change to AF mode
-    GPIOA->MODER &= ~(0x3 << (LED_PIN * 2));      // Clear mode bits for PA9
-    GPIOA->MODER |= (0x2 << (LED_PIN * 2));       // Set to AF mode (10)
+        bool output_state = false;
 
-    // Set alternate function to AF1 (TIM1_CH2) in AFRH register
-    // PA9 is bit [7:4] in AFRH (pins 8-15)
-    GPIOA->AFRH &= ~(0xF << ((LED_PIN - 8) * 4)); // Clear AF bits
-    GPIOA->AFRH |= (0x1 << ((LED_PIN - 8) * 4));  // Set to AF1 (TIM1)
+        // Update all oscillators and OR their outputs
+        for (int i = 0; i < MAX_OSCILLATORS; i++) {
+            if (oscillators[i].is_active) {
+                // Increment phase accumulator
+                oscillators[i].phase += oscillators[i].frequency / SYNTHESIS_RATE;
 
-    // Configure TIM1 for PWM
-    // Use a base prescaler for flexibility (can be adjusted per frequency)
-    TIM1->PSC = 0;          // No prescaler initially (80 MHz timer clock)
-    TIM1->ARR = 1000 - 1;   // Default period (will be set dynamically)
+                // Wrap phase (0.0 to 1.0)
+                if (oscillators[i].phase >= 1.0f) {
+                    oscillators[i].phase -= 1.0f;
+                }
 
-    // Configure Channel 2 for PWM Mode 1
-    // OC2M bits [6:4] in CCMR1 = 0110 (PWM mode 1)
-    TIM1->CCMR1 &= ~(0x7 << 12);  // Clear OC2M bits
-    TIM1->CCMR1 |= (0x6 << 12);   // PWM mode 1
+                // Check if this oscillator is in high state (50% duty cycle)
+                if (oscillators[i].phase < 0.5f) {
+                    output_state = true;  // OR together
+                }
+            }
+        }
 
-    // Enable output compare preload for Channel 2
-    TIM1->CCMR1 |= (1 << 11);     // OC2PE = 1
-
-    // Enable auto-reload preload
-    TIM1->CR1 |= (1 << 7);        // ARPE = 1
-
-    // Set 50% duty cycle
-    TIM1->CCR2 = 500;             // 50% of ARR (will be updated dynamically)
-
-    // Enable Channel 2 output
-    TIM1->CCER |= (1 << 4);       // CC2E = 1 (enable CH2 output)
-
-    // Main output enable (required for TIM1 as advanced timer)
-    TIM1->BDTR |= (1 << 15);      // MOE = 1
-
-    // Initialize registers
-    TIM1->EGR |= (1 << 0);        // UG = 1 (update generation)
-
-    // Timer will be enabled when frequency is set
-    // TIM1->CR1 |= (1 << 0);     // Uncomment to enable now
+        // Update GPIO
+        digitalWrite(LED_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+    }
 }
 
 /**
- * @brief Set TIM1 PWM frequency dynamically
+ * @brief Initialize TIM15 for multi-frequency synthesis
  *
- * @param freq_hz Desired output frequency in Hz (20 - 2000 Hz)
+ * CONFIGURATION:
+ *   Timer: TIM15 (APB2 bus, 80 MHz)
+ *   Update Rate: 100 kHz (SYNTHESIS_RATE)
+ *   Mode: Interrupt-driven phase accumulator synthesis
  *
  * CALCULATION:
- *   TIM1_CLK = 80 MHz (APB2)
- *   For good resolution, use prescaler to get ~100 kHz - 1 MHz counter
- *
- * STRATEGY:
- *   - For 20-100 Hz: PSC=799 → 100 kHz timer, ARR = 100000/freq
- *   - For 100-1000 Hz: PSC=79 → 1 MHz timer, ARR = 1000000/freq
- *   - For 1000-2000 Hz: PSC=39 → 2 MHz timer, ARR = 2000000/freq
+ *   TIM15_CLK = 80 MHz
+ *   PSC = 0 (no prescaler)
+ *   ARR = 800 - 1 = 799
+ *   Update Rate = 80 MHz / 800 = 100 kHz
  */
-void setTIM1Frequency(float freq_hz) {
-    if (freq_hz < 20.0f) {
-        // Frequency too low, turn off PWM
-        TIM1->CR1 &= ~(1 << 0);  // Disable timer
-        return;
-    }
+void initTIM15_Synthesis(void) {
+    // Enable TIM15 clock (APB2 bus)
+    RCC->APB2ENR |= (1 << 16);  // TIM15EN
 
-    uint32_t psc, arr;
+    // Configure for 100 kHz interrupt rate
+    TIM15->PSC = 0;             // No prescaler (80 MHz timer clock)
+    TIM15->ARR = 800 - 1;       // 80 MHz / 800 = 100 kHz
 
-    if (freq_hz < 100.0f) {
-        // Low frequency: 20-100 Hz
-        // PSC = 799 → Timer clock = 80 MHz / 800 = 100 kHz
-        psc = 799;
-        arr = (uint32_t)(100000.0f / freq_hz) - 1;
-    } else if (freq_hz < 1000.0f) {
-        // Mid frequency: 100-1000 Hz
-        // PSC = 79 → Timer clock = 80 MHz / 80 = 1 MHz
-        psc = 79;
-        arr = (uint32_t)(1000000.0f / freq_hz) - 1;
-    } else {
-        // High frequency: 1000-2000 Hz
-        // PSC = 39 → Timer clock = 80 MHz / 40 = 2 MHz
-        psc = 39;
-        arr = (uint32_t)(2000000.0f / freq_hz) - 1;
-    }
+    // Enable update interrupt
+    TIM15->DIER |= (1 << 0);    // UIE = 1
 
-    // Update timer configuration
-    TIM1->PSC = psc;
-    TIM1->ARR = arr;
-    TIM1->CCR2 = arr / 2;  // 50% duty cycle
+    // Enable TIM15 interrupt in NVIC (TIM1_BRK_TIM15_IRQn = 24)
+    NVIC->ISER[0] |= (1 << 24);
 
-    // Force update to load new values
-    TIM1->EGR |= (1 << 0);  // UG = 1
-
-    // Enable timer
-    TIM1->CR1 |= (1 << 0);  // CEN = 1
+    // Start timer
+    TIM15->CR1 |= (1 << 0);     // CEN = 1
 }
 
 
@@ -561,54 +537,45 @@ int main(void) {
     printf("========================================\n\n");
 
     // =========================================================================
-    // TEMPORARY TEST: Simulate FFT output with 5 Hz square wave
+    // TEMPORARY TEST: 5 Hz synthesis using TIM15 phase accumulator
     // =========================================================================
-    // This test simulates the FFT detecting a frequency and uses the actual
-    // LED control logic (threshold checking). Alternates between:
-    //   - "320 Hz detected" (above threshold) → LED ON
-    //   - "0 Hz detected" (below threshold) → LED OFF
-    // Result: 5 Hz square wave on LED (same as musical note detection)
+    // This tests the multi-frequency synthesis engine that will be used in
+    // the final Tesla coil application. Manually sets oscillator[0] = 5 Hz
+    // to verify phase accumulator and GPIO output are working correctly.
+    //
+    // Expected: PA9 outputs 5 Hz square wave (50% duty cycle)
+    // Measure: Use oscilloscope or visually observe LED (5 Hz is visible)
     // =========================================================================
-    printf("***** TEMPORARY TEST MODE: FFT Output Simulation *****\n");
-    printf("Simulating FFT detection of 5 Hz square wave pattern\n");
-    printf("Alternating: 320 Hz detected → 0 Hz detected → repeat\n");
-    printf("LED should produce 5 Hz square wave (~100ms ON, ~100ms OFF)\n\n");
+    printf("***** TEMPORARY TEST MODE: 5 Hz Synthesis *****\n");
+    printf("Testing phase accumulator synthesis engine\n");
+    printf("Oscillator[0] frequency: 5 Hz\n");
+    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
+    printf("Expected output: 5 Hz square wave on PA9\n");
+    printf("Visual: LED should blink ~5 times per second\n\n");
 
-    uint32_t toggle_counter = 0;
-    const uint32_t TOGGLE_PERIOD = 3;  // Every 3 DMA interrupts = ~100ms at 31 Hz
-    bool freq_detected = false;
-    uint32_t interrupt_count = 0;
+    // Initialize all oscillators to inactive
+    for (int i = 0; i < MAX_OSCILLATORS; i++) {
+        oscillators[i].frequency = 0.0f;
+        oscillators[i].phase = 0.0f;
+        oscillators[i].is_active = false;
+    }
 
-    // Main processing loop
+    // Set oscillator 0 to 5 Hz (manually, not from FFT)
+    oscillators[0].frequency = 5.0f;
+    oscillators[0].phase = 0.0f;
+    oscillators[0].is_active = true;
+
+    printf("Oscillator initialized. Starting TIM15 synthesis...\n\n");
+
+    // Start synthesis timer (TIM15 interrupt at 100 kHz)
+    initTIM15_Synthesis();
+
+    // Main loop - synthesis happens in TIM15 ISR
+    // ADC/DMA still runs but we don't process FFT yet
     while(1) {
-        // Wait for DMA interrupt to signal buffer is full
-        if (buffer_ready) {
-            buffer_ready = false;  // Clear flag
-            interrupt_count++;
-
-            // Print interrupt rate every 10 interrupts for diagnostics
-            if (interrupt_count % 10 == 0) {
-                printf("=== DMA Interrupt Count: %u (Expected rate: 31 Hz) ===\n",
-                       (unsigned int)interrupt_count);
-            }
-
-            // Alternate between frequency detected and not detected every ~100ms
-            toggle_counter++;
-            if (toggle_counter >= TOGGLE_PERIOD) {
-                toggle_counter = 0;
-                freq_detected = !freq_detected;
-
-                // Only print when we toggle to reduce UART traffic
-                if (freq_detected) {
-                    printf(">>> TOGGLE: Simulated 320 Hz detected -> LED ON\n");
-                    digitalWrite(LED_PIN, GPIO_HIGH);
-                } else {
-                    printf(">>> TOGGLE: No frequency detected -> LED OFF\n");
-                    digitalWrite(LED_PIN, GPIO_LOW);
-                }
-            }
-        }  // End if (buffer_ready)
-    }  // End while(1)
+        // Just wait - synthesis is interrupt-driven
+        // Could add diagnostic prints here if needed
+    }
 
     // ORIGINAL FFT CODE BELOW - Currently bypassed by DMA test above
     // Uncomment when DMA interrupt and PA9 output verified working
