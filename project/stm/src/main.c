@@ -53,12 +53,15 @@
 #define SAMPLE_RATE     8000    // Sampling frequency in Hz
 
 // Detection Thresholds
-#define FREQ_THRESHOLD  100.0f  // Minimum frequency to trigger LED (Hz)
-#define MAG_THRESHOLD   10.0f   // Minimum absolute magnitude to avoid noise
+#define FREQ_THRESHOLD      100.0f   // Minimum frequency (Hz) - set to 150 for musical range
+#define MAX_FREQ_THRESHOLD  2000.0f  // Maximum frequency (Hz) - filters out high harmonics
+#define MAG_THRESHOLD       10.0f    // Minimum absolute magnitude to avoid noise
 #define RELATIVE_MAG_THRESHOLD 0.5f  // Min magnitude relative to strongest (0.0-1.0)
                                       // Higher = fewer frequencies (stricter)
                                       // Lower = more frequencies (allows harmonics)
                                       // Recommended: 0.5-0.7 for music
+// Useful frequency range for music: 150 Hz - 2000 Hz
+// 150 Hz ≈ D3, 2000 Hz ≈ B6 (covers most musical instruments)
 
 // ============================================================================
 // ADC TRIGGER CONFIGURATION - CHANGE THIS TO TEST DIFFERENT TRIGGER SOURCES
@@ -621,8 +624,12 @@ int main(void) {
                 // Convert bin to frequency
                 float freq = (float)max_bin * SAMPLE_RATE / FFT_SIZE;
 
-                // Check if this frequency is valid (above both absolute AND relative thresholds)
+                // Check if this frequency is valid:
+                // 1. Within frequency range (FREQ_THRESHOLD < freq < MAX_FREQ_THRESHOLD)
+                // 2. Above absolute magnitude threshold (MAG_THRESHOLD)
+                // 3. Above relative magnitude threshold (relative_cutoff)
                 if (freq > FREQ_THRESHOLD &&
+                    freq < MAX_FREQ_THRESHOLD &&
                     max_mag > MAG_THRESHOLD &&
                     max_mag > relative_cutoff) {
 
@@ -637,7 +644,8 @@ int main(void) {
                     // Mark this bin as used (set magnitude to 0)
                     magnitudes[max_bin] = 0.0f;
                 } else {
-                    // No more valid frequencies - deactivate remaining oscillators
+                    // Frequency rejected (out of range, too weak, or harmonic)
+                    // Deactivate this oscillator
                     oscillators[n].is_active = false;
                 }
             }
