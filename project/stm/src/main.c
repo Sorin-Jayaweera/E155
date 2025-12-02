@@ -396,12 +396,39 @@ int main(void) {
     printf("\nLED ON: Frequency > %.0f Hz\n", FREQ_THRESHOLD);
     printf("LED OFF: Frequency < %.0f Hz\n\n", FREQ_THRESHOLD);
 
+    // =========================================================================
+    // TEMPORARY TEST: 5 Hz output toggle to verify PA9 is driving properly
+    // =========================================================================
+    // This bypasses FFT and just toggles PA9 at 5 Hz to test output path.
+    // If LED blinks at 5 Hz (200ms period), PA9 output is working correctly.
+    // TODO: Remove this test once PA9 output is verified working!
+    // =========================================================================
+    printf("***** TEMPORARY TEST MODE *****\n");
+    printf("Toggling PA9 at 5 Hz (ignoring FFT)\n");
+    printf("LED should blink visibly (100ms ON, 100ms OFF)\n\n");
+
+    uint32_t toggle_counter = 0;
+    const uint32_t TOGGLE_PERIOD = 31;  // ~3.1 updates = ~100ms at 31 Hz update rate
+    bool led_state = false;
+
     // Main processing loop
     while(1) {
         // Wait for DMA interrupt to signal buffer is full
         if (buffer_ready) {
             buffer_ready = false;  // Clear flag
 
+            // TEMPORARY: Toggle PA9 at 5 Hz for testing
+            toggle_counter++;
+            if (toggle_counter >= TOGGLE_PERIOD) {
+                toggle_counter = 0;
+                led_state = !led_state;
+                digitalWrite(LED_PIN, led_state ? GPIO_HIGH : GPIO_LOW);
+                printf("PA9 toggled: %s\n", led_state ? "HIGH" : "LOW");
+            }
+
+            // ORIGINAL CODE BELOW - Currently bypassed by test above
+            // Uncomment when PA9 output is verified working
+            /*
             // STEP 1: Convert ADC samples to normalized complex numbers
             // ADC range: 0-4095 (12-bit)
             // Normalize to: -1.0 to +1.0 (centered at 2048 = 1.65V)
@@ -448,6 +475,8 @@ int main(void) {
                 digitalWrite(LED_PIN, GPIO_LOW);
                 // No print for OFF state to reduce UART traffic
             }
+            */
+            // END TEMPORARY COMMENT - Uncomment above to re-enable FFT
         }
     }
 
