@@ -535,21 +535,23 @@ int main(void) {
     printf("========================================\n\n");
 
     // =========================================================================
-    // TEMPORARY TEST: 5 Hz synthesis using TIM15 phase accumulator
     // =========================================================================
-    // This tests the multi-frequency synthesis engine that will be used in
-    // the final Tesla coil application. Manually sets oscillator[0] = 5 Hz
-    // to verify phase accumulator and GPIO output are working correctly.
+    // FFT-BASED FREQUENCY SYNTHESIS TEST
+    // =========================================================================
+    // Full pipeline test: ADC input → FFT → Frequency detection → Synthesis
     //
-    // Expected: PA9 outputs 5 Hz square wave (50% duty cycle)
-    // Measure: Use oscilloscope or visually observe LED (5 Hz is visible)
+    // Test procedure:
+    //   1. Feed sine wave into PA6 (e.g., 50 Hz, 320 Hz, 1000 Hz)
+    //   2. FFT detects dominant frequency
+    //   3. PA9 outputs square wave at detected frequency
+    //
+    // Expected: Input frequency = Output frequency
     // =========================================================================
-    printf("***** TEMPORARY TEST MODE: 5 Hz Synthesis *****\n");
-    printf("Testing phase accumulator synthesis engine\n");
-    printf("Oscillator[0] frequency: 5 Hz\n");
-    printf("Synthesis rate: %d Hz\n", SYNTHESIS_RATE);
-    printf("Expected output: 5 Hz square wave on PA9\n");
-    printf("Visual: LED should blink ~5 times per second\n\n");
+    printf("***** FFT-BASED FREQUENCY SYNTHESIS TEST *****\n");
+    printf("Feed sine wave into PA6 (A5)\n");
+    printf("PA9 will output square wave at detected frequency\n");
+    printf("Frequency range: 20 Hz - 2000 Hz\n");
+    printf("Update rate: ~31 Hz (every 256 samples)\n\n");
 
     // Initialize all oscillators to inactive
     for (int i = 0; i < MAX_OSCILLATORS; i++) {
@@ -558,50 +560,32 @@ int main(void) {
         oscillators[i].is_active = false;
     }
 
-    // Set oscillator 0 to 5 Hz (manually, not from FFT)
-    oscillators[0].frequency = 5.0f;
-    oscillators[0].phase = 0.0f;
-    oscillators[0].is_active = true;
-
-    printf("Oscillator initialized. Starting TIM15 synthesis...\n\n");
-
-    // Start synthesis timer (TIM15 interrupt at 100 kHz)
+    printf("Starting TIM15 synthesis engine...\n");
     initTIM15_Synthesis();
 
-    // Main loop - synthesis happens in TIM15 ISR
-    // ADC/DMA still runs but we don't process FFT yet
-    while(1) {
-        // Just wait - synthesis is interrupt-driven
-        // Could add diagnostic prints here if needed
-    }
+    printf("Starting FFT processing loop...\n");
+    printf("Waiting for audio input...\n\n");
 
-    // ORIGINAL FFT CODE BELOW - Currently bypassed by DMA test above
-    // Uncomment when DMA interrupt and PA9 output verified working
-    /*
-    // Main processing loop
+    // Main processing loop: FFT → Synthesis
     while(1) {
         if (buffer_ready) {
             buffer_ready = false;
+
             // STEP 1: Convert ADC samples to normalized complex numbers
-            // ADC range: 0-4095 (12-bit)
-            // Normalize to: -1.0 to +1.0 (centered at 2048 = 1.65V)
             for (int i = 0; i < FFT_SIZE; i++) {
                 fft_buffer[i].real = ((float)adc_buffer[i] - 2048.0f) / 2048.0f;
-                fft_buffer[i].imag = 0.0f;  // No imaginary component (real signal)
+                fft_buffer[i].imag = 0.0f;
             }
 
             // STEP 2: Perform FFT
-            // Transforms time domain samples → frequency domain components
             fft_compute(fft_buffer, FFT_SIZE);
 
             // STEP 3: Find dominant frequency
-            // Calculate magnitude for each frequency bin and find maximum
             float max_mag = 0.0f;
             int max_bin = 0;
 
             // Only check bins 1 to FFT_SIZE/2 (skip DC, use Nyquist limit)
             for (int i = 1; i < FFT_SIZE / 2; i++) {
-                // Magnitude = sqrt(real² + imag²)
                 float real = fft_buffer[i].real;
                 float imag = fft_buffer[i].imag;
                 float mag = sqrtf(real * real + imag * imag);
@@ -613,24 +597,21 @@ int main(void) {
             }
 
             // Convert bin number to frequency in Hz
-            // Frequency = bin_number × (SAMPLE_RATE / FFT_SIZE)
             float freq = (float)max_bin * SAMPLE_RATE / FFT_SIZE;
 
-            // STEP 4: LED Control Logic
-            // Turn ON if:
-            //   - Frequency > 100 Hz (avoid DC and low-frequency noise)
-            //   - Magnitude > 10.0 (avoid background noise)
+            // STEP 4: Update synthesis oscillator
             if (freq > FREQ_THRESHOLD && max_mag > MAG_THRESHOLD) {
-                digitalWrite(LED_PIN, GPIO_HIGH);
-                printf("Detected: %d Hz (Mag: %d) -> LED ON\n",
-                       (int)freq, (int)max_mag);
-            } else {
-                digitalWrite(LED_PIN, GPIO_LOW);
-                // No print for OFF state to reduce UART traffic
-            }
-            */
-            // END TEMPORARY COMMENT - Uncomment above to re-enable FFT
+                // Valid frequency detected - update oscillator
+                oscillators[0].frequency = freq;
+                oscillators[0].phase = 0.0f;  // Reset phase for clean start
+                oscillators[0].is_active = true;
 
-    // Unreachable code (while loop above is infinite)
-    return 0;
-}
+                printf("Detected: %.1f Hz (Mag: %.1f) -> Square wave ON\n", freq, max_mag);
+            } else {
+                // No valid frequency - turn off oscillator
+                oscillators[0].is_active = false;
+                // Don't print every time to reduce UART spam
+            }
+        }
+    }
+}  // End main()
