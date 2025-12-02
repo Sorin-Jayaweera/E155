@@ -397,16 +397,47 @@ int main(void) {
     printf("LED OFF: Frequency < %.0f Hz\n\n", FREQ_THRESHOLD);
 
     // =========================================================================
-    // TEMPORARY TEST: 5 Hz output toggle to verify PA9 is driving properly
+    // TEMPORARY TEST: Simple GPIO toggle (no DMA dependency)
     // =========================================================================
-    // This bypasses FFT and just toggles PA9 at 5 Hz to test output path.
-    // If LED blinks at 5 Hz (200ms period), PA9 output is working correctly.
-    // TODO: Remove this test once PA9 output is verified working!
+    // This bypasses DMA/FFT entirely and just toggles PA9 in a simple loop.
+    // Tests if PA9 can be controlled as GPIO at all.
     // =========================================================================
     printf("***** TEMPORARY TEST MODE *****\n");
-    printf("Toggling PA9 at 5 Hz (ignoring FFT)\n");
-    printf("LED should blink visibly (100ms ON, 100ms OFF)\n\n");
+    printf("Testing PA9 GPIO output (bypassing DMA/FFT)\n");
+    printf("LED should blink at ~1 Hz\n\n");
 
+    // Check GPIO configuration
+    printf("GPIO Debug:\n");
+    printf("  GPIOA->MODER[PA9]: 0x%lx (should be 0x1 for output)\n",
+           (GPIOA->MODER >> (LED_PIN * 2)) & 0x3);
+    printf("  GPIOA->OTYPER[PA9]: 0x%lx (should be 0x0 for push-pull)\n",
+           (GPIOA->OTYPER >> LED_PIN) & 0x1);
+    printf("  GPIOA->AFR[PA9]: 0x%lx (should be 0x0 for GPIO, not alternate)\n\n",
+           (GPIOA->AFR[1] >> ((LED_PIN - 8) * 4)) & 0xF);
+
+    // Simple toggle loop (no DMA dependency)
+    while(1) {
+        printf("Setting PA9 HIGH\n");
+        digitalWrite(LED_PIN, GPIO_HIGH);
+
+        // Read back the ODR to verify it was set
+        printf("  GPIOA->ODR[PA9] = %lu\n", (GPIOA->ODR >> LED_PIN) & 0x1);
+
+        // Delay ~500ms
+        for (volatile int i = 0; i < 40000000; i++);
+
+        printf("Setting PA9 LOW\n");
+        digitalWrite(LED_PIN, GPIO_LOW);
+
+        // Read back the ODR to verify it was cleared
+        printf("  GPIOA->ODR[PA9] = %lu\n\n", (GPIOA->ODR >> LED_PIN) & 0x1);
+
+        // Delay ~500ms
+        for (volatile int i = 0; i < 40000000; i++);
+    }
+
+    // OLD DMA-DEPENDENT CODE (commented out)
+    /*
     uint32_t toggle_counter = 0;
     const uint32_t TOGGLE_PERIOD = 31;  // ~3.1 updates = ~100ms at 31 Hz update rate
     bool led_state = false;
@@ -425,6 +456,7 @@ int main(void) {
                 digitalWrite(LED_PIN, led_state ? GPIO_HIGH : GPIO_LOW);
                 printf("PA9 toggled: %s\n", led_state ? "HIGH" : "LOW");
             }
+    */
 
             // ORIGINAL CODE BELOW - Currently bypassed by test above
             // Uncomment when PA9 output is verified working
