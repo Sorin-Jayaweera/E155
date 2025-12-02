@@ -306,6 +306,120 @@ void initTimer_ADC(void) {
 }
 
 /**
+ * @brief Initialize TIM1 Channel 2 for PWM output on PA9
+ *
+ * CONFIGURATION:
+ *   Timer: TIM1 (Advanced Control Timer)
+ *   Channel: Channel 2 (TIM1_CH2)
+ *   Pin: PA9 (Alternate Function 1)
+ *   Mode: PWM Mode 1 (active when CNT < CCR2)
+ *   Duty Cycle: 50% (square wave)
+ *
+ * CLOCK CALCULATION:
+ *   TIM1 is on APB2 bus (80 MHz at full speed)
+ *   Prescaler can be adjusted for different frequency ranges
+ *   Frequency = TIM1_CLK / (PSC+1) / (ARR+1)
+ */
+void initTIM1_PWM(void) {
+    // Enable TIM1 clock (APB2 bus)
+    RCC->APB2ENR |= (1 << 11);  // TIM1EN
+
+    // Configure PA9 as Alternate Function (TIM1_CH2 = AF1)
+    // PA9 is currently set as GPIO_OUTPUT, need to change to AF mode
+    GPIOA->MODER &= ~(0x3 << (LED_PIN * 2));      // Clear mode bits for PA9
+    GPIOA->MODER |= (0x2 << (LED_PIN * 2));       // Set to AF mode (10)
+
+    // Set alternate function to AF1 (TIM1_CH2) in AFRH register
+    // PA9 is bit [7:4] in AFRH (pins 8-15)
+    GPIOA->AFRH &= ~(0xF << ((LED_PIN - 8) * 4)); // Clear AF bits
+    GPIOA->AFRH |= (0x1 << ((LED_PIN - 8) * 4));  // Set to AF1 (TIM1)
+
+    // Configure TIM1 for PWM
+    // Use a base prescaler for flexibility (can be adjusted per frequency)
+    TIM1->PSC = 0;          // No prescaler initially (80 MHz timer clock)
+    TIM1->ARR = 1000 - 1;   // Default period (will be set dynamically)
+
+    // Configure Channel 2 for PWM Mode 1
+    // OC2M bits [6:4] in CCMR1 = 0110 (PWM mode 1)
+    TIM1->CCMR1 &= ~(0x7 << 12);  // Clear OC2M bits
+    TIM1->CCMR1 |= (0x6 << 12);   // PWM mode 1
+
+    // Enable output compare preload for Channel 2
+    TIM1->CCMR1 |= (1 << 11);     // OC2PE = 1
+
+    // Enable auto-reload preload
+    TIM1->CR1 |= (1 << 7);        // ARPE = 1
+
+    // Set 50% duty cycle
+    TIM1->CCR2 = 500;             // 50% of ARR (will be updated dynamically)
+
+    // Enable Channel 2 output
+    TIM1->CCER |= (1 << 4);       // CC2E = 1 (enable CH2 output)
+
+    // Main output enable (required for TIM1 as advanced timer)
+    TIM1->BDTR |= (1 << 15);      // MOE = 1
+
+    // Initialize registers
+    TIM1->EGR |= (1 << 0);        // UG = 1 (update generation)
+
+    // Timer will be enabled when frequency is set
+    // TIM1->CR1 |= (1 << 0);     // Uncomment to enable now
+}
+
+/**
+ * @brief Set TIM1 PWM frequency dynamically
+ *
+ * @param freq_hz Desired output frequency in Hz (20 - 2000 Hz)
+ *
+ * CALCULATION:
+ *   TIM1_CLK = 80 MHz (APB2)
+ *   For good resolution, use prescaler to get ~100 kHz - 1 MHz counter
+ *
+ * STRATEGY:
+ *   - For 20-100 Hz: PSC=799 → 100 kHz timer, ARR = 100000/freq
+ *   - For 100-1000 Hz: PSC=79 → 1 MHz timer, ARR = 1000000/freq
+ *   - For 1000-2000 Hz: PSC=39 → 2 MHz timer, ARR = 2000000/freq
+ */
+void setTIM1Frequency(float freq_hz) {
+    if (freq_hz < 20.0f) {
+        // Frequency too low, turn off PWM
+        TIM1->CR1 &= ~(1 << 0);  // Disable timer
+        return;
+    }
+
+    uint32_t psc, arr;
+
+    if (freq_hz < 100.0f) {
+        // Low frequency: 20-100 Hz
+        // PSC = 799 → Timer clock = 80 MHz / 800 = 100 kHz
+        psc = 799;
+        arr = (uint32_t)(100000.0f / freq_hz) - 1;
+    } else if (freq_hz < 1000.0f) {
+        // Mid frequency: 100-1000 Hz
+        // PSC = 79 → Timer clock = 80 MHz / 80 = 1 MHz
+        psc = 79;
+        arr = (uint32_t)(1000000.0f / freq_hz) - 1;
+    } else {
+        // High frequency: 1000-2000 Hz
+        // PSC = 39 → Timer clock = 80 MHz / 40 = 2 MHz
+        psc = 39;
+        arr = (uint32_t)(2000000.0f / freq_hz) - 1;
+    }
+
+    // Update timer configuration
+    TIM1->PSC = psc;
+    TIM1->ARR = arr;
+    TIM1->CCR2 = arr / 2;  // 50% duty cycle
+
+    // Force update to load new values
+    TIM1->EGR |= (1 << 0);  // UG = 1
+
+    // Enable timer
+    TIM1->CR1 |= (1 << 0);  // CEN = 1
+}
+
+
+/**
  * @brief Initialize ADC and DMA for continuous sampling
  *
  * ADC CONFIGURATION:
