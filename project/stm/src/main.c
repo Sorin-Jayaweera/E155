@@ -54,7 +54,11 @@
 
 // Detection Thresholds
 #define FREQ_THRESHOLD  100.0f  // Minimum frequency to trigger LED (Hz)
-#define MAG_THRESHOLD   10.0f   // Minimum magnitude to avoid noise
+#define MAG_THRESHOLD   10.0f   // Minimum absolute magnitude to avoid noise
+#define RELATIVE_MAG_THRESHOLD 0.5f  // Min magnitude relative to strongest (0.0-1.0)
+                                      // Higher = fewer frequencies (stricter)
+                                      // Lower = more frequencies (allows harmonics)
+                                      // Recommended: 0.5-0.7 for music
 
 // ============================================================================
 // ADC TRIGGER CONFIGURATION - CHANGE THIS TO TEST DIFFERENT TRIGGER SOURCES
@@ -589,7 +593,18 @@ int main(void) {
                 magnitudes[i] = sqrtf(real * real + imag * imag);
             }
 
-            // STEP 4: Find top N_FREQ frequencies (iterative max search)
+            // STEP 4: Find global maximum to set relative threshold
+            float global_max_mag = 0.0f;
+            for (int i = 1; i < FFT_SIZE / 2; i++) {
+                if (magnitudes[i] > global_max_mag) {
+                    global_max_mag = magnitudes[i];
+                }
+            }
+
+            // Calculate relative magnitude cutoff
+            float relative_cutoff = global_max_mag * RELATIVE_MAG_THRESHOLD;
+
+            // STEP 5: Find top N_FREQ frequencies with relative magnitude filtering
             int active_count = 0;
             for (int n = 0; n < N_FREQ; n++) {
                 // Find the bin with maximum magnitude (that hasn't been used)
@@ -606,8 +621,11 @@ int main(void) {
                 // Convert bin to frequency
                 float freq = (float)max_bin * SAMPLE_RATE / FFT_SIZE;
 
-                // Check if this frequency is valid (above thresholds)
-                if (freq > FREQ_THRESHOLD && max_mag > MAG_THRESHOLD) {
+                // Check if this frequency is valid (above both absolute AND relative thresholds)
+                if (freq > FREQ_THRESHOLD &&
+                    max_mag > MAG_THRESHOLD &&
+                    max_mag > relative_cutoff) {
+
                     // Valid frequency - add to oscillator array
                     oscillators[n].frequency = freq;
                     oscillators[n].phase = 0.0f;
@@ -626,7 +644,8 @@ int main(void) {
 
             // Print summary
             if (active_count > 0) {
-                printf("  -> %d frequencies active\n", active_count);
+                printf("  -> %d/%d active (cutoff: %.1f)\n",
+                       active_count, N_FREQ, relative_cutoff);
             } else {
                 // All oscillators inactive - no output
             }
