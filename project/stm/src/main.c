@@ -197,8 +197,9 @@ void fft_compute(Complex* data, int n) {
 void DMA1_Channel1_IRQHandler(void) {
     // Check if Transfer Complete flag is set (TCIF1, bit 1)
     if (DMA1->ISR & (1 << 1)) {
-        // Clear the flag by writing 1 to CTCIF1 (bit 1)
-        DMA1->IFCR |= (1 << 1);
+        // Clear ALL Channel 1 flags (GIF1, TCIF1, HTIF1, TEIF1) to prevent infinite loop
+        // Bits 0-3: CGIF1, CTCIF1, CHTIF1, CTEIF1
+        DMA1->IFCR |= (0xF << 0);
 
         // Signal main loop that buffer is ready for FFT processing
         buffer_ready = true;
