@@ -415,8 +415,13 @@ void initADC_DMA(void) {
  *   Bin 128: 4000 Hz (Nyquist limit)
  */
 int main(void) {
+    // Configure system clock to 80 MHz using PLL
+    // CRITICAL: Must be called FIRST before any peripheral initialization!
+    // Without this, system runs on 4 MHz MSI clock (20x slower)
+    configureClock();
+
     // Initialize all hardware subsystems
-    initSystem();        // Clocks, GPIO, FPU
+    initSystem();        // GPIO, FPU (clock already configured above)
     initADC_DMA();       // ADC and DMA (MUST be before timer!)
     initTimer_ADC();     // TIM6 trigger at 8 kHz
 
