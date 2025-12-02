@@ -151,6 +151,7 @@ Complex fft_buffer[FFT_SIZE];
 // Multi-frequency synthesis parameters
 #define SYNTHESIS_RATE 100000  // 100 kHz synthesis update rate
 #define MAX_OSCILLATORS 5      // Maximum simultaneous frequencies
+#define N_FREQ 5               // Number of top frequencies to synthesize (CHANGE THIS!)
 
 // Array of frequency oscillators for synthesis
 FrequencyOscillator oscillators[MAX_OSCILLATORS];
@@ -580,37 +581,54 @@ int main(void) {
             // STEP 2: Perform FFT
             fft_compute(fft_buffer, FFT_SIZE);
 
-            // STEP 3: Find dominant frequency
-            float max_mag = 0.0f;
-            int max_bin = 0;
-
-            // Only check bins 1 to FFT_SIZE/2 (skip DC, use Nyquist limit)
+            // STEP 3: Calculate magnitude for all frequency bins
+            float magnitudes[FFT_SIZE / 2];
             for (int i = 1; i < FFT_SIZE / 2; i++) {
                 float real = fft_buffer[i].real;
                 float imag = fft_buffer[i].imag;
-                float mag = sqrtf(real * real + imag * imag);
+                magnitudes[i] = sqrtf(real * real + imag * imag);
+            }
 
-                if (mag > max_mag) {
-                    max_mag = mag;
-                    max_bin = i;
+            // STEP 4: Find top N_FREQ frequencies (iterative max search)
+            int active_count = 0;
+            for (int n = 0; n < N_FREQ; n++) {
+                // Find the bin with maximum magnitude (that hasn't been used)
+                float max_mag = 0.0f;
+                int max_bin = 0;
+
+                for (int i = 1; i < FFT_SIZE / 2; i++) {
+                    if (magnitudes[i] > max_mag) {
+                        max_mag = magnitudes[i];
+                        max_bin = i;
+                    }
+                }
+
+                // Convert bin to frequency
+                float freq = (float)max_bin * SAMPLE_RATE / FFT_SIZE;
+
+                // Check if this frequency is valid (above thresholds)
+                if (freq > FREQ_THRESHOLD && max_mag > MAG_THRESHOLD) {
+                    // Valid frequency - add to oscillator array
+                    oscillators[n].frequency = freq;
+                    oscillators[n].phase = 0.0f;
+                    oscillators[n].is_active = true;
+                    active_count++;
+
+                    printf("Osc[%d]: %.1f Hz (Mag: %.1f)\n", n, freq, max_mag);
+
+                    // Mark this bin as used (set magnitude to 0)
+                    magnitudes[max_bin] = 0.0f;
+                } else {
+                    // No more valid frequencies - deactivate remaining oscillators
+                    oscillators[n].is_active = false;
                 }
             }
 
-            // Convert bin number to frequency in Hz
-            float freq = (float)max_bin * SAMPLE_RATE / FFT_SIZE;
-
-            // STEP 4: Update synthesis oscillator
-            if (freq > FREQ_THRESHOLD && max_mag > MAG_THRESHOLD) {
-                // Valid frequency detected - update oscillator
-                oscillators[0].frequency = freq;
-                oscillators[0].phase = 0.0f;  // Reset phase for clean start
-                oscillators[0].is_active = true;
-
-                printf("Detected: %.1f Hz (Mag: %.1f) -> Square wave ON\n", freq, max_mag);
+            // Print summary
+            if (active_count > 0) {
+                printf("  -> %d frequencies active\n", active_count);
             } else {
-                // No valid frequency - turn off oscillator
-                oscillators[0].is_active = false;
-                // Don't print every time to reduce UART spam
+                // All oscillators inactive - no output
             }
         }
     }
