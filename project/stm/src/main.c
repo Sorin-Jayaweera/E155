@@ -397,70 +397,53 @@ int main(void) {
     printf("LED OFF: Frequency < %.0f Hz\n\n", FREQ_THRESHOLD);
 
     // =========================================================================
-    // TEMPORARY TEST: Simple GPIO toggle (no DMA dependency)
+    // TEMPORARY TEST: 5 Hz toggle via DMA interrupt
     // =========================================================================
-    // This bypasses DMA/FFT entirely and just toggles PA9 in a simple loop.
-    // Tests if PA9 can be controlled as GPIO at all.
+    // PA9 GPIO is verified working. Now test if DMA interrupt fires.
+    // Toggles LED at 5 Hz when buffer_ready flag is set by DMA interrupt.
+    // This tests: ADC → DMA → Interrupt → LED output pipeline
     // =========================================================================
-    printf("***** TEMPORARY TEST MODE *****\n");
-    printf("Testing PA9 GPIO output (bypassing DMA/FFT)\n");
-    printf("LED should blink at ~1 Hz\n\n");
+    printf("***** TEMPORARY TEST MODE: DMA Interrupt Test *****\n");
+    printf("Testing ADC/DMA/Timer pipeline with 5 Hz LED toggle\n");
+    printf("LED should blink at 5 Hz (~100ms ON, ~100ms OFF)\n");
+    printf("If LED doesn't blink: DMA interrupt not firing\n\n");
 
-    // Check GPIO configuration
-    printf("GPIO Debug:\n");
-    printf("  GPIOA->MODER[PA9]: 0x%x (should be 0x1 for output)\n",
-           (unsigned int)((GPIOA->MODER >> (LED_PIN * 2)) & 0x3));
-    printf("  GPIOA->OTYPER[PA9]: 0x%x (should be 0x0 for push-pull)\n",
-           (unsigned int)((GPIOA->OTYPER >> LED_PIN) & 0x1));
-    printf("  GPIOA->AFRH[PA9]: 0x%x (should be 0x0 for GPIO, not alternate)\n\n",
-           (unsigned int)((GPIOA->AFRH >> ((LED_PIN - 8) * 4)) & 0xF));
-
-    // Simple toggle loop (no DMA dependency)
-    while(1) {
-        printf("Setting PA9 HIGH\n");
-        digitalWrite(LED_PIN, GPIO_HIGH);
-
-        // Read back the ODR to verify it was set
-        printf("  GPIOA->ODR[PA9] = %u\n", (unsigned int)((GPIOA->ODR >> LED_PIN) & 0x1));
-
-        // Delay ~500ms
-        for (volatile int i = 0; i < 40000000; i++);
-
-        printf("Setting PA9 LOW\n");
-        digitalWrite(LED_PIN, GPIO_LOW);
-
-        // Read back the ODR to verify it was cleared
-        printf("  GPIOA->ODR[PA9] = %u\n\n", (unsigned int)((GPIOA->ODR >> LED_PIN) & 0x1));
-
-        // Delay ~500ms
-        for (volatile int i = 0; i < 40000000; i++);
-    }
-
-    // OLD DMA-DEPENDENT CODE (commented out)
-    /*
     uint32_t toggle_counter = 0;
-    const uint32_t TOGGLE_PERIOD = 31;  // ~3.1 updates = ~100ms at 31 Hz update rate
+    const uint32_t TOGGLE_PERIOD = 3;  // Every 3 DMA interrupts = ~100ms at 31 Hz
     bool led_state = false;
+    uint32_t interrupt_count = 0;
 
     // Main processing loop
     while(1) {
         // Wait for DMA interrupt to signal buffer is full
         if (buffer_ready) {
             buffer_ready = false;  // Clear flag
+            interrupt_count++;
 
-            // TEMPORARY: Toggle PA9 at 5 Hz for testing
+            // Print every 10 interrupts to verify DMA is working
+            if (interrupt_count % 10 == 0) {
+                printf("DMA interrupts: %u (rate: ~31 Hz)\n", (unsigned int)interrupt_count);
+            }
+
+            // Toggle PA9 at 5 Hz for testing
             toggle_counter++;
             if (toggle_counter >= TOGGLE_PERIOD) {
                 toggle_counter = 0;
                 led_state = !led_state;
                 digitalWrite(LED_PIN, led_state ? GPIO_HIGH : GPIO_LOW);
-                printf("PA9 toggled: %s\n", led_state ? "HIGH" : "LOW");
+                printf("PA9 toggled: %s (interrupts: %u)\n",
+                       led_state ? "HIGH" : "LOW", (unsigned int)interrupt_count);
             }
-    */
+        }  // End if (buffer_ready)
+    }  // End while(1)
 
-            // ORIGINAL CODE BELOW - Currently bypassed by test above
-            // Uncomment when PA9 output is verified working
-            /*
+    // ORIGINAL FFT CODE BELOW - Currently bypassed by DMA test above
+    // Uncomment when DMA interrupt and PA9 output verified working
+    /*
+    // Main processing loop
+    while(1) {
+        if (buffer_ready) {
+            buffer_ready = false;
             // STEP 1: Convert ADC samples to normalized complex numbers
             // ADC range: 0-4095 (12-bit)
             // Normalize to: -1.0 to +1.0 (centered at 2048 = 1.65V)
