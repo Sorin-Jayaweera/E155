@@ -1,29 +1,37 @@
 ---
-title: "Lab 4!"
+title: "Lab 6!"
 description: ""
 author: "Sorin Jayaweera"
-date: "8/27/2025"
+date: "10/22/2025"
 categories:
   - reflection
   - labreport
 draft: false
 ---
 
+Overview:
+The goal of this lab was to make an IOT device which could toggle an LED from a webserver, and could display temperature with a configurable resolution.
 
-## Introduction
+## Logic Analyzer
 
-## Design and Testing Methodology
+Spi sending resolution setting to 8 bits is displayed.
 
-## Technical Documentation
 
-### Block Diagram
+![](/images/lab6/spi_send.png)
 
-### Schematic
 
-## Results and Discussion
+## Schematic
 
-### Testbench Simulation
+![](/images/lab6/schematic.png)
 
-## Conclusion
 
-## AI overview
+Conclusion:
+This lab was not finished succesfully. While data is being read and sent to the temperature sensor, the sensor is not properly updating/communicating temperature information.
+
+The website does host the functionality desired.
+
+## AI Overview
+Claude made a fully functioning UI 
+![](/images/lab6/aiui.png)
+
+The code for SPI communications would not have worked however.

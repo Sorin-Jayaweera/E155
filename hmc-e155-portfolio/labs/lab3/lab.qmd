@@ -40,6 +40,7 @@ A single 7 segment driver is time multiplexed to drive two 7 segment displays, a
 ### State Machine Debounce Logic
 ![](/images/lab3/fsm.png) 
 
+![](/images/lab3/state_transition.png)
 
 ### Block Diagram
 ![](/images/lab3/block_diagram.png)
@@ -59,6 +60,7 @@ A testbench was constructed for every module.
 The device was constructed to hit each constraint - the keyboard has no debounce toggles and accepts user inputs, and the most recent two digits are displayed. The keypad will not accept any numbers that are pressed for the duration of another button.
 
 The debounce length chosen is somewhat lengthy, and may be reduced for optimization. 
+This method is easy to impliment and acts as a low pass filter to reduce noise from particularly bad buttons.
 
 Time spent: No clue, maybe ~ 15 hrs
 
