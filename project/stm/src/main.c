@@ -423,26 +423,26 @@ int main(void) {
             buffer_ready = false;  // Clear flag
             interrupt_count++;
 
+            // Print interrupt rate every 10 interrupts for diagnostics
+            if (interrupt_count % 10 == 0) {
+                printf("=== DMA Interrupt Count: %u (Expected rate: 31 Hz) ===\n",
+                       (unsigned int)interrupt_count);
+            }
+
             // Alternate between frequency detected and not detected every ~100ms
             toggle_counter++;
             if (toggle_counter >= TOGGLE_PERIOD) {
                 toggle_counter = 0;
                 freq_detected = !freq_detected;
-            }
 
-            // Simulate FFT output: manually set detected frequency and magnitude
-            float simulated_freq = freq_detected ? 320.0f : 0.0f;
-            float simulated_mag = freq_detected ? 20.0f : 0.0f;
-
-            // Use ACTUAL LED control logic from FFT code (test threshold behavior)
-            if (simulated_freq > FREQ_THRESHOLD && simulated_mag > MAG_THRESHOLD) {
-                digitalWrite(LED_PIN, GPIO_HIGH);
-                printf("Simulated FFT: %d Hz (Mag: %d) -> LED ON\n",
-                       (int)simulated_freq, (int)simulated_mag);
-            } else {
-                digitalWrite(LED_PIN, GPIO_LOW);
-                printf("Simulated FFT: %d Hz (Mag: %d) -> LED OFF\n",
-                       (int)simulated_freq, (int)simulated_mag);
+                // Only print when we toggle to reduce UART traffic
+                if (freq_detected) {
+                    printf(">>> TOGGLE: Simulated 320 Hz detected -> LED ON\n");
+                    digitalWrite(LED_PIN, GPIO_HIGH);
+                } else {
+                    printf(">>> TOGGLE: No frequency detected -> LED OFF\n");
+                    digitalWrite(LED_PIN, GPIO_LOW);
+                }
             }
         }  // End if (buffer_ready)
     }  // End while(1)
