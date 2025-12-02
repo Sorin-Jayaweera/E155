@@ -408,12 +408,12 @@ int main(void) {
 
     // Check GPIO configuration
     printf("GPIO Debug:\n");
-    printf("  GPIOA->MODER[PA9]: 0x%lx (should be 0x1 for output)\n",
-           (GPIOA->MODER >> (LED_PIN * 2)) & 0x3);
-    printf("  GPIOA->OTYPER[PA9]: 0x%lx (should be 0x0 for push-pull)\n",
-           (GPIOA->OTYPER >> LED_PIN) & 0x1);
-    printf("  GPIOA->AFR[PA9]: 0x%lx (should be 0x0 for GPIO, not alternate)\n\n",
-           (GPIOA->AFR[1] >> ((LED_PIN - 8) * 4)) & 0xF);
+    printf("  GPIOA->MODER[PA9]: 0x%x (should be 0x1 for output)\n",
+           (unsigned int)((GPIOA->MODER >> (LED_PIN * 2)) & 0x3));
+    printf("  GPIOA->OTYPER[PA9]: 0x%x (should be 0x0 for push-pull)\n",
+           (unsigned int)((GPIOA->OTYPER >> LED_PIN) & 0x1));
+    printf("  GPIOA->AFRH[PA9]: 0x%x (should be 0x0 for GPIO, not alternate)\n\n",
+           (unsigned int)((GPIOA->AFRH >> ((LED_PIN - 8) * 4)) & 0xF));
 
     // Simple toggle loop (no DMA dependency)
     while(1) {
@@ -421,7 +421,7 @@ int main(void) {
         digitalWrite(LED_PIN, GPIO_HIGH);
 
         // Read back the ODR to verify it was set
-        printf("  GPIOA->ODR[PA9] = %lu\n", (GPIOA->ODR >> LED_PIN) & 0x1);
+        printf("  GPIOA->ODR[PA9] = %u\n", (unsigned int)((GPIOA->ODR >> LED_PIN) & 0x1));
 
         // Delay ~500ms
         for (volatile int i = 0; i < 40000000; i++);
@@ -430,7 +430,7 @@ int main(void) {
         digitalWrite(LED_PIN, GPIO_LOW);
 
         // Read back the ODR to verify it was cleared
-        printf("  GPIOA->ODR[PA9] = %lu\n\n", (GPIOA->ODR >> LED_PIN) & 0x1);
+        printf("  GPIOA->ODR[PA9] = %u\n\n", (unsigned int)((GPIOA->ODR >> LED_PIN) & 0x1));
 
         // Delay ~500ms
         for (volatile int i = 0; i < 40000000; i++);
@@ -509,8 +509,7 @@ int main(void) {
             }
             */
             // END TEMPORARY COMMENT - Uncomment above to re-enable FFT
-        }
-    }
 
+    // Unreachable code (while loop above is infinite)
     return 0;
 }
