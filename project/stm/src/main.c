@@ -64,44 +64,12 @@
 // Nested Vectored Interrupt Controller (NVIC) - For enabling interrupts
 typedef struct {
     volatile uint32_t ISER[8];      // Interrupt Set Enable Register
-    uint32_t R0[24];                // Reserved
-    volatile uint32_t ICER[8];      // Interrupt Clear Enable Register
-    uint32_t R1[24];                // Reserved
-    volatile uint32_t ISPR[8];      // Interrupt Set Pending Register
-    uint32_t R2[24];                // Reserved
-    volatile uint32_t ICPR[8];      // Interrupt Clear Pending Register
-    uint32_t R3[24];                // Reserved
-    volatile uint32_t IABR[8];      // Interrupt Active Bit Register
-    uint32_t R4[56];                // Reserved
-    volatile uint8_t IP[240];       // Interrupt Priority Register
 } NVIC_Type;
 #define NVIC ((NVIC_Type *) 0xE000E100UL)
 
 // System Control Block (SCB) - For FPU enable
-typedef struct {
-    volatile const uint32_t CPUID;  // CPU ID Base Register
-    volatile uint32_t ICSR;         // Interrupt Control and State Register
-    volatile uint32_t VTOR;         // Vector Table Offset Register
-    volatile uint32_t AIRCR;        // Application Interrupt and Reset Control
-    volatile uint32_t SCR;          // System Control Register
-    volatile uint32_t CCR;          // Configuration and Control Register
-    volatile uint8_t SHP[12];       // System Handler Priority Register
-    volatile uint32_t SHCSR;        // System Handler Control and State
-    volatile uint32_t CFSR;         // Configurable Fault Status Register
-    volatile uint32_t HFSR;         // HardFault Status Register
-    volatile uint32_t DFSR;         // Debug Fault Status Register
-    volatile uint32_t MMFAR;        // MemManage Fault Address Register
-    volatile uint32_t BFAR;         // BusFault Address Register
-    volatile uint32_t AFSR;         // Auxiliary Fault Status Register
-    volatile uint32_t PFR[2];       // Processor Feature Register
-    volatile uint32_t DFR;          // Debug Feature Register
-    volatile uint32_t ADR;          // Auxiliary Feature Register
-    volatile uint32_t MMFR[4];      // Memory Model Feature Register
-    volatile uint32_t ISAR[5];      // Instruction Set Attributes Register
-    volatile uint32_t R0[5];        // Reserved
-    volatile uint32_t CPACR;        // Coprocessor Access Control Register
-} SCB_Type;
-#define SCB ((SCB_Type *) 0xE000ED00UL)
+// Note: Only defining CPACR at offset 0x88 from SCB base
+#define SCB_CPACR (*((volatile uint32_t *) 0xE000ED88UL))
 
 // TIM6 Basic Timer
 #define TIM6_BASE  (0x40001000UL)
@@ -268,7 +236,7 @@ void initSystem(void) {
     // Enable FPU (Floating Point Unit) for hardware accelerated math
     // CP10 and CP11 coprocessor access: 11 = Full access
     // Bits [21:20] = CP10, Bits [23:22] = CP11
-    SCB->CPACR |= ((3UL << 10*2) | (3UL << 11*2));
+    SCB_CPACR |= ((3UL << 10*2) | (3UL << 11*2));
 }
 
 /**
