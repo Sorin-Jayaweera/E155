@@ -398,20 +398,22 @@ int main(void) {
     printf("LED OFF: Frequency < %.0f Hz\n\n", FREQ_THRESHOLD);
 
     // =========================================================================
-    // TEMPORARY TEST: 5 Hz toggle via DMA interrupt
+    // TEMPORARY TEST: Simulate FFT output with 5 Hz square wave
     // =========================================================================
-    // PA9 GPIO is verified working. Now test if DMA interrupt fires.
-    // Toggles LED at 5 Hz when buffer_ready flag is set by DMA interrupt.
-    // This tests: ADC → DMA → Interrupt → LED output pipeline
+    // This test simulates the FFT detecting a frequency and uses the actual
+    // LED control logic (threshold checking). Alternates between:
+    //   - "320 Hz detected" (above threshold) → LED ON
+    //   - "0 Hz detected" (below threshold) → LED OFF
+    // Result: 5 Hz square wave on LED (same as musical note detection)
     // =========================================================================
-    printf("***** TEMPORARY TEST MODE: DMA Interrupt Test *****\n");
-    printf("Testing ADC/DMA/Timer pipeline with 5 Hz LED toggle\n");
-    printf("LED should blink at 5 Hz (~100ms ON, ~100ms OFF)\n");
-    printf("If LED doesn't blink: DMA interrupt not firing\n\n");
+    printf("***** TEMPORARY TEST MODE: FFT Output Simulation *****\n");
+    printf("Simulating FFT detection of 5 Hz square wave pattern\n");
+    printf("Alternating: 320 Hz detected → 0 Hz detected → repeat\n");
+    printf("LED should produce 5 Hz square wave (~100ms ON, ~100ms OFF)\n\n");
 
     uint32_t toggle_counter = 0;
     const uint32_t TOGGLE_PERIOD = 3;  // Every 3 DMA interrupts = ~100ms at 31 Hz
-    bool led_state = false;
+    bool freq_detected = false;
     uint32_t interrupt_count = 0;
 
     // Main processing loop
@@ -421,19 +423,26 @@ int main(void) {
             buffer_ready = false;  // Clear flag
             interrupt_count++;
 
-            // Print every 10 interrupts to verify DMA is working
-            if (interrupt_count % 10 == 0) {
-                printf("DMA interrupts: %u (rate: ~31 Hz)\n", (unsigned int)interrupt_count);
-            }
-
-            // Toggle PA9 at 5 Hz for testing
+            // Alternate between frequency detected and not detected every ~100ms
             toggle_counter++;
             if (toggle_counter >= TOGGLE_PERIOD) {
                 toggle_counter = 0;
-                led_state = !led_state;
-                digitalWrite(LED_PIN, led_state ? GPIO_HIGH : GPIO_LOW);
-                printf("PA9 toggled: %s (interrupts: %u)\n",
-                       led_state ? "HIGH" : "LOW", (unsigned int)interrupt_count);
+                freq_detected = !freq_detected;
+            }
+
+            // Simulate FFT output: manually set detected frequency and magnitude
+            float simulated_freq = freq_detected ? 320.0f : 0.0f;
+            float simulated_mag = freq_detected ? 20.0f : 0.0f;
+
+            // Use ACTUAL LED control logic from FFT code (test threshold behavior)
+            if (simulated_freq > FREQ_THRESHOLD && simulated_mag > MAG_THRESHOLD) {
+                digitalWrite(LED_PIN, GPIO_HIGH);
+                printf("Simulated FFT: %d Hz (Mag: %d) -> LED ON\n",
+                       (int)simulated_freq, (int)simulated_mag);
+            } else {
+                digitalWrite(LED_PIN, GPIO_LOW);
+                printf("Simulated FFT: %d Hz (Mag: %d) -> LED OFF\n",
+                       (int)simulated_freq, (int)simulated_mag);
             }
         }  // End if (buffer_ready)
     }  // End while(1)
