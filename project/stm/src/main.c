@@ -56,6 +56,40 @@
 #define FREQ_THRESHOLD  100.0f  // Minimum frequency to trigger LED (Hz)
 #define MAG_THRESHOLD   10.0f   // Minimum magnitude to avoid noise
 
+// ============================================================================
+// ADC TRIGGER CONFIGURATION - CHANGE THIS TO TEST DIFFERENT TRIGGER SOURCES
+// ============================================================================
+// ADC1 External Trigger Selection (EXTSEL) for STM32L432KC
+// Reference: STM32L4 Reference Manual RM0394, Table 72
+//
+// EXTSEL Value | Trigger Source      | Description
+// -------------|---------------------|----------------------------------------
+//      0       | TIM1_CC1            | Timer 1 Capture/Compare 1
+//      1       | TIM1_CC2            | Timer 1 Capture/Compare 2
+//      2       | TIM1_CC3            | Timer 1 Capture/Compare 3
+//      3       | TIM2_CC2            | Timer 2 Capture/Compare 2
+//      4       | TIM3_TRGO           | Timer 3 Trigger Output
+//      5       | TIM4_CC4            | Timer 4 Capture/Compare 4
+//      6       | EXTI line 11        | External interrupt line 11
+//      9       | TIM1_TRGO           | Timer 1 Trigger Output
+//     10       | TIM1_TRGO2          | Timer 1 Trigger Output 2
+//     11       | TIM2_TRGO           | Timer 2 Trigger Output
+//     12       | TIM4_TRGO           | Timer 4 Trigger Output
+//     13       | TIM6_TRGO           | Timer 6 Trigger Output (EXPECTED)
+//     14       | TIM15_TRGO          | Timer 15 Trigger Output
+//     15       | TIM3_CC4            | Timer 3 Capture/Compare 4
+//
+// CURRENT SETTING: Using TIM6, so EXTSEL should be 13
+// IF DMA RATE IS WRONG: Try other timer trigger values (4, 9, 11, 12, 14)
+//
+// QUICK TEST GUIDE:
+// 1. Change ADC_EXTSEL below to a different value
+// 2. Rebuild and flash
+// 3. Observe DMA interrupt rate and LED toggle speed
+// 4. If LED blinks at 5 Hz (~100ms ON/OFF), you found the correct EXTSEL!
+// ============================================================================
+#define ADC_EXTSEL      13      // <<< CHANGE THIS VALUE TO TEST DIFFERENT TRIGGERS
+
 /*******************************************************************************
  * HARDWARE REGISTER DEFINITIONS
  * (Missing from library headers - defined here for bare-metal access)
@@ -322,11 +356,10 @@ void initADC_DMA(void) {
     // Bit 10: EXTEN[0] = 1 (External trigger enable on rising edge)
     ADC1->CFGR |= (1 << 0) | (1 << 1) | (1 << 10);
 
-    // Select external trigger source: TIM6_TRGO
-    // EXTSEL[3:0] bits [9:6] = 1101 (13 decimal) for TIM6_TRGO on STM32L4
-    // NOTE: This differs from other STM32 series! Confirmed in RM0394 Table 98
-    ADC1->CFGR &= ~(0xF << 6);      // Clear EXTSEL bits
-    ADC1->CFGR |= (13 << 6);        // Set EXTSEL = 13 (TIM6_TRGO)
+    // Select external trigger source
+    // EXTSEL[3:0] bits [9:6] - Configurable via ADC_EXTSEL define at top of file
+    ADC1->CFGR &= ~(0xF << 6);              // Clear EXTSEL bits
+    ADC1->CFGR |= (ADC_EXTSEL << 6);        // Set EXTSEL from configuration
 
     // Clear ADRDY flag and enable ADC
     ADC1->ISR |= (1 << 0);          // Write 1 to clear ADRDY
@@ -395,7 +428,14 @@ int main(void) {
     printf("Frequency Resolution: %.2f Hz/bin\n", (float)SAMPLE_RATE / FFT_SIZE);
     printf("Update Rate: %.1f Hz\n", (float)SAMPLE_RATE / FFT_SIZE);
     printf("\nLED ON: Frequency > %.0f Hz\n", FREQ_THRESHOLD);
-    printf("LED OFF: Frequency < %.0f Hz\n\n", FREQ_THRESHOLD);
+    printf("LED OFF: Frequency < %.0f Hz\n", FREQ_THRESHOLD);
+    printf("\n========================================\n");
+    printf("  ADC TRIGGER CONFIGURATION\n");
+    printf("========================================\n");
+    printf("ADC_EXTSEL = %d\n", ADC_EXTSEL);
+    printf("Expected: 13 for TIM6_TRGO\n");
+    printf("If DMA rate is wrong, try: 4, 9, 11, 12, or 14\n");
+    printf("========================================\n\n");
 
     // =========================================================================
     // TEMPORARY TEST: Simulate FFT output with 5 Hz square wave
