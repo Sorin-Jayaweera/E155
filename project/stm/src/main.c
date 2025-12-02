@@ -105,7 +105,11 @@ typedef struct {
 // Note: Only defining CPACR at offset 0x88 from SCB base
 #define SCB_CPACR (*((volatile uint32_t *) 0xE000ED88UL))
 
-// TIM6 Basic Timer
+// TIM1 Advanced Timer (APB2 bus)
+#define TIM1_BASE  (0x40012C00UL)
+#define TIM1       ((TIM_TypeDef *) TIM1_BASE)
+
+// TIM6 Basic Timer (APB1 bus)
 #define TIM6_BASE  (0x40001000UL)
 #define TIM6       ((TIM_TypeDef *) TIM6_BASE)
 
