@@ -263,20 +263,20 @@ void DMA1_Channel1_IRQHandler(void) {
  ******************************************************************************/
 
 /**
- * @brief Initialize system clocks and peripherals
+ * @brief Initialize GPIO and FPU
  *
  * CONFIGURATION:
- *   - Enables instruction cache, data cache, and prefetch buffer
  *   - Enables GPIOA clock for PA6 and PA9
  *   - Configures GPIO pins for analog input and digital output
  *   - Enables Floating Point Unit (FPU) for fast math operations
+ *
+ * NOTE: Flash and system clock must be configured BEFORE calling this!
  */
 void initSystem(void) {
-    // Enable Flash performance features for 80 MHz operation
-    // Bit 8: ICEN (Instruction cache enable)
-    // Bit 9: DCEN (Data cache enable)
-    // Bit 10: PRFTEN (Prefetch enable)
-    FLASH->ACR |= (1 << 8) | (1 << 9) | (1 << 10);
+    // Enable FPU FIRST (before any floating point operations)
+    // CP10 and CP11 coprocessor access: 11 = Full access
+    // Bits [21:20] = CP10, Bits [23:22] = CP11
+    SCB_CPACR |= ((3UL << 10*2) | (3UL << 11*2));
 
     // Enable GPIOA clock (AHB2 bus)
     // Bit 0: GPIOAEN
@@ -285,11 +285,6 @@ void initSystem(void) {
     // Configure GPIO pins using library functions
     pinMode(LED_PIN, GPIO_OUTPUT);          // PA9 as digital output
     pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);  // PA6 as analog input
-
-    // Enable FPU (Floating Point Unit) for hardware accelerated math
-    // CP10 and CP11 coprocessor access: 11 = Full access
-    // Bits [21:20] = CP10, Bits [23:22] = CP11
-    SCB_CPACR |= ((3UL << 10*2) | (3UL << 11*2));
 }
 
 /**
@@ -509,13 +504,16 @@ void initADC_DMA(void) {
  *   Bin 128: 4000 Hz (Nyquist limit)
  */
 int main(void) {
+    // Configure Flash wait states FIRST (required for 80 MHz operation)
+    // CRITICAL: Must be done before configureClock() or CPU will crash!
+    configureFlash();
+
     // Configure system clock to 80 MHz using PLL
-    // CRITICAL: Must be called FIRST before any peripheral initialization!
-    // Without this, system runs on 4 MHz MSI clock (20x slower)
+    // CRITICAL: Must be called after configureFlash()!
     configureClock();
 
     // Initialize all hardware subsystems
-    initSystem();        // GPIO, FPU (clock already configured above)
+    initSystem();        // GPIO, FPU (clock and flash already configured above)
     initADC_DMA();       // ADC and DMA (MUST be before timer!)
     initTimer_ADC();     // TIM6 trigger at 8 kHz
 
