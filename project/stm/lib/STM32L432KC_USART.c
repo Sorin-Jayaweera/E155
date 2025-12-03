@@ -1,10 +1,8 @@
 // STM32L432KC_USART.c
 // Source code for USART functions
 
-#include <stm32l432xx.h>  // Include CMSIS library first (provides base types)
+#include "STM32L432KC.h"
 #include "STM32L432KC_USART.h"
-#include "STM32L432KC_GPIO.h"
-#include "STM32L432KC_RCC.h"
 
 USART_TypeDef * id2Port(int USART_ID) {
     USART_TypeDef * USART;
