@@ -267,6 +267,216 @@ void DMA1_Channel1_IRQHandler(void) {
 }
 
 /*******************************************************************************
+ * SOFTWARE UART FOR DFPLAYER MINI
+ * Bit-banged UART TX on PA10 @ 9600 baud (no RX needed)
+ ******************************************************************************/
+
+#define SOFT_UART_TX_PIN 10  // PA10
+#define BAUD_RATE 9600
+#define BIT_DELAY_US (1000000 / BAUD_RATE)  // ~104 us per bit @ 9600 baud
+
+/**
+ * @brief Microsecond delay for software UART bit timing
+ * @param us Microseconds to delay
+ * @note Calibrated for 80 MHz system clock
+ */
+static void delay_us(uint32_t us) {
+    // At 80 MHz: 80 cycles per microsecond
+    // Account for loop overhead (~4 cycles per iteration)
+    volatile uint32_t cycles = us * 20;  // Approximate: 80/4 = 20
+    while (cycles--);
+}
+
+/**
+ * @brief Send one byte via software UART (8N1 format)
+ * @param byte Byte to transmit
+ */
+static void softUART_sendByte(uint8_t byte) {
+    // START bit (low)
+    digitalWrite(SOFT_UART_TX_PIN, GPIO_LOW);
+    delay_us(BIT_DELAY_US);
+
+    // 8 data bits (LSB first)
+    for (int i = 0; i < 8; i++) {
+        if (byte & (1 << i)) {
+            digitalWrite(SOFT_UART_TX_PIN, GPIO_HIGH);
+        } else {
+            digitalWrite(SOFT_UART_TX_PIN, GPIO_LOW);
+        }
+        delay_us(BIT_DELAY_US);
+    }
+
+    // STOP bit (high)
+    digitalWrite(SOFT_UART_TX_PIN, GPIO_HIGH);
+    delay_us(BIT_DELAY_US);
+}
+
+/*******************************************************************************
+ * DFPLAYER MINI CONTROL
+ * Protocol: 10-byte packets with checksum
+ * Source: TF Card
+ ******************************************************************************/
+
+// DFPlayer command protocol
+#define DF_START_BYTE  0x7E
+#define DF_END_BYTE    0xEF
+#define DF_VERSION     0xFF
+#define DF_CMD_LEN     0x06
+#define DF_FEEDBACK    0x00
+#define DF_SOURCE      0x02  // TF CARD
+
+// DFPlayer commands
+#define DF_CMD_NEXT         0x01
+#define DF_CMD_PREV         0x02
+#define DF_CMD_PLAY_TRACK   0x03
+#define DF_CMD_INC_VOL      0x04
+#define DF_CMD_DEC_VOL      0x05
+#define DF_CMD_SET_VOL      0x06
+#define DF_CMD_REPEAT       0x08
+#define DF_CMD_SET_SOURCE   0x09
+#define DF_CMD_RESET        0x0C
+#define DF_CMD_PLAYBACK     0x0D
+#define DF_CMD_PAUSE        0x0E
+#define DF_CMD_PLAY_FOLDER  0x0F
+
+// Button pins (remapped for E155 PCB)
+#define BTN_PREVIOUS  8   // PA8
+#define BTN_PAUSE     0   // PB0 (moved from PA6 to avoid ADC conflict)
+#define BTN_NEXT      7   // PB7
+
+// Button state tracking for edge detection
+static uint8_t prev_btn_state = 0;
+static uint8_t pause_btn_state = 0;
+static uint8_t next_btn_state = 0;
+
+/**
+ * @brief Send command to DFPlayer Mini
+ * @param cmd Command byte
+ * @param param1 Parameter 1
+ * @param param2 Parameter 2
+ */
+static void DF_SendCmd(uint8_t cmd, uint8_t param1, uint8_t param2) {
+    // Calculate checksum: 0 - (sum of bytes)
+    uint16_t checksum = DF_VERSION + DF_CMD_LEN + cmd + DF_FEEDBACK + param1 + param2;
+    checksum = 0 - checksum;
+
+    // Build 10-byte command packet
+    uint8_t packet[10] = {
+        DF_START_BYTE,
+        DF_VERSION,
+        DF_CMD_LEN,
+        cmd,
+        DF_FEEDBACK,
+        param1,
+        param2,
+        (checksum >> 8) & 0xFF,  // Checksum high byte
+        checksum & 0xFF,         // Checksum low byte
+        DF_END_BYTE
+    };
+
+    // Transmit packet via software UART
+    for (int i = 0; i < 10; i++) {
+        softUART_sendByte(packet[i]);
+    }
+
+    // Inter-command delay (DFPlayer needs ~20ms between commands)
+    for (volatile uint32_t i = 0; i < 160000; i++);  // ~20ms @ 80 MHz
+}
+
+/**
+ * @brief Initialize DFPlayer Mini
+ * @param volume Initial volume (0-30)
+ */
+static void DF_Init(uint8_t volume) {
+    // Wait for DFPlayer to boot (~1.5 seconds)
+    for (volatile uint32_t i = 0; i < 12000000; i++);
+
+    // Reset DFPlayer
+    DF_SendCmd(DF_CMD_RESET, 0x00, 0x00);
+    for (volatile uint32_t i = 0; i < 4000000; i++);  // ~500ms
+
+    // Set source to TF Card
+    DF_SendCmd(DF_CMD_SET_SOURCE, 0x00, DF_SOURCE);
+    for (volatile uint32_t i = 0; i < 1600000; i++);  // ~200ms
+
+    // Set volume
+    DF_SendCmd(DF_CMD_SET_VOL, 0x00, volume);
+}
+
+/**
+ * @brief Play from start (track 1)
+ */
+static void DF_PlayFromStart(void) {
+    DF_SendCmd(DF_CMD_PLAY_TRACK, 0x00, 0x01);
+}
+
+/**
+ * @brief Next track
+ */
+static void DF_Next(void) {
+    DF_SendCmd(DF_CMD_NEXT, 0x00, 0x00);
+}
+
+/**
+ * @brief Previous track
+ */
+static void DF_Previous(void) {
+    DF_SendCmd(DF_CMD_PREV, 0x00, 0x00);
+}
+
+/**
+ * @brief Pause playback
+ */
+static void DF_Pause(void) {
+    DF_SendCmd(DF_CMD_PAUSE, 0x00, 0x00);
+}
+
+/**
+ * @brief Resume playback
+ */
+static void DF_Playback(void) {
+    DF_SendCmd(DF_CMD_PLAYBACK, 0x00, 0x00);
+}
+
+/**
+ * @brief Check buttons and send DFPlayer commands (non-blocking)
+ *
+ * Implements edge detection to trigger commands on button press (not hold)
+ * Uses GPIOB for Pause and Next buttons
+ */
+static void DF_CheckButtons(void) {
+    // Read current button states
+    uint8_t prev_current = digitalRead(BTN_PREVIOUS);  // PA8
+    uint8_t pause_current = (GPIOB->IDR >> BTN_PAUSE) & 1;  // PB0
+    uint8_t next_current = (GPIOB->IDR >> BTN_NEXT) & 1;   // PB7
+
+    // Previous button: Falling edge detection
+    if (prev_btn_state == 1 && prev_current == 0) {
+        DF_Previous();
+    }
+    prev_btn_state = prev_current;
+
+    // Pause button: Falling edge detection (toggles pause/play)
+    if (pause_btn_state == 1 && pause_current == 0) {
+        static uint8_t is_paused = 0;
+        if (is_paused) {
+            DF_Playback();
+            is_paused = 0;
+        } else {
+            DF_Pause();
+            is_paused = 1;
+        }
+    }
+    pause_btn_state = pause_current;
+
+    // Next button: Falling edge detection
+    if (next_btn_state == 1 && next_current == 0) {
+        DF_Next();
+    }
+    next_btn_state = next_current;
+}
+
+/*******************************************************************************
  * HARDWARE INITIALIZATION FUNCTIONS
  ******************************************************************************/
 
@@ -274,8 +484,14 @@ void DMA1_Channel1_IRQHandler(void) {
  * @brief Initialize GPIO and FPU
  *
  * CONFIGURATION:
- *   - Enables GPIOA clock for PA6 and PA9
- *   - Configures GPIO pins for analog input and digital output
+ *   FFT Tesla Coil:
+ *     - PA6: Analog input (ADC)
+ *     - PA9: Digital output (square wave to Tesla coil)
+ *   DFPlayer Mini:
+ *     - PA10: Software UART TX (output, idle HIGH)
+ *     - PA8: Previous button (input with pull-up)
+ *     - PB0: Pause/Play button (input with pull-up)
+ *     - PB7: Next button (input with pull-up)
  *   - Enables Floating Point Unit (FPU) for fast math operations
  *
  * NOTE: Flash and system clock must be configured BEFORE calling this!
@@ -286,13 +502,33 @@ void initSystem(void) {
     // Bits [21:20] = CP10, Bits [23:22] = CP11
     SCB_CPACR |= ((3UL << 10*2) | (3UL << 11*2));
 
-    // Enable GPIOA clock (AHB2 bus)
-    // Bit 0: GPIOAEN
-    RCC->AHB2ENR |= (1 << 0);
+    // Enable GPIOA and GPIOB clocks (AHB2 bus)
+    // Bit 0: GPIOAEN, Bit 1: GPIOBEN
+    RCC->AHB2ENR |= (1 << 0) | (1 << 1);
 
-    // Configure GPIO pins using library functions
+    // Configure FFT Tesla Coil pins
     pinMode(LED_PIN, GPIO_OUTPUT);          // PA9 as digital output
     pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);  // PA6 as analog input
+
+    // Configure DFPlayer software UART pin
+    pinMode(SOFT_UART_TX_PIN, GPIO_OUTPUT); // PA10 as digital output
+    digitalWrite(SOFT_UART_TX_PIN, GPIO_HIGH);  // UART idle state is HIGH
+
+    // Configure DFPlayer button pins (inputs with pull-up)
+    pinMode(BTN_PREVIOUS, GPIO_INPUT);      // PA8 as input
+    GPIOA->PUPDR &= ~(0b11 << (BTN_PREVIOUS * 2));
+    GPIOA->PUPDR |= (0b01 << (BTN_PREVIOUS * 2));  // Pull-up
+
+    // PB0 and PB7 (GPIOB pins)
+    // Set as input mode
+    GPIOB->MODER &= ~(0b11 << (BTN_PAUSE * 2));    // PB0 input
+    GPIOB->MODER &= ~(0b11 << (BTN_NEXT * 2));     // PB7 input
+
+    // Enable pull-ups
+    GPIOB->PUPDR &= ~(0b11 << (BTN_PAUSE * 2));
+    GPIOB->PUPDR |= (0b01 << (BTN_PAUSE * 2));     // PB0 pull-up
+    GPIOB->PUPDR &= ~(0b11 << (BTN_NEXT * 2));
+    GPIOB->PUPDR |= (0b01 << (BTN_NEXT * 2));      // PB7 pull-up
 }
 
 /**
@@ -571,11 +807,27 @@ int main(void) {
     printf("Starting TIM15 synthesis engine...\n");
     initTIM15_Synthesis();
 
+    printf("\n========================================\n");
+    printf("  DFPLAYER MINI INITIALIZATION\n");
+    printf("========================================\n");
+    printf("Initializing DFPlayer...\n");
+    DF_Init(15);  // Volume: 15/30 (50%)
+    printf("DFPlayer ready!\n");
+    printf("  PA8: Previous track\n");
+    printf("  PB0: Pause/Play\n");
+    printf("  PB7: Next track\n");
+    printf("Starting playback...\n");
+    DF_PlayFromStart();
+    printf("========================================\n\n");
+
     printf("Starting FFT processing loop...\n");
     printf("Waiting for audio input...\n\n");
 
-    // Main processing loop: FFT → Synthesis
+    // Main processing loop: FFT → Synthesis + DFPlayer control
     while(1) {
+        // Check DFPlayer control buttons (non-blocking)
+        DF_CheckButtons();
+
         if (buffer_ready) {
             buffer_ready = false;
 
