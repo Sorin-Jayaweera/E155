@@ -545,7 +545,7 @@ int main(void) {
     initTimer_ADC();     // TIM6 trigger at 8 kHz
 
     // Initialize USART1 for DFPlayer Mini (PA9/PA10, 9600 baud)
-    USART_TypeDef * USART1 = initUSART(USART1_ID, 9600);
+    USART_TypeDef * usart_dfplayer = initUSART(USART1_ID, 9600);
 
     printf("\n========================================\n");
     printf("  FFT VALIDATION MODE\n");
@@ -597,13 +597,13 @@ int main(void) {
     printf("  DFPLAYER MINI INITIALIZATION\n");
     printf("========================================\n");
     printf("Initializing DFPlayer...\n");
-    DF_Init(USART1, 15);  // Volume: 15/30 (50%)
+    DF_Init(usart_dfplayer, 15);  // Volume: 15/30 (50%)
     printf("DFPlayer ready!\n");
     printf("  PA8: Previous track\n");
     printf("  PA6: Pause/Play\n");
     printf("  PB7: Next track\n");
     printf("Starting playback...\n");
-    DF_PlayFromStart(USART1);
+    DF_PlayFromStart(usart_dfplayer);
     printf("========================================\n\n");
 
     printf("Starting FFT processing loop...\n");
@@ -612,7 +612,7 @@ int main(void) {
     // Main processing loop: FFT → Synthesis + DFPlayer control
     while(1) {
         // Check DFPlayer control buttons (from original DFPLAYER_MINI.c)
-        Check_Key(USART1);
+        Check_Key(usart_dfplayer);
 
         if (buffer_ready) {
             buffer_ready = false;
