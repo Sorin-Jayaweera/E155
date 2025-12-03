@@ -103,26 +103,14 @@
 
 /*******************************************************************************
  * HARDWARE REGISTER DEFINITIONS
- * (Missing from library headers - defined here for bare-metal access)
+ * (Most provided by STM32L432KC.h - only custom definitions here)
  ******************************************************************************/
 
-// Nested Vectored Interrupt Controller (NVIC) - For enabling interrupts
-typedef struct {
-    volatile uint32_t ISER[8];      // Interrupt Set Enable Register
-} NVIC_Type;
-#define NVIC ((NVIC_Type *) 0xE000E100UL)
-
-// System Control Block (SCB) - For FPU enable
-// Note: Only defining CPACR at offset 0x88 from SCB base
+// System Control Block (SCB) - CPACR for FPU enable
+// Note: SCB_CPACR is provided by CMSIS as SCB->CPACR, but using direct address for compatibility
 #define SCB_CPACR (*((volatile uint32_t *) 0xE000ED88UL))
 
-// TIM1 Advanced Timer (APB2 bus)
-#define TIM1_BASE  (0x40012C00UL)
-#define TIM1       ((TIM_TypeDef *) TIM1_BASE)
-
-// TIM6 Basic Timer (APB1 bus)
-#define TIM6_BASE  (0x40001000UL)
-#define TIM6       ((TIM_TypeDef *) TIM6_BASE)
+// All other peripherals (NVIC, TIM1, TIM6, etc.) provided by STM32L432KC.h master header
 
 // Math Constant
 #ifndef M_PI

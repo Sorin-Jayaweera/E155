@@ -111,6 +111,10 @@ typedef struct {
 #define ADC1        ((ADC_TypeDef *) ADC1_BASE)
 #define ADC_COMMON  ((ADC_Common_TypeDef *) ADC_COMMON_BASE)
 
+#else
+// Using CMSIS library - define compatibility aliases
+#define ADC_COMMON  ADC1_COMMON  // CMSIS uses ADC1_COMMON instead of ADC_COMMON
+
 #endif // __STM32L432xx_H
 
 ///////////////////////////////////////////////////////////////////////////////
