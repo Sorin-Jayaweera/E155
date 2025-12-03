@@ -4,7 +4,7 @@
 
 #include "DFPLAYER_MINI.h"
 #include "../lib/STM32L432KC_GPIO.h"
-#include <stm32l432xx.h>  // For GPIOB register access
+#include "../lib/STM32L432KC_USART.h"
 
 // DFPlayer protocol constants (from original DFPLAYER_MINI.c)
 #define Start_Byte  0x7E
