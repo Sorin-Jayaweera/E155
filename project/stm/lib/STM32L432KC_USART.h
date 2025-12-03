@@ -5,11 +5,16 @@
 #define STM32L4_USART_H
 
 #include <stdint.h>
-#include <stm32l432xx.h>
+#include <stm32l432xx.h>  // CMSIS library - provides USART_TypeDef and register bit definitions
 
 // Defines for USART case statements
 #define USART1_ID   1
 #define USART2_ID   2
+
+// HSI frequency needed for baud rate calculation
+#ifndef HSI_FREQ
+#define HSI_FREQ 16000000
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
