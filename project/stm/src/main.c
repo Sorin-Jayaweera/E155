@@ -52,8 +52,8 @@
 // DFPlayer Mini Pin Definitions (from DFPLAYER_MINI.c)
 #define SOFT_UART_TX_PIN 10     // PA10 - Software UART TX to DFPlayer
 #define BTN_PREVIOUS     8      // PA8 - Previous track button
-#define BTN_PAUSE        0      // PB0 - Pause/Play button (moved from PA6)
-#define BTN_NEXT         7      // PB7 - Next track button
+#define BTN_PAUSE        7      // PB7 - Pause/Play button (swapped with Next)
+#define BTN_NEXT         0      // PB0 - Next track button (MUST REWIRE from PA6!)
 
 // Signal Processing Parameters
 #define FFT_SIZE        256     // FFT window size (must be power of 2)

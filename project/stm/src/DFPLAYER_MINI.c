@@ -73,8 +73,8 @@ static void delay_millis(uint32_t ms) {
 
 // Button pins (remapped for E155 PCB)
 #define Previous_Key  8   // PA8 (same as original)
-#define Pause_Key     0   // PB0 (moved from PA6 to avoid ADC conflict)
-#define Next_Key      7   // PB7 (same as original)
+#define Pause_Key     7   // PB7 (swapped with Next)
+#define Next_Key      0   // PB0 (moved from PA6 - ADC conflict!)
 
 // State variables (from original DFPLAYER_MINI.c)
 static int isPaused = 0;
