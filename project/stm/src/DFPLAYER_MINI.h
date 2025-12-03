@@ -7,10 +7,8 @@
 
 #include <stdint.h>
 
-// Forward declarations to avoid header conflicts
-// (USART library includes stm32l432xx.h which conflicts with custom E155 headers)
-struct USART_TypeDef;
-typedef struct USART_TypeDef USART_TypeDef;
+// Note: USART_TypeDef is provided by STM32L432KC.h (included in .c file)
+// No forward declarations needed since .c includes full headers
 
 // DFPlayer Mini control functions
 void DF_Init(USART_TypeDef * USART, uint8_t volume);

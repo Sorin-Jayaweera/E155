@@ -32,17 +32,10 @@
 #include <stdbool.h>
 
 // Project Libraries
-#include "../lib/STM32L432KC_RCC.h"
-#include "../lib/STM32L432KC_GPIO.h"
-#include "../lib/STM32L432KC_ADC.h"
-#include "../lib/STM32L432KC_TIM.h"
-#include "../lib/STM32L432KC_DMA.h"
-#include "../lib/STM32L432KC_FLASH.h"
+#include "../lib/STM32L432KC.h"  // Master header - includes CMSIS + all peripherals
+#include "../lib/STM32L432KC_ADC.h"  // ADC not in master header
+#include "../lib/STM32L432KC_DMA.h"  // DMA not in master header
 #include "DFPLAYER_MINI.h"
-
-// Forward declarations for USART (avoid including header that conflicts with custom libs)
-#define USART1_ID 1
-USART_TypeDef * initUSART(int USART_ID, int baud_rate);
 
 /*******************************************************************************
  * CONFIGURATION PARAMETERS
