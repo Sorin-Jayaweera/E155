@@ -4,7 +4,8 @@
 #ifndef STM32L4_GPIO_H
 #define STM32L4_GPIO_H
 
-#include <stdint.h> // Include stdint header
+#include <stdint.h>
+#include <stm32l432xx.h>  // CMSIS device header (provides GPIO_TypeDef, GPIOA, etc.)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -14,43 +15,50 @@
 #define GPIO_LOW    0
 #define GPIO_HIGH   1
 
-// Base addresses for GPIO ports
-#define GPIOA_BASE  (0x48000000UL)
-#define GPIOB_BASE  (0x48000400UL)
-
 // Arbitrary GPIO functions for pinMode()
 #define GPIO_INPUT  0
 #define GPIO_OUTPUT 1
 #define GPIO_ALT    2
 #define GPIO_ANALOG 3
 
-///////////////////////////////////////////////////////////////////////////////
-// Bitfield struct for GPIO
-///////////////////////////////////////////////////////////////////////////////
+// Pin definitions
+#define PA0  0
+#define PA1  1
+#define PA2  2
+#define PA3  3
+#define PA4  4
+#define PA5  5
+#define PA6  6
+#define PA7  7
+#define PA8  8
+#define PA9  9
+#define PA10 10
+#define PA11 11
+#define PA12 12
+#define PA13 13
+#define PA14 14
+#define PA15 15
 
-// GPIO register structs here
-typedef struct {
-    volatile uint32_t MODER;
-    volatile uint32_t OTYPER;
-    volatile uint32_t OSPEEDR;
-    volatile uint32_t PURPDR;
-    volatile uint32_t IDR;
-    volatile uint32_t ODR;
-    volatile uint32_t BSRR;
-    volatile uint32_t LCKR;
-    volatile uint32_t AFRL;
-    volatile uint32_t AFRH;
-} GPIO_TypeDef;
+#define PB0  0
+#define PB1  1
+#define PB3  3
+#define PB4  4
+#define PB5  5
+#define PB6  6
+#define PB7  7
 
-// Pointers to GPIO-sized chunks of memory for each peripheral
+// GPIO port selection
+#define GPIO_PORT_A 0
+#define GPIO_PORT_B 1
 
-#define GPIOA ((GPIO_TypeDef *) GPIOA_BASE)
-#define GPIOB ((GPIO_TypeDef *) GPIOB_BASE)
+// Default GPIO port for backward compatibility
 #define GPIO GPIOA
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
+
+void gpioEnable(int port);
 
 void pinMode(int pin, int function);
 
@@ -61,7 +69,5 @@ void digitalWrite(int pin, int val);
 void togglePin(int pin);
 
 void initAltFxn(void);
-
-
 
 #endif

@@ -4,6 +4,14 @@
 #include "STM32L432KC_GPIO.h"
 #include <stdio.h>
 
+void gpioEnable(int port) {
+    // Enable clock for specified GPIO port
+    if (port == GPIO_PORT_A) {
+        RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN;
+    } else if (port == GPIO_PORT_B) {
+        RCC->AHB2ENR |= RCC_AHB2ENR_GPIOBEN;
+    }
+}
 
 void pinMode(int pin, int function) {
     switch(function) {
