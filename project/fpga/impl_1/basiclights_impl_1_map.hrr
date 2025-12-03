@@ -3,17 +3,55 @@ Report for cell top
    Instance path: top
                      Cell usage:
                                   cell	      count    Res Usage(%)
-                                  LUT4	        595        100.0
-                               LUTGATE	        389        100.0
+                                  LUT4	        590        100.0
+                               LUTGATE	        384        100.0
                                 LUTCCU	        206        100.0
                                  IOBUF	         14        100.0
-                                PFUREG	        201        100.0
+                                PFUREG	        197        100.0
 SUB MODULES
                                   cell	      count    LUT4 Usage(%)
+                           fsm_control	          1        10.8
+                           led_decoder	          1         6.3
+                            led_dimmer	          1        78.3
+                         pulse_counter	          1         1.9
                           synchronizer	          1         0.0
 ---------------------------------------------------
+Report for cell fsm_control
+   Instance path: top/fsm_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         64        10.8
+                               LUTGATE	         36         9.4
+                                LUTCCU	         28        13.6
+                                PFUREG	         27        13.7
+---------------------------------------------------
 Report for cell synchronizer
-   Instance path: top/square_synchronizer
+   Instance path: top/sync_inst
                      Cell usage:
                                   cell	      count    Res Usage(%)
                                 PFUREG	          2         1.0
+---------------------------------------------------
+Report for cell pulse_counter
+   Instance path: top/counter_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         11         1.9
+                               LUTGATE	          1         0.3
+                                LUTCCU	         10         4.9
+                                PFUREG	         17         8.6
+---------------------------------------------------
+Report for cell led_dimmer
+   Instance path: top/dimmer_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	        462        78.3
+                               LUTGATE	        294        76.6
+                                LUTCCU	        168        81.6
+                                PFUREG	        151        76.6
+---------------------------------------------------
+Report for cell led_decoder
+   Instance path: top/decoder_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  LUT4	         37         6.3
+                               LUTGATE	         37         9.6

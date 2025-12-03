@@ -48,7 +48,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Nov 29 17:16:01 2025
+Wed Dec  3 13:42:43 2025
 
 
 Command Line:  C:\lscc\radiant\2024.2\ispfpga\bin\nt64\synthesis.exe -f C:/Users/sojayaweera/E155/project/fpga/impl_1/basiclights_impl_1_lattice.synproj -logfile basiclights_impl_1_lattice.srp -gui -msgset C:/Users/sojayaweera/E155/project/fpga/promote.xml 
@@ -160,6 +160,10 @@ CRITICAL <35001476> - synthesis: A top-level module has not been specified for t
 Verilog design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.v
 Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/top.sv
 Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/synchronizer.sv
+Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/led_decoder.sv
+Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/pulse_counter.sv
+Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/fsm_control.sv
+Verilog design file: C:/Users/sojayaweera/E155/project/fpga/source/impl_1/led_dimmer.sv
 VHDL library: pmi
 VHDL design file: C:/lscc/radiant/2024.2/ip/pmi/pmi_iCE40UP.vhd
 WARNING <35935050> - synthesis: input port TRIM9 is not connected on this instance. VDB-5050
@@ -212,6 +216,10 @@ INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ram_dq_be.v(45): 
 INFO <35901328> - synthesis: c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.v(17): analyzing included file c:/lscc/radiant/2024.2/ip/pmi/pmi_dsp.v. VERI-1328
 Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv. VERI-1482
 Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/synchronizer.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/led_decoder.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/pulse_counter.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/fsm_control.sv. VERI-1482
+Analyzing Verilog file c:/users/sojayaweera/e155/project/fpga/source/impl_1/led_dimmer.sv. VERI-1482
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd. VHDL-1481
 Analyzing VHDL file c:/lscc/radiant/2024.2/ip/pmi/pmi_ice40up.vhd
 
@@ -220,9 +228,13 @@ WARNING <35001200> - synthesis: Setting top as the top-level module. To specify 
 INFO <35921504> - synthesis: The default VHDL library search path is now "C:/Users/sojayaweera/E155/project/fpga/impl_1". VHDL-1504
 Top module language type = Verilog.
 Top module name (Verilog, mixed language): top
-INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(3): compiling module top. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/top.sv(1): compiling module top. VERI-1018
 INFO <35901018> - synthesis: C:/lscc/radiant/2024.2/ispfpga/../cae_library/synthesis/verilog/iCE40UP.v(756): compiling module HSOSC. VERI-1018
 INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/synchronizer.sv(2): compiling module synchronizer. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/fsm_control.sv(1): compiling module fsm_control. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/pulse_counter.sv(1): compiling module pulse_counter. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/led_decoder.sv(1): compiling module led_decoder. VERI-1018
+INFO <35901018> - synthesis: c:/users/sojayaweera/e155/project/fpga/source/impl_1/led_dimmer.sv(1): compiling module led_dimmer. VERI-1018
 
 <A name="lse_parameter"></A><B><U><big>Parameter Setting</big></U></B>
 
@@ -237,18 +249,18 @@ WARNING <35001771> - synthesis: Initial value found on net gnd_2 will be ignored
 
 
 
-CRITICAL <35001747> - synthesis: Bit(s) of register driving state[1:0] stuck at '0': 1
+CRITICAL <35001747> - synthesis: Bit(s) of register driving \fsm_inst/state[1:0] stuck at '0': 1
 
 
 <A name="lse_area"></A><B><U><big>Area Report</big></U></B>
 
 ################### Begin Area Report (top)######################
-Number of register bits => 201 of 5280 (3 % )
+Number of register bits => 197 of 5280 (3 % )
 CCU2 => 103
-FD1P3XZ => 201
+FD1P3XZ => 197
 HSOSC => 1
 IB => 2
-LUT4 => 377
+LUT4 => 372
 OB => 12
 ################### End Area Report ##################
 Number of odd-length carry chains : 1
@@ -260,21 +272,21 @@ Number of even-length carry chains : 16
 ################### Begin Clock Report ######################
 Clock Nets
 Number of Clocks: 1
-  Net : int_osc, loads : 0
+  Net : clk, loads : 0
 Clock Enable Nets
 Number of Clock Enables: 0
 Highest fanout non-clock nets
 Top 10 highest fanout non-clock nets:
-  Net : reset_in_c_N_207, loads : 201
-  Net : state[0], loads : 62
-  Net : n4941, loads : 53
-  Net : n2807, loads : 29
-  Net : n3094, loads : 29
-  Net : n3138, loads : 29
-  Net : n3018, loads : 29
-  Net : n2711, loads : 29
-  Net : n2775, loads : 29
-  Net : n2791, loads : 28
+  Net : reset_in_c_N_202, loads : 197
+  Net : dimmer_inst/n3281, loads : 53
+  Net : fsm_inst/n1434, loads : 45
+  Net : fsm_inst/is_latching, loads : 43
+  Net : dimmer_inst/n1225, loads : 29
+  Net : dimmer_inst/n1555, loads : 29
+  Net : dimmer_inst/n1193, loads : 28
+  Net : dimmer_inst/n1451, loads : 28
+  Net : dimmer_inst/n1145, loads : 28
+  Net : dimmer_inst/n960, loads : 28
 ################### End Clock Report ##################
 
 
@@ -286,13 +298,13 @@ Constraint Summary:
   Total number of constraints dropped: 0
 ###################  End Constraint Report  ######################
 
-Peak Memory Usage: 104 MB
+Peak Memory Usage: 106 MB
 
 --------------------------------------------------------------
 Total CPU Time: 6 secs 
-Total REAL Time: 12 secs 
+Total REAL Time: 13 secs 
 --------------------------------------------------------------
-Checksum -- synthesis -- netlist: cd252782634f39f632bd237cd429b83777c869f
+Checksum -- synthesis -- netlist: 9d41131a643cf92168dbdacbcad3483fe782e4cb
 
 
 

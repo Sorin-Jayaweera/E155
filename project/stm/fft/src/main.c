@@ -161,7 +161,7 @@ Complex fft_buffer[FFT_SIZE];
 // Multi-frequency synthesis parameters
 #define SYNTHESIS_RATE 100000  // 100 kHz synthesis update rate
 #define MAX_OSCILLATORS 5      // Maximum simultaneous frequencies
-#define N_FREQ 5               // Number of top frequencies to synthesize (CHANGE THIS!)
+#define N_FREQ 10               // Number of top frequencies to synthesize (CHANGE THIS!)
 
 // Array of frequency oscillators for synthesis
 FrequencyOscillator oscillators[MAX_OSCILLATORS];
@@ -548,9 +548,7 @@ int main(void) {
     printf("  ADC TRIGGER CONFIGURATION\n");
     printf("========================================\n");
     printf("ADC_EXTSEL = %d\n", ADC_EXTSEL);
-    printf("Expected: 13 for TIM6_TRGO\n");
-    printf("If DMA rate is wrong, try: 4, 9, 11, 12, or 14\n");
-    printf("========================================\n\n");
+
 
     // =========================================================================
     // =========================================================================

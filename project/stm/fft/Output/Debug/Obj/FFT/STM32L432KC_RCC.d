@@ -1,6 +1,6 @@
 Output/Debug/Obj/FFT/STM32L432KC_RCC.o: \
-  C:\Users\sojayaweera\E155\project\stm\lib\STM32L432KC_RCC.c \
-  C:\Users\sojayaweera\E155\project\stm\lib\STM32L432KC_RCC.h \
+  C:\Users\sojayaweera\E155\project\stm\fft\lib\STM32L432KC_RCC.c \
+  C:\Users\sojayaweera\E155\project\stm\fft\lib\STM32L432KC_RCC.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\stdint.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\__SEGGER_RTL.h \
   C:\Program\ Files\SEGGER\SEGGER\ Embedded\ Studio\ 8.24\include\__SEGGER_RTL_ConfDefaults.h \

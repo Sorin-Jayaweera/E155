@@ -1,22 +1,60 @@
 ----------------------------------------------------------------------
 Report for cell top.TECH
-Register bits:  201 of 5280 (3.807%)
+Register bits:  197 of 5280 (3.731%)
 I/O cells:      14
                                   Cell usage:
                                cell     count   Res Usage(%)
                                CCU2       103          100.0
-                            FD1P3XZ       201          100.0
+                            FD1P3XZ       197          100.0
                               HSOSC         1          100.0
                                  IB         2          100.0
-                               LUT4       377          100.0
+                               LUT4       372          100.0
                                  OB        12          100.0
 SUB MODULES
+                        fsm_control         1
+                        led_decoder         1
+                         led_dimmer         1
+                      pulse_counter         1
                        synchronizer         1
-                              TOTAL       697
+                              TOTAL       692
+----------------------------------------------------------------------
+Report for cell fsm_control.v1
+Instance Path : fsm_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        14           13.6
+                            FD1P3XZ        27           13.7
+                               LUT4        36            9.7
+                              TOTAL        77
 ----------------------------------------------------------------------
 Report for cell synchronizer.v1
-Instance Path : square_synchronizer
+Instance Path : sync_inst
                                   Cell usage:
                                cell     count   Res Usage(%)
                             FD1P3XZ         2            1.0
                               TOTAL         2
+----------------------------------------------------------------------
+Report for cell pulse_counter.v1
+Instance Path : counter_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2         5            4.9
+                            FD1P3XZ        17            8.6
+                               LUT4         1            0.3
+                              TOTAL        23
+----------------------------------------------------------------------
+Report for cell led_dimmer.v1
+Instance Path : dimmer_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                                FA2        84           81.6
+                            FD1P3XZ       151           76.6
+                               LUT4       296           79.6
+                              TOTAL       531
+----------------------------------------------------------------------
+Report for cell led_decoder.v1
+Instance Path : decoder_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4        38           10.2
+                              TOTAL        38
