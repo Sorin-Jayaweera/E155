@@ -45,15 +45,17 @@
  ******************************************************************************/
 
 // Pin Definitions
-#define LED_PIN         9       // PA9 (Board D1) - Output LED indicator
-#define AUDIO_INPUT_PIN 6       // PA6 (Board A5) - Analog audio input
-#define ADC_CHANNEL     11      // ADC1 Channel 11 (maps to PA6)
+// FFT Tesla Coil (REMAPPED to avoid DFPlayer conflicts)
+#define LED_PIN         0       // PB0 (moved from PA9) - Square wave output to Tesla coil
+#define AUDIO_INPUT_PIN 5       // PA5 (moved from PA6) - Analog audio input from DFPlayer
+#define ADC_CHANNEL     10      // ADC1 Channel 10 (maps to PA5)
 
-// DFPlayer Mini Pin Definitions (from DFPLAYER_MINI.c)
-#define SOFT_UART_TX_PIN 10     // PA10 - Software UART TX to DFPlayer
-#define BTN_PREVIOUS     8      // PA8 - Previous track button
-#define BTN_PAUSE        7      // PB7 - Pause/Play button (swapped with Next)
-#define BTN_NEXT         0      // PB0 - Next track button (MUST REWIRE from PA6!)
+// DFPlayer Mini Pin Definitions (ORIGINAL working configuration)
+#define USART_TX_PIN    9       // PA9 - USART1 TX to DFPlayer RX
+#define USART_RX_PIN    10      // PA10 - USART1 RX from DFPlayer TX
+#define BTN_PREVIOUS    8       // PA8 - Previous track button
+#define BTN_PAUSE       6       // PA6 - Pause/Play button (original)
+#define BTN_NEXT        7       // PB7 - Next track button (original)
 
 // Signal Processing Parameters
 #define FFT_SIZE        256     // FFT window size (must be power of 2)
@@ -282,18 +284,19 @@ void DMA1_Channel1_IRQHandler(void) {
  * @brief Initialize GPIO and FPU
  *
  * CONFIGURATION:
- *   FFT Tesla Coil:
- *     - PA6: Analog input (ADC)
- *     - PA9: Digital output (square wave to Tesla coil)
- *   DFPlayer Mini:
- *     - PA10: Software UART TX (output, idle HIGH)
+ *   FFT Tesla Coil (REMAPPED):
+ *     - PA5: Analog input (ADC1_IN10) - moved from PA6
+ *     - PB0: Digital output (square wave to Tesla coil) - moved from PA9
+ *   DFPlayer Mini (ORIGINAL):
+ *     - PA9/PA10: USART1 TX/RX (hardware USART to DFPlayer)
  *     - PA8: Previous button (input, external pull-down, active HIGH)
- *     - PB0: Pause/Play button (input, external pull-down, active HIGH)
+ *     - PA6: Pause/Play button (input, external pull-down, active HIGH)
  *     - PB7: Next button (input, external pull-down, active HIGH)
  *   - Enables Floating Point Unit (FPU) for fast math operations
  *
  * NOTE: Flash and system clock must be configured BEFORE calling this!
  *       Buttons use EXTERNAL pull-down resistors (no internal pulls needed)
+ *       USART1 will be initialized separately in main()
  */
 void initSystem(void) {
     // Enable FPU FIRST (before any floating point operations)
@@ -305,26 +308,23 @@ void initSystem(void) {
     // Bit 0: GPIOAEN, Bit 1: GPIOBEN
     RCC->AHB2ENR |= (1 << 0) | (1 << 1);
 
-    // Configure FFT Tesla Coil pins
-    pinMode(LED_PIN, GPIO_OUTPUT);          // PA9 as digital output
-    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);  // PA6 as analog input
+    // Configure FFT Tesla Coil pins (REMAPPED)
+    // LED_PIN is now PB0 (not PA9)
+    GPIOB->MODER &= ~(0b11 << (LED_PIN * 2));
+    GPIOB->MODER |= (0b01 << (LED_PIN * 2));  // PB0 as output
 
-    // Configure DFPlayer software UART pin
-    pinMode(SOFT_UART_TX_PIN, GPIO_OUTPUT); // PA10 as digital output
-    digitalWrite(SOFT_UART_TX_PIN, GPIO_HIGH);  // UART idle state is HIGH
+    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);     // PA5 as analog input
 
     // Configure DFPlayer button pins (NO internal pulls - external pull-downs)
-    pinMode(BTN_PREVIOUS, GPIO_INPUT);      // PA8 as input
-    GPIOA->PURPDR &= ~(0b11 << (BTN_PREVIOUS * 2));  // No pull (0b00)
+    pinMode(BTN_PREVIOUS, GPIO_INPUT);         // PA8 as input
+    GPIOA->PURPDR &= ~(0b11 << (BTN_PREVIOUS * 2));  // No pull
 
-    // PB0 and PB7 (GPIOB pins)
-    // Set as input mode
-    GPIOB->MODER &= ~(0b11 << (BTN_PAUSE * 2));    // PB0 input
-    GPIOB->MODER &= ~(0b11 << (BTN_NEXT * 2));     // PB7 input
+    pinMode(BTN_PAUSE, GPIO_INPUT);            // PA6 as input
+    GPIOA->PURPDR &= ~(0b11 << (BTN_PAUSE * 2));     // No pull
 
-    // No internal pulls (external pull-downs handle this)
-    GPIOB->PURPDR &= ~(0b11 << (BTN_PAUSE * 2));   // PB0 no pull (0b00)
-    GPIOB->PURPDR &= ~(0b11 << (BTN_NEXT * 2));    // PB7 no pull (0b00)
+    // PB7 (GPIOB pin) for Next button
+    GPIOB->MODER &= ~(0b11 << (BTN_NEXT * 2));       // PB7 input
+    GPIOB->PURPDR &= ~(0b11 << (BTN_NEXT * 2));      // No pull
 }
 
 /**
@@ -396,8 +396,12 @@ void TIM1_BRK_TIM15_IRQHandler(void) {
             }
         }
 
-        // Update GPIO
-        digitalWrite(LED_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+        // Update GPIO (PB0 - use direct register access)
+        if (output_state) {
+            GPIOB->BSRR = (1 << LED_PIN);  // Set PB0 high
+        } else {
+            GPIOB->BSRR = (1 << (LED_PIN + 16));  // Set PB0 low
+        }
     }
 }
 
@@ -557,6 +561,9 @@ int main(void) {
     initADC_DMA();       // ADC and DMA (MUST be before timer!)
     initTimer_ADC();     // TIM6 trigger at 8 kHz
 
+    // Initialize USART1 for DFPlayer Mini (PA9/PA10, 9600 baud)
+    USART_TypeDef * USART1 = initUSART(USART1_ID, 9600);
+
     printf("\n========================================\n");
     printf("  FFT VALIDATION MODE\n");
     printf("========================================\n");
@@ -607,13 +614,13 @@ int main(void) {
     printf("  DFPLAYER MINI INITIALIZATION\n");
     printf("========================================\n");
     printf("Initializing DFPlayer...\n");
-    DF_Init(15);  // Volume: 15/30 (50%)
+    DF_Init(USART1, 15);  // Volume: 15/30 (50%)
     printf("DFPlayer ready!\n");
     printf("  PA8: Previous track\n");
-    printf("  PB0: Pause/Play\n");
+    printf("  PA6: Pause/Play\n");
     printf("  PB7: Next track\n");
     printf("Starting playback...\n");
-    DF_PlayFromStart();
+    DF_PlayFromStart(USART1);
     printf("========================================\n\n");
 
     printf("Starting FFT processing loop...\n");
@@ -622,7 +629,7 @@ int main(void) {
     // Main processing loop: FFT → Synthesis + DFPlayer control
     while(1) {
         // Check DFPlayer control buttons (from original DFPLAYER_MINI.c)
-        Check_Key();
+        Check_Key(USART1);
 
         if (buffer_ready) {
             buffer_ready = false;

@@ -1,24 +1,26 @@
 // DFPLAYER_MINI.h
 // DFPlayer Mini MP3 module control library
-// Adapted for STM32L432KC with software UART
+// Uses hardware USART1 - ORIGINAL WORKING VERSION
 
 #ifndef DFPLAYER_MINI_H
 #define DFPLAYER_MINI_H
 
 #include <stdint.h>
+#include <stm32l432xx.h>
 #include "../lib/STM32L432KC_GPIO.h"
+#include "../lib/STM32L432KC_USART.h"
 
 // DFPlayer Mini control functions
-void DF_Init(uint8_t volume);
-void DF_PlayFromStart(void);
-void DF_Next(void);
-void DF_Previous(void);
-void DF_Pause(void);
-void DF_Playback(void);
-void DF_SetVolume(uint8_t volume);
-void DF_PlayTrack(uint8_t track);
+void DF_Init(USART_TypeDef * USART, uint8_t volume);
+void DF_PlayFromStart(USART_TypeDef * USART);
+void DF_Next(USART_TypeDef * USART);
+void DF_Previous(USART_TypeDef * USART);
+void DF_Pause(USART_TypeDef * USART);
+void DF_Playback(USART_TypeDef * USART);
+void DF_SetVolume(USART_TypeDef * USART, uint8_t volume);
+void DF_PlayTrack(USART_TypeDef * USART, uint8_t track);
 
 // Button check function
-void Check_Key(void);
+void Check_Key(USART_TypeDef * USART);
 
 #endif // DFPLAYER_MINI_H
