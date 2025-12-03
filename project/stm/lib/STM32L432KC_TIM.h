@@ -11,6 +11,13 @@
 // Definitions
 ///////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////
+// Type definitions - only if CMSIS headers not already included
+///////////////////////////////////////////////////////////////////////////////
+
+#ifndef __STM32L432xx_H
+// Only define these if standard CMSIS library (stm32l432xx.h) is NOT included
+
 #define __IO volatile
 
 // Base addresses
@@ -18,7 +25,7 @@
 #define TIM16_BASE (0x40014400UL) // base address of TIM16
 
 /**
-  * @brief Reset and Clock Control
+  * @brief Timer Type Definition
   */
 
 typedef struct
@@ -54,6 +61,8 @@ typedef struct
 
 #define TIM15 ((TIM_TypeDef *) TIM15_BASE)
 #define TIM16 ((TIM_TypeDef *) TIM16_BASE)
+
+#endif // __STM32L432xx_H
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes

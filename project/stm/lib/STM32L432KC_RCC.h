@@ -11,11 +11,6 @@
 // Definitions
 ///////////////////////////////////////////////////////////////////////////////
 
-#define __IO volatile
-
-// Base addresses
-#define RCC_BASE (0x40021000UL) // base address of RCC
-
 // PLL
 #define PLLSRC_HSI 0
 #define PLLSRC_HSE 1
@@ -24,6 +19,18 @@
 #define SW_HSI  0
 #define SW_HSE  1
 #define SW_PLL  2
+
+///////////////////////////////////////////////////////////////////////////////
+// Type definitions - only if CMSIS headers not already included
+///////////////////////////////////////////////////////////////////////////////
+
+#ifndef __STM32L432xx_H
+// Only define these if standard CMSIS library (stm32l432xx.h) is NOT included
+
+#define __IO volatile
+
+// Base addresses
+#define RCC_BASE (0x40021000UL) // base address of RCC
 
 /**
   * @brief Reset and Clock Control
@@ -73,6 +80,8 @@ typedef struct
 } RCC_TypeDef;
 
 #define RCC ((RCC_TypeDef *) RCC_BASE)
+
+#endif // __STM32L432xx_H
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
