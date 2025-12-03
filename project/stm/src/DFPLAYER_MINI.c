@@ -2,9 +2,8 @@
 // DFPlayer Mini MP3 module control implementation
 // Uses hardware USART1 (PA9/PA10) - ORIGINAL WORKING VERSION
 
+#include "../lib/STM32L432KC.h"
 #include "DFPLAYER_MINI.h"
-#include "../lib/STM32L432KC_GPIO.h"
-#include "../lib/STM32L432KC_USART.h"
 
 // DFPlayer protocol constants (from original DFPLAYER_MINI.c)
 #define Start_Byte  0x7E
