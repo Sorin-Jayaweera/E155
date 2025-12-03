@@ -76,18 +76,8 @@
  * HARDWARE REGISTER DEFINITIONS
  ******************************************************************************/
 
-// Nested Vectored Interrupt Controller (NVIC)
-typedef struct {
-    volatile uint32_t ISER[8];
-} NVIC_Type;
-#define NVIC ((NVIC_Type *) 0xE000E100UL)
-
 // System Control Block (SCB) - FPU enable
 #define SCB_CPACR (*((volatile uint32_t *) 0xE000ED88UL))
-
-// TIM6 Basic Timer (APB1 bus)
-#define TIM6_BASE  (0x40001000UL)
-#define TIM6       ((TIM_TypeDef *) TIM6_BASE)
 
 // Math Constant
 #ifndef M_PI
@@ -285,7 +275,7 @@ void initADC_DMA(void) {
     for(volatile int i = 0; i < 2000; i++);
 
     // Configure ADC clock
-    ADC_COMMON->CCR |= (1 << 16);
+    ADC123_COMMON->CCR |= (1 << 16);
 
     // Configure ADC for DMA and hardware trigger
     ADC1->CFGR |= (1 << 0) | (1 << 1) | (1 << 10);
