@@ -28,9 +28,9 @@ int main(void) {
     gpioEnable(GPIO_PORT_A);
     gpioEnable(GPIO_PORT_B);
 
-    // Enable TIM15 for delays
-    RCC->APB2ENR |= RCC_APB2ENR_TIM15EN;
-    initTIM(TIM15);
+    // Enable TIM2 for delays (TIM15 used by FFT synthesis)
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
+    initTIM(TIM2);
 
     // Initialize USART2 at 9600 baud for DFPlayer communication
     // DFPlayer Mini requires 9600 baud rate
@@ -40,7 +40,7 @@ int main(void) {
     DF_Init(USART, 25);
 
     // Small delay to ensure initialization
-    delay_millis(TIM15, 100);
+    delay_millis(TIM2, 100);
 
     // Start playing from first track
     DF_PlayFromStart(USART);
@@ -50,7 +50,7 @@ int main(void) {
         Check_Key(USART);
         
         // Small delay to prevent excessive polling
-        delay_millis(TIM15, 10);
+        delay_millis(TIM2, 10);
     }
 
     return 0;

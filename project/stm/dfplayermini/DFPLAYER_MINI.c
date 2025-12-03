@@ -52,52 +52,52 @@ void DF_Init(USART_TypeDef * USART, uint8_t volume) {
     pinMode(Previous_Key, GPIO_INPUT);
     pinMode(Pause_Key, GPIO_INPUT);
     pinMode(Next_Key, GPIO_INPUT);
-    
+
     // Wait for DFPlayer to boot
-    delay_millis(TIM15, 500);
-    
+    delay_millis(TIM2, 500);
+
     // Initialize DFPlayer
     Send_cmd(USART, 0x3F, 0x00, Source);  // Set source to TF card
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
     Send_cmd(USART, 0x06, 0x00, volume);  // Set volume
-    delay_millis(TIM15, 500);
+    delay_millis(TIM2, 500);
 }
 
 void DF_PlayFromStart(USART_TypeDef * USART) {
     Send_cmd(USART, 0x03, 0x00, 0x01);  // Play first track
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
     isPlaying = 1;
     isPaused = 0;
 }
 
 void DF_Next(USART_TypeDef * USART) {
     Send_cmd(USART, 0x01, 0x00, 0x00);  // Next track
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void DF_Previous(USART_TypeDef * USART) {
     Send_cmd(USART, 0x02, 0x00, 0x00);  // Previous track
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void DF_Pause(USART_TypeDef * USART) {
     Send_cmd(USART, 0x0E, 0x00, 0x00);  // Pause
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void DF_Playback(USART_TypeDef * USART) {
     Send_cmd(USART, 0x0D, 0x00, 0x00);  // Resume playback
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void DF_SetVolume(USART_TypeDef * USART, uint8_t volume) {
     Send_cmd(USART, 0x06, 0x00, volume);  // Set volume (0-30)
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void DF_PlayTrack(USART_TypeDef * USART, uint8_t track) {
     Send_cmd(USART, 0x03, 0x00, track);  // Play specific track
-    delay_millis(TIM15, 200);
+    delay_millis(TIM2, 200);
 }
 
 void Check_Key(USART_TypeDef * USART) {
@@ -105,8 +105,8 @@ void Check_Key(USART_TypeDef * USART) {
     if (digitalRead(Pause_Key)) {
         // Wait for button release (debounce)
         while (digitalRead(Pause_Key));
-        delay_millis(TIM15, 50);  // Additional debounce
-        
+        delay_millis(TIM2, 50);  // Additional debounce
+
         if (isPlaying) {
             isPaused = 1;
             isPlaying = 0;
@@ -117,18 +117,18 @@ void Check_Key(USART_TypeDef * USART) {
             DF_Playback(USART);
         }
     }
-    
+
     // Check previous button
     if (digitalRead(Previous_Key)) {
         while (digitalRead(Previous_Key));
-        delay_millis(TIM15, 50);
+        delay_millis(TIM2, 50);
         DF_Previous(USART);
     }
-    
+
     // Check next button
     if (digitalRead(Next_Key)) {
         while (digitalRead(Next_Key));
-        delay_millis(TIM15, 50);
+        delay_millis(TIM2, 50);
         DF_Next(USART);
     }
 }

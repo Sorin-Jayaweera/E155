@@ -8,10 +8,13 @@
  *   3. Outputs LED indication when frequency > 100 Hz is detected
  *
  * HARDWARE CONFIGURATION:
- *   - Input:  PA6 (Board Label: A5, ADC Channel 11)
- *   - Output: PA9 (Board Label: D1, LED indicator)
+ *   - Input:  PA5 (Board Label: A4, ADC Channel 10) - REMAPPED from PA6
+ *   - Output: PB0 (Board Label: D3) - REMAPPED from PA9
  *   - Platform: STM32L432KC Nucleo-32
  *   - Reference Voltage: 3.3V
+ *
+ *   NOTE: Pins remapped to avoid conflict with DFPlayer Mini USART1 (PA9/PA10)
+ *         and button (PA6)
  *
  * SIGNAL PROCESSING PIPELINE:
  *   TIM6 (8kHz) → ADC1 → DMA1_Ch1 → FFT → Frequency Detection → LED Output
@@ -43,10 +46,10 @@
  * CONFIGURATION PARAMETERS
  ******************************************************************************/
 
-// Pin Definitions
-#define LED_PIN         9       // PA9 (Board D1) - Output LED indicator
-#define AUDIO_INPUT_PIN 6       // PA6 (Board A5) - Analog audio input
-#define ADC_CHANNEL     11      // ADC1 Channel 11 (maps to PA6)
+// Pin Definitions - REMAPPED to avoid DFPlayer conflicts
+#define LED_PIN         0       // PB0 (Board D3) - Output square wave to Tesla coil
+#define AUDIO_INPUT_PIN 5       // PA5 (Board A4) - Analog audio input
+#define ADC_CHANNEL     10      // ADC1 Channel 10 (maps to PA5)
 
 // Signal Processing Parameters
 #define FFT_SIZE        256     // FFT window size (must be power of 2)
@@ -274,7 +277,7 @@ void DMA1_Channel1_IRQHandler(void) {
  * @brief Initialize GPIO and FPU
  *
  * CONFIGURATION:
- *   - Enables GPIOA clock for PA6 and PA9
+ *   - Enables GPIOA and GPIOB clocks for PA5 (ADC) and PB0 (output)
  *   - Configures GPIO pins for analog input and digital output
  *   - Enables Floating Point Unit (FPU) for fast math operations
  *
@@ -286,13 +289,16 @@ void initSystem(void) {
     // Bits [21:20] = CP10, Bits [23:22] = CP11
     SCB_CPACR |= ((3UL << 10*2) | (3UL << 11*2));
 
-    // Enable GPIOA clock (AHB2 bus)
-    // Bit 0: GPIOAEN
-    RCC->AHB2ENR |= (1 << 0);
+    // Enable GPIOA and GPIOB clocks (AHB2 bus)
+    // Bit 0: GPIOAEN, Bit 1: GPIOBEN
+    RCC->AHB2ENR |= (1 << 0) | (1 << 1);
 
-    // Configure GPIO pins using library functions
-    pinMode(LED_PIN, GPIO_OUTPUT);          // PA9 as digital output
-    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);  // PA6 as analog input
+    // Configure GPIO pins
+    // PB0 as digital output (MODER[1:0] = 01 for output mode)
+    GPIOB->MODER |= (0b1 << (2 * LED_PIN));      // Set bit 0
+    GPIOB->MODER &= ~(0b1 << (2 * LED_PIN + 1)); // Clear bit 1
+
+    pinMode(AUDIO_INPUT_PIN, GPIO_ANALOG);  // PA5 as analog input (on GPIOA)
 }
 
 /**
@@ -333,7 +339,7 @@ void initTimer_ADC(void) {
  *   - Called at SYNTHESIS_RATE (100 kHz)
  *   - Updates phase accumulator for each active oscillator
  *   - OR's all oscillator outputs together
- *   - Writes result to PA9 (SQUARE_OUT_PIN)
+ *   - Writes result to PB0 (LED_PIN)
  *
  * PHASE ACCUMULATOR:
  *   phase += frequency / SYNTHESIS_RATE
@@ -364,8 +370,12 @@ void TIM1_BRK_TIM15_IRQHandler(void) {
             }
         }
 
-        // Update GPIO
-        digitalWrite(LED_PIN, output_state ? GPIO_HIGH : GPIO_LOW);
+        // Update GPIO - Direct GPIOB access since LED_PIN is on GPIOB (PB0)
+        if (output_state) {
+            GPIOB->ODR |= (1 << LED_PIN);   // Set PB0 HIGH
+        } else {
+            GPIOB->ODR &= ~(1 << LED_PIN);  // Set PB0 LOW
+        }
     }
 }
 
@@ -406,7 +416,7 @@ void initTIM15_Synthesis(void) {
  * @brief Initialize ADC and DMA for continuous sampling
  *
  * ADC CONFIGURATION:
- *   - Channel: 11 (PA6)
+ *   - Channel: 10 (PA5)
  *   - Trigger: TIM6_TRGO (EXTSEL = 13, hardware trigger)
  *   - DMA: Circular mode (auto-restart after buffer fills)
  *   - Clock: Synchronous HCLK/1 (80 MHz)
@@ -498,8 +508,8 @@ void initADC_DMA(void) {
  *   6. Turn LED ON if frequency > 100 Hz and magnitude > threshold
  *
  * SIGNAL FLOW:
- *   Audio Input (PA6) → ADC (8 kHz) → DMA Buffer → FFT →
- *   Frequency Detection → LED Output (PA9)
+ *   Audio Input (PA5) → ADC (8 kHz) → DMA Buffer → FFT →
+ *   Frequency Detection → LED Output (PB0)
  *
  * FREQUENCY RESOLUTION:
  *   Each FFT bin represents: SAMPLE_RATE / FFT_SIZE = 8000 / 256 = 31.25 Hz
@@ -549,15 +559,15 @@ int main(void) {
     // Full pipeline test: ADC input → FFT → Frequency detection → Synthesis
     //
     // Test procedure:
-    //   1. Feed sine wave into PA6 (e.g., 50 Hz, 320 Hz, 1000 Hz)
+    //   1. Feed sine wave into PA5 (e.g., 50 Hz, 320 Hz, 1000 Hz)
     //   2. FFT detects dominant frequency
-    //   3. PA9 outputs square wave at detected frequency
+    //   3. PB0 outputs square wave at detected frequency
     //
     // Expected: Input frequency = Output frequency
     // =========================================================================
     printf("***** FFT-BASED FREQUENCY SYNTHESIS TEST *****\n");
-    printf("Feed sine wave into PA6 (A5)\n");
-    printf("PA9 will output square wave at detected frequency\n");
+    printf("Feed sine wave into PA5 (A4)\n");
+    printf("PB0 will output square wave at detected frequency\n");
     printf("Frequency range: 20 Hz - 2000 Hz\n");
     printf("Update rate: ~31 Hz (every 256 samples)\n\n");
 
