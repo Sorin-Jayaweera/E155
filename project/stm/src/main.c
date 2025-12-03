@@ -31,10 +31,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-// Project Libraries
-#include "../lib/STM32L432KC.h"  // Master header - includes CMSIS + all peripherals
-#include "../lib/STM32L432KC_ADC.h"  // ADC not in master header
-#include "../lib/STM32L432KC_DMA.h"  // DMA not in master header
+// Project Libraries - MASTER HEADER MUST BE FIRST
+#include "../lib/STM32L432KC.h"  // Master header - includes CMSIS + all peripherals (GPIO, RCC, TIM, FLASH, USART, ADC, DMA)
 #include "DFPLAYER_MINI.h"
 
 /*******************************************************************************
@@ -314,14 +312,14 @@ void initSystem(void) {
 
     // Configure DFPlayer button pins (NO internal pulls - external pull-downs)
     pinMode(BTN_PREVIOUS, GPIO_INPUT);         // PA8 as input
-    GPIOA->PURPDR &= ~(0b11 << (BTN_PREVIOUS * 2));  // No pull
+    GPIOA->PUPDR &= ~(0b11 << (BTN_PREVIOUS * 2));  // No pull
 
     pinMode(BTN_PAUSE, GPIO_INPUT);            // PA6 as input
-    GPIOA->PURPDR &= ~(0b11 << (BTN_PAUSE * 2));     // No pull
+    GPIOA->PUPDR &= ~(0b11 << (BTN_PAUSE * 2));     // No pull
 
     // PB7 (GPIOB pin) for Next button
     GPIOB->MODER &= ~(0b11 << (BTN_NEXT * 2));       // PB7 input
-    GPIOB->PURPDR &= ~(0b11 << (BTN_NEXT * 2));      // No pull
+    GPIOB->PUPDR &= ~(0b11 << (BTN_NEXT * 2));      // No pull
 }
 
 /**

@@ -10,19 +10,6 @@
 // Definitions
 ///////////////////////////////////////////////////////////////////////////////
 
-#define __IO volatile
-
-// Base addresses
-#define DMA1_BASE           (0x40020000UL)
-#define DMA2_BASE           (0x40020400UL)
-#define DMA1_Channel1_BASE  (0x40020008UL)
-#define DMA1_Channel2_BASE  (0x4002001CUL)
-#define DMA1_Channel3_BASE  (0x40020030UL)
-#define DMA1_Channel4_BASE  (0x40020044UL)
-#define DMA1_Channel5_BASE  (0x40020058UL)
-#define DMA1_Channel6_BASE  (0x4002006CUL)
-#define DMA1_Channel7_BASE  (0x40020080UL)
-
 // DMA Request mapping (CSELR register)
 #define DMA_REQUEST_ADC1    0
 
@@ -45,6 +32,22 @@
 // DMA register structures
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifndef __STM32L432xx_H
+// Only define these if standard CMSIS library (stm32l432xx.h) is NOT included
+
+#define __IO volatile
+
+// Base addresses
+#define DMA1_BASE           (0x40020000UL)
+#define DMA2_BASE           (0x40020400UL)
+#define DMA1_Channel1_BASE  (0x40020008UL)
+#define DMA1_Channel2_BASE  (0x4002001CUL)
+#define DMA1_Channel3_BASE  (0x40020030UL)
+#define DMA1_Channel4_BASE  (0x40020044UL)
+#define DMA1_Channel5_BASE  (0x40020058UL)
+#define DMA1_Channel6_BASE  (0x4002006CUL)
+#define DMA1_Channel7_BASE  (0x40020080UL)
+
 typedef struct {
     __IO uint32_t CCR;      // DMA channel configuration register
     __IO uint32_t CNDTR;    // DMA channel number of data register
@@ -65,6 +68,8 @@ typedef struct {
 #define DMA1_Channel1   ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
 #define DMA1_Channel2   ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
 #define DMA1_CSELR      ((DMA_Request_TypeDef *) (DMA1_BASE + 0xA8))
+
+#endif // __STM32L432xx_H
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes

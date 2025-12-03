@@ -10,12 +10,6 @@
 // Definitions
 ///////////////////////////////////////////////////////////////////////////////
 
-#define __IO volatile
-
-// Base addresses
-#define ADC1_BASE       (0x50040000UL)
-#define ADC_COMMON_BASE (0x50040300UL)
-
 // ADC Channels
 #define ADC_CHANNEL_0   0
 #define ADC_CHANNEL_1   1
@@ -57,6 +51,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // ADC register structures
 ///////////////////////////////////////////////////////////////////////////////
+
+#ifndef __STM32L432xx_H
+// Only define these if standard CMSIS library (stm32l432xx.h) is NOT included
+
+#define __IO volatile
+
+// Base addresses
+#define ADC1_BASE       (0x50040000UL)
+#define ADC_COMMON_BASE (0x50040300UL)
 
 typedef struct {
     __IO uint32_t ISR;      // ADC interrupt and status register,          offset: 0x00
@@ -107,6 +110,8 @@ typedef struct {
 
 #define ADC1        ((ADC_TypeDef *) ADC1_BASE)
 #define ADC_COMMON  ((ADC_Common_TypeDef *) ADC_COMMON_BASE)
+
+#endif // __STM32L432xx_H
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
