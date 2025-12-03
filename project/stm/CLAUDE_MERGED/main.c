@@ -36,14 +36,14 @@
 #include <stdbool.h>
 
 // Project Libraries
-#include "../lib/STM32L432KC_RCC.h"
-#include "../lib/STM32L432KC_GPIO.h"
-#include "../lib/STM32L432KC_ADC.h"
-#include "../lib/STM32L432KC_TIM.h"
-#include "../STM32L432KC_DMA.h"
-#include "../STM32L432KC_FLASH.h"
-#include "../STM32L432KC_USART.h"
-#include "../DFPLAYER_MINI.h"
+#include "STM32L432KC_RCC.h"
+#include "STM32L432KC_GPIO.h"
+#include "STM32L432KC_ADC.h"
+#include "STM32L432KC_TIM.h"
+#include "STM32L432KC_DMA.h"
+#include "STM32L432KC_FLASH.h"
+#include "STM32L432KC_USART.h"
+#include "DFPLAYER_MINI.h"
 
 /*******************************************************************************
  * CONFIGURATION PARAMETERS
