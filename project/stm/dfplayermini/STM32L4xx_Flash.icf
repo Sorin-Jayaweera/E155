@@ -88,6 +88,13 @@ Literature:
 define memory with size = 4G;
 
 //
+// Memory regions for STM32L432KC
+//
+define region FLASH1 = [from 0x08000000 size 256k];  // 256 KB Flash
+define region RAM1   = [from 0x20000000 size 48k];   // 48 KB SRAM1
+define region RAM2   = [from 0x10000000 size 16k];   // 16 KB SRAM2
+
+//
 // Combined regions per memory type
 //
 define region FLASH = FLASH1;
