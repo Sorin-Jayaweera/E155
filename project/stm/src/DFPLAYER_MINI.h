@@ -6,6 +6,7 @@
 #define DFPLAYER_MINI_H
 
 #include <stdint.h>
+#include "../lib/STM32L432KC_GPIO.h"
 
 // DFPlayer Mini control functions
 void DF_Init(uint8_t volume);

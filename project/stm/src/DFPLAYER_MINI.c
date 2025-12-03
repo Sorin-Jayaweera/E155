@@ -3,7 +3,6 @@
 // Adapted from working DFPLAYER_MINI.c with software UART for E155 PCB
 
 #include "DFPLAYER_MINI.h"
-#include "STM32L432KC.h"
 
 /*******************************************************************************
  * SOFTWARE UART FOR DFPLAYER MINI
