@@ -40,6 +40,10 @@
 #include "../lib/STM32L432KC_FLASH.h"
 #include "DFPLAYER_MINI.h"
 
+// Forward declarations for USART (avoid including header that conflicts with custom libs)
+#define USART1_ID 1
+USART_TypeDef * initUSART(int USART_ID, int baud_rate);
+
 /*******************************************************************************
  * CONFIGURATION PARAMETERS
  ******************************************************************************/

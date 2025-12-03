@@ -6,11 +6,11 @@
 #define DFPLAYER_MINI_H
 
 #include <stdint.h>
-#include "../lib/STM32L432KC_USART.h"
 
-// Forward declaration to avoid header conflicts
-// (GPIO library redefines types already in stm32l432xx.h)
-int digitalRead(int pin);
+// Forward declarations to avoid header conflicts
+// (USART library includes stm32l432xx.h which conflicts with custom E155 headers)
+struct USART_TypeDef;
+typedef struct USART_TypeDef USART_TypeDef;
 
 // DFPlayer Mini control functions
 void DF_Init(USART_TypeDef * USART, uint8_t volume);
