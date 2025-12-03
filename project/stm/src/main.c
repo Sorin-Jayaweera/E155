@@ -287,12 +287,13 @@ void DMA1_Channel1_IRQHandler(void) {
  *     - PA9: Digital output (square wave to Tesla coil)
  *   DFPlayer Mini:
  *     - PA10: Software UART TX (output, idle HIGH)
- *     - PA8: Previous button (input with pull-up)
- *     - PB0: Pause/Play button (input with pull-up)
- *     - PB7: Next button (input with pull-up)
+ *     - PA8: Previous button (input, external pull-down, active HIGH)
+ *     - PB0: Pause/Play button (input, external pull-down, active HIGH)
+ *     - PB7: Next button (input, external pull-down, active HIGH)
  *   - Enables Floating Point Unit (FPU) for fast math operations
  *
  * NOTE: Flash and system clock must be configured BEFORE calling this!
+ *       Buttons use EXTERNAL pull-down resistors (no internal pulls needed)
  */
 void initSystem(void) {
     // Enable FPU FIRST (before any floating point operations)
@@ -312,21 +313,18 @@ void initSystem(void) {
     pinMode(SOFT_UART_TX_PIN, GPIO_OUTPUT); // PA10 as digital output
     digitalWrite(SOFT_UART_TX_PIN, GPIO_HIGH);  // UART idle state is HIGH
 
-    // Configure DFPlayer button pins (inputs with pull-up)
+    // Configure DFPlayer button pins (NO internal pulls - external pull-downs)
     pinMode(BTN_PREVIOUS, GPIO_INPUT);      // PA8 as input
-    GPIOA->PURPDR &= ~(0b11 << (BTN_PREVIOUS * 2));
-    GPIOA->PURPDR |= (0b01 << (BTN_PREVIOUS * 2));  // Pull-up
+    GPIOA->PURPDR &= ~(0b11 << (BTN_PREVIOUS * 2));  // No pull (0b00)
 
     // PB0 and PB7 (GPIOB pins)
     // Set as input mode
     GPIOB->MODER &= ~(0b11 << (BTN_PAUSE * 2));    // PB0 input
     GPIOB->MODER &= ~(0b11 << (BTN_NEXT * 2));     // PB7 input
 
-    // Enable pull-ups
-    GPIOB->PURPDR &= ~(0b11 << (BTN_PAUSE * 2));
-    GPIOB->PURPDR |= (0b01 << (BTN_PAUSE * 2));     // PB0 pull-up
-    GPIOB->PURPDR &= ~(0b11 << (BTN_NEXT * 2));
-    GPIOB->PURPDR |= (0b01 << (BTN_NEXT * 2));      // PB7 pull-up
+    // No internal pulls (external pull-downs handle this)
+    GPIOB->PURPDR &= ~(0b11 << (BTN_PAUSE * 2));   // PB0 no pull (0b00)
+    GPIOB->PURPDR &= ~(0b11 << (BTN_NEXT * 2));    // PB7 no pull (0b00)
 }
 
 /**
