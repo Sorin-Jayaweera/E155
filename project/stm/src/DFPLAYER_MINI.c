@@ -3,6 +3,8 @@
 // Uses hardware USART1 (PA9/PA10) - ORIGINAL WORKING VERSION
 
 #include "DFPLAYER_MINI.h"
+#include "../lib/STM32L432KC_GPIO.h"
+#include <stm32l432xx.h>  // For GPIOB register access
 
 // DFPlayer protocol constants (from original DFPLAYER_MINI.c)
 #define Start_Byte  0x7E
